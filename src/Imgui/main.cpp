@@ -18,6 +18,10 @@
 #include "../Editor.h"
 #include "../Core/Engine.h"
 
+#ifndef _DEBUG
+#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" ) // 设置入口地址
+#endif //  !Debug
+
 using namespace std;
 using namespace TmingEngine;
 
