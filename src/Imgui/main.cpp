@@ -70,6 +70,7 @@ int main()
 		glfwTerminate();
 		return -1;
 	}
+	//设置各种事件的监听
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
@@ -86,11 +87,11 @@ int main()
 		return -1;
 	}
 
-	// configure global opengl state
+	// 开启深度测试
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
 
-	// build and compile shaders
+	// 加载对应shader文件
 	// -------------------------
 	Shader shader("5.1.framebuffers.vs", "5.1.framebuffers.fs");
 	Shader screenShader("5.1.framebuffers_screen.vs", "5.1.framebuffers_screen.fs");
@@ -161,6 +162,8 @@ int main()
 		1.0f, -1.0f,  1.0f, 0.0f,
 		1.0f,  1.0f,  1.0f, 1.0f
 	};
+
+
 	// cube VAO
 	unsigned int cubeVAO, cubeVBO;
 	glGenVertexArrays(1, &cubeVAO);
@@ -201,7 +204,16 @@ int main()
 	unsigned int floorTexture = loadTexture(FileSystem::getPath("resources/textures/metal.png").c_str());
 
 	unsigned int cubeTexture2 = loadTexture(FileSystem::getPath("resources/textures/awesomeface.png").c_str());
-	
+
+	Shader ourShader("1.model_loading.vs", "1.model_loading.fs");
+	Model ourModel(FileSystem::getPath("resources/objects/nanosuit/nanosuit.obj"));
+
+	shader.use();
+	shader.setInt("texture1", 0);
+
+	screenShader.use();
+	screenShader.setInt("screenTexture", 0);
+
 	// shader configuration
 	// --------------------
 	shader.use();
@@ -210,18 +222,19 @@ int main()
 	screenShader.use();
 	screenShader.setInt("screenTexture", 0);
 
-	// framebuffer configuration
+	/// 创建一个帧缓冲对象，并绑定它
 	// -------------------------
 	unsigned int framebuffer;
 	glGenFramebuffers(1, &framebuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-	// create a color attachment texture
+	// 创建一个纹理图像
 	unsigned int textureColorbuffer;
 	glGenTextures(1, &textureColorbuffer);
 	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//纹理 附加到当前绑定的帧缓冲对象
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
 
 	// create a renderbuffer object for depth and stencil attachment (we won't be sampling these)
@@ -251,7 +264,7 @@ int main()
 	g_engine = new Engine(new Context());
 	g_engine->Initialize();
 	g_engineContext = g_engine->GetContext();
-	
+
 	g_editor = new Editor();
 	g_editor->Initialize();
 
