@@ -2,7 +2,7 @@
 #include<string>
 #include "EngineDefs.h"
 
-#define GENERATE_GUID Directus::GUIDGenerator::Generate()
+#define GENERATE_GUID TmingEngine::GUIDGenerator::Generate()
 
 namespace TmingEngine
 {

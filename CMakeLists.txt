@@ -15,6 +15,8 @@ aux_source_directory(src/Logging DIR_Log)
 aux_source_directory(src/Scene DIR_Scene)
 aux_source_directory(src/Threading DIR_Threading)
 aux_source_directory(src/Scene/Components DIR_Components)
+aux_source_directory(src/IO DIR_IO)
+aux_source_directory(src/Graphics DIR_Graphics)
 
 #aux_source_directory(src/Math DIR_SRCS5)
 #add_subdirectory(src/Core)
@@ -66,11 +68,13 @@ source_group("Logging" FILES ${DIR_Log})
 source_group("Scene" FILES ${DIR_Scene})
 source_group("Threading" FILES ${DIR_Threading})
 source_group("Scene\\Components" FILES ${DIR_Components})
+source_group("IO" FILES ${DIR_IO})
+source_group("Graphics" FILES ${DIR_Graphics})
 
 add_executable(Editor ${DIR_Main} ${DIR_Imgui})
 add_library(TmingEngine STATIC
  ${DIR_FileSystem} ${DIR_OpenGL} ${DIR_Log} ${DIR_Scene} 
- ${DIR_Threading} ${DIR_Components}
+ ${DIR_Threading} ${DIR_Components} ${DIR_IO} ${DIR_Graphics}
  ${DIR_Core} ${DIR_Plantform} ${DIR_Math})
 
 #寻找lib文件

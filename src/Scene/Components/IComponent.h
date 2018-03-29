@@ -11,7 +11,7 @@ namespace TmingEngine
 	class GameObject;
 	class Transform;
 	class Context;
-	class FileStream;
+	
 
 	enum ComponentType : unsigned int
 	{
