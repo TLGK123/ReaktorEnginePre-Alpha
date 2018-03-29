@@ -11,6 +11,10 @@ aux_source_directory(src/Core DIR_Core)
 aux_source_directory(src/OpenGL DIR_OpenGL)
 aux_source_directory(src/Plantform DIR_Plantform)
 aux_source_directory(src/Math DIR_Math)
+aux_source_directory(src/Logging DIR_Log)
+aux_source_directory(src/Scene DIR_Scene)
+aux_source_directory(src/Threading DIR_Threading)
+aux_source_directory(src/Scene/Components DIR_Components)
 
 #aux_source_directory(src/Math DIR_SRCS5)
 #add_subdirectory(src/Core)
@@ -58,11 +62,16 @@ source_group("Core" FILES ${DIR_Core})
 source_group("Plantform" FILES ${DIR_Plantform})
 source_group("OpenGL" FILES ${DIR_OpenGL})
 source_group("Math" FILES ${DIR_Math})
+source_group("Logging" FILES ${DIR_Log})
+source_group("Scene" FILES ${DIR_Scene})
+source_group("Threading" FILES ${DIR_Threading})
+source_group("Scene\\Components" FILES ${DIR_Components})
 
 add_executable(Editor ${DIR_Main} ${DIR_Imgui})
 add_library(TmingEngine STATIC
- ${DIR_FileSystem} ${DIR_OpenGL}
- ${DIR_Core} ${DIR_Plantform})
+ ${DIR_FileSystem} ${DIR_OpenGL} ${DIR_Log} ${DIR_Scene} 
+ ${DIR_Threading} ${DIR_Components}
+ ${DIR_Core} ${DIR_Plantform} ${DIR_Math})
 
 #寻找lib文件
 # PROJECT_SOURCE_DIR 工程的根目录

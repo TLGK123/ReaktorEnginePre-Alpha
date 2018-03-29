@@ -1,24 +1,3 @@
-/*
-Copyright(c) 2016-2018 Panos Karabelas
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-copies of the Software, and to permit persons to whom the Software is furnished
-to do so, subject to the following conditions :
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-
 #pragma once
 
 //= INCLUDES ==================
@@ -27,23 +6,23 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //=============================
 
 //=========================================================
-static const std::string NOT_ASSIGNED		= "N/A";
-static const int NOT_ASSIGNED_HASH			= -1;
+static const std::string NOT_ASSIGNED = "N/A";
+static const int NOT_ASSIGNED_HASH = -1;
 // Metadata extensions
-static const char* METADATA_EXTENSION		= ".xml";
-static const char* METADATA_TYPE_TEXTURE	= "Texture";
-static const char* METADATA_TYPE_AUDIOCLIP	= "Audio_Clip";
+static const char* METADATA_EXTENSION = ".xml";
+static const char* METADATA_TYPE_TEXTURE = "Texture";
+static const char* METADATA_TYPE_AUDIOCLIP = "Audio_Clip";
 // Engine file extensions
-static const char* SCENE_EXTENSION			= ".directus";
-static const char* MATERIAL_EXTENSION		= ".mat";
-static const char* MODEL_EXTENSION			= ".model";
-static const char* PREFAB_EXTENSION			= ".prefab";
-static const char* SHADER_EXTENSION			= ".shader";
-static const char* TEXTURE_EXTENSION		= ".texture";
-static const char* MESH_EXTENSION			= ".mesh";
+static const char* SCENE_EXTENSION = ".directus";
+static const char* MATERIAL_EXTENSION = ".mat";
+static const char* MODEL_EXTENSION = ".model";
+static const char* PREFAB_EXTENSION = ".prefab";
+static const char* SHADER_EXTENSION = ".shader";
+static const char* TEXTURE_EXTENSION = ".texture";
+static const char* MESH_EXTENSION = ".mesh";
 //=========================================================
 
-namespace Directus
+namespace TmingEngine
 {
 	class ENGINE_CLASS FileSystem
 	{
@@ -87,14 +66,14 @@ namespace Directus
 		static std::vector<std::string> GetSupportedSceneFilesInDirectory(const std::string& directory);
 		//======================================================================================================
 
-		//= SUPPORTED FILE CHECKS =====================================	
+		//= SUPPORTED FILE CHECKS =====================================
 		static bool IsSupportedAudioFile(const std::string& path);
-		static bool IsSupportedImageFile(const std::string& path);	
+		static bool IsSupportedImageFile(const std::string& path);
 		static bool IsSupportedModelFile(const std::string& path);
 		static bool IsSupportedShaderFile(const std::string& path);
 		static bool IsSupportedFontFile(const std::string& path);
 		static bool IsEngineScriptFile(const std::string& path);
-		static bool IsEnginePrefabFile(const std::string& filePath);		
+		static bool IsEnginePrefabFile(const std::string& filePath);
 		static bool IsEngineMaterialFile(const std::string& filePath);
 		static bool IsEngineMeshFile(const std::string& filePath);
 		static bool IsEngineModelFile(const std::string& filePath);
@@ -107,7 +86,7 @@ namespace Directus
 		//= STRING PARSING =============================================================================================================================
 		static std::string GetStringAfterExpression(const std::string& str, const std::string& expression);
 		static std::string GetStringBetweenExpressions(const std::string& str, const std::string& firstExpression, const std::string& secondExpression);
-		static std::string ConvertToUppercase(const std::string& lower);		
+		static std::string ConvertToUppercase(const std::string& lower);
 		static std::string ReplaceExpression(const std::string& str, const std::string& from, const std::string& to);
 		//==============================================================================================================================================
 
