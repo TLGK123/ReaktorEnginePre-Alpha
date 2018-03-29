@@ -10,6 +10,7 @@ aux_source_directory(src/Imgui DIR_Imgui)
 aux_source_directory(src/Core DIR_Core)
 aux_source_directory(src/OpenGL DIR_OpenGL)
 aux_source_directory(src/Plantform DIR_Plantform)
+aux_source_directory(src/Math DIR_Math)
 
 #aux_source_directory(src/Math DIR_SRCS5)
 #add_subdirectory(src/Core)
@@ -56,6 +57,7 @@ source_group("Imgui" FILES ${DIR_Imgui})
 source_group("Core" FILES ${DIR_Core})
 source_group("Plantform" FILES ${DIR_Plantform})
 source_group("OpenGL" FILES ${DIR_OpenGL})
+source_group("Math" FILES ${DIR_Math})
 
 add_executable(Editor ${DIR_Main} ${DIR_Imgui})
 add_library(TmingEngine STATIC
