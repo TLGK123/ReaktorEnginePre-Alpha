@@ -249,18 +249,18 @@ namespace TmingEngine
 		weak_ptr<IComponent> component;
 		switch (type)
 		{
-		case ComponentType_AudioListener:	component = AddComponent<AudioListener>();	break;
-		case ComponentType_AudioSource:		component = AddComponent<AudioSource>();	break;
-		case ComponentType_Camera:			component = AddComponent<Camera>();			break;
-		case ComponentType_Collider:		component = AddComponent<Collider>();		break;
-		case ComponentType_Constraint:		component = AddComponent<Constraint>();		break;
+		//case ComponentType_AudioListener:	component = AddComponent<AudioListener>();	break;
+		//case ComponentType_AudioSource:		component = AddComponent<AudioSource>();	break;
+		//case ComponentType_Camera:			component = AddComponent<Camera>();			break;
+		//case ComponentType_Collider:		component = AddComponent<Collider>();		break;
+		//case ComponentType_Constraint:		component = AddComponent<Constraint>();		break;
 		case ComponentType_Light:			component = AddComponent<Light>();			break;
-		case ComponentType_LineRenderer:	component = AddComponent<LineRenderer>();	break;
+		//case ComponentType_LineRenderer:	component = AddComponent<LineRenderer>();	break;
 		case ComponentType_MeshFilter:		component = AddComponent<MeshFilter>();		break;
 		case ComponentType_MeshRenderer:	component = AddComponent<MeshRenderer>();	break;
-		case ComponentType_RigidBody:		component = AddComponent<RigidBody>();		break;
-		case ComponentType_Script:			component = AddComponent<Script>();			break;
-		case ComponentType_Skybox:			component = AddComponent<Skybox>();			break;
+		//case ComponentType_RigidBody:		component = AddComponent<RigidBody>();		break;
+		//case ComponentType_Script:			component = AddComponent<Script>();			break;
+		//case ComponentType_Skybox:			component = AddComponent<Skybox>();			break;
 		case ComponentType_Transform:		component = AddComponent<Transform>();		break;
 		case ComponentType_Unknown:														break;
 		default:																		break;
