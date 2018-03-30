@@ -1,39 +1,19 @@
-/*
-Copyright(c) 2016-2018 Panos Karabelas
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-copies of the Software, and to permit persons to whom the Software is furnished
-to do so, subject to the following conditions :
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
 
 //= INCLUDES ===========================
 #include "Transform.h"
-#include "../Scene.h"
-#include "../GameObject.h"
+//#include "../Scene.h"
+//#include "../GameObject.h"
 #include "../../Logging/Log.h"
-#include "../../IO/FileStream.h"
+//#include "../../IO/FileStream.h"
 #include "../../FileSystem/FileSystem.h"
 //======================================
 
 //= NAMESPACES ================
 using namespace std;
-using namespace Directus::Math;
+using namespace TmingEngine::Math;
 //=============================
 
-namespace Directus
+namespace TmingEngine
 {
 	Transform::Transform(Context* context, GameObject* gameObject, Transform* transform) : IComponent(context, gameObject, transform)
 	{
@@ -58,31 +38,31 @@ namespace Directus
 
 	void Transform::Serialize(FileStream* stream)
 	{
-		stream->Write(m_positionLocal);
-		stream->Write(m_rotationLocal);
-		stream->Write(m_scaleLocal);
-		stream->Write(m_lookAt);
-		stream->Write(m_parent ? m_parent->GetGameObject_Ref()->GetID() : NOT_ASSIGNED_HASH);
+		//stream->Write(m_positionLocal);
+		//stream->Write(m_rotationLocal);
+		//stream->Write(m_scaleLocal);
+		//stream->Write(m_lookAt);
+		//stream->Write(m_parent ? m_parent->GetGameObject_Ref()->GetID() : NOT_ASSIGNED_HASH);
 	}
 
 	void Transform::Deserialize(FileStream* stream)
 	{
 		unsigned int parentGameObjectID = 0;
 
-		stream->Read(&m_positionLocal);
-		stream->Read(&m_rotationLocal);
-		stream->Read(&m_scaleLocal);
-		stream->Read(&m_lookAt);
-		stream->Read(&parentGameObjectID);
+		//stream->Read(&m_positionLocal);
+		//stream->Read(&m_rotationLocal);
+		//stream->Read(&m_scaleLocal);
+		//stream->Read(&m_lookAt);
+		//stream->Read(&parentGameObjectID);
 
-		if (parentGameObjectID != NOT_ASSIGNED_HASH)
-		{
-			auto parent = GetContext()->GetSubsystem<Scene>()->GetGameObjectByID(parentGameObjectID);
-			if (!parent.expired())
-			{
-				parent.lock()->GetTransformRef()->AddChild(this);
-			}
-		}
+		//if (parentGameObjectID != NOT_ASSIGNED_HASH)
+		//{
+		//	auto parent = GetContext()->GetSubsystem<Scene>()->GetGameObjectByID(parentGameObjectID);
+		//	if (!parent.expired())
+		//	{
+		//		parent.lock()->GetTransformRef()->AddChild(this);
+		//	}
+		//}
 
 		UpdateTransform();
 	}
@@ -325,30 +305,30 @@ namespace Directus
 		m_children.clear();
 		m_children.shrink_to_fit();
 
-		auto gameObjects = GetContext()->GetSubsystem<Scene>()->GetAllGameObjects();
-		for (const auto& gameObject : gameObjects)
-		{
-			if (!gameObject)
-				continue;
+		//auto gameObjects = GetContext()->GetSubsystem<Scene>()->GetAllGameObjects();
+		//for (const auto& gameObject : gameObjects)
+		//{
+		//	if (!gameObject)
+		//		continue;
 
-			// get the possible child
-			Transform* possibleChild = gameObject->GetTransformRef();
+		//	// get the possible child
+		//	Transform* possibleChild = gameObject->GetTransformRef();
 
-			// if it doesn't have a parent, forget about it.
-			if (!possibleChild->HasParent())
-				continue;
+		//	// if it doesn't have a parent, forget about it.
+		//	if (!possibleChild->HasParent())
+		//		continue;
 
-			// if it's parent matches this transform
-			if (possibleChild->GetParent()->GetID() == m_ID)
-			{
-				// welcome home son
-				m_children.push_back(possibleChild);
+		//	// if it's parent matches this transform
+		//	if (possibleChild->GetParent()->GetID() == m_ID)
+		//	{
+		//		// welcome home son
+		//		m_children.push_back(possibleChild);
 
-				// make the child do the same thing all over, essentialy
-				// resolving the entire hierarchy.
-				possibleChild->ResolveChildrenRecursively();
-			}
-		}
+		//		// make the child do the same thing all over, essentialy
+		//		// resolving the entire hierarchy.
+		//		possibleChild->ResolveChildrenRecursively();
+		//	}
+		//}
 	}
 
 	bool Transform::IsDescendantOf(Transform* transform)
