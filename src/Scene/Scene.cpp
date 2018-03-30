@@ -1,46 +1,26 @@
-/*
-Copyright(c) 2016-2018 Panos Karabelas
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-copies of the Software, and to permit persons to whom the Software is furnished
-to do so, subject to the following conditions :
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
 
 //= INCLUDES ===========================
 #include "Scene.h"
 #include "GameObject.h"
 #include "Components/Transform.h"
-#include "Components/Camera.h"
-#include "Components/Light.h"
-#include "Components/Script.h"
-#include "Components/LineRenderer.h"
-#include "Components/Skybox.h"
-#include "Components/MeshFilter.h"
-#include "Components/MeshRenderer.h"
+//#include "Components/Camera.h"
+//#include "Components/Light.h"
+//#include "Components/Script.h"
+//#include "Components/LineRenderer.h"
+//#include "Components/Skybox.h"
+//#include "Components/MeshFilter.h"
+//#include "Components/MeshRenderer.h"
 #include "../Core/Timer.h"
 #include "../Core/Context.h"
 #include "../Core/Stopwatch.h"
 #include "../Core/EventSystem.h"
-#include "../Resource/ResourceManager.h"
-#include "../Graphics/Mesh.h"
+//#include "../Resource/ResourceManager.h"
+//#include "../Graphics/Mesh.h"
 #include "../IO/FileStream.h"
 #include "../FileSystem/FileSystem.h"
 #include "../Logging/Log.h"
 #include "../Core/Engine.h"
-#include "Components/AudioListener.h"
+//#include "Components/AudioListener.h"
 //======================================
 
 //= NAMESPACES ================
@@ -61,8 +41,8 @@ namespace TmingEngine
 		m_jobsTotal = 0.0f;
 		m_isLoading = false;
 
-		SUBSCRIBE_TO_EVENT(EVENT_SCENE_RESOLVE, EVENT_HANDLER(Resolve));
-		SUBSCRIBE_TO_EVENT(EVENT_UPDATE, EVENT_HANDLER(Update));
+		//SUBSCRIBE_TO_EVENT(EVENT_SCENE_RESOLVE, EVENT_HANDLER(Resolve));
+		//SUBSCRIBE_TO_EVENT(EVENT_UPDATE, EVENT_HANDLER(Update));
 	}
 
 	Scene::~Scene()
@@ -130,142 +110,142 @@ namespace TmingEngine
 		m_renderables.clear();
 		m_renderables.shrink_to_fit();
 
-		FIRE_EVENT(EVENT_SCENE_CLEARED);
+	//	FIRE_EVENT(EVENT_SCENE_CLEARED);
 	}
 	//=========================================================================================================
 
 	//= I/O ===================================================================================================
 	bool Scene::SaveToFile(const string& filePathIn)
 	{
-		m_progressStatus = "Saving scene...";
-		Stopwatch timer;
-		m_isLoading = true;
+		//m_progressStatus = "Saving scene...";
+		//Stopwatch timer;
+		//m_isLoading = true;
 
-		// Add scene file extension to the filepath if it's missing
-		string filePath = filePathIn;
-		if (FileSystem::GetExtensionFromFilePath(filePath) != SCENE_EXTENSION)
-		{
-			filePath += SCENE_EXTENSION;
-		}
+		//// Add scene file extension to the filepath if it's missing
+		//string filePath = filePathIn;
+		//if (FileSystem::GetExtensionFromFilePath(filePath) != SCENE_EXTENSION)
+		//{
+		//	filePath += SCENE_EXTENSION;
+		//}
 
-		// Save any in-memory changes done to resources while running.
-		m_context->GetSubsystem<ResourceManager>()->SaveResourcesToFiles();
+		//// Save any in-memory changes done to resources while running.
+		//m_context->GetSubsystem<ResourceManager>()->SaveResourcesToFiles();
 
-		// Create a prefab file
-		auto file = make_unique<FileStream>(filePath, FileStreamMode_Write);
-		if (!file->IsOpen())
-			return false;
+		//// Create a prefab file
+		//auto file = make_unique<FileStream>(filePath, FileStreamMode_Write);
+		//if (!file->IsOpen())
+		//	return false;
 
-		// Save currently loaded resource paths
-		vector<string> filePaths;
-		m_context->GetSubsystem<ResourceManager>()->GetResourceFilePaths(filePaths);
-		file->Write(filePaths);
+		//// Save currently loaded resource paths
+		//vector<string> filePaths;
+		//m_context->GetSubsystem<ResourceManager>()->GetResourceFilePaths(filePaths);
+		//file->Write(filePaths);
 
-		//= Save GameObjects ============================
-		// Only save root GameObjects as they will also save their descendants
-		vector<weak_ptr<GameObject>> rootGameObjects = GetRootGameObjects();
+		////= Save GameObjects ============================
+		//// Only save root GameObjects as they will also save their descendants
+		//vector<weak_ptr<GameObject>> rootGameObjects = GetRootGameObjects();
 
-		// 1st - GameObject count
-		int rootGameObjectCount = (int)rootGameObjects.size();
-		file->Write(rootGameObjectCount);
+		//// 1st - GameObject count
+		//int rootGameObjectCount = (int)rootGameObjects.size();
+		//file->Write(rootGameObjectCount);
 
-		// 2nd - GameObject IDs
-		for (const auto& root : rootGameObjects)
-		{
-			file->Write(root.lock()->GetID());
-		}
+		//// 2nd - GameObject IDs
+		//for (const auto& root : rootGameObjects)
+		//{
+		//	file->Write(root.lock()->GetID());
+		//}
 
-		// 3rd - GameObjects
-		for (const auto& root : rootGameObjects)
-		{
-			root.lock()->Serialize(file.get());
-		}
-		//==============================================
+		//// 3rd - GameObjects
+		//for (const auto& root : rootGameObjects)
+		//{
+		//	root.lock()->Serialize(file.get());
+		//}
+		////==============================================
 
-		ClearProgressStatus();
-		LOG_INFO("Scene: Saving took " + to_string((int)timer.GetElapsedTimeMs()) + " ms");
-		FIRE_EVENT(EVENT_SCENE_SAVED);
+		//ClearProgressStatus();
+		//LOG_INFO("Scene: Saving took " + to_string((int)timer.GetElapsedTimeMs()) + " ms");
+		//FIRE_EVENT(EVENT_SCENE_SAVED);
 
 		return true;
 	}
 
 	bool Scene::LoadFromFile(const string& filePath)
 	{
-		if (!FileSystem::FileExists(filePath))
-		{
-			LOG_ERROR(filePath + " was not found.");
-			return false;
-		}
+		//if (!FileSystem::FileExists(filePath))
+		//{
+		//	LOG_ERROR(filePath + " was not found.");
+		//	return false;
+		//}
 
-		Clear();
-		m_progressStatus = "Loading scene...";
-		m_isLoading = true;
+		//Clear();
+		//m_progressStatus = "Loading scene...";
+		//m_isLoading = true;
 
-		// Read all the resource file paths
-		auto file = make_unique<FileStream>(filePath, FileStreamMode_Read);
-		if (!file->IsOpen())
-			return false;
+		//// Read all the resource file paths
+		//auto file = make_unique<FileStream>(filePath, FileStreamMode_Read);
+		//if (!file->IsOpen())
+		//	return false;
 
-		Stopwatch timer;
+		//Stopwatch timer;
 
-		vector<string> resourcePaths;
-		file->Read(&resourcePaths);
+		//vector<string> resourcePaths;
+		//file->Read(&resourcePaths);
 
-		m_jobsTotal = (float)resourcePaths.size();
+		//m_jobsTotal = (float)resourcePaths.size();
 
-		// Load all the resources
-		auto resourceMng = m_context->GetSubsystem<ResourceManager>();
-		for (const auto& resourcePath : resourcePaths)
-		{
-			if (FileSystem::IsEngineMeshFile(resourcePath))
-			{
-				resourceMng->Load<Mesh>(resourcePath);
-			}
+		//// Load all the resources
+		//auto resourceMng = m_context->GetSubsystem<ResourceManager>();
+		//for (const auto& resourcePath : resourcePaths)
+		//{
+		//	if (FileSystem::IsEngineMeshFile(resourcePath))
+		//	{
+		//		resourceMng->Load<Mesh>(resourcePath);
+		//	}
 
-			if (FileSystem::IsEngineModelFile(resourcePath))
-			{
-				resourceMng->Load<Model>(resourcePath);
-			}
+		//	if (FileSystem::IsEngineModelFile(resourcePath))
+		//	{
+		//		resourceMng->Load<Model>(resourcePath);
+		//	}
 
-			if (FileSystem::IsEngineMaterialFile(resourcePath))
-			{
-				resourceMng->Load<Material>(resourcePath);
-			}
+		//	if (FileSystem::IsEngineMaterialFile(resourcePath))
+		//	{
+		//		resourceMng->Load<Material>(resourcePath);
+		//	}
 
-			if (FileSystem::IsEngineTextureFile(resourcePath))
-			{
-				resourceMng->Load<Texture>(resourcePath);
-			}
+		//	if (FileSystem::IsEngineTextureFile(resourcePath))
+		//	{
+		//		resourceMng->Load<Texture>(resourcePath);
+		//	}
 
-			m_jobsDone++;
-		}
+		//	m_jobsDone++;
+		//}
 
-		//= Load GameObjects ============================
-		// 1st - Root GameObject count
-		int rootGameObjectCount = file->ReadInt();
+		////= Load GameObjects ============================
+		//// 1st - Root GameObject count
+		//int rootGameObjectCount = file->ReadInt();
 
-		// 2nd - Root GameObject IDs
-		for (int i = 0; i < rootGameObjectCount; i++)
-		{
-			auto gameObj = GameObject_CreateAdd().lock();
-			gameObj->SetID(file->ReadInt());
-		}
+		//// 2nd - Root GameObject IDs
+		//for (int i = 0; i < rootGameObjectCount; i++)
+		//{
+		//	auto gameObj = GameObject_CreateAdd().lock();
+		//	gameObj->SetID(file->ReadInt());
+		//}
 
-		// 3rd - GameObjects
-		// It's important to loop with rootGameObjectCount
-		// as the vector size will increase as we deserialize
-		// GameObjects. This is because a GameObject will also
-		// deserialize their descendants.
-		for (int i = 0; i < rootGameObjectCount; i++)
-		{
-			m_gameObjects[i]->Deserialize(file.get(), nullptr);
-		}
-		//==============================================
+		//// 3rd - GameObjects
+		//// It's important to loop with rootGameObjectCount
+		//// as the vector size will increase as we deserialize
+		//// GameObjects. This is because a GameObject will also
+		//// deserialize their descendants.
+		//for (int i = 0; i < rootGameObjectCount; i++)
+		//{
+		//	m_gameObjects[i]->Deserialize(file.get(), nullptr);
+		//}
+		////==============================================
 
-		Resolve();
-		ClearProgressStatus();
-		LOG_INFO("Scene: Loading took " + to_string((int)timer.GetElapsedTimeMs()) + " ms");
-		FIRE_EVENT(EVENT_SCENE_LOADED);
+		//Resolve();
+		//ClearProgressStatus();
+		//LOG_INFO("Scene: Loading took " + to_string((int)timer.GetElapsedTimeMs()) + " ms");
+		//FIRE_EVENT(EVENT_SCENE_LOADED);
 
 		return true;
 	}
@@ -304,37 +284,37 @@ namespace TmingEngine
 	// Removes a GameObject and all of it's children
 	void Scene::GameObject_Remove(weak_ptr<GameObject> gameObject)
 	{
-		GameObject* gameObjPtr = gameObject.lock().get();
-		if (!gameObjPtr)
-			return;
+		//GameObject* gameObjPtr = gameObject.lock().get();
+		//if (!gameObjPtr)
+		//	return;
 
-		// remove any descendants
-		vector<Transform*> children = gameObjPtr->GetTransformRef()->GetChildren();
-		for (const auto& child : children)
-		{
-			GameObject_Remove(child->GetGameObject_RefWeak());
-		}
+		//// remove any descendants
+		//vector<Transform*> children = gameObjPtr->GetTransformRef()->GetChildren();
+		//for (const auto& child : children)
+		//{
+		//	GameObject_Remove(child->GetGameObject_RefWeak());
+		//}
 
-		// Keep a reference to it's parent (in case it has one)
-		Transform* parent = gameObjPtr->GetTransformRef()->GetParent();
+		//// Keep a reference to it's parent (in case it has one)
+		//Transform* parent = gameObjPtr->GetTransformRef()->GetParent();
 
-		// Remove this GameObject
-		for (auto it = m_gameObjects.begin(); it < m_gameObjects.end();)
-		{
-			shared_ptr<GameObject> temp = *it;
-			if (temp->GetID() == gameObjPtr->GetID())
-			{
-				it = m_gameObjects.erase(it);
-				break;
-			}
-			++it;
-		}
+		//// Remove this GameObject
+		//for (auto it = m_gameObjects.begin(); it < m_gameObjects.end();)
+		//{
+		//	shared_ptr<GameObject> temp = *it;
+		//	if (temp->GetID() == gameObjPtr->GetID())
+		//	{
+		//		it = m_gameObjects.erase(it);
+		//		break;
+		//	}
+		//	++it;
+		//}
 
-		// If there was a parent, update it
-		if (parent)
-		{
-			parent->ResolveChildrenRecursively();
-		}
+		//// If there was a parent, update it
+		//if (parent)
+		//{
+		//	parent->ResolveChildrenRecursively();
+		//}
 
 		Resolve();
 	}
@@ -342,23 +322,25 @@ namespace TmingEngine
 	vector<weak_ptr<GameObject>> Scene::GetRootGameObjects()
 	{
 		vector<weak_ptr<GameObject>> rootGameObjects;
-		for (const auto& gameObj : m_gameObjects)
+		/*for (const auto& gameObj : m_gameObjects)
 		{
 			if (gameObj->GetTransformRef()->IsRoot())
 			{
 				rootGameObjects.emplace_back(gameObj);
 			}
-		}
+		}*/
 
 		return rootGameObjects;
 	}
 
 	weak_ptr<GameObject> Scene::GetGameObjectRoot(weak_ptr<GameObject> gameObject)
 	{
-		if (gameObject.expired())
-			return weak_ptr<GameObject>();
+		return weak_ptr<GameObject>();
 
-		return gameObject.lock()->GetTransformRef()->GetRoot()->GetGameObject_RefWeak();
+		//if (gameObject.expired())
+		//	return weak_ptr<GameObject>();
+
+		//return gameObject.lock()->GetTransformRef()->GetRoot()->GetGameObject_RefWeak();
 	}
 
 	weak_ptr<GameObject> Scene::GetGameObjectByName(const string& name)
@@ -392,40 +374,40 @@ namespace TmingEngine
 	void Scene::Resolve()
 	{
 		m_renderables.clear();
-		m_renderables.shrink_to_fit();
+		//m_renderables.shrink_to_fit();
 
-		bool hasCamera = false;
-		bool hasSkybox = false;
-		for (const auto& gameObject : m_gameObjects)
-		{
-			hasCamera = false;
-			hasSkybox = false;
+		//bool hasCamera = false;
+		//bool hasSkybox = false;
+		//for (const auto& gameObject : m_gameObjects)
+		//{
+		//	hasCamera = false;
+		//	hasSkybox = false;
 
-			// Find camera
-			if (gameObject->HasComponent<Camera>())
-			{
-				m_mainCamera = gameObject;
-				hasCamera = true;
-			}
+		//	// Find camera
+		//	if (gameObject->HasComponent<Camera>())
+		//	{
+		//		m_mainCamera = gameObject;
+		//		hasCamera = true;
+		//	}
 
-			// Find skybox
-			if (gameObject->HasComponent<Skybox>())
-			{
-				m_skybox = gameObject;
-				hasSkybox = true;
-			}
+		//	// Find skybox
+		//	if (gameObject->HasComponent<Skybox>())
+		//	{
+		//		m_skybox = gameObject;
+		//		hasSkybox = true;
+		//	}
 
-			// Find renderables
-			if ((gameObject->HasComponent<MeshRenderer>() && gameObject->HasComponent<MeshFilter>()) ||
-				hasCamera ||
-				hasSkybox ||
-				gameObject->HasComponent<Light>())
-			{
-				m_renderables.push_back(gameObject);
-			}
-		}
+		//	// Find renderables
+		//	if ((gameObject->HasComponent<MeshRenderer>() && gameObject->HasComponent<MeshFilter>()) ||
+		//		hasCamera ||
+		//		hasSkybox ||
+		//		gameObject->HasComponent<Light>())
+		//	{
+		//		m_renderables.push_back(gameObject);
+		//	}
+		//}
 
-		FIRE_EVENT_DATA(EVENT_SCENE_RESOLVED, m_renderables);
+		//FIRE_EVENT_DATA(EVENT_SCENE_RESOLVED, m_renderables);
 	}
 	//===================================================================================================
 
@@ -447,25 +429,25 @@ namespace TmingEngine
 		shared_ptr<GameObject> skybox = GameObject_CreateAdd().lock();
 		skybox->SetName("Skybox");
 		skybox->SetHierarchyVisibility(false);
-		skybox->AddComponent<LineRenderer>();
-		skybox->AddComponent<Skybox>();
-		skybox->GetTransformRef()->SetParent(m_mainCamera.lock()->GetTransformRef());
+		//skybox->AddComponent<LineRenderer>();
+		//skybox->AddComponent<Skybox>();
+		//skybox->GetTransformRef()->SetParent(m_mainCamera.lock()->GetTransformRef());
 
 		return skybox;
 	}
 
 	weak_ptr<GameObject> Scene::CreateCamera()
 	{
-		auto resourceMng = m_context->GetSubsystem<ResourceManager>();
-		string scriptDirectory = resourceMng->GetStandardResourceDirectory(Resource_Script);
+		/*auto resourceMng = m_context->GetSubsystem<ResourceManager>();
+		string scriptDirectory = resourceMng->GetStandardResourceDirectory(Resource_Script);*/
 
 		shared_ptr<GameObject> camera = GameObject_CreateAdd().lock();
 		camera->SetName("Camera");
-		camera->AddComponent<Camera>();
+		/*camera->AddComponent<Camera>();
 		camera->AddComponent<AudioListener>();
 		camera->AddComponent<Script>().lock()->SetScript(scriptDirectory + "MouseLook.as");
 		camera->AddComponent<Script>().lock()->SetScript(scriptDirectory + "FirstPersonController.as");
-		camera->GetTransformRef()->SetPositionLocal(Vector3(0.0f, 1.0f, -5.0f));
+		camera->GetTransformRef()->SetPositionLocal(Vector3(0.0f, 1.0f, -5.0f));*/
 
 		return camera;
 	}
@@ -473,13 +455,13 @@ namespace TmingEngine
 	weak_ptr<GameObject> Scene::CreateDirectionalLight()
 	{
 		shared_ptr<GameObject> light = GameObject_CreateAdd().lock();
-		light->SetName("DirectionalLight");
+		/*light->SetName("DirectionalLight");
 		light->GetTransformRef()->SetRotationLocal(Quaternion::FromEulerAngles(30.0f, 0.0, 0.0f));
 		light->GetTransformRef()->SetPosition(Vector3(0.0f, 10.0f, 0.0f));
 
 		Light* lightComp = light->AddComponent<Light>().lock().get();
 		lightComp->SetLightType(LightType_Directional);
-		lightComp->SetIntensity(2.0f);
+		lightComp->SetIntensity(2.0f);*/
 
 		return light;
 	}
