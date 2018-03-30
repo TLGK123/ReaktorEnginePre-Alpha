@@ -1,18 +1,18 @@
 
 //= INCLUDES ===========================
 #include "IComponent.h"
-#include "Skybox.h"
-#include "Script.h"
-#include "RigidBody.h"
-#include "MeshRenderer.h"
-#include "MeshFilter.h"
-#include "LineRenderer.h"
-#include "Constraint.h"
-#include "Collider.h"
-#include "Camera.h"
-#include "AudioSource.h"
-#include "AudioListener.h"
-#include "Light.h"
+//#include "Skybox.h"
+//#include "Script.h"
+//#include "RigidBody.h"
+//#include "MeshRenderer.h"
+//#include "MeshFilter.h"
+//#include "LineRenderer.h"
+//#include "Constraint.h"
+//#include "Collider.h"
+//#include "Camera.h"
+//#include "AudioSource.h"
+//#include "AudioListener.h"
+//#include "Light.h"
 #include "Transform.h"
 #include "../GameObject.h"
 #include "../../Core/Context.h"
@@ -95,17 +95,17 @@ namespace TmingEngine
 
 #define INSTANTIATE(T) template ENGINE_CLASS ComponentType IComponent::ToComponentType<T>()
 	// Explicit template instantiation
-	INSTANTIATE(AudioListener);
-	INSTANTIATE(AudioSource);
-	INSTANTIATE(Camera);
-	INSTANTIATE(Collider);
-	INSTANTIATE(Constraint);
-	INSTANTIATE(Light);
-	INSTANTIATE(LineRenderer);
-	INSTANTIATE(MeshFilter);
-	INSTANTIATE(MeshRenderer);
-	INSTANTIATE(RigidBody);
-	INSTANTIATE(Script);
-	INSTANTIATE(Skybox);
+	//INSTANTIATE(AudioListener);
+	//INSTANTIATE(AudioSource);
+	//INSTANTIATE(Camera);
+	//INSTANTIATE(Collider);
+	//INSTANTIATE(Constraint);
+	//INSTANTIATE(Light);
+	//INSTANTIATE(LineRenderer);
+	//INSTANTIATE(MeshFilter);
+	//INSTANTIATE(MeshRenderer);
+	//INSTANTIATE(RigidBody);
+	//INSTANTIATE(Script);
+	//INSTANTIATE(Skybox);
 	INSTANTIATE(Transform);
 }
