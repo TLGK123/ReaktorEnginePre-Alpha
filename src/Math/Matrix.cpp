@@ -7,7 +7,7 @@
 using namespace std;
 //==================
 
-namespace TmingEngine
+namespace TmingEngine::Math
 {
 	const Matrix Matrix::Identity
 	(

@@ -6,7 +6,7 @@
 #include "Vector3.h"
 //==================
 
-namespace TmingEngine
+namespace TmingEngine::Math
 {
 	class ENGINE_CLASS Quaternion
 	{

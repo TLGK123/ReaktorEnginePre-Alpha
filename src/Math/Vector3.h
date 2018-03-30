@@ -6,7 +6,7 @@
 #include "MathHelper.h"
 //=============================
 
-namespace TmingEngine
+namespace TmingEngine::Math
 {
 	class ENGINE_CLASS Vector3
 	{

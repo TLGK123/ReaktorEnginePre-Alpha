@@ -4,7 +4,7 @@
 #include <string>
 //=============================
 
-namespace TmingEngine
+namespace TmingEngine::Math
 {
 	class ENGINE_CLASS Vector2
 	{

@@ -16,7 +16,7 @@ using namespace std;
 // Bank		-> Roll		-> Z-axis													   //
 //=====================================================================================//
 
-namespace TmingEngine
+namespace TmingEngine::Math
 {
 	const Quaternion Quaternion::Identity(0.0f, 0.0f, 0.0f, 1.0f);
 
