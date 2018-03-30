@@ -10,7 +10,10 @@
 namespace TmingEngine
 {
 	class GameObject;
-	struct VertexPosTexTBN;
+	struct VertexPosTexTBN
+	{
+
+	};
 	namespace Math
 	{
 		class Vector2;
