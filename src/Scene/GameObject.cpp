@@ -125,20 +125,20 @@ namespace TmingEngine
 	void GameObject::Serialize(FileStream* stream)
 	{
 		//= BASIC DATA ==========================
-		stream->Write(m_isPrefab);
-		stream->Write(m_isActive);
-		stream->Write(m_hierarchyVisibility);
-		stream->Write(m_ID);
+		//stream->Write(m_isPrefab);
+		//stream->Write(m_isActive);
+		//stream->Write(m_hierarchyVisibility);
+		//stream->Write(m_ID);
 		stream->Write(m_name);
 		//=======================================
 
 		//= COMPONENTS ================================
-		stream->Write((int)m_components.size());
-		for (const auto& component : m_components)
-		{
-			stream->Write((unsigned int)component.second->GetType());
-			stream->Write(component.second->GetID());
-		}
+		//stream->Write((int)m_components.size());
+		//for (const auto& component : m_components)
+		//{
+		//	stream->Write((unsigned int)component.second->GetType());
+		//	stream->Write(component.second->GetID());
+		//}
 
 		for (const auto& component : m_components)
 		{
@@ -146,41 +146,41 @@ namespace TmingEngine
 		}
 		//=============================================
 
-		//= CHILDREN ==================================
-		vector<Transform*> children = GetTransformRef()->GetChildren();
+		////= CHILDREN ==================================
+		//vector<Transform*> children = GetTransformRef()->GetChildren();
 
-		// 1st - children count
-		stream->Write((int)children.size());
+		//// 1st - children count
+		//stream->Write((int)children.size());
 
-		// 2nd - children IDs
-		for (const auto& child : children)
-		{
-			stream->Write(child->GetID());
-		}
+		//// 2nd - children IDs
+		//for (const auto& child : children)
+		//{
+		//	stream->Write(child->GetID());
+		//}
 
-		// 3rd - children
-		for (const auto& child : children)
-		{
-			if (child->GetGameObject_Ref())
-			{
-				child->GetGameObject_Ref()->Serialize(stream);
-			}
-			else
-			{
-				LOG_ERROR("Aborting GameObject serialization, child GameObject is nullptr.");
-				break;
-			}
-		}
+		//// 3rd - children
+		//for (const auto& child : children)
+		//{
+		//	if (child->GetGameObject_Ref())
+		//	{
+		//		child->GetGameObject_Ref()->Serialize(stream);
+		//	}
+		//	else
+		//	{
+		//		LOG_ERROR("Aborting GameObject serialization, child GameObject is nullptr.");
+		//		break;
+		//	}
+		//}
 		//=============================================
 	}
 
 	void GameObject::Deserialize(FileStream* stream, Transform* parent)
 	{
 		//= BASIC DATA =====================
-		stream->Read(&m_isPrefab);
+		/*stream->Read(&m_isPrefab);
 		stream->Read(&m_isActive);
 		stream->Read(&m_hierarchyVisibility);
-		stream->Read(&m_ID);
+		stream->Read(&m_ID);*/
 		stream->Read(&m_name);
 		//==================================
 
@@ -191,8 +191,8 @@ namespace TmingEngine
 			unsigned int type = ComponentType_Unknown;
 			unsigned int id = 0;
 
-			stream->Read(&type); // load component's type
-			stream->Read(&id); // load component's id
+			//stream->Read(&type); // load component's type
+			//stream->Read(&id); // load component's id
 
 			auto component = AddComponent((ComponentType)type);
 			component.lock()->SetID(id);
@@ -209,7 +209,7 @@ namespace TmingEngine
 		// Set the transform's parent
 		if (m_transform)
 		{
-			m_transform->SetParent(parent);
+	//		m_transform->SetParent(parent);
 		}
 
 		//= CHILDREN ===================================
@@ -233,13 +233,13 @@ namespace TmingEngine
 		}
 		//=============================================
 
-		if (m_transform)
-		{
-			m_transform->ResolveChildrenRecursively();
-		}
+		//if (m_transform)
+		//{
+		//	m_transform->ResolveChildrenRecursively();
+		//}
 
-		// Make the scene resolve
-		FIRE_EVENT(EVENT_SCENE_RESOLVE);
+		//// Make the scene resolve
+		//FIRE_EVENT(EVENT_SCENE_RESOLVE);
 	}
 
 	weak_ptr<IComponent> GameObject::AddComponent(ComponentType type)
@@ -267,7 +267,7 @@ namespace TmingEngine
 		}
 
 		// Make the scene resolve
-		FIRE_EVENT(EVENT_SCENE_RESOLVE);
+	//	FIRE_EVENT(EVENT_SCENE_RESOLVE);
 
 		return component;
 	}
@@ -290,6 +290,6 @@ namespace TmingEngine
 		}
 
 		// Make the scene resolve
-		FIRE_EVENT(EVENT_SCENE_RESOLVE);
+//		FIRE_EVENT(EVENT_SCENE_RESOLVE);
 	}
 }
