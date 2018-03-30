@@ -1,3 +1,5 @@
+
+
 #pragma once
 
 //= INCLUDES =====
@@ -9,9 +11,7 @@ namespace TmingEngine
 {
 	class GameObject;
 	struct VertexPosTexTBN
-	{
-
-	};
+	{};
 	namespace Math
 	{
 		class Vector2;
