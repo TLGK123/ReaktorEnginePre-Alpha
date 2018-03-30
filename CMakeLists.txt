@@ -17,6 +17,7 @@ aux_source_directory(src/Threading DIR_Threading)
 aux_source_directory(src/Scene/Components DIR_Components)
 aux_source_directory(src/IO DIR_IO)
 aux_source_directory(src/Graphics DIR_Graphics)
+aux_source_directory(src/Resource DIR_Resource)
 
 #aux_source_directory(src/Math DIR_SRCS5)
 #add_subdirectory(src/Core)
@@ -70,10 +71,11 @@ source_group("Threading" FILES ${DIR_Threading})
 source_group("Scene\\Components" FILES ${DIR_Components})
 source_group("IO" FILES ${DIR_IO})
 source_group("Graphics" FILES ${DIR_Graphics})
+source_group("Resource" FILES ${DIR_Resource})
 
 add_executable(Editor ${DIR_Main} ${DIR_Imgui})
 add_library(TmingEngine STATIC
- ${DIR_FileSystem} ${DIR_OpenGL} ${DIR_Log} ${DIR_Scene} 
+ ${DIR_FileSystem} ${DIR_OpenGL} ${DIR_Log} ${DIR_Scene} ${DIR_Resource}
  ${DIR_Threading} ${DIR_Components} ${DIR_IO} ${DIR_Graphics}
  ${DIR_Core} ${DIR_Plantform} ${DIR_Math})
 
