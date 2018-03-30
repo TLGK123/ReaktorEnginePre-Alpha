@@ -17,6 +17,7 @@
 
 #include "../Editor.h"
 #include "../Core/Engine.h"
+#include "../Core/GUIDGenerator.h"
 
 #ifndef _DEBUG
 #pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" ) // 设置入口地址
@@ -62,6 +63,8 @@ int main()
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 #endif
+
+	printf("GUID:%d", GENERATE_GUID);
 
 	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "TmingEngine", NULL, NULL);
 	if (window == NULL)
@@ -162,7 +165,6 @@ int main()
 		1.0f, -1.0f,  1.0f, 0.0f,
 		1.0f,  1.0f,  1.0f, 1.0f
 	};
-
 
 	// cube VAO
 	unsigned int cubeVAO, cubeVBO;
@@ -364,6 +366,7 @@ int main()
 	ImGui::DestroyContext();
 
 	glfwTerminate();
+
 	return 0;
 }
 
