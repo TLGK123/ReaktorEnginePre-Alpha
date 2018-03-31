@@ -60,7 +60,7 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 #link_directories("${PROJECT_SOURCE_DIR}/lib")
 #IDE中分文件夹
 source_group("FileSystem" FILES ${DIR_FileSystem})
-source_group("Imgui" FILES ${DIR_Imgui})
+source_group("ImGui" FILES ${DIR_Imgui})
 source_group("Core" FILES ${DIR_Core})
 source_group("Plantform" FILES ${DIR_Plantform})
 source_group("OpenGL" FILES ${DIR_OpenGL})
