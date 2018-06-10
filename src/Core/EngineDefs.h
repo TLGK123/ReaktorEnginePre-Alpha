@@ -1,12 +1,14 @@
 #pragma once
 
-#define COMPILING_LIB 1
+//#define COMPILING_LIB 1
 
-#ifdef COMPILING_LIB
+//#ifdef COMPILING_LIB
+//#define ENGINE_CLASS __declspec(dllexport)
+//#else
+//#define ENGINE_CLASS __declspec(dllimport)
+//#endif
+
 #define ENGINE_CLASS __declspec(dllexport)
-#else
-#define ENGINE_CLASS __declspec(dllimport)
-#endif
 
 namespace TmingEngine
 {
