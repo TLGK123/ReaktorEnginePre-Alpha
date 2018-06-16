@@ -2,7 +2,7 @@
 file(GLOB headers "*.h")
 file(GLOB sources "*.cpp")
 
-if (IDE_Show_HeadFiles)
+if (true)
     list(APPEND sources ${headers})
 endif()
 
