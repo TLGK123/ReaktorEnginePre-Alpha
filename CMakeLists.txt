@@ -4,22 +4,11 @@ project (TmingEngine)               #创建引擎核心逻辑库
 
 set(CMAKE_CXX_STANDARD 11)          #使用c++ 11
 aux_source_directory(src DIR_Main)  # 查找src目录下的所有源文件 并将名称保存到 DIR_Main 变量
-aux_source_directory(src/FileSystem DIR_FileSystem)
-aux_source_directory(src/Imgui DIR_Imgui)
-aux_source_directory(src/Core DIR_Core)
-aux_source_directory(src/OpenGL DIR_OpenGL)
-aux_source_directory(src/Plantform DIR_Plantform)
-aux_source_directory(src/Math DIR_Math)
-aux_source_directory(src/Logging DIR_Log)
-aux_source_directory(src/Scene DIR_Scene)
-aux_source_directory(src/Threading DIR_Threading)
-aux_source_directory(src/Scene/Components DIR_Components)
-aux_source_directory(src/IO DIR_IO)
-aux_source_directory(src/Graphics DIR_Graphics)
-aux_source_directory(src/Resource DIR_Resource)
-aux_source_directory(src/UI DIR_UI)
+
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
+
+
 
 #IDE中分文件夹
 source_group("FileSystem" FILES ${DIR_FileSystem})
