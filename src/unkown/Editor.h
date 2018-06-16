@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "Core\Context.h"
+#include "../Core/Context.h"
 #include "Widget.h"
 
 struct SDL_Window;
@@ -23,7 +23,7 @@ union SDL_Event;
 		void ApplyStyle();
 
 		std::vector<std::unique_ptr<Widget>> m_widgets;
-		TmingEngine::Context* m_context;
+	//	TmingEngine::Context* m_context;
 
 	};
 
