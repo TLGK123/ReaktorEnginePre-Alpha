@@ -1,5 +1,10 @@
 #include<iostream>
+
+#if win32
 #include<direct.h>
+#else
+#include <unistd.h>
+#endif
 //unistd.h（windows下为direct.h）
 
 #ifdef _DEBUG  
@@ -19,12 +24,13 @@ private:
 
 std::string FileSystem::getPath(std::string assetpath)
 {
-	char buffer[MAX_PATH];
-	_getcwd(buffer, MAX_PATH);
-	std::string path = buffer;
-	path += "\\..\\" + assetpath;
+//	char buffer[MAX_PATH];
+//	_getcwd(buffer, MAX_PATH);
+//	std::string path = buffer;
+//	path += "\\..\\" + assetpath;
 
-	std::cout <<"AssetPath: "+ path << std::endl;
-	return path;
+//	std::cout <<"AssetPath: "+ path << std::endl;
+//	return path;
+    return "";
 }
 
