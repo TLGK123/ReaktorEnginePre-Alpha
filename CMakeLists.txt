@@ -7,10 +7,6 @@ aux_source_directory(src DIR_Main)  # 查找src目录下的所有源文件 并�
 
 add_subdirectory(src)               #添加一个子目录
 
-file(GLOB headers "*.h")
-file(GLOB sources "*.cpp")
-list(APPEND headers ${headers})
-list(APPEND sources ${sources})
 
 add_executable(Editor ${sources})       #编辑器 添加源代码
 
