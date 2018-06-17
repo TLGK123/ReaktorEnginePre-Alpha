@@ -24,10 +24,8 @@ using namespace std;
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);  //函数声明，当窗口大小调整时触发的函数
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    glViewport(0, 0, width, height);
-}
+void processInput(GLFWwindow *window);                                      //处理按键输入的函数
+
 
 int main ()
 {
@@ -50,7 +48,7 @@ int main ()
         glfwTerminate();
         return -1;
     }
-    glfwMakeContextCurrent(window);                                 //通知GLFW将我们窗口的上下文设置为当前线程的主上下文了
+    glfwMakeContextCurrent(window);                                     //通知GLFW将我们窗口的上下文设置为当前线程的主上下文了
     
     
     //---------------GLAD是用来管理OpenGL的函数指针的---------------
@@ -60,16 +58,33 @@ int main ()
         return -1;
     }
     
-    glViewport(0, 0, 800, 600);                                     // 前两个参数控制窗口左下角的位置。第三个和第四个参数控制渲染窗口的宽度和高度（像素）
+    glViewport(0, 0, 800, 600);                                         // 前两个参数控制窗口左下角的位置。第三个和第四个参数控制渲染窗口的宽度和高度（像素）
     
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  //注册一个窗口变化的事件 ，也就会每当尺寸变化就调用的函数
     
     
     while(!glfwWindowShouldClose(window))                               //开启一个渲染循环
     {
+        processInput(window);                                           //处理每帧的键盘输入
+       
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    
+    glfwTerminate();                                                    //结束后释放资源
     return 0;
+}
+
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+
+void processInput(GLFWwindow *window)
+{
+    if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
 }
