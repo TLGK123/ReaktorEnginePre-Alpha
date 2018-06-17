@@ -24,6 +24,10 @@ using namespace std;
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);  //函数声明，当窗口大小调整时触发的函数
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
 
 int main ()
 {
@@ -58,6 +62,14 @@ int main ()
     
     glViewport(0, 0, 800, 600);                                     // 前两个参数控制窗口左下角的位置。第三个和第四个参数控制渲染窗口的宽度和高度（像素）
     
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  //注册一个窗口变化的事件 ，也就会每当尺寸变化就调用的函数
+    
+    
+    while(!glfwWindowShouldClose(window))                               //开启一个渲染循环
+    {
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
     
     return 0;
 }
