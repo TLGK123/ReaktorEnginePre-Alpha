@@ -26,6 +26,9 @@ using namespace std;
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);  //函数声明，当窗口大小调整时触发的函数
 void processInput(GLFWwindow *window);                                      //处理按键输入的函数
 
+//#if !Debug
+//#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" ) // 去掉黑色控制台窗口
+//#endif //  !Debug
 
 int main ()
 {
