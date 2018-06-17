@@ -21,6 +21,10 @@
 #include "Main.h"
 #include <iostream>
 using namespace std;
+
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);  //函数声明，当窗口大小调整时触发的函数
+
 int main ()
 {
     cout<<"Hello World"<<endl;
@@ -51,6 +55,8 @@ int main ()
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+    
+    glViewport(0, 0, 800, 600);                                     // 前两个参数控制窗口左下角的位置。第三个和第四个参数控制渲染窗口的宽度和高度（像素）
     
     
     return 0;
