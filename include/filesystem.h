@@ -1,6 +1,6 @@
 #include<iostream>
 
-#if win32
+#if !__APPLE__
 #include<direct.h>
 #else
 #include <unistd.h>
