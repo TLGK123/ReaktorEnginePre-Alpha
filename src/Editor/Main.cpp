@@ -49,7 +49,7 @@ float vertrices[] ={
     -0.5f,-0.5,0.0f,
     0.5f,0.5f,0.0f,
     0.0f,0.5f,0.0f
-};
+};                                                                  //标准化的坐标，0，0 在正中心 其他位置都是百分比
 
 //---------------------Edn Data---------
 int main ()
@@ -65,6 +65,16 @@ int main ()
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // uncomment this statement to fix compilation on OS X
 #endif
+    
+    //--------- OpenGL --对象------
+    unsigned  int VBO;
+    glGenBuffers(1,&VBO);               //设置缓冲对象的ID
+    glBindBuffer(GL_ARRAY_BUFFER,VBO);  //把新创建的vbo 缓存对象 绑定到 GL_ARRAY_BUFFER上
+    glBufferData(GL_ARRAY_BUFFER,sizeof(vertrices),vertrices,GL_STATIC_DRAW); //把顶点的数据信息复制到 VBO的内存空间中去
+    
+    ///其实这个就是申请一片内存空间，然后向内存空间里面写数据
+    //-----------
+    
     
     GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
     if (window == NULL)
