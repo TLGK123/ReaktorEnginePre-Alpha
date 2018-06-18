@@ -44,13 +44,13 @@ const char *vertexShaderSource = "#version 330 core\n"
 "void main()\n"
 "{\n"
 "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
+"}";
 const char *fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
 "void main()\n"
 "{\n"
 "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-"}\n\0";
+"}";
 
 #if !Debug
 #pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" ) // 去掉黑色控制台窗口
@@ -95,12 +95,12 @@ int main ()
     //-----------开始加入GLSL---------
     
     unsigned int vertexShader;
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);    //创建一个 GL_VERTEX_SHADER 类型的shader
+    vertexShader = glCreateShader(GL_VERTEX_SHADER);           //创建一个 GL_VERTEX_SHADER 类型的shader
     glShaderSource(vertexShader,1,&vertexShaderSource,NULL);   // 1是源代码的数量
-    glCompileShader(vertexShader);
+    glCompileShader(vertexShader);                             //编译顶点shader
     int success;
     char info[512];
-    glGetShaderiv(vertexShader,GL_COMPILE_STATUS,&success);
+    glGetShaderiv(vertexShader,GL_COMPILE_STATUS,&success);    //获取编译的信息，比如是否出差，错在哪
     
     if(!success)
     {
@@ -110,31 +110,26 @@ int main ()
     }
     
     unsigned int fragmentShader;
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);        //创建一个片段shader
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
     glCompileShader(fragmentShader);
     
     unsigned int shaderProgram;
-    shaderProgram = glCreateProgram();
+    shaderProgram = glCreateProgram();                         //创建一个渲染的着色器程序(Shader Program)
     
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
+    glAttachShader(shaderProgram, vertexShader);               //附加顶点shader
+    glAttachShader(shaderProgram, fragmentShader);             //附加片段shader
+    glLinkProgram(shaderProgram);                              //链接上shader
     
     // check for linking errors
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);   //检测shader链接出错信息
     if (!success) {
         glGetProgramInfoLog(shaderProgram, 512, NULL, info);
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << info << std::endl;
     }
     
-    glDeleteShader(vertexShader);
+    glDeleteShader(vertexShader);                               //删除使用过的数据
     glDeleteShader(fragmentShader);
-    
-    
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    
     
     //------------GLSL---------end--------
     
@@ -153,10 +148,9 @@ int main ()
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1,&VBO);               //设置缓冲对象的ID
     
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    
+    // 1. 绑定VAO
+    glBindVertexArray(VAO);             //要想使用VAO，要做的只是使用glBindVertexArray绑定VAO
+    // 2. 把顶点数组复制到缓冲中供OpenGL使用
     glBindBuffer(GL_ARRAY_BUFFER,VBO);  //把新创建的vbo 缓存对象 绑定到 GL_ARRAY_BUFFER上
     glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW); //把顶点的数据信息复制到 VBO的内存空间中去
     
@@ -166,10 +160,18 @@ int main ()
      GL_STREAM_DRAW ：数据每次绘制时都会改变。  这样就能确保显卡把数据放在能够高速写入的内存部分。
      */
     ///其实这个就是申请一片内存空间，然后向内存空间里面写数据
-    //-----------
-    
+    //------------------------
+    // 3. 设置顶点属性指针
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    /*
+     第一个参数指定我们要配置的顶点属性。还记得我们在顶点着色器中使用layout(location = 0)定义了position顶点属性的位置值(Location)吗？它可以把顶点属性的位置值设置为0。因为我们希望把数据传递到这一个顶点属性中，所以这里我们传入0。
+     第二个参数指定顶点属性的大小。顶点属性是一个vec3，它由3个值组成，所以大小是3。
+     第三个参数指定数据的类型，这里是GL_FLOAT(GLSL中vec*都是由浮点数值组成的)。
+     下个参数定义我们是否希望数据被标准化(Normalize)。如果我们设置为GL_TRUE，所有数据都会被映射到0（对于有符号型signed数据是-1）到1之间。我们把它设置为GL_FALSE。
+     第五个参数叫做步长(Stride)，它告诉我们在连续的顶点属性组之间的间隔。由于下个组位置数据在3个float之后，我们把步长设置为3 * sizeof(float)。要注意的是由于我们知道这个数组是紧密排列的（在两个顶点属性之间没有空隙）我们也可以设置为0来让OpenGL决定具体步长是多少（只有当数值是紧密排列时才可用）。一旦我们有更多的顶点属性，我们就必须更小心地定义每个顶点属性之间的间隔，我们在后面会看到更多的例子（译注: 这个参数的意思简单说就是从这个属性第二次出现的地方到整个数组0位置之间有多少字节）。
+     最后一个参数的类型是void*，所以需要我们进行这个奇怪的强制类型转换。它表示位置数据在缓冲中起始位置的偏移量(Offset)。由于位置数据在数组的开头，所以这里是0。我们会在后面详细解释这个参数。
+     */
+    glEnableVertexAttribArray(0);                                       //以顶点属性位置值作为参数，启用顶点属性
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     
@@ -180,7 +182,8 @@ int main ()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
-        glUseProgram(shaderProgram);
+        // 4. 绘制物体
+        glUseProgram(shaderProgram);                                   // 当我们渲染一个物体时要使用着色器程序
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         
