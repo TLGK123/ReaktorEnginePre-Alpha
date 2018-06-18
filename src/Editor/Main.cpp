@@ -17,7 +17,6 @@
  // 现在函数可以被正常调用了
  GLuint buffer;
  glGenBuffers(1, &buffer);
- 
  */
 
 #include <GLFW/glfw3.h>
