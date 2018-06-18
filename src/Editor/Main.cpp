@@ -73,7 +73,7 @@ int main ()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(window);                                        //双缓冲交换 --更新画面
         glfwPollEvents();
     }
     glfwTerminate();                                                    //结束后释放资源
@@ -88,6 +88,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void processInput(GLFWwindow *window)
 {
-    if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)                    //添加按键判断
         glfwSetWindowShouldClose(window, true);
 }
