@@ -44,6 +44,14 @@ void processInput(GLFWwindow *window);                                      //�
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" ) // 去掉黑色控制台窗口
 //#endif //  !Debug
 
+//---------------------Data-------------
+float vertrices[] ={
+    -0.5f,-0.5,0.0f,
+    0.5f,0.5f,0.0f,
+    0.0f,0.5f,0.0f
+}
+
+//---------------------Edn Data---------
 int main ()
 {
     cout<<"Hello World"<<endl;
