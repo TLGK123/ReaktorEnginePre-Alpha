@@ -72,8 +72,41 @@ int main ()
     glBindBuffer(GL_ARRAY_BUFFER,VBO);  //把新创建的vbo 缓存对象 绑定到 GL_ARRAY_BUFFER上
     glBufferData(GL_ARRAY_BUFFER,sizeof(vertrices),vertrices,GL_STATIC_DRAW); //把顶点的数据信息复制到 VBO的内存空间中去
     
+    /*
+     GL_STATIC_DRAW ：数据不会或几乎不会改变。  位置数据不会改变，每次渲染调用时都保持原样，所以它的使用类型最好是GL_STATIC_DRAW
+     GL_DYNAMIC_DRAW：数据会被改变很多。       一个缓冲中的数据将频繁被改变
+     GL_STREAM_DRAW ：数据每次绘制时都会改变。  这样就能确保显卡把数据放在能够高速写入的内存部分。
+     */
     ///其实这个就是申请一片内存空间，然后向内存空间里面写数据
     //-----------
+    
+    
+    //-----------开始加入GLSL---------
+    
+    char *vertexShaderSource =
+    "#version 330 core\n"
+    "layout (location = 0) in vec3 aPos;\n"
+    "void main()\n"
+    "{\n"
+    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "}\0";
+    unsigned int vertexShader;
+    vertexShader = glCreateShader(GL_VERTEX_SHADER);    //创建一个 GL_VERTEX_SHADER 类型的shader
+    glShaderSource(vertexShader,1,&vertexShaderSource,NULL);   // 1是源代码的数量
+    glCompileShader(vertexShader);
+    int success;
+    char info[512];
+    glGetShaderiv(vertexShader,GL_COMPILE_STATUS,&success);
+    
+    if(!success)
+    {
+        glGetShaderInfoLog(vertexShader,512,NULL,info);
+        std::cout<<"Shader 编译出差："<<info<<endl;
+        
+    }
+    //------------GLSL---------end--------
+    
+    
     
     
     GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
