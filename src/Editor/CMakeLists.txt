@@ -1,11 +1,13 @@
 file(GLOB headers "*.h")
 file(GLOB sources "*.cpp" "*.c")
 include_directories("../../include")    #添加头文件目录
+aux_source_directory(opengl DIR_Main)
+
 if (SYNERGY_ADD_HEADERS)
-    list(APPEND sources ${headers})
+    list(APPEND sources ${headers} ${DIR_Main})
 endif()
 
-add_executable(Editor ${sources})
+add_executable(Editor ${sources}) 
 
 set(libpath ${PROJECT_SOURCE_DIR}/lib)
 
@@ -15,7 +17,7 @@ else()
 find_library (GLFW glfw3.a ${libpath})   
 endif()
 
-message(${GLFW})
+message(${DIR_Main})
 target_link_libraries(Editor ${GLFW})
 
 if(APPLE)
