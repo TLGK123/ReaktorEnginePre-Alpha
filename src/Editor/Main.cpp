@@ -220,14 +220,13 @@ int main ()
         
         //开始旋转
         glm::mat4 transform;
-        transform = glm::translate(transform, glm::vec3(0.5f,-0.5f,0.0f));
-        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f,0.0f,1.0f));
+        transform = glm::translate(transform, glm::vec3(0.5f,-0.5f,0.0f));                  //先位移
+        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f,0.0f,1.0f));//随着时间推移旋转
+        ourShader.use();
+        unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");  //获取shader变量地址
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));     //修改shader中的变量值
         
         // render container
-        ourShader.use();
-        unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
-        
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         
