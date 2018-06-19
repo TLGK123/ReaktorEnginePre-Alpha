@@ -82,7 +82,7 @@ int main ()
     //-----------开始加入GLSL---------
     // build and compile our shader zprogram
     // ------------------------------------
-    Shader ourShader("4.2.texture.vs", "4.2.texture.fs");
+    Shader ourShader("5.1.transform.vs", "5.1.transform.fs");
     //------------GLSL---------end--------
     
     //---------------------Data-------------
@@ -195,12 +195,11 @@ int main ()
     }
     stbi_image_free(data);
     
-    // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
-    // -------------------------------------------------------------------------------------------
-    ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
+    ourShader.use();
     // either set it manually like so:
     glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
     // or set it via the texture class
+    ourShader.setInt("texture1", 0);
     ourShader.setInt("texture2", 1);
     
     
@@ -218,8 +217,16 @@ int main ()
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
         
+        //开始旋转
+        glm::mat4 transform;
+        transform = glm::translate(transform, glm::vec3(0.5f,-0.5f,0.0f));
+        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f,0.0f,1.0f));
+        
         // render container
         ourShader.use();
+        unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+        
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         
@@ -244,4 +251,10 @@ void processInput(GLFWwindow *window)
 {
     if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)                    //添加按键判断
         glfwSetWindowShouldClose(window, true);
+}
+
+void testMath()
+{
+    glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+    
 }
