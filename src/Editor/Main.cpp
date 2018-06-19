@@ -225,6 +225,7 @@ int main ()
         ourShader.use();
         unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");  //获取shader变量地址
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));     //修改shader中的变量值
+                         //需要被修改的矩阵 矩阵数量 是否交换行列 改变方式，用适当的矩阵数据表示
         
         // render container
         glBindVertexArray(VAO);
