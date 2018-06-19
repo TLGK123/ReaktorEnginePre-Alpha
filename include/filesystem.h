@@ -3,6 +3,7 @@
 #if !__APPLE__
 #include<direct.h>
 #else
+#define MAX_PATH _PC_PATH_MAX
 #include <unistd.h>
 #endif
 //unistd.h（windows下为direct.h）
@@ -24,13 +25,13 @@ private:
 
 std::string FileSystem::getPath(std::string assetpath)
 {
-//	char buffer[MAX_PATH];
-//	_getcwd(buffer, MAX_PATH);
-//	std::string path = buffer;
-//	path += "\\..\\" + assetpath;
-
-//	std::cout <<"AssetPath: "+ path << std::endl;
-//	return path;
-    return "";
+    char buffer[MAX_PATH];
+   // getcwd(buffer, MAX_PATH);
+    std::string path = buffer;
+    path = "/Users/blue/Desktop/Gitee/TmingEngine/" + assetpath;
+    ;
+    std::cout <<"AssetPath: "+ path << std::endl;
+    return path;
+       
 }
 
