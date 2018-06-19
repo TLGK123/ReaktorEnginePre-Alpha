@@ -33,9 +33,9 @@ public:
 		{
 			// open files
 			std::string vp = vertexPath;
-			vp = "\shader\\" + vp;
+			vp = "shader/" + vp;
 			std::string fp = fragmentPath;
-			fp = "\shader\\" + fp;
+			fp = "shader/" + fp;
 			vShaderFile.open(FileSystem::getPath(vp));
 			fShaderFile.open(FileSystem::getPath(fp));
 
