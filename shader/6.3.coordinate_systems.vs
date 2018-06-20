@@ -10,6 +10,6 @@ uniform mat4 projection;
 
 void main()
 {
-    gl_Position = projection * view * model * vec4(aPos, 1.0f);
+    gl_Position = projection * view * model * vec4(aPos, 1.0f);   //模型--》世界--》相机--》投影--》屏幕
     TexCoord = vec2(aTexCoord.x, 1.0 - aTexCoord.y);
 }
