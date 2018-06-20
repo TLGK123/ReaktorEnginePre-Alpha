@@ -60,7 +60,7 @@ int main ()
 #endif
     
    
-    GLFWwindow* window = glfwCreateWindow(800, 600, "TmingEngine", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "TmingEngine", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -69,7 +69,7 @@ int main ()
     }
     glfwMakeContextCurrent(window);                                     //通知GLFW将我们窗口的上下文设置为当前线程的主上下文了
     
-    
+
     //---------------GLAD是用来管理OpenGL的函数指针的---------------
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -77,10 +77,10 @@ int main ()
         return -1;
     }
     
-    glViewport(0, 0, 800, 600);                                         // 前两个参数控制窗口左下角的位置。第三个和第四个参数控制渲染窗口的宽度和高度（像素）
+    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);                                         // 前两个参数控制窗口左下角的位置。第三个和第四个参数控制渲染窗口的宽度和高度（像素）
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  //注册一个窗口变化的事件 ，也就会每当尺寸变化就调用的函数
     
-    
+    glEnable(GL_DEPTH_TEST);                                            //进入3D后需要深度测试，前后分清楚
     //-----------开始加入GLSL---------
     // build and compile our shader zprogram
     // ------------------------------------
@@ -249,7 +249,7 @@ int main ()
         processInput(window);                                           //处理每帧的键盘输入
        
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            // also clear the depth buffer now!
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            // also clear the depth buffer now!
         
         // 4. 绘制物体
         // bind textures on corresponding texture units
@@ -261,7 +261,8 @@ int main ()
         ourShader.use();
         glm::mat4 view;
         glm::mat4 projection;
-        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); //创建了平截头体
+        //                        45.0f是视野                     宽高比                近平面距离       远平面距离
         view       = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
         // pass transformation matrices to the shader
         ourShader.setMat4("projection", projection);
@@ -280,7 +281,7 @@ int main ()
             
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-                
+        
         glfwSwapBuffers(window);                                        //双缓冲交换 --更新画面
         glfwPollEvents();
     }
