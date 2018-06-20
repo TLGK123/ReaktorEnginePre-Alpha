@@ -77,13 +77,11 @@ int main ()
         return -1;
     }
     
-    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);                                         // 前两个参数控制窗口左下角的位置。第三个和第四个参数控制渲染窗口的宽度和高度（像素）
+    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);                             // 前两个参数控制窗口左下角的位置。第三个和第四个参数控制渲染窗口的宽度和高度（像素）
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  //注册一个窗口变化的事件 ，也就会每当尺寸变化就调用的函数
     
     glEnable(GL_DEPTH_TEST);                                            //进入3D后需要深度测试，前后分清楚
     //-----------开始加入GLSL---------
-    // build and compile our shader zprogram
-    // ------------------------------------
     Shader ourShader("6.3.coordinate_systems.vs", "6.3.coordinate_systems.fs");
     //------------GLSL---------end--------
     
