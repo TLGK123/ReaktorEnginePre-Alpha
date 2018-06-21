@@ -260,6 +260,10 @@ int main ()
     
     while(!glfwWindowShouldClose(window))                               //开启一个渲染循环
     {
+        float currentFrame = glfwGetTime();                             //计算两帧之间的时间差
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+        
         processInput(window);                                           //处理每帧的键盘输入
        
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
