@@ -10,13 +10,6 @@
  OpenGL只是一个标准/规范，具体的实现是由驱动开发商针对特定显卡实现的。
  由于OpenGL驱动版本众多，它大多数函数的位置都无法在编译时确定下来，需要在运行时查询。
  
- // 定义函数原型
- typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
- // 找到正确的函数并赋值给函数指针
- GL_GENBUFFERS glGenBuffers  = (GL_GENBUFFERS)wglGetProcAddress("glGenBuffers");
- // 现在函数可以被正常调用了
- GLuint buffer;
- glGenBuffers(1, &buffer);
  */
 
 #include <GLFW/glfw3.h>
