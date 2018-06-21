@@ -261,7 +261,18 @@ int main ()
         glm::mat4 projection;
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); //创建了平截头体
         //                        45.0f是视野                     宽高比                近平面距离       远平面距离
-        view       = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));            //观察矩阵 也是 相机矩阵
+        glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 5.0f);      //虚构一个相机，位置坐标
+        glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);   //场景原点
+        glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);   //获取相机的方向
+        
+        
+        float radius = 10.0f;
+        float camX = sin(glfwGetTime()) * radius;
+        float camZ = cos(glfwGetTime()) * radius;
+     
+        view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+        
+        
         // pass transformation matrices to the shader
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
