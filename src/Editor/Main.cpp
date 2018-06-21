@@ -261,7 +261,7 @@ int main ()
         glm::mat4 projection;
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); //创建了平截头体
         //                        45.0f是视野                     宽高比                近平面距离       远平面距离
-        view       = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
+        view       = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));            //观察矩阵 也是 相机矩阵
         // pass transformation matrices to the shader
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
