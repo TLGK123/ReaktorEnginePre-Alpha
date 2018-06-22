@@ -14,7 +14,7 @@ set(libpath ${PROJECT_SOURCE_DIR}/lib)
 if(WIN32)
 find_library (GLFW glfw3.lib ${libpath})
 else()
-find_library (GLFW glfw3.a ${libpath})   
+find_library (GLFW libglfw3.a ${libpath}) 
 endif()
 
 message(${DIR_Main})
