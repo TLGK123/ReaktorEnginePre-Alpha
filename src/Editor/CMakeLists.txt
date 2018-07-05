@@ -3,9 +3,7 @@ file(GLOB sources "*.cpp" "*.c")
 include_directories("../../include")    #添加头文件目录
 aux_source_directory(opengl DIR_Main)
 
-if (SYNERGY_ADD_HEADERS)
-    list(APPEND sources ${headers} ${DIR_Main})
-endif()
+list(APPEND sources ${headers} ${DIR_Main})
 
 add_executable(Editor ${sources}) 
 
