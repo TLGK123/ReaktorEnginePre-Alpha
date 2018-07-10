@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "Core/Engine.h"
 #include "Core/EngineDefs.h"
+#include "Log/Log.h"
 void EngineInit();
 
 #endif /* Main_h */

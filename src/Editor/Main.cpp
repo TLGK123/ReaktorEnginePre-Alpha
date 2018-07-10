@@ -15,10 +15,10 @@ int main()
 	Engine *engine = new Engine(new Context());
 	if (!engine->Initialize())
 	{
-		printf("引擎初始化失败");
+		Debug::Log("引擎初始化失败");
 		return -1;
 	};
-
+   
 	while (!screen->ScreenShouldClose())
 	{
 		screen->Update();
