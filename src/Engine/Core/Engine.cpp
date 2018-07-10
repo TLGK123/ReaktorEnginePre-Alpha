@@ -37,7 +37,7 @@ namespace TmingEngine
 		//m_flags |= Engine_Physics;
 		//m_flags |= Engine_Game;
 
-	//	m_timer = nullptr;
+		m_timer = nullptr;
 		//g_stopwatch = make_unique<Stopwatch>();
 
 		// Register self as a subsystem
@@ -66,12 +66,12 @@ namespace TmingEngine
 		bool success = true;
 
 		// Timer
-		//m_timer = m_context->GetSubsystem<Timer>();
-		//if (!m_timer->Initialize())
-		//{
-		//	LOG_ERROR("Failed to initialize Timer subsystem");
-		//	success = false;
-		//}
+		m_timer = m_context->GetSubsystem<Timer>();
+		if (!m_timer->Initialize())
+		{
+			printf("Failed to initialize Timer subsystem");
+			success = false;
+		}
 
 		//// Input
 		//if (!m_context->GetSubsystem<Input>()->Initialize())
