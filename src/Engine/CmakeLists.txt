@@ -1,12 +1,12 @@
-file(GLOB headers "*.h")
-file(GLOB sources "*.cpp" "*.c")
+file(GLOB headers "Core/Engine.h")
+file(GLOB sources "Core/Engine.cpp")
 include_directories("../../include")    #添加头文件目录
-include_directories("../Engine")    #添加头文件目录
+include_directories("../Engine")    	#添加头文件目录
 aux_source_directory(opengl DIR_Main)
 
 list(APPEND sources ${headers} ${DIR_Main})
 
-add_executable(Editor ${sources}) 
+add_library(TmingEngine ${sources}) 
 
 set(libpath ${PROJECT_SOURCE_DIR}/lib)
 
@@ -16,7 +16,6 @@ else()
 find_library (GLFW libglfw3.a ${libpath}) 
 endif()
 
-message(${DIR_Main})
 target_link_libraries(Editor ${GLFW})
 
 if(APPLE)
@@ -28,3 +27,5 @@ target_link_libraries(Editor "-framework IOKit")
 target_link_libraries(Editor "-framework CoreVideo")
 
 endif(APPLE)
+
+add_definitions(-DCOMPILING_LIB)

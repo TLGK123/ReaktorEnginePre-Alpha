@@ -9,7 +9,7 @@
 #define Main_h
 #include"Screen.h"
 #include <stdio.h>
-
+#include "Core/Engine.h"
 void EngineInit();
 
 #endif /* Main_h */

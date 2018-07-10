@@ -2,8 +2,8 @@
 #include <iostream>
 using namespace std;
 
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;										// camera
+const unsigned int SCR_WIDTH = 1366;
+const unsigned int SCR_HEIGHT = 768;										// camera
 Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));                                 //默认相机的参数
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;

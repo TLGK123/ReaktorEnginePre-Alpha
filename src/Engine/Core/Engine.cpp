@@ -1,6 +1,6 @@
 //= INCLUDES =================================
 #include "Engine.h"
-#include "Timer.h"
+//#include "Timer.h"
 #include<memory>
 //#include "Settings.h"
 //#include "../Logging/Log.h"
@@ -14,7 +14,7 @@
 //#include "../Input/DInput/DInput.h"
 //#include "../Physics/Physics.h"
 //#include "../Scene/Scene.h"
-#include "Stopwatch.h"
+//#include "Stopwatch.h"
 //#include "../Profiling/Profiler.h"
 //===========================================
 
@@ -24,11 +24,11 @@ using namespace std;
 
 namespace TmingEngine
 {
-	void* Engine::m_drawHandle = nullptr;
-	void* Engine::m_windowHandle = nullptr;
-	void* Engine::m_windowInstance = nullptr;
-	unsigned long Engine::m_flags = 0;
-	static unique_ptr<Stopwatch> g_stopwatch;
+	//void* Engine::m_drawHandle = nullptr;
+	//void* Engine::m_windowHandle = nullptr;
+	//void* Engine::m_windowInstance = nullptr;
+	//unsigned long Engine::m_flags = 0;
+	//static unique_ptr<Stopwatch> g_stopwatch;
 
 	Engine::Engine(Context* context) : Subsystem(context)
 	{
@@ -37,8 +37,8 @@ namespace TmingEngine
 		m_flags |= Engine_Physics;
 		m_flags |= Engine_Game;
 
-		m_timer = nullptr;
-		g_stopwatch = make_unique<Stopwatch>();
+	//	m_timer = nullptr;
+		//g_stopwatch = make_unique<Stopwatch>();
 
 		// Register self as a subsystem
 		m_context->RegisterSubsystem(this);
@@ -49,7 +49,7 @@ namespace TmingEngine
 		//Settings::Get().Initialize();
 
 		// Register subsystems
-		m_context->RegisterSubsystem(new Timer(m_context));
+		//m_context->RegisterSubsystem(new Timer(m_context));
 		//m_context->RegisterSubsystem(new Input(m_context));
 		//m_context->RegisterSubsystem(new Threading(m_context));
 		//m_context->RegisterSubsystem(new ResourceManager(m_context));
@@ -66,7 +66,7 @@ namespace TmingEngine
 		bool success = true;
 
 		// Timer
-		m_timer = m_context->GetSubsystem<Timer>();
+		//m_timer = m_context->GetSubsystem<Timer>();
 		//if (!m_timer->Initialize())
 		//{
 		//	LOG_ERROR("Failed to initialize Timer subsystem");
@@ -138,7 +138,7 @@ namespace TmingEngine
 		//}
 
 		//Profiler::Get().Initialize(m_context);
-		g_stopwatch->Start();
+		//g_stopwatch->Start();
 
 		return success;
 	}
