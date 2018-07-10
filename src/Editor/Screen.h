@@ -50,7 +50,7 @@ public:
 
 	Screen();
 	~Screen();
-	void Init();
+	void Initialize();
 	void Update();
 	void ShutDown();
 

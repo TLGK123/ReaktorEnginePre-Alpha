@@ -10,7 +10,7 @@ using namespace TmingEngine;
 int main()
 {
 	Screen *screen = new Screen();
-	screen->Init();
+	screen->Initialize();
 
 	Engine *engine = new Engine(new Context());
 	engine->Initialize();
@@ -18,7 +18,7 @@ int main()
 	while (!screen->ScreenShouldClose())
 	{
 		screen->Update();
-		engine->Update();
+		engine->Tick();
 	}
 	screen->ShutDown();
 	engine->Shutdown();

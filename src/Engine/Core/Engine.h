@@ -16,7 +16,7 @@ namespace TmingEngine
 		Engine_Game = 1UL << 3,	// Is the engine running in game or editor mode?
 	};
 
-	//class Timer;
+	class Timer;
 
 	class ENGINE_CLASS Engine : public Subsystem
 	{
@@ -56,6 +56,6 @@ namespace TmingEngine
 		//static void* m_windowHandle;
 		//static void* m_windowInstance;
 		//static unsigned long m_flags;
-		//Timer* m_timer;
+		Timer* m_timer;
 	};
 }

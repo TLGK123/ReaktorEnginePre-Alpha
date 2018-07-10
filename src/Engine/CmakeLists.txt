@@ -1,5 +1,5 @@
-file(GLOB headers "Core/Engine.h")
-file(GLOB sources "Core/Engine.cpp" "Core/Context.cpp")
+file(GLOB headers "Core/Engine.h" "Core/Context.h" "Core/Timer.h")
+file(GLOB sources "Core/Engine.cpp" "Core/Context.cpp" "Core/Timer.cpp")
 include_directories("../../include")    #添加头文件目录
 include_directories("../Engine")    	#添加头文件目录
 aux_source_directory(opengl DIR_Main)

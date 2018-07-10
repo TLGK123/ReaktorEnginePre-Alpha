@@ -1,6 +1,6 @@
 //= INCLUDES =================================
 #include "Engine.h"
-//#include "Timer.h"
+#include "Timer.h"
 #include<memory>
 //#include "Settings.h"
 //#include "../Logging/Log.h"
@@ -49,7 +49,7 @@ namespace TmingEngine
 		//Settings::Get().Initialize();
 
 		// Register subsystems
-		//m_context->RegisterSubsystem(new Timer(m_context));
+		m_context->RegisterSubsystem(new Timer(m_context));
 		//m_context->RegisterSubsystem(new Input(m_context));
 		//m_context->RegisterSubsystem(new Threading(m_context));
 		//m_context->RegisterSubsystem(new ResourceManager(m_context));
@@ -143,10 +143,6 @@ namespace TmingEngine
 		return success;
 	}
 
-	void Engine::Update()
-	{
-	}
-
 	void Engine::Tick()
 	{
 		//= MAX FPS =============================================================
@@ -158,7 +154,7 @@ namespace TmingEngine
 		////=======================================================================
 
 		//// Timer always ticks
-		//m_timer->Tick();
+		 m_timer->Tick();
 
 		//if (EngineMode_IsSet(Engine_Update))
 		//{
@@ -169,6 +165,12 @@ namespace TmingEngine
 		//{
 		//	FIRE_EVENT(EVENT_RENDER);
 		//}
+
+		 Update();
+	}
+
+	void Engine::Update()
+	{
 	}
 
 	void Engine::Shutdown()

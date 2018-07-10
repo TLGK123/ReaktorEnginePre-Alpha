@@ -72,7 +72,7 @@ glm::vec3 cubePositions[] = {
 };
 //---------------------Edn Data---------
 
-void Screen::Init()
+void Screen::Initialize()
 {
 	cout << "Hello World" << endl;
 	// glfw: initialize and configure
