@@ -9,5 +9,17 @@ using namespace std;
 
 int main()
 {
-	//Screen *screen = new Screen();
+	Screen *screen = new Screen();	
+	screen->Init();
+	EngineInit();
+	while (!screen->ScreenShouldClose())
+	{
+		screen->Update();
+	}
+	screen->ShutDown();
+}
+
+void EngineInit()
+{
+
 }

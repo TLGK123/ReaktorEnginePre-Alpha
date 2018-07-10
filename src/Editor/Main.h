@@ -10,4 +10,6 @@
 #include"Screen.h"
 #include <stdio.h>
 
+void EngineInit();
+
 #endif /* Main_h */

@@ -41,10 +41,20 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);   //¹ö
 class Screen
 {
 public:
+	GLFWwindow * window;
+	unsigned int texture1, texture2;
+	Shader ourShader;
+	unsigned int VBO, VAO;
+	
 	Screen();
 	~Screen();
 	void Init();
+	void Update();
+	void ShutDown();
+	bool ScreenShouldClose();
+
 private:
+	
 };
 
 #endif // !Screen_h
