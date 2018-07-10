@@ -18,7 +18,7 @@ endif()
 
 message(${DIR_Main})
 target_link_libraries(Editor ${GLFW})
-
+target_link_libraries(Editor TmingEngine)
 if(APPLE)
 message("Link Mac OS framework")                            #glfw3 需要一些mac 的原生库
 target_link_libraries(Editor "-framework CoreFoundation")

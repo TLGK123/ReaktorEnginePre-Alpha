@@ -10,6 +10,7 @@
 #include"Screen.h"
 #include <stdio.h>
 #include "Core/Engine.h"
+#include "Core/EngineDefs.h"
 void EngineInit();
 
 #endif /* Main_h */

@@ -32,10 +32,10 @@ namespace TmingEngine
 
 	Engine::Engine(Context* context) : Subsystem(context)
 	{
-		m_flags |= Engine_Update;
-		m_flags |= Engine_Render;
-		m_flags |= Engine_Physics;
-		m_flags |= Engine_Game;
+		//m_flags |= Engine_Update;
+		//m_flags |= Engine_Render;
+		//m_flags |= Engine_Physics;
+		//m_flags |= Engine_Game;
 
 	//	m_timer = nullptr;
 		//g_stopwatch = make_unique<Stopwatch>();
@@ -177,11 +177,11 @@ namespace TmingEngine
 	   //Log::Release();
 	}
 
-	void Engine::SetHandles(void* drawHandle, void* windowHandle, void* windowInstance)
-	{
-		m_drawHandle = drawHandle;
-		m_windowHandle = windowHandle;
-		m_windowInstance = windowInstance;
-	}
+	//void Engine::SetHandles(void* drawHandle, void* windowHandle, void* windowInstance)
+	//{
+	//	m_drawHandle = drawHandle;
+	//	m_windowHandle = windowHandle;
+	//	m_windowInstance = windowInstance;
+	//}
 
 }
