@@ -14,6 +14,9 @@
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
 
+#include "Core/Context.h"
+#include "Console.h"
+
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" ) // 去掉黑色控制台窗口
 //#endif //  Debug
@@ -24,14 +27,7 @@ void processInput(GLFWwindow *window);                                      //处
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);          //鼠标处理函数
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);   //滚轮处理函数
 
-#if defined(_WIN32)
-#if defined(NANOGUI_BUILD)
-#      define TmingAPI __declspec(dllexport)
-#else
-#      define TmingAPI __declspec(dllimport)
-#endif
-#endif
-
+using namespace TmingEngine;
 class Screen
 {
 public:
@@ -44,16 +40,20 @@ public:
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-	Screen();
-	~Screen();
-	void Initialize();
+	Console * console;
+
+	void Initialize(Context * context);
 	void Update();
 	void ShutDown();
 
 	bool ScreenShouldClose();
 
+	void InitOpenGL();
+
+	void InitSubSystem(Context * context);
 private:
 	void InitImgui();
 };
+
 
 #endif // 

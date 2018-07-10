@@ -71,7 +71,6 @@ namespace TmingEngine
 		if (!m_timer->Initialize())
 		{
 			Debug::Log("Failed to initialize Timer subsystem");
-			printf("Failed to initialize Timer subsystem");
 			success = false;
 		}
 
@@ -157,7 +156,7 @@ namespace TmingEngine
 
 		//// Timer always ticks
 		m_timer->Tick();
-		printf("每帧时间间隔: %f\n", m_timer->GetDeltaTimeMs());
+		//Debug::Log("每帧时间间隔: %f\n", m_timer->GetDeltaTimeMs());
 		//if (EngineMode_IsSet(Engine_Update))
 		//{
 		//	FIRE_EVENT_DATA(EVENT_UPDATE, m_timer->GetDeltaTimeSec());

@@ -72,9 +72,16 @@ glm::vec3 cubePositions[] = {
 };
 //---------------------Edn Data---------
 
-void Screen::Initialize()
+void Screen::Initialize(Context * context)
 {
 	cout << "Hello World" << endl;
+	InitOpenGL();
+	InitImgui();
+	InitSubSystem(context);
+}
+
+void Screen::InitOpenGL()
+{
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();                                                     //初始化glfw
@@ -109,9 +116,9 @@ void Screen::Initialize()
 
 	glEnable(GL_DEPTH_TEST);                                            //进入3D后需要深度测试，前后分清楚
 	ourShader.Init("7.4.camera.vs", "7.4.camera.fs");					//-----------开始加入GLSL---------
-	//------------GLSL---------end--------
+																		//------------GLSL---------end--------
 
-	//--------- OpenGL --对象------
+																		//--------- OpenGL --对象------
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);               //设置缓冲对象的ID
@@ -199,8 +206,12 @@ void Screen::Initialize()
 	glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
 	ourShader.setInt("texture1", 0);
 	ourShader.setInt("texture2", 1);
+}
 
-	InitImgui();
+void Screen::InitSubSystem(Context * context)
+{
+	console = new Console(context);
+	context->RegisterSubsystem(console);
 }
 
 void Screen::Update()
@@ -209,6 +220,7 @@ void Screen::Update()
 	{
 		static float f = 0.0f;
 		static int counter = 0;
+		static bool showLog = false;
 		ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
 		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
 		ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
@@ -218,9 +230,14 @@ void Screen::Update()
 
 		if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
 			counter++;
+
+		if (ImGui::Button("ShowLog"))
+		{
+			showLog = true;
+		}
+
 		ImGui::SameLine();
 		ImGui::Text("counter = %d", counter);
-
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	}
 
@@ -275,11 +292,15 @@ void Screen::Update()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
+	bool showDebug = true;
+	console->Draw("Hello Debug", &showDebug);
+
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 
 	glfwSwapBuffers(window);                                        //双缓冲交换 --更新画面
 	glfwPollEvents();
+
 }
 
 void Screen::ShutDown()
@@ -305,14 +326,6 @@ void Screen::InitImgui()
 	ImGui_ImplGlfwGL3_Init(window, true);
 	// Setup style
 	ImGui::StyleColorsDark();
-}
-
-Screen::~Screen()
-{
-}
-
-Screen::Screen()
-{
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
