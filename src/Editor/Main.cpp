@@ -18,7 +18,6 @@ int main()
 		printf("ÒýÇæ³õÊ¼»¯Ê§°Ü");
 		return -1;
 	};
-	
 
 	while (!screen->ScreenShouldClose())
 	{
@@ -28,4 +27,3 @@ int main()
 	screen->ShutDown();
 	engine->Shutdown();
 }
-

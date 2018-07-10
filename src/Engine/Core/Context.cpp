@@ -8,7 +8,6 @@ namespace TmingEngine
 {
 	Context::Context()
 	{
-
 	}
 
 	Context::~Context()

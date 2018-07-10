@@ -43,7 +43,7 @@ namespace TmingEngine
 		// Register self as a subsystem
 		m_context->RegisterSubsystem(this);
 
-		// Initialize global/static subsystems 
+		// Initialize global/static subsystems
 		//Log::Initialize();
 		//FileSystem::Initialize();
 		//Settings::Get().Initialize();
@@ -154,8 +154,8 @@ namespace TmingEngine
 		////=======================================================================
 
 		//// Timer always ticks
-		 m_timer->Tick();
-		 printf("每帧时间间隔: %f\n", m_timer->GetDeltaTimeMs());
+		m_timer->Tick();
+		printf("每帧时间间隔: %f\n", m_timer->GetDeltaTimeMs());
 		//if (EngineMode_IsSet(Engine_Update))
 		//{
 		//	FIRE_EVENT_DATA(EVENT_UPDATE, m_timer->GetDeltaTimeSec());
@@ -166,7 +166,7 @@ namespace TmingEngine
 		//	FIRE_EVENT(EVENT_RENDER);
 		//}
 
-		 Update();
+		Update();
 	}
 
 	void Engine::Update()
@@ -189,5 +189,4 @@ namespace TmingEngine
 	//	m_windowHandle = windowHandle;
 	//	m_windowInstance = windowInstance;
 	//}
-
 }

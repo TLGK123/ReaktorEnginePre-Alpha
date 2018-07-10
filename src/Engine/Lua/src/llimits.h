@@ -7,10 +7,8 @@
 #ifndef llimits_h
 #define llimits_h
 
-
 #include <limits.h>
 #include <stddef.h>
-
 
 #include "lua.h"
 
@@ -30,10 +28,8 @@ typedef unsigned long lu_mem;
 typedef long l_mem;
 #endif				/* } */
 
-
 /* chars used as small naturals (so that 'char' is reserved for characters) */
 typedef unsigned char lu_byte;
-
 
 /* maximum value for size_t */
 #define MAX_SIZET	((size_t)(~(size_t)0))
@@ -42,14 +38,11 @@ typedef unsigned char lu_byte;
 #define MAX_SIZE	(sizeof(size_t) < sizeof(lua_Integer) ? MAX_SIZET \
                           : (size_t)(LUA_MAXINTEGER))
 
-
 #define MAX_LUMEM	((lu_mem)(~(lu_mem)0))
 
 #define MAX_LMEM	((l_mem)(MAX_LUMEM >> 1))
 
-
 #define MAX_INT		INT_MAX  /* maximum value of an int */
-
 
 /*
 ** conversion of pointer to unsigned integer:
@@ -58,27 +51,22 @@ typedef unsigned char lu_byte;
 */
 #define point2uint(p)	((unsigned int)((size_t)(p) & UINT_MAX))
 
-
-
 /* type to ensure maximum alignment */
 #if defined(LUAI_USER_ALIGNMENT_T)
 typedef LUAI_USER_ALIGNMENT_T L_Umaxalign;
 #else
 typedef union {
-  lua_Number n;
-  double u;
-  void *s;
-  lua_Integer i;
-  long l;
+	lua_Number n;
+	double u;
+	void *s;
+	lua_Integer i;
+	long l;
 } L_Umaxalign;
 #endif
-
-
 
 /* types of 'usual argument conversions' for lua_Number and lua_Integer */
 typedef LUAI_UACNUMBER l_uacNumber;
 typedef LUAI_UACINT l_uacInt;
-
 
 /* internal assertions for in-house debugging */
 #if defined(lua_assert)
@@ -100,12 +88,10 @@ typedef LUAI_UACINT l_uacInt;
 
 #define api_check(l,e,msg)	luai_apicheck(l,(e) && msg)
 
-
 /* macro to avoid warnings about unused variables */
 #if !defined(UNUSED)
 #define UNUSED(x)	((void)(x))
 #endif
-
 
 /* type casts (a macro highlights casts in the code) */
 #define cast(t, exp)	((t)(exp))
@@ -115,7 +101,6 @@ typedef LUAI_UACINT l_uacInt;
 #define cast_num(i)	cast(lua_Number, (i))
 #define cast_int(i)	cast(int, (i))
 #define cast_uchar(i)	cast(unsigned char, (i))
-
 
 /* cast a signed lua_Integer to lua_Unsigned */
 #if !defined(l_castS2U)
@@ -131,7 +116,6 @@ typedef LUAI_UACINT l_uacInt;
 #define l_castU2S(i)	((lua_Integer)(i))
 #endif
 
-
 /*
 ** non-return type
 */
@@ -143,8 +127,6 @@ typedef LUAI_UACINT l_uacInt;
 #define l_noret		void
 #endif
 
-
-
 /*
 ** maximum depth for nested C calls and syntactical nested non-terminals
 ** in a program. (Value must fit in an unsigned short int.)
@@ -152,8 +134,6 @@ typedef LUAI_UACINT l_uacInt;
 #if !defined(LUAI_MAXCCALLS)
 #define LUAI_MAXCCALLS		200
 #endif
-
-
 
 /*
 ** type for virtual-machine instructions;
@@ -165,8 +145,6 @@ typedef unsigned int Instruction;
 typedef unsigned long Instruction;
 #endif
 
-
-
 /*
 ** Maximum length for short strings, that is, strings that are
 ** internalized. (Cannot be smaller than reserved words or tags for
@@ -176,7 +154,6 @@ typedef unsigned long Instruction;
 #if !defined(LUAI_MAXSHORTLEN)
 #define LUAI_MAXSHORTLEN	40
 #endif
-
 
 /*
 ** Initial size for the string table (must be power of 2).
@@ -188,7 +165,6 @@ typedef unsigned long Instruction;
 #define MINSTRTABSIZE	128
 #endif
 
-
 /*
 ** Size of cache for strings in the API. 'N' is the number of
 ** sets (better be a prime) and "M" is the size of each set (M == 1
@@ -199,12 +175,10 @@ typedef unsigned long Instruction;
 #define STRCACHE_M		2
 #endif
 
-
 /* minimum size for string buffer */
 #if !defined(LUA_MINBUFFER)
 #define LUA_MINBUFFER	32
 #endif
-
 
 /*
 ** macros that are executed whenever program enters the Lua core
@@ -222,7 +196,6 @@ typedef unsigned long Instruction;
 #if !defined(luai_threadyield)
 #define luai_threadyield(L)	{lua_unlock(L); lua_lock(L);}
 #endif
-
 
 /*
 ** these macros allow user-specific actions on threads when you defined
@@ -252,8 +225,6 @@ typedef unsigned long Instruction;
 #if !defined(luai_userstateyield)
 #define luai_userstateyield(L,n)	((void)L)
 #endif
-
-
 
 /*
 ** The luai_num* macros define the primitive operations over numbers.
@@ -297,10 +268,6 @@ typedef unsigned long Instruction;
 #define luai_numle(a,b)         ((a)<=(b))
 #define luai_numisnan(a)        (!luai_numeq((a), (a)))
 #endif
-
-
-
-
 
 /*
 ** macro to control inclusion of some hard tests on stack reallocation

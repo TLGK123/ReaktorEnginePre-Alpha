@@ -7,7 +7,6 @@
 #ifndef lgc_h
 #define lgc_h
 
-
 #include "lobject.h"
 #include "lstate.h"
 
@@ -24,14 +23,11 @@
 ** is not being enforced (e.g., sweep phase).
 */
 
-
-
 /* how much to allocate before next GC step */
 #if !defined(GCSTEPSIZE)
 /* ~100 small strings */
 #define GCSTEPSIZE	(cast_int(100 * sizeof(TString)))
 #endif
-
 
 /*
 ** Possible states of the Garbage Collector
@@ -45,10 +41,8 @@
 #define GCScallfin	6
 #define GCSpause	7
 
-
 #define issweepphase(g)  \
 	(GCSswpallgc <= (g)->gcstate && (g)->gcstate <= GCSswpend)
-
 
 /*
 ** macro to tell when main invariant (white objects cannot point to black
@@ -59,7 +53,6 @@
 */
 
 #define keepinvariant(g)	((g)->gcstate <= GCSatomic)
-
 
 /*
 ** some useful bit tricks
@@ -73,7 +66,6 @@
 #define resetbit(x,b)		resetbits(x, bitmask(b))
 #define testbit(x,b)		testbits(x, bitmask(b))
 
-
 /* Layout for bit use in 'marked' field: */
 #define WHITE0BIT	0  /* object is white (type 0) */
 #define WHITE1BIT	1  /* object is white (type 1) */
@@ -82,7 +74,6 @@
 /* bit 7 is currently used by tests (luaL_checkmemory) */
 
 #define WHITEBITS	bit2mask(WHITE0BIT, WHITE1BIT)
-
 
 #define iswhite(x)      testbits((x)->marked, WHITEBITS)
 #define isblack(x)      testbit((x)->marked, BLACKBIT)
@@ -100,7 +91,6 @@
 
 #define luaC_white(g)	cast(lu_byte, (g)->currentwhite & WHITEBITS)
 
-
 /*
 ** Does one step of collection when debt becomes positive. 'pre'/'pos'
 ** allows some adjustments to be done only when needed. macro
@@ -113,7 +103,6 @@
 
 /* more often than not, 'pre'/'pos' are empty */
 #define luaC_checkGC(L)		luaC_condGC(L,(void)0,(void)0)
-
 
 #define luaC_barrier(L,p,v) (  \
 	(iscollectable(v) && isblack(p) && iswhite(gcvalue(v))) ?  \
@@ -131,17 +120,16 @@
 	(iscollectable((uv)->v) && !upisopen(uv)) ? \
          luaC_upvalbarrier_(L,uv) : cast_void(0))
 
-LUAI_FUNC void luaC_fix (lua_State *L, GCObject *o);
-LUAI_FUNC void luaC_freeallobjects (lua_State *L);
-LUAI_FUNC void luaC_step (lua_State *L);
-LUAI_FUNC void luaC_runtilstate (lua_State *L, int statesmask);
-LUAI_FUNC void luaC_fullgc (lua_State *L, int isemergency);
-LUAI_FUNC GCObject *luaC_newobj (lua_State *L, int tt, size_t sz);
-LUAI_FUNC void luaC_barrier_ (lua_State *L, GCObject *o, GCObject *v);
-LUAI_FUNC void luaC_barrierback_ (lua_State *L, Table *o);
-LUAI_FUNC void luaC_upvalbarrier_ (lua_State *L, UpVal *uv);
-LUAI_FUNC void luaC_checkfinalizer (lua_State *L, GCObject *o, Table *mt);
-LUAI_FUNC void luaC_upvdeccount (lua_State *L, UpVal *uv);
-
+LUAI_FUNC void luaC_fix(lua_State *L, GCObject *o);
+LUAI_FUNC void luaC_freeallobjects(lua_State *L);
+LUAI_FUNC void luaC_step(lua_State *L);
+LUAI_FUNC void luaC_runtilstate(lua_State *L, int statesmask);
+LUAI_FUNC void luaC_fullgc(lua_State *L, int isemergency);
+LUAI_FUNC GCObject *luaC_newobj(lua_State *L, int tt, size_t sz);
+LUAI_FUNC void luaC_barrier_(lua_State *L, GCObject *o, GCObject *v);
+LUAI_FUNC void luaC_barrierback_(lua_State *L, Table *o);
+LUAI_FUNC void luaC_upvalbarrier_(lua_State *L, UpVal *uv);
+LUAI_FUNC void luaC_checkfinalizer(lua_State *L, GCObject *o, Table *mt);
+LUAI_FUNC void luaC_upvdeccount(lua_State *L, UpVal *uv);
 
 #endif

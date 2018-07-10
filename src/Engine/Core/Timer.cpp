@@ -3,7 +3,6 @@
 using namespace std;
 using namespace chrono;
 
-
 namespace TmingEngine
 {
 	Timer::Timer(Context* context) : Subsystem(context)
@@ -14,7 +13,6 @@ namespace TmingEngine
 
 	Timer::~Timer()
 	{
-
 	}
 
 	void Timer::Tick()

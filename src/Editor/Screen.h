@@ -32,7 +32,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);   //¹ö
 #endif
 #endif
 
-
 class Screen
 {
 public:
@@ -52,7 +51,6 @@ public:
 	void ShutDown();
 
 	bool ScreenShouldClose();
-
 
 private:
 	void InitImgui();

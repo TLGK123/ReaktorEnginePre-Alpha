@@ -9,7 +9,6 @@
 
 #include "lprefix.h"
 
-
 #include "lctype.h"
 
 #if !LUA_USE_CTYPE	/* { */
