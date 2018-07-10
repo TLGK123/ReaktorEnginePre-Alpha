@@ -27,6 +27,7 @@ namespace TmingEngine
 		//= SUBSYSTEM =============
 		bool Initialize() override;
 		//=========================
+		void Update();
 
 		void Tick();
 

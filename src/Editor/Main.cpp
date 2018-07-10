@@ -12,15 +12,15 @@ int main()
 	Screen *screen = new Screen();
 	screen->Init();
 
-	EngineInit();
+	Engine *engine = new Engine(new Context());
+	engine->Initialize();
+
 	while (!screen->ScreenShouldClose())
 	{
 		screen->Update();
+		engine->Update();
 	}
 	screen->ShutDown();
+	engine->Shutdown();
 }
 
-void EngineInit()
-{
-	Engine *engine = new Engine(new Context());
-}

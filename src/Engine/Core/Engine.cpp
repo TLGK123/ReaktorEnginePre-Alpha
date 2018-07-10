@@ -143,6 +143,10 @@ namespace TmingEngine
 		return success;
 	}
 
+	void Engine::Update()
+	{
+	}
+
 	void Engine::Tick()
 	{
 		//= MAX FPS =============================================================
