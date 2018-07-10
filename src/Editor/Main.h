@@ -25,6 +25,4 @@ bool firstMouse = true;
 float deltaTime = 0.0f;                                                     //每帧执行需要加权平均一下
 float lastFrame = 0.0f;
 
-
-
 #endif /* Main_h */

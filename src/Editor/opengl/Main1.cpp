@@ -145,7 +145,7 @@
 //		// bind to framebuffer and draw scene as we normally would to color texture
 //		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 //		glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
-//			
+//
 //		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 //		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //		shader.use();

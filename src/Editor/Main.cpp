@@ -16,7 +16,7 @@ using namespace std;
 //{
 //    if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)                    //添加Q按键判断 关闭
 //        glfwSetWindowShouldClose(window, true);
-//    
+//
 //    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 //        camera.ProcessKeyboard(FORWARD, deltaTime);
 //    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -37,13 +37,13 @@ using namespace std;
 //        lastY = ypos;
 //        firstMouse = false;
 //    }
-//    
+//
 //    float xoffset = xpos - lastX;
 //    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-//    
+//
 //    lastX = xpos;
 //    lastY = ypos;
-//    
+//
 //    camera.ProcessMouseMovement(xoffset, yoffset);
 //}
 //
