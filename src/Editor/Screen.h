@@ -18,8 +18,6 @@
 #pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" ) // 去掉黑色控制台窗口
 #endif //  !Debug
 
-
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);  //函数声明，当窗口大小调整时触发的函数
 void processInput(GLFWwindow *window);                                      //处理按键输入的函数
 
@@ -45,7 +43,7 @@ public:
 	unsigned int texture1, texture2;
 	Shader ourShader;
 	unsigned int VBO, VAO;
-	
+
 	Screen();
 	~Screen();
 	void Init();
@@ -54,7 +52,6 @@ public:
 	bool ScreenShouldClose();
 
 private:
-	
 };
 
 #endif // !Screen_h

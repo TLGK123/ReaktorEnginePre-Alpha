@@ -145,7 +145,6 @@ void Screen::Init()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-
 	// texture 1
 	// ---------
 	glGenTextures(1, &texture1);
@@ -201,13 +200,13 @@ void Screen::Init()
 	glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
 	ourShader.setInt("texture1", 0);
 	ourShader.setInt("texture2", 1);
-                                                 
+
 	return;
 }
 
 void Screen::Update()
 {
-//	while (!glfwWindowShouldClose(window))                               //开启一个渲染循环
+	//	while (!glfwWindowShouldClose(window))                               //开启一个渲染循环
 	{
 		float currentFrame = glfwGetTime();                             //计算两帧之间的时间差
 		deltaTime = currentFrame - lastFrame;
@@ -268,50 +267,49 @@ Screen::Screen()
 {
 }
 
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    glViewport(0, 0, width, height);
+	glViewport(0, 0, width, height);
 }
 
 void processInput(GLFWwindow *window)
 {
-    if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)                    //添加Q按键判断 关闭
-        glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)                    //添加Q按键判断 关闭
+		glfwSetWindowShouldClose(window, true);
 
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.ProcessKeyboard(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.ProcessKeyboard(LEFT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.ProcessKeyboard(RIGHT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		camera.ProcessKeyboard(FORWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		camera.ProcessKeyboard(BACKWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		camera.ProcessKeyboard(LEFT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		camera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    if (firstMouse)
-    {
-        lastX = xpos;
-        lastY = ypos;
-        firstMouse = false;
-    }
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
 
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
 
-    lastX = xpos;
-    lastY = ypos;
+	lastX = xpos;
+	lastY = ypos;
 
-    camera.ProcessMouseMovement(xoffset, yoffset);
+	camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-    camera.ProcessMouseScroll(yoffset);
+	camera.ProcessMouseScroll(yoffset);
 }
