@@ -13,7 +13,12 @@ int main()
 	screen->Initialize();
 
 	Engine *engine = new Engine(new Context());
-	engine->Initialize();
+	if (!engine->Initialize())
+	{
+		printf("ÒýÇæ³õÊ¼»¯Ê§°Ü");
+		return -1;
+	};
+	
 
 	while (!screen->ScreenShouldClose())
 	{
