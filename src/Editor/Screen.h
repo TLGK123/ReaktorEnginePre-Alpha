@@ -44,14 +44,21 @@ public:
 	Shader ourShader;
 	unsigned int VBO, VAO;
 
+	bool show_demo_window = true;
+	bool show_another_window = false;
+	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
 	Screen();
 	~Screen();
 	void Init();
 	void Update();
 	void ShutDown();
+
 	bool ScreenShouldClose();
 
+
 private:
+	void InitImgui();
 };
 
-#endif // !Screen_h
+#endif // 

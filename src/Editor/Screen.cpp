@@ -140,7 +140,6 @@ void Screen::Init()
 	最后一个参数的类型是void*，所以需要我们进行这个奇怪的强制类型转换。它表示位置数据在缓冲中起始位置的偏移量(Offset)。由于位置数据在数组的开头，所以这里是0。我们会在后面详细解释这个参数。
 	*/
 	glEnableVertexAttribArray(0);                                       //以顶点属性位置值作为参数，启用顶点属性
-
 																		// color attribute
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
@@ -201,54 +200,93 @@ void Screen::Init()
 	ourShader.setInt("texture1", 0);
 	ourShader.setInt("texture2", 1);
 
-	return;
+	InitImgui();
 }
 
 void Screen::Update()
 {
-	//	while (!glfwWindowShouldClose(window))                               //开启一个渲染循环
+	ImGui_ImplGlfwGL3_NewFrame();
 	{
-		float currentFrame = glfwGetTime();                             //计算两帧之间的时间差
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
-		processInput(window);                                           //处理每帧的键盘输入
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            // also clear the depth buffer now!																	   // 4. 绘制物体
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture1);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, texture2);
+		static float f = 0.0f;
+		static int counter = 0;
+		ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
+		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+		ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
-		ourShader.use();
-		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); //创建了平截头体
-																													  //                        45.0f是视野                     宽高比                近平面距离       远平面距离
-		ourShader.setMat4("projection", projection);
+		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our windows open/close state
+		ImGui::Checkbox("Another Window", &show_another_window);
 
-		glm::mat4 view = camera.GetViewMatrix();
-		ourShader.setMat4("view", view);
+		if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
+			counter++;
+		ImGui::SameLine();
+		ImGui::Text("counter = %d", counter);
 
-		// render container
-		glBindVertexArray(VAO);
-		for (unsigned int i = 0; i < 10; i++)
-		{
-			// calculate the model matrix for each object and pass it to shader before drawing
-			glm::mat4 model;
-			model = glm::translate(model, cubePositions[i]);
-			float angle = 20.0f * i;
-			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-			ourShader.setMat4("model", model);
-
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-		}
-
-		glfwSwapBuffers(window);                                        //双缓冲交换 --更新画面
-		glfwPollEvents();
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	}
+
+	// 2. Show another simple window. In most cases you will use an explicit Begin/End pair to name your windows.
+	if (show_another_window)
+	{
+		ImGui::Begin("Another Window", &show_another_window);
+		ImGui::Text("Hello from another window!");
+		if (ImGui::Button("Close Me"))
+			show_another_window = false;
+		ImGui::End();
+	}
+
+	// 3. Show the ImGui demo window. Most of the sample code is in ImGui::ShowDemoWindow(). Read its code to learn more about Dear ImGui!
+	if (show_demo_window)
+	{
+		ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!
+		ImGui::ShowDemoWindow(&show_demo_window);
+	}
+
+	;
+	float currentFrame = glfwGetTime();                             //计算两帧之间的时间差
+	deltaTime = currentFrame - lastFrame;
+	lastFrame = currentFrame;
+	processInput(window);                                           //处理每帧的键盘输入
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            // also clear the depth buffer now!																	   // 4. 绘制物体
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture1);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+
+	ourShader.use();
+	glm::mat4 projection;
+	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); //创建了平截头体
+																												  //                        45.0f是视野                     宽高比                近平面距离       远平面距离
+	ourShader.setMat4("projection", projection);
+
+	glm::mat4 view = camera.GetViewMatrix();
+	ourShader.setMat4("view", view);
+
+	// render container
+	glBindVertexArray(VAO);
+	for (unsigned int i = 0; i < 10; i++)
+	{
+		// calculate the model matrix for each object and pass it to shader before drawing
+		glm::mat4 model;
+		model = glm::translate(model, cubePositions[i]);
+		float angle = 20.0f * i;
+		model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+		ourShader.setMat4("model", model);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+	}
+
+	ImGui::Render();
+	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+
+	glfwSwapBuffers(window);                                        //双缓冲交换 --更新画面
+	glfwPollEvents();
 }
 
 void Screen::ShutDown()
 {
+	ImGui_ImplGlfwGL3_Shutdown();
+	ImGui::DestroyContext();
+
 	glDeleteVertexArrays(1, &VAO);		//结束后释放资源
 	glDeleteBuffers(1, &VBO);
 	glfwTerminate();
@@ -257,6 +295,16 @@ void Screen::ShutDown()
 bool Screen::ScreenShouldClose()
 {
 	return glfwWindowShouldClose(window);
+}
+
+void Screen::InitImgui()
+{
+	// Setup ImGui binding
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGui_ImplGlfwGL3_Init(window, true);
+	// Setup style
+	ImGui::StyleColorsDark();
 }
 
 Screen::~Screen()
@@ -287,8 +335,6 @@ void processInput(GLFWwindow *window)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
-// glfw: whenever the mouse moves, this callback is called
-// -------------------------------------------------------
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	if (firstMouse)
@@ -307,8 +353,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
-// glfw: whenever the mouse scroll wheel scrolls, this callback is called
-// ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	camera.ProcessMouseScroll(yoffset);
