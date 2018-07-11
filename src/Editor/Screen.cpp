@@ -1,4 +1,5 @@
 #include "Screen.h"
+#include "Main.h"
 #include <iostream>
 using namespace std;
 
@@ -74,10 +75,11 @@ glm::vec3 cubePositions[] = {
 
 void Screen::Initialize(Context * context)
 {
+	screenContext = context;
 	cout << "Hello World" << endl;
 	InitOpenGL();
 	InitImgui();
-	InitSubSystem(context);
+	InitSubSystem(screenContext);
 }
 
 void Screen::InitOpenGL()
@@ -210,8 +212,9 @@ void Screen::InitOpenGL()
 
 void Screen::InitSubSystem(Context * context)
 {
-	console = new Console(context);
-	context->RegisterSubsystem(console);
+	context->RegisterSubsystem(new Console(context));
+
+	Debug::Log("log RegisterSubsystem over");
 }
 
 void Screen::Update()
@@ -293,14 +296,13 @@ void Screen::Update()
 	}
 
 	bool showDebug = true;
-	console->Draw("Hello Debug", &showDebug);
+	screenContext->GetSubsystem<Console>()->Draw("Hello Debug", &showDebug);
 
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 
 	glfwSwapBuffers(window);                                        //双缓冲交换 --更新画面
 	glfwPollEvents();
-
 }
 
 void Screen::ShutDown()

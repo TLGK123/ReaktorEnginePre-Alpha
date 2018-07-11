@@ -28,7 +28,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);          //Êó
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);   //¹öÂÖ´¦Àíº¯Êý
 
 using namespace TmingEngine;
-class Screen
+class Screen :public Subsystem
 {
 public:
 	GLFWwindow * window;
@@ -39,8 +39,7 @@ public:
 	bool show_demo_window = true;
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
-	Console * console;
+	Context * screenContext;
 
 	void Initialize(Context * context);
 	void Update();
@@ -51,9 +50,14 @@ public:
 	void InitOpenGL();
 
 	void InitSubSystem(Context * context);
+
+	Screen(Context* context) : Subsystem(context)
+	{
+		Initialize(context);
+	}
+
 private:
 	void InitImgui();
 };
-
 
 #endif // 

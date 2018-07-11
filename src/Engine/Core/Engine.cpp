@@ -178,7 +178,7 @@ namespace TmingEngine
 	{
 		// The context will deallocate the subsystems
 		// in the reverse order in which they were registered.
-		SafeDelete(m_context);
+		//SafeDelete(m_context);
 
 		// Release Log singleton
 	   //Log::Release();

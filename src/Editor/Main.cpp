@@ -9,16 +9,19 @@ using namespace TmingEngine;
 
 int main()
 {
-	Screen *screen = new Screen();
-	Engine *engine = new Engine(new Context());
+	//SmartPtr<Context> context =
+	Screen *screen;
+	Engine *engine;
+
+	engine = new Engine(&Global<Context>());
 	if (!engine->Initialize())
 	{
 		Debug::Log("ÒýÇæ³õÊ¼»¯Ê§°Ü");
 		return -1;
 	};
+
 	auto engineContext = engine->GetContext();
-	screen->Initialize(engineContext);
-   
+	screen = new Screen(engineContext);
 	while (!screen->ScreenShouldClose())
 	{
 		screen->Update();
@@ -27,4 +30,7 @@ int main()
 
 	screen->ShutDown();
 	engine->Shutdown();
+
+
+
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "EngineDefs.h"
+#include "SmartPtr.h"
 
 namespace TmingEngine
 {

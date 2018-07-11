@@ -3,6 +3,7 @@
 #include "Core/Context.h"
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
+#include "Log/Log.h"
 
 namespace TmingEngine
 {
@@ -15,14 +16,12 @@ namespace TmingEngine
 		bool                ScrollToBottom;
 
 		Console(Context *context) : Subsystem(context)
-		{	
+		{
 		}
 		~Console();
 
 		void Clear();
-		void AddLog(const char* fmt, ...)IM_FMTARGS(2);
-		void Draw(const char* title, bool* p_open );
+		void AddLog(const char* fmt, ...);
+		void Draw(const char* title, bool* p_open);
 	};
 }
-
-

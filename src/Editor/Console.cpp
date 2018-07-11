@@ -6,7 +6,7 @@ namespace TmingEngine
 
 	void Console::Clear() { Buf.clear(); LineOffsets.clear(); }
 
-	void Console::AddLog(const char* fmt, ...) IM_FMTARGS(2)
+	void Console::AddLog(const char* fmt, ...)
 	{
 		int old_size = Buf.size();
 		va_list args;

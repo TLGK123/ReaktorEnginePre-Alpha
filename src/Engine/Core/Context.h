@@ -5,7 +5,7 @@
 
 namespace TmingEngine
 {
-	class ENGINE_CLASS Context
+	class ENGINE_CLASS Context :public RefCount
 	{
 	public:
 		Context();

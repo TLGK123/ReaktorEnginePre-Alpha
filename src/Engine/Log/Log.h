@@ -3,19 +3,19 @@
 #include <chrono>
 #include <iostream>
 #include <list>
+#include "../Editor/Console.h"
+#include "Core\SmartPtr.h"
+#include "../Editor/Screen.h"
 //====================
 
 namespace TmingEngine
 {
-	typedef void (*HandleLog)(char* Log) ;
-
 	static class ENGINE_CLASS Debug : public Subsystem
 	{
-	public:
-	 static void Log(const char * message,...);
-
+	public:	
+		static void Log(const char * message, ...);
 	private:
-
-	
 	};
+
+
 }
