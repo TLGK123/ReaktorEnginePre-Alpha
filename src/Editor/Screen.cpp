@@ -297,6 +297,8 @@ void Screen::Update()
 
 	bool showDebug = true;
 	screenContext->GetSubsystem<Console>()->Draw("Hello Debug", &showDebug);
+	screenContext->GetSubsystem<Console>()->Draw2("Hello Debug", &showDebug);
+	
 
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());

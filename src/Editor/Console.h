@@ -23,5 +23,6 @@ namespace TmingEngine
 		void Clear();
 		void AddLog(const char* fmt, ...);
 		void Draw(const char* title, bool* p_open);
+		void Draw2(const char* title, bool* p_open);
 	};
 }
