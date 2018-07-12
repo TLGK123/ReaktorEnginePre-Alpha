@@ -546,6 +546,7 @@ static int pmain(lua_State *L) {
 		doREPL(L);  /* do read-eval-print loop */
 	else if (script == argc && !(args & (has_e | has_v))) {  /* no arguments? */
 		if (lua_stdin_is_tty()) {  /* running in interactive mode? */
+						
 			print_version();
 			doREPL(L);  /* do read-eval-print loop */
 		}
@@ -554,10 +555,14 @@ static int pmain(lua_State *L) {
 	lua_pushboolean(L, 1);  /* signal no errors */
 	return 1;
 }
+//------------------------
+//修改了 main 函数名字
+//--------------------
 
-int main(int argc, char **argv) {
+int LuaMain(int argc, char **argv) {
 	int status, result;
 	lua_State *L = luaL_newstate();  /* create state */
+	luaL_dostring(L, "print(\"Hello World!\")");
 	if (L == NULL) {
 		l_message(argv[0], "cannot create state: not enough memory");
 		return EXIT_FAILURE;

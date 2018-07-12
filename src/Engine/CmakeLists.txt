@@ -6,6 +6,6 @@ include_directories("../Engine")
 list(APPEND sources ${headers} ${DIR_Main})
 
 add_library(TmingEngine ${sources}) 
-#target_link_libraries(TmingEngine lua)
+target_link_libraries(TmingEngine lua)
 
 add_definitions(-DCOMPILING_LIB)
