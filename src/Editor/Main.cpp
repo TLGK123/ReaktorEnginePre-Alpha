@@ -19,9 +19,8 @@ int main()
 		Debug::Log("ÒıÇæ³õÊ¼»¯Ê§°Ü");
 		return -1;
 	};
+	screen = new Screen(&Global<Context>());
 
-	auto engineContext = engine->GetContext();
-	screen = new Screen(engineContext);
 	while (!screen->ScreenShouldClose())
 	{
 		screen->Update();

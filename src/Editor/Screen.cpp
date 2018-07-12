@@ -5,13 +5,13 @@ using namespace std;
 
 const unsigned int SCR_WIDTH = 1366;
 const unsigned int SCR_HEIGHT = 768;										// camera
-Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));                                 //Ĭ������Ĳ���
+Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));                                
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 // timing
-float deltaTime = 0.0f;                                                     //ÿִ֡����Ҫ��Ȩƽ��һ��
+float deltaTime = 0.0f;                                                     
 float lastFrame = 0.0f;
 
 //---------------------Data-------------
@@ -58,7 +58,7 @@ float vertices[] = {
 	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
-//��׼�������꣬0��0 �������� ����λ�ö��ǰٷֱ�
+
 glm::vec3 cubePositions[] = {
 	glm::vec3(0.0f,  0.0f,  0.0f),
 	glm::vec3(2.0f,  5.0f, -15.0f),
@@ -82,14 +82,16 @@ void Screen::Initialize(Context * context)
 	InitSubSystem(screenContext);
 }
 
+
+ViewPoint * s;
 void Screen::InitOpenGL()
 {
 	// glfw: initialize and configure
 	// ------------------------------
-	glfwInit();                                                     //��ʼ��glfw
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  //�������汾�� 3
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);                  //���ôΰ汾�� 3  ---��glfw 3.3
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  //ʹ�õ��Ǻ���ģʽ(Core-profile)
+	glfwInit();                                                    
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                 
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);                 
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  
 
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // uncomment this statement to fix compilation on OS X
@@ -102,53 +104,34 @@ void Screen::InitOpenGL()
 		glfwTerminate();
 		return;
 	}
-	glfwMakeContextCurrent(window);                                     //֪ͨGLFW�����Ǵ��ڵ�����������Ϊ��ǰ�̵߳�����������
-
-																		//---------------GLAD����������OpenGL�ĺ���ָ���---------------
+	glfwMakeContextCurrent(window);                                 
+																		
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
 
-	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);                            //ǰ�����������ƴ������½ǵ�λ�á�����,�ĸ�����������Ⱦ���ڵĿ�Ⱥ͸߶ȣ����أ�
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  //ע��һ�����ڱ仯���¼� ��Ҳ�ͻ�ÿ���ߴ�仯�͵��õĺ���
-	glfwSetCursorPosCallback(window, mouse_callback);                   //ע��һ������ƶ����¼�
-	glfwSetScrollCallback(window, scroll_callback);                     //ע����ֻ������¼�
-
-	glEnable(GL_DEPTH_TEST);                                            //����3D����Ҫ��Ȳ��ԣ�ǰ������
-	ourShader.Init("7.4.camera.vs", "7.4.camera.fs");					//-----------��ʼ����GLSL---------
-																		//------------GLSL---------end--------
-
-																		//--------- OpenGL --����------
-
+	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);                           
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback); 
+	glfwSetCursorPosCallback(window, mouse_callback);                 
+	glfwSetScrollCallback(window, scroll_callback);                  
+	glEnable(GL_DEPTH_TEST);                                          
+	ourShader.Init("7.4.camera.vs", "7.4.camera.fs");					
+																																
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);               //���û�������ID
+	glGenBuffers(1, &VBO);               
 
-										 // 1. ��VAO
-	glBindVertexArray(VAO);             //Ҫ��ʹ��VAO��Ҫ����ֻ��ʹ��glBindVertexArray��VAO
-										// 2. �Ѷ������鸴�Ƶ������й�OpenGLʹ��
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);  //���´�����vbo ������� �󶨵� GL_ARRAY_BUFFER��
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); //�Ѷ����������Ϣ���Ƶ� VBO���ڴ�ռ���ȥ
+										 
+	glBindVertexArray(VAO);            
+										
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);  
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); 
 
-																			   /*
-																			   GL_STATIC_DRAW �����ݲ���򼸺�����ı䡣  λ�����ݲ���ı䣬ÿ����Ⱦ����ʱ������ԭ������������ʹ�����������GL_STATIC_DRAW
-																			   GL_DYNAMIC_DRAW�����ݻᱻ�ı�ܶࡣ       һ�������е����ݽ�Ƶ�����ı�
-																			   GL_STREAM_DRAW ������ÿ�λ���ʱ����ı䡣  ��������ȷ���Կ������ݷ����ܹ�����д����ڴ沿�֡�
-																			   */
-																			   ///��ʵ�����������һƬ�ڴ�ռ䣬Ȼ�����ڴ�ռ�����д����
-																			   //------------------------
-																			   // 3. ���ö�������ָ��
+
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	/*
-	��һ������ָ������Ҫ���õĶ������ԡ����ǵ������ڶ�����ɫ����ʹ��layout(location = 0)������position�������Ե�λ��ֵ(Location)�������԰Ѷ������Ե�λ��ֵ����Ϊ0����Ϊ����ϣ�������ݴ��ݵ���һ�����������У������������Ǵ���0��
-	�ڶ�������ָ���������ԵĴ�С������������һ��vec3������3��ֵ��ɣ����Դ�С��3��
-	����������ָ�����ݵ����ͣ�������GL_FLOAT(GLSL��vec*�����ɸ�����ֵ��ɵ�)��
-	�¸��������������Ƿ�ϣ�����ݱ���׼��(Normalize)�������������ΪGL_TRUE���������ݶ��ᱻӳ�䵽0�������з�����signed������-1����1֮�䡣���ǰ�������ΪGL_FALSE��
-	�����������������(Stride)�������������������Ķ���������֮��ļ�������¸���λ��������3��float֮�����ǰѲ�������Ϊ3 * sizeof(float)��Ҫע�������������֪����������ǽ������еģ���������������֮��û�п�϶������Ҳ��������Ϊ0����OpenGL�������岽���Ƕ��٣�ֻ�е���ֵ�ǽ�������ʱ�ſ��ã���һ�������и���Ķ������ԣ����Ǿͱ����С�ĵض���ÿ����������֮��ļ�������ں���ῴ����������ӣ���ע: �����������˼��˵���Ǵ�������Եڶ��γ��ֵĵط�����������0λ��֮���ж����ֽڣ���
-	���һ��������������void*��������Ҫ���ǽ��������ֵ�ǿ������ת��������ʾλ�������ڻ�������ʼλ�õ�ƫ����(Offset)������λ������������Ŀ�ͷ������������0�����ǻ��ں�����ϸ�������������
-	*/
-	glEnableVertexAttribArray(0);                                       //�Զ�������λ��ֵ��Ϊ���������ö�������
+
+	glEnableVertexAttribArray(0);                                    
 																		// color attribute
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
@@ -208,17 +191,70 @@ void Screen::InitOpenGL()
 	glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
 	ourShader.setInt("texture1", 0);
 	ourShader.setInt("texture2", 1);
+
+	CreateFrameBufer();
 }
 
 void Screen::InitSubSystem(Context * context)
 {
 	context->RegisterSubsystem(new Console(context));
-	RegisteWidget(new ViewPoint(context));
+	s = new ViewPoint(context);
+	RegisteWidget(s);
 	Debug::Log("log RegisterSubsystem over");
+}
+
+int Screen::GetCurrentFrameTexture()
+{
+	return CurrentFrameTextureID;
 }
 
 void Screen::Update()
 {
+	glfwPollEvents();
+
+	float currentFrame = glfwGetTime();
+	deltaTime = currentFrame - lastFrame;
+	lastFrame = currentFrame;
+	processInput(window);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	glEnable(GL_DEPTH_TEST);
+
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            // also clear the depth buffer now!																	   // 4. ��������
+	
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture1);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+
+	ourShader.use();
+	glm::mat4 projection;
+	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); 
+
+	ourShader.setMat4("projection", projection);
+
+	glm::mat4 view = camera.GetViewMatrix();
+	ourShader.setMat4("view", view);
+
+	// render container
+	glBindVertexArray(VAO);
+	for (unsigned int i = 0; i < 10; i++)
+	{
+		// calculate the model matrix for each object and pass it to shader before drawing
+		glm::mat4 model;
+		model = glm::translate(model, cubePositions[i]);
+		float angle = 20.0f * i;
+		model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+		ourShader.setMat4("model", model);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glDisable(GL_DEPTH_TEST);
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
 	ImGui_ImplGlfwGL3_NewFrame();
 	{
 		static float f = 0.0f;
@@ -242,9 +278,10 @@ void Screen::Update()
 		ImGui::SameLine();
 		ImGui::Text("counter = %d", counter);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+		ImGui::Image((void*)textureColorbuffer, ImVec2(320, 180), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 	}
 
-	// 2. Show another simple window. In most cases you will use an explicit Begin/End pair to name your windows.
 	if (show_another_window)
 	{
 		ImGui::Begin("Another Window", &show_another_window);
@@ -254,70 +291,59 @@ void Screen::Update()
 		ImGui::End();
 	}
 
-	// 3. Show the ImGui demo window. Most of the sample code is in ImGui::ShowDemoWindow(). Read its code to learn more about Dear ImGui!
 	if (show_demo_window)
 	{
 		ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!
 		ImGui::ShowDemoWindow(&show_demo_window);
 	}
 
-	float currentFrame = glfwGetTime();
-	deltaTime = currentFrame - lastFrame;
-	lastFrame = currentFrame;
-	processInput(window);
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            // also clear the depth buffer now!																	   // 4. ��������
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture1);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-
-	ourShader.use();
-	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); //������ƽ��ͷ��
-																												  //                        45.0f����Ұ                     ��߱�                ��ƽ�����       Զƽ�����
-	ourShader.setMat4("projection", projection);
-
-	glm::mat4 view = camera.GetViewMatrix();
-	ourShader.setMat4("view", view);
-
-	// render container
-	glBindVertexArray(VAO);
-	for (unsigned int i = 0; i < 10; i++)
-	{
-		// calculate the model matrix for each object and pass it to shader before drawing
-		glm::mat4 model;
-		model = glm::translate(model, cubePositions[i]);
-		float angle = 20.0f * i;
-		model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-		ourShader.setMat4("model", model);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-	}
-
 	bool showDebug = true;
 	screenContext->GetSubsystem<Console>()->Draw("Hello Debug", &showDebug);
 	screenContext->GetSubsystem<Console>()->Draw2("Hello Debug", &showDebug);
 
-	for (auto& widget : m_widgets)
-	{
-		if (widget->GetIsWindow())
-		{
-			widget->Begin();
-		}
-
-		widget->Update();
-
-		if (widget->GetIsWindow())
-		{
-			widget->End();
-		}
-	}
+	s->ImageId = CurrentFrameTextureID;
+	DrawScreen();
 
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 
-	glfwSwapBuffers(window);                                        //˫���彻�� --���»���
-	glfwPollEvents();
+
+	glfwSwapBuffers(window);                                       
+	
+}
+
+void Screen::CreateFrameBufer()
+{
+	// 创建一个帧缓冲对象，并绑定它
+	//unsigned int framebuffer;
+	glGenFramebuffers(1, &framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	// 创建一个纹理图像
+	//unsigned int textureColorbuffer;
+	glGenTextures(1, &textureColorbuffer);
+	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//纹理 附加到当前绑定的帧缓冲对象
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
+
+	//创建一个渲染缓冲对象
+	unsigned int rbo;
+	glGenRenderbuffers(1, &rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	//创建一个深度和模板渲染缓冲对象
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT); // use a single renderbuffer object for both a depth AND stencil buffer.
+																						//附加这个渲染缓冲对象：
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
+																								  // now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	CurrentFrameTextureID = textureColorbuffer;
+	return ;
 }
 
 void Screen::ShutDown()

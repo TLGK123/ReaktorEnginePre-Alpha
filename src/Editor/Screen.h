@@ -44,6 +44,11 @@ public:
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 	Context * screenContext;
+	int CurrentFrameTextureID = 0;
+
+	unsigned int framebuffer;
+	unsigned int textureColorbuffer;
+
 
 	void Initialize(Context * context);
 	void Update();
@@ -55,6 +60,10 @@ public:
 
 	void InitSubSystem(Context * context);
 
+	int GetCurrentFrameTexture();
+
+	void CreateFrameBufer();
+	 
 	Screen(Context* context) : Subsystem(context)
 	{
 		Initialize(context);
@@ -63,8 +72,6 @@ public:
 	void RegisteWidget(Widget *widget )
 	{
 		m_widgets.push_back(widget);
-
-		//Debug::Log(" RegisteWidget ViwePoint Success");
 	}
 
 	void DrawScreen()

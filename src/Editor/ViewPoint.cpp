@@ -22,7 +22,7 @@ void TmingEngine::ViewPoint::Update()
 {
 	bool p_open = true;
 	ImGui::SetNextWindowSize(ImVec2(350, 560), ImGuiCond_FirstUseEver);
-	if (!ImGui::Begin("Example: Custom rendering", &p_open))
+	if (!ImGui::Begin("Scene", &p_open))
 	{
 		ImGui::End();
 		return;
@@ -36,16 +36,17 @@ void TmingEngine::ViewPoint::Update()
 	// If you decided that ImTextureID = MyEngineTexture*, then you can pass your MyEngineTexture* pointers to ImGui::Image(), and gather width/height through your own functions, etc.
 	// Using ShowMetricsWindow() as a "debugger" to inspect the draw data that are being passed to your render will help you debug issues if you are confused about this.
 	// Consider using the lower-level ImDrawList::AddImage() API, via ImGui::GetWindowDrawList()->AddImage().
-	ImTextureID my_tex_id = io.Fonts->TexID;
-	float my_tex_w = (float)io.Fonts->TexWidth;
-	float my_tex_h = (float)io.Fonts->TexHeight;
+	// ImTextureID my_tex_id = io.Fonts->TexID;
+	ImTextureID my_tex_id =(void *)ImageId;
+	
+	float my_tex_w = 1366;
+	float my_tex_h = 768;
 
 	ImGui::Text("%.0fx%.0f", my_tex_w, my_tex_h);
-	ImVec2 pos = ImGui::GetCursorScreenPos();
-	ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(1, 1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
-
+	//----------------------------------------------------------------- -1 -1  Image reversal
+	ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 	ImGui::End();
-
+	
 }
 
 void TmingEngine::ViewPoint::End()
