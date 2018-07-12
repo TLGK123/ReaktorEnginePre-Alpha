@@ -12,10 +12,8 @@ namespace TmingEngine
 {
 	static class ENGINE_CLASS Debug : public Subsystem
 	{
-	public:	
+	public:
 		static void Log(const char * message, ...);
 	private:
 	};
-
-
 }

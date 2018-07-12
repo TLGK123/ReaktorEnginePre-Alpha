@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 //= INCLUDES ==============
@@ -12,7 +10,7 @@ namespace TmingEngine
 	enum LogType
 	{
 		Error,
-	    Assert,
+		Assert,
 		Warning,
 		Log,
 		Exception

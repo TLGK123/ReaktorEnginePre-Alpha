@@ -7,5 +7,4 @@ namespace TmingEngine
 		printf(message);
 		Global<Context>().GetSubsystem<Console>()->AddLog(message);
 	}
-
 }
