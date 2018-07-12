@@ -5,13 +5,13 @@ using namespace std;
 
 const unsigned int SCR_WIDTH = 1366;
 const unsigned int SCR_HEIGHT = 768;										// camera
-Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));                                
+Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 // timing
-float deltaTime = 0.0f;                                                     
+float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 //---------------------Data-------------
@@ -82,16 +82,15 @@ void Screen::Initialize(Context * context)
 	InitSubSystem(screenContext);
 }
 
-
 ViewPoint * s;
 void Screen::InitOpenGL()
 {
 	// glfw: initialize and configure
 	// ------------------------------
-	glfwInit();                                                    
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);                 
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  
+	glfwInit();
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // uncomment this statement to fix compilation on OS X
@@ -104,35 +103,33 @@ void Screen::InitOpenGL()
 		glfwTerminate();
 		return;
 	}
-	glfwMakeContextCurrent(window);                                 
-																		
+	glfwMakeContextCurrent(window);
+
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
 
-	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);                           
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback); 
-	glfwSetCursorPosCallback(window, mouse_callback);                 
-	glfwSetScrollCallback(window, scroll_callback);                  
-	glEnable(GL_DEPTH_TEST);                                          
-	ourShader.Init("7.4.camera.vs", "7.4.camera.fs");					
-																																
+	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetScrollCallback(window, scroll_callback);
+	glEnable(GL_DEPTH_TEST);
+	ourShader.Init("7.4.camera.vs", "7.4.camera.fs");
+
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);               
+	glGenBuffers(1, &VBO);
 
-										 
-	glBindVertexArray(VAO);            
-										
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);  
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); 
+	glBindVertexArray(VAO);
 
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 
-	glEnableVertexAttribArray(0);                                    
-																		// color attribute
+	glEnableVertexAttribArray(0);
+	// color attribute
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
@@ -219,10 +216,82 @@ void Screen::Update()
 
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 	glEnable(GL_DEPTH_TEST);
-
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            // also clear the depth buffer now!																	   // 4. ��������
-	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            																	   // 4. ��������
+
+	Render_SceneObject();
+	Render_SkyBox();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glDisable(GL_DEPTH_TEST);
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	Render_UI();
+	glfwSwapBuffers(window);
+}
+
+void Screen::CreateFrameBufer()
+{
+	// 创建一个帧缓冲对象，并绑定它
+	//unsigned int framebuffer;
+	glGenFramebuffers(1, &framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	// 创建一个纹理图像
+	//unsigned int textureColorbuffer;
+	glGenTextures(1, &textureColorbuffer);
+	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//纹理 附加到当前绑定的帧缓冲对象
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
+
+	//创建一个渲染缓冲对象
+	unsigned int rbo;
+	glGenRenderbuffers(1, &rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	//创建一个深度和模板渲染缓冲对象
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT); // use a single renderbuffer object for both a depth AND stencil buffer.
+																						//附加这个渲染缓冲对象：
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
+																								  // now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	CurrentFrameTextureID = textureColorbuffer;
+	return;
+}
+
+void Screen::ShutDown()
+{
+	ImGui_ImplGlfwGL3_Shutdown();
+	ImGui::DestroyContext();
+
+	glDeleteVertexArrays(1, &VAO);		//�������ͷ���Դ
+	glDeleteBuffers(1, &VBO);
+	glfwTerminate();
+}
+
+bool Screen::ScreenShouldClose()
+{
+	return glfwWindowShouldClose(window);
+}
+
+void Screen::InitImgui()
+{
+	// Setup ImGui binding
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGui_ImplGlfwGL3_Init(window, true);
+	// Setup style
+	ImGui::StyleColorsDark();
+}
+
+void Screen::Render_SceneObject()
+{
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture1);
 	glActiveTexture(GL_TEXTURE1);
@@ -230,7 +299,7 @@ void Screen::Update()
 
 	ourShader.use();
 	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); 
+	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
 	ourShader.setMat4("projection", projection);
 
@@ -249,12 +318,14 @@ void Screen::Update()
 		ourShader.setMat4("model", model);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
+}
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glDisable(GL_DEPTH_TEST);
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+void Screen::Render_SkyBox()
+{
+}
 
+void Screen::Render_UI()
+{
 	ImGui_ImplGlfwGL3_NewFrame();
 	{
 		static float f = 0.0f;
@@ -306,69 +377,6 @@ void Screen::Update()
 
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
-
-
-	glfwSwapBuffers(window);                                       
-	
-}
-
-void Screen::CreateFrameBufer()
-{
-	// 创建一个帧缓冲对象，并绑定它
-	//unsigned int framebuffer;
-	glGenFramebuffers(1, &framebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-	// 创建一个纹理图像
-	//unsigned int textureColorbuffer;
-	glGenTextures(1, &textureColorbuffer);
-	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//纹理 附加到当前绑定的帧缓冲对象
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
-
-	//创建一个渲染缓冲对象
-	unsigned int rbo;
-	glGenRenderbuffers(1, &rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	//创建一个深度和模板渲染缓冲对象
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT); // use a single renderbuffer object for both a depth AND stencil buffer.
-																						//附加这个渲染缓冲对象：
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
-																								  // now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	CurrentFrameTextureID = textureColorbuffer;
-	return ;
-}
-
-void Screen::ShutDown()
-{
-	ImGui_ImplGlfwGL3_Shutdown();
-	ImGui::DestroyContext();
-
-	glDeleteVertexArrays(1, &VAO);		//�������ͷ���Դ
-	glDeleteBuffers(1, &VBO);
-	glfwTerminate();
-}
-
-bool Screen::ScreenShouldClose()
-{
-	return glfwWindowShouldClose(window);
-}
-
-void Screen::InitImgui()
-{
-	// Setup ImGui binding
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	ImGui_ImplGlfwGL3_Init(window, true);
-	// Setup style
-	ImGui::StyleColorsDark();
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)

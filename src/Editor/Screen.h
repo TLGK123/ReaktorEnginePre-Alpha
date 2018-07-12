@@ -92,8 +92,13 @@ public:
 		}
 	}
 
+	void CreateCube();
 private:
 	void InitImgui();
+	void Render_SceneObject();
+	void Render_SkyBox();
+	void Render_UI();
+
 };
 
 #endif // 

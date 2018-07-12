@@ -24,5 +24,6 @@ namespace TmingEngine
 
 		int ImageId;
 		void SetTexture(int Id);
+		void CreateCube();
 	};
 }

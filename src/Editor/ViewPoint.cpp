@@ -27,7 +27,6 @@ void TmingEngine::ViewPoint::Update()
 		ImGui::End();
 		return;
 	}
-	ImGuiIO& io = ImGui::GetIO();
 
 	// Here we are grabbing the font texture because that's the only one we have access to inside the demo code.
 	// Remember that ImTextureID is just storage for whatever you want it to be, it is essentially a value that will be passed to the render function inside the ImDrawCmd structure.
@@ -58,3 +57,5 @@ void TmingEngine::ViewPoint::SetTexture(int Id)
 {
 	ImageId = Id;
 }
+
+
