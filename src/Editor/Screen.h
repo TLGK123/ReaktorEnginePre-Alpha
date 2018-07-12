@@ -16,9 +16,9 @@
 
 #include "Core/Context.h"
 #include "Console.h"
-#include "UI\Widgets\Widget.h"
+#include "UI/Widgets/Widget.h"
 #include "ViewPoint.h"
-#include "Log\Log.h"
+#include "Log/Log.h"
 
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" ) // 去掉黑色控制台窗口
@@ -49,7 +49,6 @@ public:
 	unsigned int framebuffer;
 	unsigned int textureColorbuffer;
 
-
 	void Initialize(Context * context);
 	void Update();
 	void ShutDown();
@@ -63,13 +62,13 @@ public:
 	int GetCurrentFrameTexture();
 
 	void CreateFrameBufer();
-	 
+
 	Screen(Context* context) : Subsystem(context)
 	{
 		Initialize(context);
 	}
 
-	void RegisteWidget(Widget *widget )
+	void RegisteWidget(Widget *widget)
 	{
 		m_widgets.push_back(widget);
 	}
@@ -98,7 +97,6 @@ private:
 	void Render_SceneObject();
 	void Render_SkyBox();
 	void Render_UI();
-
 };
 
 #endif // 

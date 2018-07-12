@@ -414,7 +414,11 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	lastX = xpos;
 	lastY = ypos;
 
-	camera.ProcessMouseMovement(xoffset, yoffset);
+	ImGuiIO& io = ImGui::GetIO();
+	if (&io != NULL && io.MouseDownDuration[1] >= 0)
+	{
+		camera.ProcessMouseMovement(xoffset, yoffset);
+	}
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)

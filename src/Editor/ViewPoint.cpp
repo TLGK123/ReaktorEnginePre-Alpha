@@ -2,12 +2,10 @@
 
 TmingEngine::ViewPoint::~ViewPoint()
 {
-
 }
 
 void TmingEngine::ViewPoint::Begin()
 {
-
 	//Debug::Log("# 1");
 	//ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 	//Debug::Log("# 2");
@@ -36,8 +34,8 @@ void TmingEngine::ViewPoint::Update()
 	// Using ShowMetricsWindow() as a "debugger" to inspect the draw data that are being passed to your render will help you debug issues if you are confused about this.
 	// Consider using the lower-level ImDrawList::AddImage() API, via ImGui::GetWindowDrawList()->AddImage().
 	// ImTextureID my_tex_id = io.Fonts->TexID;
-	ImTextureID my_tex_id =(void *)ImageId;
-	
+	ImTextureID my_tex_id = (void *)ImageId;
+
 	float my_tex_w = 1366;
 	float my_tex_h = 768;
 
@@ -45,17 +43,14 @@ void TmingEngine::ViewPoint::Update()
 	//----------------------------------------------------------------- -1 -1  Image reversal
 	ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 	ImGui::End();
-	
 }
 
 void TmingEngine::ViewPoint::End()
 {
-//	ImGui::End();
+	//	ImGui::End();
 }
 
 void TmingEngine::ViewPoint::SetTexture(int Id)
 {
 	ImageId = Id;
 }
-
-
