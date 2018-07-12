@@ -58,10 +58,9 @@ namespace TmingEngine
 
 	void Console::Draw2(const char* title, bool* p_open = NULL)
 	{
-		
 		{
-			ImGui::SetNextWindowSize(ImVec2(350, 560), ImGuiCond_FirstUseEver);
-			if (!ImGui::Begin("Example: Custom rendering", p_open))
+			ImGui::SetNextWindowSize(ImVec2(350, 568), ImGuiCond_FirstUseEver);
+			if (!ImGui::Begin("Example: Custom rendering1", p_open))  //标题一样，代表同一窗口
 			{
 				ImGui::End();
 				return;

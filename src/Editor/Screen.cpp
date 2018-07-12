@@ -5,13 +5,13 @@ using namespace std;
 
 const unsigned int SCR_WIDTH = 1366;
 const unsigned int SCR_HEIGHT = 768;										// camera
-Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));                                 //Ä¬ÈÏÏà»úµÄ²ÎÊý
+Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));                                 //Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 // timing
-float deltaTime = 0.0f;                                                     //Ã¿Ö¡Ö´ÐÐÐèÒª¼ÓÈ¨Æ½¾ùÒ»ÏÂ
+float deltaTime = 0.0f;                                                     //Ã¿Ö¡Ö´ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½È¨Æ½ï¿½ï¿½Ò»ï¿½ï¿½
 float lastFrame = 0.0f;
 
 //---------------------Data-------------
@@ -58,7 +58,7 @@ float vertices[] = {
 	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
-//±ê×¼»¯µÄ×ø±ê£¬0£¬0 ÔÚÕýÖÐÐÄ ÆäËûÎ»ÖÃ¶¼ÊÇ°Ù·Ö±È
+//ï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£¬0ï¿½ï¿½0 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã¶ï¿½ï¿½Ç°Ù·Ö±ï¿½
 glm::vec3 cubePositions[] = {
 	glm::vec3(0.0f,  0.0f,  0.0f),
 	glm::vec3(2.0f,  5.0f, -15.0f),
@@ -86,10 +86,10 @@ void Screen::InitOpenGL()
 {
 	// glfw: initialize and configure
 	// ------------------------------
-	glfwInit();                                                     //³õÊ¼»¯glfw
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  //ÉèÖÃÖ÷°æ±¾ºÅ 3
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);                  //ÉèÖÃ´Î°æ±¾ºÅ 3  ---¡·glfw 3.3
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  //Ê¹ÓÃµÄÊÇºËÐÄÄ£Ê½(Core-profile)
+	glfwInit();                                                     //ï¿½ï¿½Ê¼ï¿½ï¿½glfw
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ±¾ï¿½ï¿½ 3
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);                  //ï¿½ï¿½ï¿½Ã´Î°æ±¾ï¿½ï¿½ 3  ---ï¿½ï¿½glfw 3.3
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  //Ê¹ï¿½Ãµï¿½ï¿½Çºï¿½ï¿½ï¿½Ä£Ê½(Core-profile)
 
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // uncomment this statement to fix compilation on OS X
@@ -102,53 +102,53 @@ void Screen::InitOpenGL()
 		glfwTerminate();
 		return;
 	}
-	glfwMakeContextCurrent(window);                                     //Í¨ÖªGLFW½«ÎÒÃÇ´°¿ÚµÄÉÏÏÂÎÄÉèÖÃÎªµ±Ç°Ïß³ÌµÄÖ÷ÉÏÏÂÎÄÁË
+	glfwMakeContextCurrent(window);                                     //Í¨ÖªGLFWï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ç°ï¿½ß³Ìµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-																		//---------------GLADÊÇÓÃÀ´¹ÜÀíOpenGLµÄº¯ÊýÖ¸ÕëµÄ---------------
+																		//---------------GLADï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½OpenGLï¿½Äºï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½---------------
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
 
-	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);                            //Ç°Á½¸ö²ÎÊý¿ØÖÆ´°¿Ú×óÏÂ½ÇµÄÎ»ÖÃ¡£µÚÈý,ËÄ¸ö²ÎÊý¿ØÖÆäÖÈ¾´°¿ÚµÄ¿í¶ÈºÍ¸ß¶È£¨ÏñËØ£©
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  //×¢²áÒ»¸ö´°¿Ú±ä»¯µÄÊÂ¼þ £¬Ò²¾Í»áÃ¿µ±³ß´ç±ä»¯¾Íµ÷ÓÃµÄº¯Êý
-	glfwSetCursorPosCallback(window, mouse_callback);                   //×¢²áÒ»¸öÊó±êÒÆ¶¯µÄÊÂ¼þ
-	glfwSetScrollCallback(window, scroll_callback);                     //×¢²á¹öÂÖ»¬¶¯µÄÊÂ¼þ
+	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);                            //Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â½Çµï¿½Î»ï¿½Ã¡ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ÚµÄ¿ï¿½ÈºÍ¸ß¶È£ï¿½ï¿½ï¿½ï¿½Ø£ï¿½
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  //×¢ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ú±ä»¯ï¿½ï¿½ï¿½Â¼ï¿½ ï¿½ï¿½Ò²ï¿½Í»ï¿½Ã¿ï¿½ï¿½ï¿½ß´ï¿½ä»¯ï¿½Íµï¿½ï¿½ÃµÄºï¿½ï¿½ï¿½
+	glfwSetCursorPosCallback(window, mouse_callback);                   //×¢ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
+	glfwSetScrollCallback(window, scroll_callback);                     //×¢ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 
-	glEnable(GL_DEPTH_TEST);                                            //½øÈë3DºóÐèÒªÉî¶È²âÊÔ£¬Ç°ºó·ÖÇå³þ
-	ourShader.Init("7.4.camera.vs", "7.4.camera.fs");					//-----------¿ªÊ¼¼ÓÈëGLSL---------
+	glEnable(GL_DEPTH_TEST);                                            //ï¿½ï¿½ï¿½ï¿½3Dï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½È²ï¿½ï¿½Ô£ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	ourShader.Init("7.4.camera.vs", "7.4.camera.fs");					//-----------ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½GLSL---------
 																		//------------GLSL---------end--------
 
-																		//--------- OpenGL --¶ÔÏó------
+																		//--------- OpenGL --ï¿½ï¿½ï¿½ï¿½------
 
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);               //ÉèÖÃ»º³å¶ÔÏóµÄID
+	glGenBuffers(1, &VBO);               //ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID
 
-										 // 1. °ó¶¨VAO
-	glBindVertexArray(VAO);             //ÒªÏëÊ¹ÓÃVAO£¬Òª×öµÄÖ»ÊÇÊ¹ÓÃglBindVertexArray°ó¶¨VAO
-										// 2. °Ñ¶¥µãÊý×é¸´ÖÆµ½»º³åÖÐ¹©OpenGLÊ¹ÓÃ
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);  //°ÑÐÂ´´½¨µÄvbo »º´æ¶ÔÏó °ó¶¨µ½ GL_ARRAY_BUFFERÉÏ
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); //°Ñ¶¥µãµÄÊý¾ÝÐÅÏ¢¸´ÖÆµ½ VBOµÄÄÚ´æ¿Õ¼äÖÐÈ¥
+										 // 1. ï¿½ï¿½VAO
+	glBindVertexArray(VAO);             //Òªï¿½ï¿½Ê¹ï¿½ï¿½VAOï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ê¹ï¿½ï¿½glBindVertexArrayï¿½ï¿½VAO
+										// 2. ï¿½Ñ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¸´ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¹ï¿½OpenGLÊ¹ï¿½ï¿½
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);  //ï¿½ï¿½ï¿½Â´ï¿½ï¿½ï¿½ï¿½ï¿½vbo ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ó¶¨µï¿½ GL_ARRAY_BUFFERï¿½ï¿½
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); //ï¿½Ñ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Æµï¿½ VBOï¿½ï¿½ï¿½Ú´ï¿½Õ¼ï¿½ï¿½ï¿½È¥
 
 																			   /*
-																			   GL_STATIC_DRAW £ºÊý¾Ý²»»á»ò¼¸ºõ²»»á¸Ä±ä¡£  Î»ÖÃÊý¾Ý²»»á¸Ä±ä£¬Ã¿´ÎäÖÈ¾µ÷ÓÃÊ±¶¼±£³ÖÔ­Ñù£¬ËùÒÔËüµÄÊ¹ÓÃÀàÐÍ×îºÃÊÇGL_STATIC_DRAW
-																			   GL_DYNAMIC_DRAW£ºÊý¾Ý»á±»¸Ä±äºÜ¶à¡£       Ò»¸ö»º³åÖÐµÄÊý¾Ý½«Æµ·±±»¸Ä±ä
-																			   GL_STREAM_DRAW £ºÊý¾ÝÃ¿´Î»æÖÆÊ±¶¼»á¸Ä±ä¡£  ÕâÑù¾ÍÄÜÈ·±£ÏÔ¿¨°ÑÊý¾Ý·ÅÔÚÄÜ¹»¸ßËÙÐ´ÈëµÄÄÚ´æ²¿·Ö¡£
+																			   GL_STATIC_DRAW ï¿½ï¿½ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½ò¼¸ºï¿½ï¿½ï¿½ï¿½ï¿½Ä±ä¡£  Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½Ä±ä£¬Ã¿ï¿½ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½GL_STATIC_DRAW
+																			   GL_DYNAMIC_DRAWï¿½ï¿½ï¿½ï¿½ï¿½Ý»á±»ï¿½Ä±ï¿½Ü¶à¡£       Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½Ý½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½
+																			   GL_STREAM_DRAW ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½Î»ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ä±ä¡£  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½Ú´æ²¿ï¿½Ö¡ï¿½
 																			   */
-																			   ///ÆäÊµÕâ¸ö¾ÍÊÇÉêÇëÒ»Æ¬ÄÚ´æ¿Õ¼ä£¬È»ºóÏòÄÚ´æ¿Õ¼äÀïÃæÐ´Êý¾Ý
+																			   ///ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Æ¬ï¿½Ú´ï¿½Õ¼ä£¬È»ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½
 																			   //------------------------
-																			   // 3. ÉèÖÃ¶¥µãÊôÐÔÖ¸Õë
+																			   // 3. ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	/*
-	µÚÒ»¸ö²ÎÊýÖ¸¶¨ÎÒÃÇÒªÅäÖÃµÄ¶¥µãÊôÐÔ¡£»¹¼ÇµÃÎÒÃÇÔÚ¶¥µã×ÅÉ«Æ÷ÖÐÊ¹ÓÃlayout(location = 0)¶¨ÒåÁËposition¶¥µãÊôÐÔµÄÎ»ÖÃÖµ(Location)Âð£¿Ëü¿ÉÒÔ°Ñ¶¥µãÊôÐÔµÄÎ»ÖÃÖµÉèÖÃÎª0¡£ÒòÎªÎÒÃÇÏ£Íû°ÑÊý¾Ý´«µÝµ½ÕâÒ»¸ö¶¥µãÊôÐÔÖÐ£¬ËùÒÔÕâÀïÎÒÃÇ´«Èë0¡£
-	µÚ¶þ¸ö²ÎÊýÖ¸¶¨¶¥µãÊôÐÔµÄ´óÐ¡¡£¶¥µãÊôÐÔÊÇÒ»¸övec3£¬ËüÓÉ3¸öÖµ×é³É£¬ËùÒÔ´óÐ¡ÊÇ3¡£
-	µÚÈý¸ö²ÎÊýÖ¸¶¨Êý¾ÝµÄÀàÐÍ£¬ÕâÀïÊÇGL_FLOAT(GLSLÖÐvec*¶¼ÊÇÓÉ¸¡µãÊýÖµ×é³ÉµÄ)¡£
-	ÏÂ¸ö²ÎÊý¶¨ÒåÎÒÃÇÊÇ·ñÏ£ÍûÊý¾Ý±»±ê×¼»¯(Normalize)¡£Èç¹ûÎÒÃÇÉèÖÃÎªGL_TRUE£¬ËùÓÐÊý¾Ý¶¼»á±»Ó³Éäµ½0£¨¶ÔÓÚÓÐ·ûºÅÐÍsignedÊý¾ÝÊÇ-1£©µ½1Ö®¼ä¡£ÎÒÃÇ°ÑËüÉèÖÃÎªGL_FALSE¡£
-	µÚÎå¸ö²ÎÊý½Ð×ö²½³¤(Stride)£¬Ëü¸æËßÎÒÃÇÔÚÁ¬ÐøµÄ¶¥µãÊôÐÔ×éÖ®¼äµÄ¼ä¸ô¡£ÓÉÓÚÏÂ¸ö×éÎ»ÖÃÊý¾ÝÔÚ3¸öfloatÖ®ºó£¬ÎÒÃÇ°Ñ²½³¤ÉèÖÃÎª3 * sizeof(float)¡£Òª×¢ÒâµÄÊÇÓÉÓÚÎÒÃÇÖªµÀÕâ¸öÊý×éÊÇ½ôÃÜÅÅÁÐµÄ£¨ÔÚÁ½¸ö¶¥µãÊôÐÔÖ®¼äÃ»ÓÐ¿ÕÏ¶£©ÎÒÃÇÒ²¿ÉÒÔÉèÖÃÎª0À´ÈÃOpenGL¾ö¶¨¾ßÌå²½³¤ÊÇ¶àÉÙ£¨Ö»ÓÐµ±ÊýÖµÊÇ½ôÃÜÅÅÁÐÊ±²Å¿ÉÓÃ£©¡£Ò»µ©ÎÒÃÇÓÐ¸ü¶àµÄ¶¥µãÊôÐÔ£¬ÎÒÃÇ¾Í±ØÐë¸üÐ¡ÐÄµØ¶¨ÒåÃ¿¸ö¶¥µãÊôÐÔÖ®¼äµÄ¼ä¸ô£¬ÎÒÃÇÔÚºóÃæ»á¿´µ½¸ü¶àµÄÀý×Ó£¨Òë×¢: Õâ¸ö²ÎÊýµÄÒâË¼¼òµ¥Ëµ¾ÍÊÇ´ÓÕâ¸öÊôÐÔµÚ¶þ´Î³öÏÖµÄµØ·½µ½Õû¸öÊý×é0Î»ÖÃÖ®¼äÓÐ¶àÉÙ×Ö½Ú£©¡£
-	×îºóÒ»¸ö²ÎÊýµÄÀàÐÍÊÇvoid*£¬ËùÒÔÐèÒªÎÒÃÇ½øÐÐÕâ¸öÆæ¹ÖµÄÇ¿ÖÆÀàÐÍ×ª»»¡£Ëü±íÊ¾Î»ÖÃÊý¾ÝÔÚ»º³åÖÐÆðÊ¼Î»ÖÃµÄÆ«ÒÆÁ¿(Offset)¡£ÓÉÓÚÎ»ÖÃÊý¾ÝÔÚÊý×éµÄ¿ªÍ·£¬ËùÒÔÕâÀïÊÇ0¡£ÎÒÃÇ»áÔÚºóÃæÏêÏ¸½âÊÍÕâ¸ö²ÎÊý¡£
+	ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ÃµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¡ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½layout(location = 0)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½positionï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½Î»ï¿½ï¿½Öµ(Location)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô°Ñ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½Î»ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½Ýµï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ï¿½ï¿½0ï¿½ï¿½
+	ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÔµÄ´ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½vec3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½Öµï¿½ï¿½É£ï¿½ï¿½ï¿½ï¿½Ô´ï¿½Ð¡ï¿½ï¿½3ï¿½ï¿½
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½GL_FLOAT(GLSLï¿½ï¿½vec*ï¿½ï¿½ï¿½ï¿½ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Éµï¿½)ï¿½ï¿½
+	ï¿½Â¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½×¼ï¿½ï¿½(Normalize)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªGL_TRUEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½á±»Ó³ï¿½äµ½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½signedï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-1ï¿½ï¿½ï¿½ï¿½1Ö®ï¿½ä¡£ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªGL_FALSEï¿½ï¿½
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(Stride)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¸ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½floatÖ®ï¿½ï¿½ï¿½ï¿½ï¿½Ç°Ñ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª3 * sizeof(float)ï¿½ï¿½Òª×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½Ã»ï¿½Ð¿ï¿½Ï¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½OpenGLï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å²½ï¿½ï¿½ï¿½Ç¶ï¿½ï¿½Ù£ï¿½Ö»ï¿½Ðµï¿½ï¿½ï¿½Öµï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Å¿ï¿½ï¿½Ã£ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¸ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô£ï¿½ï¿½ï¿½ï¿½Ç¾Í±ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ÄµØ¶ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½á¿´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½ï¿½ï¿½×¢: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¼ï¿½ï¿½Ëµï¿½ï¿½ï¿½Ç´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÔµÚ¶ï¿½ï¿½Î³ï¿½ï¿½ÖµÄµØ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0Î»ï¿½ï¿½Ö®ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Ö½Ú£ï¿½ï¿½ï¿½
+	ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½void*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼Î»ï¿½Ãµï¿½Æ«ï¿½ï¿½ï¿½ï¿½(Offset)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½Ç»ï¿½ï¿½Úºï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	*/
-	glEnableVertexAttribArray(0);                                       //ÒÔ¶¥µãÊôÐÔÎ»ÖÃÖµ×÷Îª²ÎÊý£¬ÆôÓÃ¶¥µãÊôÐÔ
+	glEnableVertexAttribArray(0);                                       //ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½Öµï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 																		// color attribute
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
@@ -213,7 +213,7 @@ void Screen::InitOpenGL()
 void Screen::InitSubSystem(Context * context)
 {
 	context->RegisterSubsystem(new Console(context));
-
+	RegisteWidget(new ViewPoint(context));
 	Debug::Log("log RegisterSubsystem over");
 }
 
@@ -261,13 +261,12 @@ void Screen::Update()
 		ImGui::ShowDemoWindow(&show_demo_window);
 	}
 
-	;
-	float currentFrame = glfwGetTime();                             //¼ÆËãÁ½Ö¡Ö®¼äµÄÊ±¼ä²î
+	float currentFrame = glfwGetTime();
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
-	processInput(window);                                           //´¦ÀíÃ¿Ö¡µÄ¼üÅÌÊäÈë
+	processInput(window);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            // also clear the depth buffer now!																	   // 4. »æÖÆÎïÌå
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            // also clear the depth buffer now!																	   // 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture1);
 	glActiveTexture(GL_TEXTURE1);
@@ -275,8 +274,8 @@ void Screen::Update()
 
 	ourShader.use();
 	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); //´´½¨ÁËÆ½½ØÍ·Ìå
-																												  //                        45.0fÊÇÊÓÒ°                     ¿í¸ß±È                ½üÆ½Ãæ¾àÀë       Ô¶Æ½Ãæ¾àÀë
+	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Í·ï¿½ï¿½
+																												  //                        45.0fï¿½ï¿½ï¿½ï¿½Ò°                     ï¿½ï¿½ß±ï¿½                ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½       Ô¶Æ½ï¿½ï¿½ï¿½ï¿½ï¿½
 	ourShader.setMat4("projection", projection);
 
 	glm::mat4 view = camera.GetViewMatrix();
@@ -298,12 +297,26 @@ void Screen::Update()
 	bool showDebug = true;
 	screenContext->GetSubsystem<Console>()->Draw("Hello Debug", &showDebug);
 	screenContext->GetSubsystem<Console>()->Draw2("Hello Debug", &showDebug);
-	
+
+	for (auto& widget : m_widgets)
+	{
+		if (widget->GetIsWindow())
+		{
+			widget->Begin();
+		}
+
+		widget->Update();
+
+		if (widget->GetIsWindow())
+		{
+			widget->End();
+		}
+	}
 
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 
-	glfwSwapBuffers(window);                                        //Ë«»º³å½»»» --¸üÐÂ»­Ãæ
+	glfwSwapBuffers(window);                                        //Ë«ï¿½ï¿½ï¿½å½»ï¿½ï¿½ --ï¿½ï¿½ï¿½Â»ï¿½ï¿½ï¿½
 	glfwPollEvents();
 }
 
@@ -312,7 +325,7 @@ void Screen::ShutDown()
 	ImGui_ImplGlfwGL3_Shutdown();
 	ImGui::DestroyContext();
 
-	glDeleteVertexArrays(1, &VAO);		//½áÊøºóÊÍ·Å×ÊÔ´
+	glDeleteVertexArrays(1, &VAO);		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½Ô´
 	glDeleteBuffers(1, &VBO);
 	glfwTerminate();
 }
@@ -339,7 +352,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void processInput(GLFWwindow *window)
 {
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)                    //Ìí¼ÓQ°´¼üÅÐ¶Ï ¹Ø±Õ
+	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)                    //ï¿½ï¿½ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ ï¿½Ø±ï¿½
 		glfwSetWindowShouldClose(window, true);
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)

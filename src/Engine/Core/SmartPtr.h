@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #ifndef SmartPtr_H
 #define SmartPtr_H
 

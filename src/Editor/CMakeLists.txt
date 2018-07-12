@@ -1,5 +1,5 @@
-file(GLOB headers "*.h")
-file(GLOB sources "*.cpp" "*.c")
+file(GLOB headers "*.h" "UI/Widgets/Widget.h")
+file(GLOB sources "*.cpp" "*.c" "UI/Widgets/Widget.cpp")
 include_directories("../../include")    #添加头文件目录
 include_directories("../Engine")    #添加头文件目录
 aux_source_directory(opengl DIR_Main)

@@ -16,6 +16,9 @@
 
 #include "Core/Context.h"
 #include "Console.h"
+#include "UI\Widgets\Widget.h"
+#include "ViewPoint.h"
+#include "Log\Log.h"
 
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" ) // 去掉黑色控制台窗口
@@ -35,6 +38,7 @@ public:
 	unsigned int texture1, texture2;
 	Shader ourShader;
 	unsigned int VBO, VAO;
+	vector<Widget *> m_widgets;
 
 	bool show_demo_window = true;
 	bool show_another_window = false;
@@ -54,6 +58,31 @@ public:
 	Screen(Context* context) : Subsystem(context)
 	{
 		Initialize(context);
+	}
+
+	void RegisteWidget(Widget *widget )
+	{
+		m_widgets.push_back(widget);
+
+		//Debug::Log(" RegisteWidget ViwePoint Success");
+	}
+
+	void DrawScreen()
+	{
+		for (auto& widget : m_widgets)
+		{
+			if (widget->GetIsWindow())
+			{
+				widget->Begin();
+			}
+
+			widget->Update();
+
+			if (widget->GetIsWindow())
+			{
+				widget->End();
+			}
+		}
 	}
 
 private:
