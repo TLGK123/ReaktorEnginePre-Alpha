@@ -36,8 +36,8 @@ void TmingEngine::ViewPoint::Update()
 	// ImTextureID my_tex_id = io.Fonts->TexID;
 	ImTextureID my_tex_id = (void *)ImageId;
 
-	float my_tex_w = 1366;
-	float my_tex_h = 768;
+	float my_tex_w = 683;
+	float my_tex_h = 384;
 
 	ImGui::Text("%.0fx%.0f", my_tex_w, my_tex_h);
 	//----------------------------------------------------------------- -1 -1  Image reversal
