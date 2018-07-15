@@ -18,6 +18,7 @@
 #include "Console.h"
 #include "UI/Widgets/Widget.h"
 #include "ViewPoint.h"
+#include "DemoMenu.h"
 #include "Log/Log.h"
 
 //#if Debug
@@ -71,6 +72,18 @@ public:
 	void RegisteWidget(Widget *widget)
 	{
 		m_widgets.push_back(widget);
+	}
+
+	template <class T>
+	T* GetSubWidget()
+	{
+		for (const auto& subwidget : m_widgets)
+		{
+			if (typeid(T) == typeid(*subwidget))
+				return static_cast<T*>(subwidget);
+		}
+
+		return nullptr;
 	}
 
 	void DrawScreen()

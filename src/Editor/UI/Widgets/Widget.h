@@ -13,6 +13,7 @@ public:
 	virtual void End();
 	bool GetIsWindow() { return m_isWindow; }
 
+
 protected:
 	TmingEngine::Context* m_context = nullptr;
 	bool m_isVisible = false;

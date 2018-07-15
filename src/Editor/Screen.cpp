@@ -195,8 +195,9 @@ void Screen::InitOpenGL()
 void Screen::InitSubSystem(Context * context)
 {
 	context->RegisterSubsystem(new Console(context));
-	s = new ViewPoint(context);
-	RegisteWidget(s);
+
+	RegisteWidget(new ViewPoint(context));
+	RegisteWidget(new DemoMenu(context));
 	Debug::Log("log RegisterSubsystem over");
 }
 
@@ -373,7 +374,7 @@ void Screen::Render_UI()
 	screenContext->GetSubsystem<Console>()->Draw("Hello Debug", &showDebug);
 	screenContext->GetSubsystem<Console>()->Draw2("Hello Debug", &showDebug);
 
-	s->ImageId = CurrentFrameTextureID;
+    GetSubWidget<ViewPoint>()->ImageId = CurrentFrameTextureID;
 	DrawScreen();
 
 	ImGui::Render();

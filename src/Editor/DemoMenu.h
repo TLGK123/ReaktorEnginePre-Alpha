@@ -1,4 +1,6 @@
-#pragma once
+#ifndef DemoMenu_h
+#define DemoMenu_h
+
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
 #include "imgui.h"
@@ -8,21 +10,24 @@
 
 namespace TmingEngine
 {
-	class ViewPoint :public Widget
+
+	class DemoMenu :public Widget
 	{
 	public:
 
-		ViewPoint(Context *context)
+		DemoMenu(Context *context)
 		{
 			m_title = "ViewPoint";
 		}
-		~ViewPoint();
+		int testIndex = 0;
+		int testCount = 3;
+
+		int testSelection;
 
 		void Begin();
 		void Update();
 		void End();
-
-		int ImageId;
-		void SetTexture(int Id);	
 	};
 }
+
+#endif

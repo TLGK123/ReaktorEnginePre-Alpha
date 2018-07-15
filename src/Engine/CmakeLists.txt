@@ -9,3 +9,5 @@ add_library(TmingEngine ${sources})
 target_link_libraries(TmingEngine lua)
 
 add_definitions(-DCOMPILING_LIB)
+
+#add_subdirectory(3Part/bullet3)
