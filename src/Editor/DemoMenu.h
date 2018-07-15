@@ -7,10 +7,10 @@
 #include "imgui_impl_glfw_gl3.h"
 #include "Log/Log.h"
 #include "UI/Widgets/Widget.h"
+#include "Log/Log.h"
 
 namespace TmingEngine
 {
-
 	class DemoMenu :public Widget
 	{
 	public:
@@ -20,7 +20,7 @@ namespace TmingEngine
 			m_title = "ViewPoint";
 		}
 		int testIndex = 0;
-		int testCount = 3;
+		int testCount = 2;
 
 		int testSelection;
 
