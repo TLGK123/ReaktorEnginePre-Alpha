@@ -82,7 +82,7 @@ void Screen::Initialize(Context * context)
 	InitSubSystem(screenContext);
 }
 
-ViewPoint * s;
+
 void Screen::InitOpenGL()
 {
 	// glfw: initialize and configure
@@ -218,7 +218,7 @@ void Screen::Update()
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            																	   // 4. ��������
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            																	  
 
 	Render_SceneObject();
 	Render_SkyBox();
@@ -271,7 +271,7 @@ void Screen::ShutDown()
 	ImGui_ImplGlfwGL3_Shutdown();
 	ImGui::DestroyContext();
 
-	glDeleteVertexArrays(1, &VAO);		//�������ͷ���Դ
+	glDeleteVertexArrays(1, &VAO);		
 	glDeleteBuffers(1, &VBO);
 	glfwTerminate();
 }
@@ -319,6 +319,11 @@ void Screen::Render_SceneObject()
 		ourShader.setMat4("model", model);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
+
+	//for each (TestDemo* demo in m_testDemos)
+	//{
+	//	demo->Render_SceneObject();
+	//}
 }
 
 void Screen::Render_SkyBox()

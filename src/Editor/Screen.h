@@ -20,6 +20,7 @@
 #include "ViewPoint.h"
 #include "DemoMenu.h"
 #include "Log/Log.h"
+#include "Test.h"
 
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" ) // 去掉黑色控制台窗口
@@ -32,6 +33,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);          //鼠
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);   //滚轮处理函数
 
 using namespace TmingEngine;
+
 class Screen :public Subsystem
 {
 public:
@@ -40,6 +42,7 @@ public:
 	Shader ourShader;
 	unsigned int VBO, VAO;
 	vector<Widget *> m_widgets;
+	vector<TestDemo *> m_testDemos;
 
 	bool show_demo_window = true;
 	bool show_another_window = false;
@@ -104,7 +107,7 @@ public:
 		}
 	}
 
-	void CreateCube();
+
 private:
 	void InitImgui();
 	void Render_SceneObject();
