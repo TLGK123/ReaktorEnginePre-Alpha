@@ -215,15 +215,16 @@ void Screen::Update()
 	lastFrame = currentFrame;
 	processInput(window);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-	glEnable(GL_DEPTH_TEST);
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);   //帧缓冲的 开始  
+	glEnable(GL_DEPTH_TEST);                          //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
+	                                                  //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            																	  
 
 	Render_SkyBox();
 	Render_SceneObject();
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
 
 	glDisable(GL_DEPTH_TEST);
 	glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
