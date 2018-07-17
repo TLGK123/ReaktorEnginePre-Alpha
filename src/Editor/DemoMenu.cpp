@@ -50,6 +50,11 @@ static bool sTestEntriesGetName(void*, int idx, const char** out_name)
 
 void TmingEngine::DemoMenu::Begin()
 {
+
+}
+
+void TmingEngine::DemoMenu::Update()
+{
 	bool p_open = true;
 	//ImGui::SetNextWindowPos(ImVec2(200, 10));
 	ImGui::SetNextWindowSize(ImVec2(200, 560), ImGuiCond_FirstUseEver);
@@ -75,10 +80,6 @@ void TmingEngine::DemoMenu::Begin()
 	ImGui::Text("Vel Iters");
 	ImGui::PopAllowKeyboardFocus();
 	ImGui::End();
-}
-
-void TmingEngine::DemoMenu::Update()
-{
 }
 
 void TmingEngine::DemoMenu::End()
