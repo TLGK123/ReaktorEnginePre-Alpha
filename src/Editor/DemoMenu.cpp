@@ -1,9 +1,12 @@
 #include "DemoMenu.h"
 #include "Test.h"
 
-#define NewDemo(X) currentDemo = new X();
-//#define ShowDemo(X) void show##X ()\
-//						{ NewDemo(x); }
+#define NewDemo(X) if(currentDemo!=nullptr) \
+					{delete currentDemo;} \
+					currentDemo = new X();
+
+#define ShowDemo(X) void show##X ()\
+						{ NewDemo(x); }
 
 typedef void(*SimpleFunc)();
 

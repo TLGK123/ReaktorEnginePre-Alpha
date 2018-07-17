@@ -1,22 +1,27 @@
 #pragma once
-
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
-
 
 class TestDemo
 {
 public:
 	TestDemo()
 	{
-
+		Initlization();
 	}
+
 	~TestDemo()
 	{
 
 	}
+
+	virtual void Initlization()
+	{
+	
+	}
+
 	virtual void Render_SceneObject();
 private:
 
@@ -25,8 +30,9 @@ private:
 class Demo1 :public TestDemo
 {
 public:
-	Demo1()
+	Demo1():TestDemo()
 	{
+
 	}
 
 	~Demo1()
