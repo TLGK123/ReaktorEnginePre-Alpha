@@ -27,9 +27,9 @@ struct GLRenderLines;
 struct GLRenderTriangles;
 
 //
-struct Camera
+struct Box2DCamera
 {
-	Camera()
+	Box2DCamera()
 	{
 		m_center.Set(0.0f, 20.0f);
 		m_zoom = 1.0f;
@@ -87,6 +87,6 @@ private:
 };
 
 extern DebugDraw g_debugDraw;
-extern Camera g_camera;
+extern Box2DCamera g_camera;
 
 #endif

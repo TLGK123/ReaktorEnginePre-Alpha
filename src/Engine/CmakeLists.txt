@@ -2,6 +2,8 @@ file(GLOB headers "Core/Engine.h" "Core/Context.h" "Core/Timer.h" "Log/ILogger.h
 file(GLOB sources "Core/Engine.cpp" "Core/Context.cpp" "Core/Timer.cpp" "Log/Log.cpp")
 include_directories("../../include")									#添加头文件目录
 include_directories("../Engine")    	
+include_directories("../Engine/3Part/Box2D")
+include_directories("../Engine/3Part/Box2D/Testbed/Framework")    #添加头文件目录
 
 list(APPEND sources ${headers} ${DIR_Main})
 

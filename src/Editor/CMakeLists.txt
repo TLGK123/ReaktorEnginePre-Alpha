@@ -1,7 +1,10 @@
 file(GLOB headers "*.h" "UI/Widgets/Widget.h")
-file(GLOB sources "*.cpp" "*.c" "UI/Widgets/Widget.cpp")
+file(GLOB sources "*.cpp" "*.c" "UI/Widgets/Widget.cpp" "../Engine/3Part/Box2D/Testbed/Framework/DebugDraw.cpp")
 include_directories("../../include")    #添加头文件目录
 include_directories("../Engine")    #添加头文件目录
+include_directories("../Engine/3Part/Box2D")    #添加头文件目录
+include_directories("../Engine/3Part/Box2D/Testbed/Framework")    #添加头文件目录
+
 aux_source_directory(opengl DIR_Main)
 
 list(APPEND sources ${headers} ${DIR_Main})

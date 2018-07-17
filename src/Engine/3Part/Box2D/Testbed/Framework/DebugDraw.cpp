@@ -34,10 +34,10 @@
 #define BUFFER_OFFSET(x)  ((const void*) (x))
 
 DebugDraw g_debugDraw;
-Camera g_camera;
+Box2DCamera g_camera;
 
 //
-b2Vec2 Camera::ConvertScreenToWorld(const b2Vec2& ps)
+b2Vec2 Box2DCamera::ConvertScreenToWorld(const b2Vec2& ps)
 {
     float32 w = float32(m_width);
     float32 h = float32(m_height);
@@ -58,7 +58,7 @@ b2Vec2 Camera::ConvertScreenToWorld(const b2Vec2& ps)
 }
 
 //
-b2Vec2 Camera::ConvertWorldToScreen(const b2Vec2& pw)
+b2Vec2 Box2DCamera::ConvertWorldToScreen(const b2Vec2& pw)
 {
 	float32 w = float32(m_width);
 	float32 h = float32(m_height);
@@ -80,7 +80,7 @@ b2Vec2 Camera::ConvertWorldToScreen(const b2Vec2& pw)
 
 // Convert from world coordinates to normalized device coordinates.
 // http://www.songho.ca/opengl/gl_projectionmatrix.html
-void Camera::BuildProjectionMatrix(float32* m, float32 zBias)
+void Box2DCamera::BuildProjectionMatrix(float32* m, float32 zBias)
 {
 	float32 w = float32(m_width);
 	float32 h = float32(m_height);
