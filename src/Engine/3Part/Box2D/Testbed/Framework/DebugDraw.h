@@ -86,7 +86,7 @@ private:
 	GLRenderTriangles* m_triangles;
 };
 
-extern DebugDraw g_debugDraw;
+extern DebugDraw * g_debugDraw;
 extern Box2DCamera g_camera;
 
 #endif
