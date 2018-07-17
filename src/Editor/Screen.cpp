@@ -324,9 +324,11 @@ void Screen::Render_SceneObject()
 
 	for each (TestDemo* demo in m_testDemos)
 	{
-		demo->Render_SceneObject();
+		if (demo!= nullptr)
+		{
+			demo->Render_SceneObject();
+		}	
 	}
-
 }
 
 void Screen::Render_SkyBox()
