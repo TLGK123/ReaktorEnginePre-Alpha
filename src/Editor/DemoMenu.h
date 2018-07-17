@@ -15,9 +15,10 @@ namespace TmingEngine
 	{
 	public:
 
-		DemoMenu(Context *context)
+		DemoMenu(Context *context) 
 		{
 			m_title = "ViewPoint";
+			m_context = context;
 		}
 		int testIndex = 0;
 		int testCount = 2;

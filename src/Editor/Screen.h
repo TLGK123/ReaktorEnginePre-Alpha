@@ -34,6 +34,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);   //¹ö
 
 using namespace TmingEngine;
 
+
 class Screen :public Subsystem
 {
 public:
@@ -42,6 +43,7 @@ public:
 	Shader ourShader;
 	unsigned int VBO, VAO;
 	vector<Widget *> m_widgets;
+
 	vector<TestDemo *> m_testDemos;
 
 	bool show_demo_window = true;

@@ -1,34 +1,35 @@
 #include "DemoMenu.h"
+#include "Test.h"
 
+#define NewDemo(X) currentDemo = new X();
+//#define ShowDemo(X) void show##X ()\
+//						{ NewDemo(x); }
 
-typedef void (*SimpleFunc)();
+typedef void(*SimpleFunc)();
 
 struct EntryPoint
 {
 	const char * name;
 	SimpleFunc  fun;
-
 };
 
 EntryPoint * entry;
+TestDemo *currentDemo;
 
-void pf()
+void showDemo1()
 {
-	printf("hello 123\n");
-	Debug::Log("Open 1 Demo\n");
-	
+	NewDemo(Demo1);
 }
 
-void pf2()
+void showDemo2()
 {
-	printf("hello 456\n");
-	Debug::Log("Open 2 Demo\n");
+	NewDemo(Demo2);
 }
 
 EntryPoint g_testEntries[]
 {
-	{"Hello",pf},
-	{"Hello2",pf2}
+	{"Hello",showDemo1},
+	{"Hello2",showDemo2}
 };
 
 static bool sTestEntriesGetName(void*, int idx, const char** out_name)
@@ -55,7 +56,6 @@ void TmingEngine::DemoMenu::Begin()
 	ImGui::Text("Test");
 	if (ImGui::Combo("##Test", &testIndex, sTestEntriesGetName, NULL, testCount, testCount))
 	{
-		
 		entry = g_testEntries + testIndex;
 		entry->fun();
 		testSelection = testIndex;
@@ -69,6 +69,10 @@ void TmingEngine::DemoMenu::Begin()
 
 void TmingEngine::DemoMenu::Update()
 {
+	if (currentDemo != nullptr)
+	{
+		currentDemo->Render_SceneObject();
+	}
 }
 
 void TmingEngine::DemoMenu::End()

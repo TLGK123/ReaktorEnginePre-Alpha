@@ -320,10 +320,10 @@ void Screen::Render_SceneObject()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
-	//for each (TestDemo* demo in m_testDemos)
-	//{
-	//	demo->Render_SceneObject();
-	//}
+	for each (TestDemo* demo in m_testDemos)
+	{
+		demo->Render_SceneObject();
+	}
 }
 
 void Screen::Render_SkyBox()
