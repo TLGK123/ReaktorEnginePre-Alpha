@@ -220,15 +220,17 @@ void Screen::Update()
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            																	  
 
-	Render_SceneObject();
 	Render_SkyBox();
+	Render_SceneObject();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 	glDisable(GL_DEPTH_TEST);
 	glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	Render_UI();
+	
 	glfwSwapBuffers(window);
 }
 
@@ -254,7 +256,7 @@ void Screen::CreateFrameBufer()
 	glGenRenderbuffers(1, &rbo);
 	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
 	//创建一个深度和模板渲染缓冲对象
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT); // use a single renderbuffer object for both a depth AND stencil buffer.
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT); 
 																						//附加这个渲染缓冲对象：
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
 																								  // now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
@@ -324,6 +326,7 @@ void Screen::Render_SceneObject()
 	{
 		demo->Render_SceneObject();
 	}
+
 }
 
 void Screen::Render_SkyBox()

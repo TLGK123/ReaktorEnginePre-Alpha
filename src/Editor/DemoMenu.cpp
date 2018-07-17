@@ -1,10 +1,15 @@
 #include "DemoMenu.h"
 #include "Test.h"
+#include "Screen.h"
 
 #define NewDemo(X) if(currentDemo!=nullptr) \
 					{delete currentDemo;} \
-					currentDemo = new X();
+					currentDemo = new X();\
+Global<Context>().GetSubsystem<Screen>()->m_testDemos.push_back(currentDemo);\
 
+//Global<Context>().GetSubsystem<Screen>()->CreateFrameBufer(); \
+
+	
 #define ShowDemo(X) void show##X ()\
 						{ NewDemo(x); }
 
@@ -22,6 +27,7 @@ TestDemo *currentDemo;
 void showDemo1()
 {
 	NewDemo(Demo1);
+
 }
 
 void showDemo2()
@@ -72,10 +78,7 @@ void TmingEngine::DemoMenu::Begin()
 
 void TmingEngine::DemoMenu::Update()
 {
-	if (currentDemo != nullptr)
-	{
-		currentDemo->Render_SceneObject();
-	}
+
 }
 
 void TmingEngine::DemoMenu::End()

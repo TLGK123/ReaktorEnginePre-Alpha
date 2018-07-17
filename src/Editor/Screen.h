@@ -71,6 +71,7 @@ public:
 
 	Screen(Context* context) : Subsystem(context)
 	{
+		context->RegisterSubsystem(this);
 		Initialize(context);
 	}
 
