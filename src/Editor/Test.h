@@ -8,7 +8,6 @@
 class TestDemo
 {
 public:
-	Test * Demo;
 	TestDemo()
 	{
 		Initlization();
@@ -164,10 +163,10 @@ public:
 class Demo1 :public TestDemo
 {
 public:
-	
+	Tiles * tiles;
 	Demo1() :TestDemo()
 	{
-		Demo = new Tiles();
+		tiles = new Tiles();
 	}
 
 	~Demo1()

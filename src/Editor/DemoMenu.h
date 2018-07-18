@@ -28,8 +28,6 @@ namespace TmingEngine
 		void Begin();
 		void Update();
 		void End();
-		TestDemo* CurrenDemon();
-		
 	};
 }
 

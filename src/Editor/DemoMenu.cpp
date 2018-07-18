@@ -85,8 +85,3 @@ void TmingEngine::DemoMenu::Update()
 void TmingEngine::DemoMenu::End()
 {
 }
-
-TestDemo * TmingEngine::DemoMenu::CurrenDemon()
-{
-	return currentDemo;
-}
