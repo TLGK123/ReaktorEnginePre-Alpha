@@ -115,6 +115,8 @@ void Screen::InitOpenGL()
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
+	glfwSetKeyCallback(window, sKeyCallback);
+
 	glEnable(GL_DEPTH_TEST);
 	ourShader.Init("7.4.camera.vs", "7.4.camera.fs");
 
@@ -410,6 +412,119 @@ void processInput(GLFWwindow *window)
 		camera.ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
+
+}
+
+
+static void sKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	//ImGui_ImplGlfwGL3_KeyCallback(window, key, scancode, action, mods);
+	//bool keys_for_ui = ImGui::GetIO().WantCaptureKeyboard;
+	//if (keys_for_ui)
+	//	return;
+	Test * test = Global<Context>().GetSubsystem<DemoMenu>()->CurrenDemon()->Demo;
+	if (action == GLFW_PRESS)
+	{
+		switch (key)
+		{
+		case GLFW_KEY_ESCAPE:
+			// Quit
+			glfwSetWindowShouldClose(window, GL_TRUE);
+			break;
+
+		case GLFW_KEY_LEFT:
+			// Pan left
+			if (mods == GLFW_MOD_CONTROL)
+			{
+				b2Vec2 newOrigin(2.0f, 0.0f);
+				test->ShiftOrigin(newOrigin);
+			}
+			else
+			{
+				g_camera.m_center.x -= 0.5f;
+			}
+			break;
+
+		case GLFW_KEY_RIGHT:
+			// Pan right
+			if (mods == GLFW_MOD_CONTROL)
+			{
+				b2Vec2 newOrigin(-2.0f, 0.0f);
+				test->ShiftOrigin(newOrigin);
+			}
+			else
+			{
+				g_camera.m_center.x += 0.5f;
+			}
+			break;
+
+		case GLFW_KEY_DOWN:
+			// Pan down
+			if (mods == GLFW_MOD_CONTROL)
+			{
+				b2Vec2 newOrigin(0.0f, 2.0f);
+				test->ShiftOrigin(newOrigin);
+			}
+			else
+			{
+				g_camera.m_center.y -= 0.5f;
+			}
+			break;
+
+		case GLFW_KEY_UP:
+			// Pan up
+			if (mods == GLFW_MOD_CONTROL)
+			{
+				b2Vec2 newOrigin(0.0f, -2.0f);
+				test->ShiftOrigin(newOrigin);
+			}
+			else
+			{
+				g_camera.m_center.y += 0.5f;
+			}
+			break;
+
+		case GLFW_KEY_HOME:
+			// Reset view
+			g_camera.m_zoom = 1.0f;
+			g_camera.m_center.Set(0.0f, 20.0f);
+			break;
+
+		case GLFW_KEY_Z:
+			// Zoom out
+			g_camera.m_zoom = b2Min(1.1f * g_camera.m_zoom, 20.0f);
+			break;
+
+		case GLFW_KEY_X:
+			// Zoom in
+			g_camera.m_zoom = b2Max(0.9f * g_camera.m_zoom, 0.02f);
+			break;
+
+		case GLFW_KEY_R:
+			// Reset test
+
+			break;
+
+		case GLFW_KEY_SPACE:
+			// Launch a bomb.
+			if (test)
+			{
+				test->LaunchBomb();
+			}
+			break;
+
+		default:
+			if (test)
+			{
+				test->Keyboard(key);
+			}
+		}
+	}
+	else if (action == GLFW_RELEASE)
+	{
+		test->KeyboardUp(key);
+	}
+	// else GLFW_REPEAT
 }
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
