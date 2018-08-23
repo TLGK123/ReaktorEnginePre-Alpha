@@ -1,11 +1,11 @@
 #pragma once
 #include "EngineDefs.h"
 #include "SmartPtr.h"
-#include "Context.h"
+
 
 namespace TmingEngine
 {
-    class ENGINE_CLASS Subsystem
+	class ENGINE_CLASS Subsystem
 	{
 		friend class Context;
 	public:

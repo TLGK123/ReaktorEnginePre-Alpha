@@ -6,6 +6,7 @@
 #include "../Editor/Console.h"
 #include "Core/SmartPtr.h"
 #include "../Editor/Screen.h"
+#include "Core/Context.h"
 //====================
 
 namespace TmingEngine

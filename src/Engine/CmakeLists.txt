@@ -1,5 +1,5 @@
 file(GLOB_RECURSE headers "Core/*.h?" "Log/*.h?" "Core/*.h" "Log/*.h")
-file(GLOB_RECURSE sources "Core/*.cpp")
+file(GLOB_RECURSE sources "Core/*.cpp" "Log/*.cpp")
 set(CXX_STANDARD 14)
 
 include_directories("../../include")									#添加头文件目录
