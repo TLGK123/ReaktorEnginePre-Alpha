@@ -1,9 +1,13 @@
-#pragma once
-
+#ifndef EngineDef
+#define EngineDef
 #ifdef COMPILING_LIB
-#define ENGINE_CLASS __declspec(dllexport)
+#if WIN32
+    #define ENGINE_CLASS __declspec(dllexport)
 #else
-#define ENGINE_CLASS __declspec(dllimport)
+    #define ENGINE_CLASS
+#endif
+#else
+    #define ENGINE_CLASS
 #endif
 
 namespace TmingEngine
@@ -29,3 +33,5 @@ namespace TmingEngine
 	}
 
 }
+
+#endif

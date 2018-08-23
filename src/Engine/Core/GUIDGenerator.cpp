@@ -1,9 +1,9 @@
 #include "GUIDGenerator.h"
 #include <iomanip>
 #include <sstream> 
-#include <guiddef.h>
-#include "Objbase.h"
-#include <winerror.h>
+//#include <guiddef.h>
+//#include "Objbase.h"
+//#include <winerror.h>
 //= NAMESPACES =====
 using namespace std;
 //==================
