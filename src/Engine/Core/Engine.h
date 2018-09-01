@@ -1,9 +1,5 @@
 #pragma once
-
-//= INCLUDES =======
 #include "Context.h"
-//==================
-
 #define ENGINE_VERSION "v0.1 alpha"
 
 namespace TmingEngine
