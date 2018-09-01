@@ -1,15 +1,18 @@
 #pragma once
+
+#ifndef  Subsystem_h
+#define Subsystem_h
 #include "EngineDefs.h"
 #include "SmartPtr.h"
 
-
 namespace TmingEngine
 {
+    class Context;
 	class ENGINE_CLASS Subsystem
 	{
-		friend class Context;
+		
 	public:
-		Subsystem(Context* context)
+		Subsystem(Context * context)
 		{
 			m_context = context;
 		}
@@ -21,3 +24,5 @@ namespace TmingEngine
 		Context * m_context;
 	};
 }
+
+#endif

@@ -1,7 +1,9 @@
 #pragma once
 #include<string>
 #include"Core/SmartPtr.h"
-namespace TmingEngine { class Context; }
+namespace TmingEngine
+{
+class Context;
 
 class Widget :public RefCount
 {
@@ -25,3 +27,6 @@ protected:
 	float m_yMin = 0;
 	float m_yMax = 0;
 };
+
+    
+}

@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "Timer.h"
 #include<memory>
-#include"Log/Log.h"
+//#include"Log/Log.h"
 //#include "Settings.h"
 //#include "../Logging/Log.h"
 //#include "../Threading/Threading.h"
@@ -70,7 +70,7 @@ namespace TmingEngine
 		m_timer = m_context->GetSubsystem<Timer>();
 		if (!m_timer->Initialize())
 		{
-			Debug::Log("Failed to initialize Timer subsystem");
+			//Debug::Log("Failed to initialize Timer subsystem");
 			success = false;
 		}
 

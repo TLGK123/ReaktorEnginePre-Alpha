@@ -5,6 +5,6 @@ namespace TmingEngine
 	void Debug::Log(const char * message, ...)
 	{
 		printf(message);
-		Global<Context>().GetSubsystem<Console>()->AddLog(message);
+		//Global<Context>().GetSubsystem<Console>()->AddLog(message);
 	}
 }

@@ -1,5 +1,4 @@
 #include "Screen.h"
-#include "Main.h"
 #include <iostream>
 using namespace std;
 
@@ -323,13 +322,13 @@ void Screen::Render_SceneObject()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
-	for each (TestDemo* demo in m_testDemos)
-	{
-		if (demo!= nullptr)
-		{
-			demo->Render_SceneObject();
-		}	
-	}
+//    for each (TestDemo* demo in m_testDemos)
+//    {
+//        if (demo!= nullptr)
+//        {
+//            demo->Render_SceneObject();
+//        }    
+//    }
 }
 
 void Screen::Render_SkyBox()

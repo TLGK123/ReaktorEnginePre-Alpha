@@ -3,13 +3,14 @@
 //  Editor
 //  Created by blue on 2018/6/16.
 #include "Main.h"
+#include "Screen.h"
 #include <iostream>
 using namespace std;
 using namespace TmingEngine;
 
 int main()
 {
-	//SmartPtr<Context> context =
+	
 	Screen *screen;
 	Engine *engine;
 

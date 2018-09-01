@@ -1,16 +1,19 @@
 #pragma once
-#include "SubSystem.h"
+#include "SmartPtr.h"
+#include "EngineDefs.h"
 #include <vector>
+#include "SubSystem.h"
 //====================
 
 namespace TmingEngine
 {
+    
 	class ENGINE_CLASS Context :public RefCount
 	{
 	public:
 		Context();
 		~Context();
-
+ 
 		// Register a subsystem
 		void RegisterSubsystem(Subsystem* subsystem);
 

@@ -1,10 +1,8 @@
 #pragma once
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
-#include "imgui.h"
-#include "imgui_impl_glfw_gl3.h"
+#include "im.h"
 #include "Box2DTest.h"
-
 class TestDemo
 {
 public:
