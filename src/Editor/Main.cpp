@@ -17,7 +17,7 @@ int main()
 	engine = new Engine(&Global<Context>());
 	if (!engine->Initialize())
 	{
-		Debug::Log("ÒýÇæ³õÊ¼»¯Ê§°Ü");
+		Debug::Log("hello world");
 		return -1;
 	};
 	screen = new Screen(&Global<Context>());
