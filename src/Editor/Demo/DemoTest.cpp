@@ -1,5 +1,6 @@
 #include "Test.h"
 #include "Box2DTest.h"
+#include "demo.h"
 
 void DestructionListener::SayGoodbye(b2Joint* joint)
 {

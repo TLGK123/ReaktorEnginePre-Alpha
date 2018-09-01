@@ -2,10 +2,10 @@
 #define DemoMenu_h
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
-#include "UI/Widgets/Widget.h"
+#include "Widget.h"
 #include "Log/Log.h"
 #include "im.h"
-#include "Demo/demo.h"
+
 
 
 namespace TmingEngine

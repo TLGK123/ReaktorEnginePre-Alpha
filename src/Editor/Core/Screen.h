@@ -4,11 +4,11 @@
 #include "im.h"
 #include "Core/Context.h"
 #include "Console.h"
-#include "UI/Widgets/Widget.h"
+#include "Widget.h"
 #include "ViewPoint.h"
 #include "DemoMenu.h"
 #include "Log/Log.h"
-#include "Test.h"
+#include "demo.h"
 
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )
