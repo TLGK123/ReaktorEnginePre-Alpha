@@ -80,16 +80,13 @@ Test::~Test()
 	m_world = NULL;
 }
 
-Settings settings;
+
 void TestDemo::Render_SceneObject()
 {
 
 }
 
-void Demo1::Render_SceneObject()
-{
-	tiles->Step(&settings);
-}
+
 
 void Demo2::Render_SceneObject()
 {

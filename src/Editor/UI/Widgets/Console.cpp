@@ -1,108 +1,88 @@
-/*
-Copyright(c) 2016-2018 Panos Karabelas
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-copies of the Software, and to permit persons to whom the Software is furnished
-to do so, subject to the following conditions :
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-
-//= INCLUDES ====================
 #include "Console.h"
-#include "../../ImGui/imgui.h"
-#include "Logging/Log.h"
-#include "../ThumbnailProvider.h"
-#include "../EditorHelper.h"
-//===============================
 
-//= NAMESPACES ==========
-using namespace std;
-using namespace Directus;
-//=======================
-
-static bool g_scrollToBottom = false;
-static ImVec4 g_logColor[3] =
+namespace TmingEngine
 {
-	ImVec4(0.76f, 0.77f, 0.8f, 1.0f),	// Info
-	ImVec4(1.0f, 1.0f, 0.0f, 1.0f),		// Warning
-	ImVec4(1.0f, 0.0f, 0.0f, 1.0f)		// Error
-};
-static ImGuiTextFilter g_logFilter;
+	Console::~Console() {}
 
-Console::Console()
-{
-	m_title = "Console";
+	void Console::Clear() { Buf.clear(); LineOffsets.clear(); }
 
-	// Create an implementation of EngineLogger
-	m_logger = make_shared<EngineLogger>();
-	m_logger->SetCallback([this](LogPackage package) { AddLogPackage(package); });
-
-	// Set the logger implementation for the engine to use
-	Log::SetLogger(m_logger);
-
-	m_showInfo = true;
-	m_showWarnings = true;
-	m_showErrors = true;
-}
-
-void Console::Update()
-{
-	if (ImGui::Button("Clear")) { Clear(); }														ImGui::SameLine();
-	if (THUMBNAIL_BUTTON_BY_TYPE(Icon_Console_Info, 15.0f)) { m_showInfo = !m_showInfo;		g_scrollToBottom = true; }	ImGui::SameLine();
-	if (THUMBNAIL_BUTTON_BY_TYPE(Icon_Console_Warning, 15.0f)) { m_showWarnings = !m_showWarnings;	g_scrollToBottom = true; }	ImGui::SameLine();
-	if (THUMBNAIL_BUTTON_BY_TYPE(Icon_Console_Error, 15.0f)) { m_showErrors = !m_showErrors;	g_scrollToBottom = true; }	ImGui::SameLine();
-
-	g_logFilter.Draw("Filter", -100.0f);
-	ImGui::Separator();
-
-	ImGui::BeginChild("scrolling", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
-	for (const auto& log : m_logs)
+	void Console::AddLog(const char* fmt, ...)
 	{
-		if (!g_logFilter.PassFilter(log.text.c_str()))
-			continue;
+		int old_size = Buf.size();
+		va_list args;
+		va_start(args, fmt);
+		Buf.appendfv(fmt, args);
+		va_end(args);
+		for (int new_size = Buf.size(); old_size < new_size; old_size++)
+			if (Buf[old_size] == '\n')
+				LineOffsets.push_back(old_size);
+		ScrollToBottom = true;
+	}
 
-		if ((log.errorLevel == 0 && m_showInfo) || (log.errorLevel == 1 && m_showWarnings) || (log.errorLevel == 2 && m_showErrors))
+	void Console::Draw(const char* title, bool* p_open = NULL)
+	{
+		ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+		ImGui::Begin(title, p_open);
+		if (ImGui::Button("Clear")) Clear();
+		ImGui::SameLine();
+		bool copy = ImGui::Button("Copy");
+		ImGui::SameLine();
+		Filter.Draw("Filter", -100.0f);
+		ImGui::Separator();
+		ImGui::BeginChild("scrolling", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
+		if (copy) ImGui::LogToClipboard();
+
+		if (Filter.IsActive())
 		{
-			ImGui::PushStyleColor(ImGuiCol_Text, g_logColor[log.errorLevel]);
-			ImGui::TextUnformatted(log.text.c_str());
-			ImGui::PopStyleColor();
+			const char* buf_begin = Buf.begin();
+			const char* line = buf_begin;
+			for (int line_no = 0; line != NULL; line_no++)
+			{
+				const char* line_end = (line_no < LineOffsets.Size) ? buf_begin + LineOffsets[line_no] : NULL;
+				if (Filter.PassFilter(line, line_end))
+					ImGui::TextUnformatted(line, line_end);
+				line = line_end && line_end[1] ? line_end + 1 : NULL;
+			}
+		}
+		else
+		{
+			ImGui::TextUnformatted(Buf.begin());
+		}
+
+		if (ScrollToBottom)
+			ImGui::SetScrollHere(1.0f);
+		ScrollToBottom = false;
+		ImGui::EndChild();
+		ImGui::End();
+	}
+
+	void Console::Draw2(const char* title, bool* p_open = NULL)
+	{
+		{
+			ImGui::SetNextWindowSize(ImVec2(350, 568), ImGuiCond_FirstUseEver);
+			if (!ImGui::Begin("Example: Custom rendering1", p_open))  //标题一样，代表同一窗口
+			{
+				ImGui::End();
+				return;
+			}
+			ImGuiIO& io = ImGui::GetIO();
+
+			// Here we are grabbing the font texture because that's the only one we have access to inside the demo code.
+			// Remember that ImTextureID is just storage for whatever you want it to be, it is essentially a value that will be passed to the render function inside the ImDrawCmd structure.
+			// If you use one of the default imgui_impl_XXXX.cpp renderer, they all have comments at the top of their file to specify what they expect to be stored in ImTextureID.
+			// (for example, the imgui_impl_dx11.cpp renderer expect a 'ID3D11ShaderResourceView*' pointer. The imgui_impl_glfw_gl3.cpp renderer expect a GLuint OpenGL texture identifier etc.)
+			// If you decided that ImTextureID = MyEngineTexture*, then you can pass your MyEngineTexture* pointers to ImGui::Image(), and gather width/height through your own functions, etc.
+			// Using ShowMetricsWindow() as a "debugger" to inspect the draw data that are being passed to your render will help you debug issues if you are confused about this.
+			// Consider using the lower-level ImDrawList::AddImage() API, via ImGui::GetWindowDrawList()->AddImage().
+			ImTextureID my_tex_id = io.Fonts->TexID;
+			float my_tex_w = (float)io.Fonts->TexWidth;
+			float my_tex_h = (float)io.Fonts->TexHeight;
+
+			ImGui::Text("%.0fx%.0f", my_tex_w, my_tex_h);
+			ImVec2 pos = ImGui::GetCursorScreenPos();
+			ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(1, 1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+
+			ImGui::End();
 		}
 	}
-
-	if (g_scrollToBottom)
-	{
-		ImGui::SetScrollHere();
-		g_scrollToBottom = false;
-	}
-
-	ImGui::EndChild();
-}
-
-void Console::AddLogPackage(LogPackage package)
-{
-	m_logs.push_back(package);
-	if ((int)m_logs.size() > m_maxLogEntries)
-	{
-		m_logs.pop_front();
-	}
-
-	g_scrollToBottom = true;
-}
-
-void Console::Clear()
-{
-	m_logs.clear();
-	m_logs.shrink_to_fit();
 }

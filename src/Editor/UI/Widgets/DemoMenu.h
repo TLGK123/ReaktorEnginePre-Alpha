@@ -5,6 +5,7 @@
 #include "UI/Widgets/Widget.h"
 #include "Log/Log.h"
 #include "im.h"
+#include "Demo/demo.h"
 
 
 namespace TmingEngine
