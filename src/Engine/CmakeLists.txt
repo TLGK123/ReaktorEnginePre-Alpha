@@ -10,6 +10,7 @@ file(GLOB_RECURSE sources
 "FileSystem/*.cpp"
 "ImGui/*.c??"
 "ImGui/*.c"
+"3Part/STB/*.cpp"
 ) 
 set(CXX_STANDARD 14)
 
