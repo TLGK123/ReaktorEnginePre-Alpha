@@ -1,5 +1,6 @@
 #include "Screen.h"
 #include <iostream>
+#include "Test.h"
 using namespace std;
 
 const unsigned int SCR_WIDTH = 1366;
@@ -321,14 +322,14 @@ void Screen::Render_SceneObject()
 		ourShader.setMat4("model", model);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
+ 
+     int count = m_testDemos.size();
+    
+    for (int i =0; i<count; i++) {
+        
+        m_testDemos[i]->Render_SceneObject();
+    }
 
-//    for each (TestDemo* demo in m_testDemos)
-//    {
-//        if (demo!= nullptr)
-//        {
-//            demo->Render_SceneObject();
-//        }    
-//    }
 }
 
 void Screen::Render_SkyBox()
