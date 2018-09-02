@@ -1,6 +1,6 @@
 #include "DemoMenu.h"
 #include "Screen.h"
-
+#include "demo.h"
 #define NewDemo(X) 	if (currentDemo != nullptr)\
 	{\
 	Global<Context>().GetSubsystem<Screen>()->m_testDemos.pop_back();\

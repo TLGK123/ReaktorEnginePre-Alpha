@@ -2,6 +2,7 @@ file(GLOB headers
 "*.h"
 "UI/Widgets/Widget.h"
 "../../include/im.h"
+"Demo/*.h"
 )
 
 file(GLOB sources 

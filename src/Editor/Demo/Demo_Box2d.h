@@ -1,9 +1,9 @@
 #include "DemoTest.h"
-class Demo1 :public TestDemo
+class Demo1 :public DemoTest
 {
 public:
 	Tiles * tiles;
-	Demo1() :TestDemo()
+	Demo1() :DemoTest()
 	{
 		tiles = new Tiles();
 	}
