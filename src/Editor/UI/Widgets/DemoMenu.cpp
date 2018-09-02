@@ -37,8 +37,8 @@ void showDemo2()
 
 EntryPoint g_testEntries[]
 {
-	{"Hello",showDemo1},
-	{"Hello2",showDemo2}
+	{"Box2d",showDemo1},
+	{"Model",showDemo2}
 };
 
 static bool sTestEntriesGetName(void*, int idx, const char** out_name)
