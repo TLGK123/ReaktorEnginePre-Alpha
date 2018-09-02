@@ -87,13 +87,6 @@ void DemoTest::Render_SceneObject()
 
 }
 
-
-
-void DemoModel::Render_SceneObject()
-{
-
-}
-
 void Test::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 {
 	const b2Manifold* manifold = contact->GetManifold();
