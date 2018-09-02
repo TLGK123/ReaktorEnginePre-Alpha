@@ -82,14 +82,14 @@ Test::~Test()
 }
 
 
-void TestDemo::Render_SceneObject()
+void DemoTest::Render_SceneObject()
 {
 
 }
 
 
 
-void Demo2::Render_SceneObject()
+void DemoModel::Render_SceneObject()
 {
 
 }

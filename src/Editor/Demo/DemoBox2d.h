@@ -1,14 +1,15 @@
 #include "DemoTest.h"
-class Demo1 :public DemoTest
+#include "Tiles.h"
+class DemoBox2d :public DemoTest
 {
 public:
 	Tiles * tiles;
-	Demo1() :DemoTest()
+	DemoBox2d() :DemoTest()
 	{
 		tiles = new Tiles();
 	}
 
-	~Demo1()
+	~DemoBox2d()
 	{
 	}
 

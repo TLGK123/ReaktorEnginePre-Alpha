@@ -5,14 +5,14 @@
 //  Created by blue on 2018/9/2.
 //
 
-#ifndef TestDemo_h
-#define TestDemo_h
+#ifndef DemoTest_h
+#define DemoTest_h
 
 
 class DemoTest
 {
 public:
-    TestDemo()
+    DemoTest()
     {
         Initlization();
     }

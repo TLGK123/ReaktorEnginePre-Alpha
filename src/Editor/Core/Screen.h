@@ -33,7 +33,7 @@ public:
 	unsigned int VBO, VAO;
 	vector<Widget *> m_widgets;
 
-	vector<TestDemo *> m_testDemos;
+	vector<DemoTest *> m_testDemos;
 
 	bool show_demo_window = true;
 	bool show_another_window = false;

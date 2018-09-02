@@ -1,7 +1,7 @@
 #ifndef demo_h
 #define demo_h
 
-#include "Demo_box2d.h"
-#include "Demo_Model.h"
+#include "DemoBox2d.h"
+#include "DemoModel.h"
 
 #endif

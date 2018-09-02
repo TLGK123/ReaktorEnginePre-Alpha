@@ -23,16 +23,16 @@ struct EntryPoint
 };
 
 EntryPoint * entry;
-TestDemo *currentDemo;
+DemoTest *currentDemo;
 
 void showDemo1()
 {
-	NewDemo(Demo1);
+	NewDemo(DemoBox2d);
 }
 
 void showDemo2()
 {
-	NewDemo(Demo2);
+	NewDemo(DemoModel);
 }
 
 EntryPoint g_testEntries[]

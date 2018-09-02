@@ -8,16 +8,16 @@
 #ifndef ModelTest_h
 #define ModelTest_h
 
+#include "DemoTest.h"
 
-
-class Demo2 :public DemoTest
+class DemoModel :public DemoTest
 {
 public:
-    Demo2()
+    DemoModel()
     {
     }
     
-    ~Demo2()
+    ~DemoModel()
     {
     }
     
