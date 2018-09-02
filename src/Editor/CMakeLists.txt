@@ -23,11 +23,7 @@ include_directories("../Engine/3Part/Box2D/Testbed/Framework")    #添加头文�
 include_directories("Demo")    #添加头文件目录
 include_directories("Core")    #添加头文件目录
 
-#aux_source_directory(opengl DIR_Main)
-
-list(APPEND sources ${headers})
-
-add_executable(Editor ${sources}) 
+add_executable(Editor ${headers} ${sources})
 
 set(libpath ${PROJECT_SOURCE_DIR}/lib)
 
