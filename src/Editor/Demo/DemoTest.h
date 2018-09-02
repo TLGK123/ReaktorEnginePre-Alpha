@@ -14,7 +14,7 @@ class DemoTest
 public:
     DemoTest()
     {
-        Initlization();
+       
     }
     
     ~DemoTest()

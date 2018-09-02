@@ -7,9 +7,10 @@
 	delete currentDemo;\
 	}\
 	currentDemo = new X();\
-	Global<Context>().GetSubsystem<Screen>()->m_testDemos.push_back(currentDemo);
+	Global<Context>().GetSubsystem<Screen>()->m_testDemos.push_back(currentDemo);\
+    currentDemo->Initlization();
 
-//Global<Context>().GetSubsystem<Screen>()->CreateFrameBufer(); \
+    //Global<Context>().GetSubsystem<Screen>()->CreateFrameBufer(); \
 
 #define ShowDemo(X) void show##X ()\
 						{ NewDemo(x); }
