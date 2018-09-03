@@ -1,7 +1,7 @@
-#include "DemoModel.h"
+#include "DemoTriangle.h"
 #include "im.h"
 
-void DemoModel::Initlization()
+void DemoTriangle::Initlization()
 {
 
     SetupShader();
@@ -28,7 +28,7 @@ void DemoModel::Initlization()
 }
 
 
-void DemoModel::Render_SceneObject()
+void DemoTriangle::Render_SceneObject()
 {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -42,7 +42,7 @@ void DemoModel::Render_SceneObject()
 
 
 
-void DemoModel::SetupShader()
+void DemoTriangle::SetupShader()
 {
     // build and compile our shader program
     // ------------------------------------

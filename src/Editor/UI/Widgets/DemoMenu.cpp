@@ -33,13 +33,13 @@ void showDemo1()
 
 void showDemo2()
 {
-	NewDemo(DemoModel);
+	NewDemo(DemoTriangle);
 }
 
 EntryPoint g_testEntries[]
 {
 	{"Box2d",showDemo1},
-	{"Model",showDemo2}
+	{"Triangle",showDemo2}
 };
 
 static bool sTestEntriesGetName(void*, int idx, const char** out_name)

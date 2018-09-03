@@ -10,14 +10,14 @@
 
 #include "DemoTest.h"
 
-class DemoModel :public DemoTest
+class DemoTriangle :public DemoTest
 {
 public:
-    DemoModel()
+    DemoTriangle()
     {
     }
     
-    ~DemoModel()
+    ~DemoTriangle()
     {
     }
     

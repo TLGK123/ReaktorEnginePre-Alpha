@@ -2,6 +2,6 @@
 #define demo_h
 
 #include "DemoBox2d.h"
-#include "DemoModel.h"
+#include "DemoTriangle.h"
 
 #endif
