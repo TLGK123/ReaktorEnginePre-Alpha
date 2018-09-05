@@ -7,9 +7,9 @@
 
 #ifndef DemoTest_h
 #define DemoTest_h
+ 
 
-
-class DemoTest
+ class DemoTest
 {
 public:
     DemoTest()

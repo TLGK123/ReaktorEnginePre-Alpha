@@ -10,10 +10,12 @@ file(GLOB sources
 "Core/*.cpp"
 "Demo/*.cpp"
 "imgui/*.cpp"
+"Model/*.cpp"
 "UI/Widgets/Widget.cpp"
 "UI/Widgets/Console.cpp"
 "UI/Widgets/DemoMenu.cpp" 
 "../Engine/3Part/Box2D/Testbed/Framework/DebugDraw.cpp"
+"../Engine/Model/model.cpp"
 )
 
 include_directories("UI/Widgets")    #添加头文件目录
@@ -32,10 +34,14 @@ if(WIN32)
 find_library (GLFW glfw3.lib ${libpath})
 elseif(APPLE)
 find_library (GLFW libglfw3.a ${libpath}) 
+find_library(ASSIMP libassimp.4.1.0.dylib ${libpath})
 endif()
+
+
 
 target_link_libraries(Editor ${GLFW})
 target_link_libraries(Editor TmingEngine)
+target_link_libraries(Editor ${ASSIMP})
 
 if(APPLE)                        #glfw3 需要一些mac 的原生库
 target_link_libraries(Editor "-framework CoreFoundation")

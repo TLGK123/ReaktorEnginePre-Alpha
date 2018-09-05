@@ -5,13 +5,13 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <stb_image.h>
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
 
-#include <learnopengl/mesh.h>
-#include <learnopengl/shader_m.h>
+#include "assimp/Importer.hpp"
+#include "assimp/scene.h"
+#include "assimp/postprocess.h"
+
+#include "learnopengl/mesh.h"
+#include "learnopengl/shader_m.h"
 
 #include <string>
 #include <fstream>
@@ -36,8 +36,14 @@ public:
 	// constructor, expects a filepath to a 3D model.
 	Model(string const &path, bool gamma = false) : gammaCorrection(gamma)
 	{
-		loadModel(path);
+        Init(path);
 	}
+    
+    void Init(string const &path)
+    {
+        loadModel(path);
+        
+    }
 
 	// draws the model, and thus all its meshes
 	void Draw(Shader shader)

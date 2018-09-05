@@ -3,15 +3,6 @@
 #pragma once
 #include "Box2D/Box2D.h"
 #include "DebugDraw.h"
-
-//#if defined(__APPLE__)
-//#define GLFW_INCLUDE_GLCOREARB
-//#include <OpenGL/gl3.h>
-//#else
-//#include "Testbed/glad/glad.h"
-//#endif
-//#include "Testbed/glfw/glfw3.h"
-
 #include <stdlib.h>
 
 class Test;

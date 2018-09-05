@@ -1,6 +1,7 @@
 #include "Screen.h"
 #include <iostream>
 #include "Test.h"
+
 using namespace std;
 
 const unsigned int SCR_WIDTH = 1366;

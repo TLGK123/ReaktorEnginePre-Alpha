@@ -1,6 +1,7 @@
 #pragma once
 #include "Context.h"
 #define ENGINE_VERSION "v0.1 alpha"
+#define TmengineLib
 
 namespace TmingEngine
 {

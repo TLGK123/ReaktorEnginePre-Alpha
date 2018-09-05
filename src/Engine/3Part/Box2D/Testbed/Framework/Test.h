@@ -5,7 +5,6 @@
 #include "DebugDraw.h"
 
 #include "im.h"
-
 #include <stdlib.h>
 
 class Test;
