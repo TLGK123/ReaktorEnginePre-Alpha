@@ -3,7 +3,7 @@
 //  Editor
 //  Created by blue on 2018/6/16.
 #include "Main.h"
-#include "AAScreen.h"
+#include "Screen.h"
 #include <iostream>
 using namespace std;
 using namespace TmingEngine;

@@ -1,5 +1,5 @@
 #include "DemoMenu.h"
-#include "AAScreen.h"
+#include "Screen.h"
 #include "demo.h"
 #define NewDemo(X) 	if (currentDemo != nullptr)\
 	{\
