@@ -35,8 +35,10 @@ void DemoModel::Render_SceneObject() {
 }
 
 
-void DemoModel::Initlization() { 
-
+void DemoModel::Initlization() {
+    camera = new Camera();
+    ourShader = new Shader();
+    ourModel = new Model();
     ourShader->Init("1.model_loading.vs", "1.model_loading.fs");
     ourModel->Init(FileSystem::getPath("resources/objects/nanosuit/nanosuit.obj"));
     
