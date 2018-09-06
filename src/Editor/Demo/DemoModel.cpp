@@ -36,7 +36,7 @@ void DemoModel::Render_SceneObject() {
 
 
 void DemoModel::Initlization() {
-    camera = new Camera();
+    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
     ourShader = new Shader();
     ourModel = new Model();
     ourShader->Init("1.model_loading.vs", "1.model_loading.fs");
