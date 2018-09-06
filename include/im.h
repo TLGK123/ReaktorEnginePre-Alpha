@@ -4,7 +4,7 @@
 //
 //  Created by blue on 2018/9/1.
 //
-
+#pragma once
 #ifndef im_h
 #define im_h
 
@@ -21,15 +21,17 @@
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <learnopengl/mesh.h>
+#include "assimp/Importer.hpp"
+#include "assimp/scene.h"
+#include "assimp/postprocess.h"
+#include "learnopengl/mesh.h"
 
 #include<string>
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#ifndef STB_H
+#define STB_H
+
+#endif
 
 
 #endif /* im_h */

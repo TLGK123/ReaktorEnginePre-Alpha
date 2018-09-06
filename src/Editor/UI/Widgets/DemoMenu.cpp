@@ -1,5 +1,5 @@
 #include "DemoMenu.h"
-#include "Screen.h"
+#include "AAScreen.h"
 #include "demo.h"
 #define NewDemo(X) 	if (currentDemo != nullptr)\
 	{\
@@ -43,8 +43,9 @@ void showDemo3()
 EntryPoint g_testEntries[]
 {
 	{"Box2d",showDemo1},
-	{"Triangle",showDemo2},
-    {"Avatar",showDemo3}
+     {"Avatar",showDemo3},
+	{"Triangle",showDemo2}
+   
 };
 
 static bool sTestEntriesGetName(void*, int idx, const char** out_name)

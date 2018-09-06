@@ -1,4 +1,6 @@
 #include "im.h"
+#define STB_LIB_IMPLEMENTATION
+#include "stb_image.h"
 
 unsigned int TextureFromFile(const char *path, const string &directory, bool gamma)
 {

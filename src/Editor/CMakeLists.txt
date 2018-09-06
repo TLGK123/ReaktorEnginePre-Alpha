@@ -3,6 +3,7 @@ file(GLOB headers
 "UI/Widgets/Widget.h"
 "../../include/im.h"
 "Demo/*.h"
+"../../include/stb_image.h"
 )
 
 file(GLOB sources 
@@ -16,6 +17,7 @@ file(GLOB sources
 "UI/Widgets/DemoMenu.cpp" 
 "../Engine/3Part/Box2D/Testbed/Framework/DebugDraw.cpp"
 "../Engine/Model/model.cpp"
+"../../include/*.cpp"
 )
 
 include_directories("UI/Widgets")    #添加头文件目录
