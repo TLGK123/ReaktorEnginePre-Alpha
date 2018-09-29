@@ -12,6 +12,7 @@ file(GLOB_RECURSE sources
 "ImGui/*.c"
 "3Part/STB/*.cpp"
 "../../include/*.cpp"
+"Model/model.cpp"
 ) 
 set(CXX_STANDARD 14)
 
@@ -20,10 +21,19 @@ include_directories("../Engine")
 include_directories("../Engine/3Part/Box2D")
 include_directories("../Engine/3Part/Box2D/Testbed/Framework")    #添加头文件目录
 
-add_library(TmingEngine ${headers} ${sources})
+set(libpath ${PROJECT_SOURCE_DIR}/../Library/static)
+if(WIN32)
+find_library (GLFW glfw3.lib ${libpath})
+elseif(APPLE)
+find_library (GLFW libglfw3.a ${libpath}) 
+endif()
+
+add_library(TmingEngine  ${headers} ${sources})
 target_link_libraries(TmingEngine lua)
 target_link_libraries(TmingEngine Box2D)
+target_link_libraries(TmingEngine ${GLFW})
 
 add_definitions(-DCOMPILING_LIB)
 
 add_subdirectory(3Part/Box2D)
+
