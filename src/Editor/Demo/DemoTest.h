@@ -7,31 +7,24 @@
 
 #ifndef DemoTest_h
 #define DemoTest_h
- 
 
- class DemoTest
+class DemoTest
 {
 public:
-    DemoTest()
-    {
-       
-    }
-    
-    ~DemoTest()
-    {
-        
-    }
-    
-    virtual void Initlization()
-    {
-        
-    }
-    
-    virtual void Render_SceneObject();
+	DemoTest()
+	{
+	}
+
+	~DemoTest()
+	{
+	}
+
+	virtual void Initlization()
+	{
+	}
+
+	virtual void Render_SceneObject();
 private:
-    
 };
-
-
 
 #endif /* TestDemo_h */

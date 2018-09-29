@@ -58,7 +58,7 @@ Test::Test()
 
 	m_destructionListener.test = this;
 	m_world->SetDestructionListener(&m_destructionListener);
-	m_world->SetContactListener(this);	
+	m_world->SetContactListener(this);
 	g_debugDraw = new DebugDraw();
 	g_debugDraw->Create();
 	m_world->SetDebugDraw(g_debugDraw);
@@ -81,10 +81,8 @@ Test::~Test()
 	m_world = NULL;
 }
 
-
 void DemoTest::Render_SceneObject()
 {
-
 }
 
 void Test::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)

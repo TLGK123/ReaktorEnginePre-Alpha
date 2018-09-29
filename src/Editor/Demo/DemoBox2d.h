@@ -15,7 +15,5 @@ public:
 
 	void Render_SceneObject() override;
 
-
 private:
-
 };

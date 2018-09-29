@@ -135,6 +135,3 @@ public:
 	int32 m_fixtureCount;
 	float32 m_createTime;
 };
-
-
-

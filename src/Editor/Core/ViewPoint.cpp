@@ -6,7 +6,6 @@ TmingEngine::ViewPoint::~ViewPoint()
 
 void TmingEngine::ViewPoint::Begin()
 {
-
 }
 
 void TmingEngine::ViewPoint::Update()
@@ -28,12 +27,10 @@ void TmingEngine::ViewPoint::Update()
 	ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 
 	ImGui::End();
-
 }
 
 void TmingEngine::ViewPoint::End()
 {
-
 }
 
 void TmingEngine::ViewPoint::SetTexture(int Id)

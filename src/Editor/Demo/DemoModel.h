@@ -11,26 +11,23 @@
 #include "DemoTest.h"
 #include "im.h"
 
-
 class DemoModel : public DemoTest
 {
 public:
-   DemoModel()
-    {
-    }
-  ~DemoModel()
-    {
-        
-    }
-    
-    Camera * camera;
-    Shader * ourShader;
-    Model * ourModel;
-    
-    void Initlization() override;
-    
-    void Render_SceneObject() override;
-    
+	DemoModel()
+	{
+	}
+	~DemoModel()
+	{
+	}
+
+	Camera * camera;
+	Shader * ourShader;
+	Model * ourModel;
+
+	void Initlization() override;
+
+	void Render_SceneObject() override;
 };
 
 #endif /* DemoModel_h */

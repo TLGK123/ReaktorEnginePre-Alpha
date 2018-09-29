@@ -20,10 +20,8 @@ void Widget::Initialize(Context* context)
 
 void Widget::Begin()
 {
-
 }
 
 void Widget::End()
 {
-
 }

@@ -10,7 +10,7 @@
 	Global<Context>().GetSubsystem<Screen>()->m_testDemos.push_back(currentDemo);\
     currentDemo->Initlization();
 
-    //Global<Context>().GetSubsystem<Screen>()->CreateFrameBufer(); \
+//Global<Context>().GetSubsystem<Screen>()->CreateFrameBufer(); \
 
 #define ShowDemo(X) void show##X ()\
 						{ NewDemo(x); }
@@ -37,15 +37,14 @@ void showDemo2()
 }
 void showDemo3()
 {
-    NewDemo(DemoModel);
+	NewDemo(DemoModel);
 }
 
 EntryPoint g_testEntries[]
 {
 	{"Box2d",showDemo1},
-     {"Avatar",showDemo3},
+	 {"Avatar",showDemo3},
 	{"Triangle",showDemo2}
-   
 };
 
 static bool sTestEntriesGetName(void*, int idx, const char** out_name)
@@ -56,7 +55,6 @@ static bool sTestEntriesGetName(void*, int idx, const char** out_name)
 
 void TmingEngine::DemoMenu::Begin()
 {
-
 }
 
 void TmingEngine::DemoMenu::Update()

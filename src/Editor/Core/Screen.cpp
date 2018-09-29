@@ -88,7 +88,6 @@ void Screen::Initialize(Context * context)
 	InitSubSystem(screenContext);
 }
 
-
 void Screen::InitOpenGL()
 {
 	// glfw: initialize and configure
@@ -221,11 +220,11 @@ void Screen::Update()
 	lastFrame = currentFrame;
 	processInput(window);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);   //帧缓冲的 开始  
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);   //帧缓冲的 开始
 	glEnable(GL_DEPTH_TEST);                          //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
-	                                                  //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
+													  //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);            																	  
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	Render_SkyBox();
 	Render_SceneObject();
@@ -237,7 +236,7 @@ void Screen::Update()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	Render_UI();
-	
+
 	glfwSwapBuffers(window);
 }
 
@@ -263,8 +262,8 @@ void Screen::CreateFrameBufer()
 	glGenRenderbuffers(1, &rbo);
 	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
 	//创建一个深度和模板渲染缓冲对象
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT); 
-																						//附加这个渲染缓冲对象：
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT);
+	//附加这个渲染缓冲对象：
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
 																								  // now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -280,7 +279,7 @@ void Screen::ShutDown()
 	ImGui_ImplGlfwGL3_Shutdown();
 	ImGui::DestroyContext();
 
-	glDeleteVertexArrays(1, &VAO);		
+	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 	glfwTerminate();
 }
@@ -328,14 +327,12 @@ void Screen::Render_SceneObject()
 		ourShader.setMat4("model", model);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
- 
-     int count = m_testDemos.size();
-    
-    for (int i =0; i<count; i++) {
-        
-        m_testDemos[i]->Render_SceneObject();
-    }
 
+	int count = m_testDemos.size();
+
+	for (int i = 0; i < count; i++) {
+		m_testDemos[i]->Render_SceneObject();
+	}
 }
 
 void Screen::Render_SkyBox()
@@ -391,7 +388,7 @@ void Screen::Render_UI()
 	screenContext->GetSubsystem<Console>()->Draw("Hello Debug", &showDebug);
 	screenContext->GetSubsystem<Console>()->Draw2("Hello Debug", &showDebug);
 
-    GetSubWidget<ViewPoint>()->ImageId = CurrentFrameTextureID;
+	GetSubWidget<ViewPoint>()->ImageId = CurrentFrameTextureID;
 	DrawScreen();
 
 	ImGui::Render();
@@ -405,7 +402,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void processInput(GLFWwindow *window)
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS )
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)

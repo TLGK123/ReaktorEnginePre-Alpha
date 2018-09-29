@@ -10,17 +10,17 @@ using namespace TmingEngine;
 
 int main()
 {
-	
 	Screen *screen;
 	Engine *engine;
 
 	engine = new Engine(&Global<Context>());
 	if (!engine->Initialize())
 	{
-		Debug::Log("hello world");
 		return -1;
 	};
+
 	screen = new Screen(&Global<Context>());
+	Debug::Log("hello world");
 
 	while (!screen->ScreenShouldClose())
 	{
