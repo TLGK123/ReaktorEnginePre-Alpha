@@ -34,6 +34,7 @@ set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
 
 if(WIN32)
 find_library (GLFW glfw3.lib ${libpath})
+find_library (ASSIMP assimp-vc140-mt.lib ${libpath})
 elseif(APPLE)
 find_library (GLFW libglfw3.a ${libpath}) 
 find_library (ASSIMP libassimp.4.1.0.dylib ${libpath})
@@ -61,5 +62,3 @@ if(WIN32)
 message(${ASSIMP})
 CopyFile(Editor ${ASSIMP})                                              
 endif()
-
-find_library (ASSIMP assimp-vc140-mt.lib ${libpath})
