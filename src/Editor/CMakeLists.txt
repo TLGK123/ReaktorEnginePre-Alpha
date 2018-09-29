@@ -30,21 +30,14 @@ include_directories("Core")    #添加头文件目录
 
 add_executable(Editor ${headers} ${sources})
 
-set(libpath ${PROJECT_SOURCE_DIR}/lib)
+set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
 
 if(WIN32)
 find_library (GLFW glfw3.lib ${libpath})
-find_library(ASSIMP assimp-vc140-mt.lib ${libpath})
-add_custom_command(TARGET Editor POST_BUILD        # Adds a post-build event to Editor
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
-        "${PROJECT_SOURCE_DIR}/lib/assimp-vc140-mt.dll"      # <--this is in-file
-        $<TARGET_FILE_DIR:Editor>)                 # <--this is out-file path
-
 elseif(APPLE)
 find_library (GLFW libglfw3.a ${libpath}) 
-find_library(ASSIMP libassimp.4.1.0.dylib ${libpath})
+find_library (ASSIMP libassimp.4.1.0.dylib ${libpath})
 endif()
-
 
 
 target_link_libraries(Editor ${GLFW})
@@ -58,3 +51,15 @@ target_link_libraries(Editor "-framework OpenGL")
 target_link_libraries(Editor "-framework IOKit")
 target_link_libraries(Editor "-framework CoreVideo")
 endif(APPLE)
+
+add_custom_command(TARGET Editor POST_BUILD     #拷贝文件夹             
+COMMAND ${CMAKE_COMMAND} -E copy_directory                     
+"${PROJECT_SOURCE_DIR}/Library/shared"                                                     
+$<TARGET_FILE_DIR:Editor>)
+
+if(WIN32)
+message(${ASSIMP})
+CopyFile(Editor ${ASSIMP})                                              
+endif()
+
+find_library (ASSIMP assimp-vc140-mt.lib ${libpath})
