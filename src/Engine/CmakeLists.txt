@@ -7,9 +7,9 @@ file(GLOB_RECURSE headers
 file(GLOB_RECURSE sources 
 "Core/*.cpp" 
 "Log/*.cpp"
-"FileSystem/*.cpp"
-"ImGui/*.c??"
+"FileSystem/*.cpp" 
 "ImGui/*.c"
+"ImGui/*.c??"
 "3Part/STB/*.cpp"
 "../../include/*.cpp"
 "Model/model.cpp"

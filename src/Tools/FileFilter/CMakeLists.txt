@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.12)
+project(FileFilter)
+aux_source_directory(src source)
+include_directories("include")
+add_executable(FileFilter ${source})
