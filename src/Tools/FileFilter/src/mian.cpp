@@ -19,24 +19,40 @@ std::vector<std::string> split(const std::string& s, char delimiter)
 	return tokens;
 }
 
-//遍历当前目录下的文件夹和文件,默认是按字母顺序遍历
-bool TraverseFiles(string path, int &file_num) {
-	_finddata_t file_info;
-	string current_path = path + "/*.*";							//可以定义后面的后缀为*.exe，*.txt等来查找特定后缀的文件，*.*是通配符，匹配所有类型,路径连接符最好是左斜杠/，可跨平台    //打开文件查找句柄
-	int handle = _findfirst(current_path.c_str(), &file_info);		//返回值为-1则查找失败
-	if (-1 == handle)
-		return false;
-	do {															//判断是否子目录
-		string attribute;
-		if (file_info.attrib == _A_SUBDIR)							//是目录
-			attribute = "dir";
+void listFiles(const char * dir)
+{
+	char dirNew[200];
+	strcpy(dirNew, dir);
+	strcat(dirNew, "\\*.*");    // 在目录后面加上"\\*.*"进行第一次搜索
+
+	intptr_t handle;
+	_finddata_t findData;
+
+	handle = _findfirst(dirNew, &findData);
+	if (handle == -1)        // 检查是否成功
+		return;
+
+	do
+	{
+		if (findData.attrib & _A_SUBDIR)
+		{
+			if (strcmp(findData.name, ".") == 0 || strcmp(findData.name, "..") == 0)
+				continue;
+
+			cout << findData.name << "\t<dir>\n";
+
+			// 在目录后面加上"\\"和搜索到的目录名进行下一次搜索
+			strcpy(dirNew, dir);
+			strcat(dirNew, "\\");
+			strcat(dirNew, findData.name);
+
+			listFiles(dirNew);
+		}
 		else
-			attribute = "file";        //输出文件信息并计数,文件名(带后缀)、文件最后修改时间、文件字节数(文件夹显示0)、文件是否目录
-		cout << file_info.name << ' ' << file_info.time_write << ' ' << file_info.size << ' ' << attribute << endl; //获得的最后修改时间是time_t格式的长整型，需要用其他方法转成正常时间显示
-		file_num++;
-	} while (!_findnext(handle, &file_info));  //返回0则遍历完    //关闭文件句柄
-	_findclose(handle);
-	return true;
+			cout << findData.name << "\t" << findData.size << " bytes.\n";
+	} while (_findnext(handle, &findData) == 0);
+
+	_findclose(handle);    // 关闭搜索句柄
 }
 
 int main(int argc, char const *argv[])
@@ -51,8 +67,8 @@ int main(int argc, char const *argv[])
 		}
 	}
 	filters = split(commands["-f"], ' ');
-	int c;
-	TraverseFiles(commands["-p"], c);
+	
+	listFiles(commands["-p"].c_str());
 	//cout << "Path " << commands["-p"] << endl;
 	//cout << "filter " << commands["-f"] << endl;
 	;
