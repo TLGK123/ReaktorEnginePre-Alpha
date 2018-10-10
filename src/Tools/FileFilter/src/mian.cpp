@@ -7,6 +7,8 @@
 #include <stdlib.h>
 
 using namespace std;
+map<string, string> commands;
+vector<string> filters;
 
 std::vector<std::string> split(const std::string& s, char delimiter)
 {
@@ -53,21 +55,18 @@ void listFiles(const char * dir)
 		}
 		else
 		{
-			//cout << dir << "\\" << findData.name << "\t" << findData.size << " b\n";
-			//char path_buffer[_MAX_PATH];
-			//char drive[_MAX_DRIVE];
-			//char dir[_MAX_DIR];
-			//char fname[_MAX_FNAME];
-			//char ext[_MAX_EXT];
-
-			//string s = string(dir) + string(findData.name);
-			//strcpy(path_buffer, s.c_str());
-			//_splitpath(path_buffer, drive, dir, fname, ext);
-
-			//cout<< ext <<endl;
-			//delete ext, path_buffer, drive, fname, dir;
-			//;
-			files.push_back(s);
+			string s = string(dir) + string(findData.name);
+			auto ext = split(findData.name, '.');
+			//cout <<"."<< *(ext.end()-1) << endl;
+			
+			vector<string>::iterator it;
+			string value ="."+ *(ext.end() - 1);
+			it = find(filters.begin(), filters.end(), value);
+			
+			if (it != filters.end())
+			{
+				files.push_back(s);
+			}
 		}
 	} while (_findnext(handle, &findData) == 0);
 
@@ -76,8 +75,6 @@ void listFiles(const char * dir)
 
 int main(int argc, char const *argv[])
 {
-	map<string, string> commands;
-	vector<string> filters;
 	for (int i = 1; i < argc; ++i)
 	{
 		if (argv[i][0] == '-')
@@ -88,14 +85,11 @@ int main(int argc, char const *argv[])
 	filters = split(commands["-f"], ' ');
 
 	listFiles(commands["-p"].c_str());
-	//cout << "Path " << commands["-p"] << endl;
-	//cout << "filter " << commands["-f"] << endl;
 
 	vector<string>::iterator iter;
 	for (iter = files.begin(); iter != files.end(); iter++)
 	{
 		cout << *iter << endl;
 	}
-	;
 	return 0;
 }
