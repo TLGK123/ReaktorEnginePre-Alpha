@@ -4,6 +4,7 @@
 #include <string>
 #include<sstream>
 #include <io.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -18,6 +19,8 @@ std::vector<std::string> split(const std::string& s, char delimiter)
 	}
 	return tokens;
 }
+
+std::vector<std::string> files;
 
 void listFiles(const char * dir)
 {
@@ -39,7 +42,7 @@ void listFiles(const char * dir)
 			if (strcmp(findData.name, ".") == 0 || strcmp(findData.name, "..") == 0)
 				continue;
 
-			cout << findData.name << "\t<dir>\n";
+			//cout << dir << "\\" << findData.name << "\t<dir>\n";
 
 			// 在目录后面加上"\\"和搜索到的目录名进行下一次搜索
 			strcpy(dirNew, dir);
@@ -49,7 +52,23 @@ void listFiles(const char * dir)
 			listFiles(dirNew);
 		}
 		else
-			cout << findData.name << "\t" << findData.size << " bytes.\n";
+		{
+			//cout << dir << "\\" << findData.name << "\t" << findData.size << " b\n";
+			//char path_buffer[_MAX_PATH];
+			//char drive[_MAX_DRIVE];
+			//char dir[_MAX_DIR];
+			//char fname[_MAX_FNAME];
+			//char ext[_MAX_EXT];
+
+			//string s = string(dir) + string(findData.name);
+			//strcpy(path_buffer, s.c_str());
+			//_splitpath(path_buffer, drive, dir, fname, ext);
+
+			//cout<< ext <<endl;
+			//delete ext, path_buffer, drive, fname, dir;
+			//;
+			files.push_back(s);
+		}
 	} while (_findnext(handle, &findData) == 0);
 
 	_findclose(handle);    // 关闭搜索句柄
@@ -67,10 +86,16 @@ int main(int argc, char const *argv[])
 		}
 	}
 	filters = split(commands["-f"], ' ');
-	
+
 	listFiles(commands["-p"].c_str());
 	//cout << "Path " << commands["-p"] << endl;
 	//cout << "filter " << commands["-f"] << endl;
+
+	vector<string>::iterator iter;
+	for (iter = files.begin(); iter != files.end(); iter++)
+	{
+		cout << *iter << endl;
+	}
 	;
 	return 0;
 }
