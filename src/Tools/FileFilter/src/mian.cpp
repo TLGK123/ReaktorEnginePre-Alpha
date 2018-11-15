@@ -144,26 +144,35 @@ void listFiles(const char * dir)
 
 	_findclose(handle);    // ¹Ø±ÕËÑË÷¾ä±ú
 }
+
+std::vector<std::string> FileFilter(const char * dir , std::vector<std::string> filefilters)
+{
+	filters = filefilters;
+	files.clear();
+	listFiles(dir);
+	return files;
+}
 #endif
 
-int main(int argc, char const *argv[])
-{
-	for (int i = 1; i < argc; ++i)
-	{
-		if (argv[i][0] == '-')
-		{
-			commands.insert(pair<string, string>(argv[i], argv[i + 1]));
-		}
-	}
-	filters = split(commands["-f"], ' ');
+//int main(int argc, char const *argv[])
+//{
+//	for (int i = 1; i < argc; ++i)
+//	{
+//		if (argv[i][0] == '-')
+//		{
+//			commands.insert(pair<string, string>(argv[i], argv[i + 1]));
+//		}
+//	}
+//	filters = split(commands["-f"], ' ');
+//
+//	listFiles(commands["-p"].c_str());
+//
+//	vector<string>::iterator iter;
+//	for (iter = files.begin(); iter != files.end(); iter++)
+//	{
+//		cout << *iter << endl;
+//		//  readFile(*iter);
+//	}
+//	return 0;
+//}
 
-	listFiles(commands["-p"].c_str());
-
-	vector<string>::iterator iter;
-	for (iter = files.begin(); iter != files.end(); iter++)
-	{
-		cout << *iter << endl;
-		//  readFile(*iter);
-	}
-	return 0;
-}

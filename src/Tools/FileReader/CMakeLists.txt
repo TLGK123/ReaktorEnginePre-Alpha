@@ -1,5 +1,6 @@
 #cmake_minimum_required(VERSION 3.12)
-project(FileFilter)
+project(FileReader)
+
 file(GLOB headers 
 "include/*.h"
 "include/*.h??"
@@ -9,4 +10,4 @@ file(GLOB sources
 )
 
 include_directories("include")
-add_library(FileFilter  ${headers} ${sources})
+add_library(FileReader  ${headers} ${sources})
