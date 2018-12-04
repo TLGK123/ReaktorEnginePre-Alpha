@@ -111,16 +111,29 @@ long FileCharacter(string s)
 		cout << "打开文件出错" << endl;
 		return 0;
 	}
-	long totalByte =0;
+	long totalByte = 0;
 	//按字节读入并输出
 	char ch;
 	while (EOF != (ch = f.get()))
 	{
-		//cout << ch; 
-		if(ch=='\n')
-		totalByte++;
+		//cout << ch;
+		if (ch == '\n')
+			totalByte++;
 	}
 
 	f.close();
 	return totalByte;
+}
+
+vector<string> GetFileContent(string f)
+{
+	vector<string> content;
+	ifstream fin(f);
+	string  s;
+	while (getline(fin, s))
+	{
+		content.push_back(s);
+	}
+	fin.close();
+	return content;
 }
