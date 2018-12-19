@@ -4,6 +4,7 @@ file(GLOB headers
 "../../include/im.h"
 "Demo/*.h"
 "../../include/stb_image.h"
+"Core/*.h"
 )
 
 file(GLOB sources 
