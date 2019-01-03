@@ -203,6 +203,7 @@ void Screen::InitSubSystem(Context * context)
 
 	RegisteWidget(new ViewPoint(context));
 	RegisteWidget(new DemoMenu(context));
+	RegisteWidget(new Project(context));
 	Debug::Log("log RegisterSubsystem over");
 }
 
