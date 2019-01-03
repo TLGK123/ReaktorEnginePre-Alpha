@@ -1,6 +1,7 @@
 
 //= INCLUDES =======
 #include "Vector3.h"
+#include <stdio.h>
 //==================
 
 //= NAMESPACES =====
@@ -23,7 +24,7 @@ namespace TmingEngine::Math
 	string Vector3::ToString() const
 	{
 		char tempBuffer[200];
-		sprintf_s(tempBuffer, "X:%f, Y:%f, Z:%f", x, y, z);
+		sprintf(tempBuffer, "X:%f, Y:%f, Z:%f", x, y, z);
 		return string(tempBuffer);
 	}
 }

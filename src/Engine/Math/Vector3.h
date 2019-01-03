@@ -4,6 +4,7 @@
 #include <string>
 #include "../Core/EngineDefs.h"
 #include "MathHelper.h"
+#include "stdio.h"
 //=============================
 
 namespace TmingEngine::Math

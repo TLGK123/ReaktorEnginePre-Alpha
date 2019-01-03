@@ -52,44 +52,44 @@ namespace TmingEngine
 	template <typename T>
 	ComponentType IComponent::ToComponentType()
 	{
-		if (typeid(T) == typeid(AudioListener))
-			return ComponentType_AudioListener;
-
-		if (typeid(T) == typeid(AudioSource))
-			return ComponentType_AudioSource;
-
-		if (typeid(T) == typeid(Camera))
-			return ComponentType_Camera;
-
-		if (typeid(T) == typeid(Collider))
-			return ComponentType_Collider;
-
-		if (typeid(T) == typeid(Constraint))
-			return ComponentType_Constraint;
-
-		if (typeid(T) == typeid(Light))
-			return ComponentType_Light;
-
-		if (typeid(T) == typeid(LineRenderer))
-			return ComponentType_LineRenderer;
-
-		if (typeid(T) == typeid(MeshFilter))
-			return ComponentType_MeshFilter;
-
-		if (typeid(T) == typeid(MeshRenderer))
-			return ComponentType_MeshRenderer;
-
-		if (typeid(T) == typeid(RigidBody))
-			return ComponentType_RigidBody;
-
-		if (typeid(T) == typeid(Script))
-			return ComponentType_Script;
-
-		if (typeid(T) == typeid(Skybox))
-			return ComponentType_Skybox;
-
-		if (typeid(T) == typeid(Transform))
-			return ComponentType_Transform;
+//        if (typeid(T) == typeid(AudioListener))
+//            return ComponentType_AudioListener;
+//
+//        if (typeid(T) == typeid(AudioSource))
+//            return ComponentType_AudioSource;
+//
+//        if (typeid(T) == typeid(Camera))
+//            return ComponentType_Camera;
+//
+//        if (typeid(T) == typeid(Collider))
+//            return ComponentType_Collider;
+//
+//        if (typeid(T) == typeid(Constraint))
+//            return ComponentType_Constraint;
+//
+//        if (typeid(T) == typeid(Light))
+//            return ComponentType_Light;
+//
+//        if (typeid(T) == typeid(LineRenderer))
+//            return ComponentType_LineRenderer;
+//
+//        if (typeid(T) == typeid(MeshFilter))
+//            return ComponentType_MeshFilter;
+//
+//        if (typeid(T) == typeid(MeshRenderer))
+//            return ComponentType_MeshRenderer;
+//
+//        if (typeid(T) == typeid(RigidBody))
+//            return ComponentType_RigidBody;
+//
+//        if (typeid(T) == typeid(Script))
+//            return ComponentType_Script;
+//
+//        if (typeid(T) == typeid(Skybox))
+//            return ComponentType_Skybox;
+//
+//        if (typeid(T) == typeid(Transform))
+//            return ComponentType_Transform;
 
 		return ComponentType_Unknown;
 	}

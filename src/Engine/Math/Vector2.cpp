@@ -1,4 +1,5 @@
 #include "Vector2.h"
+#include <stdio.h>
 //==================
 
 //= NAMESPACES =====
@@ -13,7 +14,7 @@ namespace TmingEngine::Math
 	string Vector2::ToString() const
 	{
 		char tempBuffer[200];
-		sprintf_s(tempBuffer, "X:%f, Y:%f", x, y);
+		sprintf(tempBuffer, "X:%f, Y:%f", x, y);
 		return string(tempBuffer);
 	}
 }
