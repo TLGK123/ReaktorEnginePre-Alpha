@@ -11,6 +11,7 @@
 #include "Log/Log.h"
 #include "demo.h"
 #include "Project.h"
+#include "Hierachy.h"
 
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )
