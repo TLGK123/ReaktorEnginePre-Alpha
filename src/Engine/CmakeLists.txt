@@ -3,6 +3,11 @@ file(GLOB_RECURSE headers
 "Log/*.h"
 "Core/*.h"
 "FileSystem/*.h"
+"Scene/Components/Transform.h"
+"Scene/Components/IComponent.h"
+
+"Math/Vector2.h"
+"Math/Vector3.h"
 )
 file(GLOB_RECURSE sources 
 "Core/*.cpp" 
@@ -13,6 +18,10 @@ file(GLOB_RECURSE sources
 "3Part/STB/*.cpp"
 "../../include/*.cpp"
 "Model/model.cpp"
+"Math/Vector2.cpp"
+"Math/Vector3.cpp"
+"Scene/Components/Transform.cpp"
+"Scene/Components/IComponent.cpp"
 ) 
 set(CXX_STANDARD 14)
 

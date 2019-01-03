@@ -16,8 +16,8 @@
 //#include "Transform.h"
 //#include "../GameObject.h"
 #include "../../Core/Context.h"
-#include "../../Core/GUIDGenerator.h"
-#include "../../FileSystem/FileSystem.h"
+//#include "../../Core/GUIDGenerator.h"
+//#include "../../FileSystem/FileSystem.h"
 //======================================
 
 //= NAMESPACES =====
@@ -32,7 +32,7 @@ namespace TmingEngine
 		m_gameObject	= gameObject;
 		m_transform		= transform;
 		m_enabled		= true;
-		m_ID			= GENERATE_GUID;
+	/*	m_ID			= GENERATE_GUID;*/
 	}
 
 	std::shared_ptr<GameObject> IComponent::GetGameObject_RefStrong()
@@ -43,9 +43,9 @@ namespace TmingEngine
 
 	const string& IComponent::GetGameObjectName()
 	{
-		if (!m_gameObject)
-			return NOT_ASSIGNED;
-
+		//if (!m_gameObject)
+		//	return NOT_ASSIGNED;
+		return nullptr;
 	//	return m_gameObject->GetName();
 	}
 

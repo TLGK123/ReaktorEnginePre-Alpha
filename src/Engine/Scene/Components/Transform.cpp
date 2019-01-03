@@ -3,9 +3,9 @@
 #include "Transform.h"
 //#include "../Scene.h"
 //#include "../GameObject.h"
-#include "../../Logging/Log.h"
+//#include "../../Logging/Log.h"
 //#include "../../IO/FileStream.h"
-#include "../../FileSystem/FileSystem.h"
+//#include "../../FileSystem/FileSystem.h"
 //======================================
 
 //= NAMESPACES ================
@@ -273,14 +273,14 @@ namespace TmingEngine
 	{
 		if (!HasChildren())
 		{
-			LOG_WARNING(GetGameObjectName() + " has no children.");
+			//LOG_WARNING(GetGameObjectName() + " has no children.");
 			return nullptr;
 		}
 
 		// prevent an out of vector bounds error
 		if (index >= GetChildrenCount())
 		{
-			LOG_WARNING("There is no child with an index of \"" + to_string(index) + "\".");
+			//LOG_WARNING("There is no child with an index of \"" + to_string(index) + "\".");
 			return nullptr;
 		}
 
