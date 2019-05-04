@@ -21,66 +21,44 @@
 
 using namespace std;
 
-//int main(int argc, char const *argv[])
-//{
-//	//TextRead_CPPmode("D:\\Gitee\\TmingEngine\\src\\Tools\\FileReader\\Data\\1.txt");
-//	int todayWork = FileCharacter("D:\\Gitee\\TmingEngine\\src\\Tools\\FileReader\\Data\\1.txt");
-//	cout << "½ñÌìÐ´µÄ´úÂëÁ¿:" << todayWork << " ×Ö½Ú"<< endl;
-//	return 0;
-//}
 
-//²ÉÓÃCPPÄ£Ê½¶ÁÈ¡txt
 void TextRead_CPPmode(string s)
 {
 	fstream f;
 	f.open(s, ios::in);
-	//ÎÄ¼þ´ò¿ª·½Ê½Ñ¡Ïî£º
-	//¡¡ios::in¡¡¡¡¡¡¡¡= 0x01,¡¡//¹©¶Á£¬ÎÄ¼þ²»´æÔÚÔò´´½¨(ifstreamÄ¬ÈÏµÄ´ò¿ª·½Ê½)
-	//¡¡ios::out¡¡¡¡¡¡ = 0x02,¡¡//¹©Ð´£¬ÎÄ¼þ²»´æÔÚÔò´´½¨£¬ÈôÎÄ¼þÒÑ´æÔÚÔòÇå¿ÕÔ­ÄÚÈÝ(ofstreamÄ¬ÈÏµÄ´ò¿ª·½Ê½)
-	//¡¡ios::ate¡¡¡¡¡¡ = 0x04,¡¡//ÎÄ¼þ´ò¿ªÊ±£¬Ö¸ÕëÔÚÎÄ¼þ×îºó¡£¿É¸Ä±äÖ¸ÕëµÄÎ»ÖÃ£¬³£ºÍin¡¢outÁªºÏÊ¹ÓÃ
-	//¡¡ios::app¡¡¡¡¡¡ = 0x08,¡¡//¹©Ð´£¬ÎÄ¼þ²»´æÔÚÔò´´½¨£¬ÈôÎÄ¼þÒÑ´æÔÚÔòÔÚÔ­ÎÄ¼þÄÚÈÝºóÐ´ÈëÐÂµÄÄÚÈÝ£¬Ö¸ÕëÎ»ÖÃ×ÜÔÚ×îºó
-	//¡¡ios::trunc¡¡¡¡ = 0x10,¡¡//ÔÚ¶ÁÐ´Ç°ÏÈ½«ÎÄ¼þ³¤¶È½Ø¶ÏÎª0£¨Ä¬ÈÏ£©
-	//¡¡ios::nocreate¡¡= 0x20,¡¡//ÎÄ¼þ²»´æÔÚÊ±²úÉú´íÎó£¬³£ºÍin»òappÁªºÏÊ¹ÓÃ
-	//¡¡ios::noreplace = 0x40,¡¡//ÎÄ¼þ´æÔÚÊ±²úÉú´íÎó£¬³£ºÍoutÁªºÏÊ¹ÓÃ
-	//¡¡ios::binary¡¡¡¡= 0x80¡¡ //¶þ½øÖÆ¸ñÊ½ÎÄ¼þ
 	vector<int> index;
 	vector<double> x_pos;
 	vector<double> y_pos;
 	if (!f)
 	{
-		cout << "´ò¿ªÎÄ¼þ³ö´í" << endl;
+        cout << " ### 12312312 ####  " << endl;
 		return;
 	}
-	//cout << "modeÎª1£¬°´×Ö·û¶ÁÈë²¢Êä³ö£»modeÎª2£¬°´ÐÐ¶ÁÈëÊä³ö£»modeÎª3£¬ÖªµÀÊý¾Ý¸ñÊ½£¬°´ÐÐ¶ÁÈë²¢Êä³ö" << endl;
+
 	int mode = 2;
 	//cin >> mode;
 	if (1 == mode)
 	{
-		//°´×Ö½Ú¶ÁÈë²¢Êä³ö
+
 		char ch;
 		while (EOF != (ch = f.get()))
 			cout << ch;
 	}
 	else if (2 == mode)
 	{
-		//°´ÐÐ¶ÁÈ¡£¬²¢ÏÔÊ¾
+
 		char line[128];
 		int numBytes;
-		f.seekg(0, 0);			  //Ìø¹ý×Ö½Ú
-		//seekg(¾ø¶ÔÎ»ÖÃ);¡¡¡¡¡¡¡¡¡¡ //¾ø¶ÔÒÆ¶¯
-		//seekg(Ïà¶ÔÎ»ÖÃ,²ÎÕÕÎ»ÖÃ);¡¡//Ïà¶Ô²Ù×÷
-		//tellg();			     //·µ»Øµ±Ç°Ö¸ÕëÎ»ÖÃ
-
+		f.seekg(0, 0);
 		long totalByte = 0;
 		while (!f.eof())
 		{
-			//Ê¹ÓÃeof()º¯Êý¼ì²âÎÄ¼þÊÇ·ñ¶Á½áÊø
 			f.getline(line, 128);
-			numBytes = f.gcount();		//Ê¹ÓÃgcount()»ñµÃÊµ¼Ê¶ÁÈ¡µÄ×Ö½ÚÊý
+			numBytes = f.gcount();
 			totalByte += numBytes;
-			cout << line << "\t" << numBytes << "×Ö½Ú" << endl;
+			cout << line << "\t" << numBytes << " tttttt " << endl;
 		}
-		cout << "ÎÄ¼þ×Ü×Ö½ÚÊý£º\t" << totalByte << "×Ö½Ú" << endl;
+		cout << " hahaha " << totalByte << " hello Ú" << endl;
 	}
 	else if (3 == mode)
 	{

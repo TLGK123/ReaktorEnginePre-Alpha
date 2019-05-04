@@ -14,8 +14,9 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
 	int todayWork = 0;
-	vector<string> fi({ ".cpp",".cs",".hpp" });
-	std::vector<std::string> files = FileFilter("D:\\Unity4_7_WorkSpace\\DreamCast_Client\\client\\Unity", fi);
+    std::string str[] = {".cpp",".cs",".hpp" };
+ 	std::vector<string> fi(str,str+3);
+	std::vector<std::string> files = FileFilter("/Users/blue/Desktop/GitHub/Vulkan", fi);
 	
 	vector<string>::iterator iter;
 	for (iter = files.begin(); iter != files.end(); iter++)
@@ -25,10 +26,10 @@ int main(int argc, char const *argv[])
 		;
 		long count = FileCharacter(s);
 		todayWork += count;
-		cout  <<"行数："<<count <<"  --  "<< *iter <<endl;
+		cout  <<"行- "<<count <<"  --  "<< *iter <<endl;
 		;
 	}
 
-	cout << endl << "文件个数：" << files.size() << " 总计行数: " << todayWork << endl;
+	cout << endl << " " << files.size()<<"   ww  "  << todayWork << endl;
 	return 0;
 }
