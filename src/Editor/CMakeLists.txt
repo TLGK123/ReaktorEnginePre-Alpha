@@ -5,6 +5,7 @@ file(GLOB headers
 "Demo/*.h"
 "../../include/stb_image.h"
 "Core/*.h"
+"../Engine/imgui/*.h"
 )
 
 file(GLOB sources 
@@ -18,6 +19,7 @@ file(GLOB sources
 "UI/Widgets/DemoMenu.cpp" 
 "../Engine/3Part/Box2D/Testbed/Framework/DebugDraw.cpp"
 "../../include/*.cpp"
+"../Engine/imgui/*.cpp"
 )
 
 include_directories("UI/Widgets")    #添加头文件目录
@@ -62,3 +64,6 @@ if(WIN32)
 message(${ASSIMP})
 CopyFile(Editor ${ASSIMP})                                              
 endif()
+
+ADD_DEFINITIONS(-DIMGUI_IMPL_OPENGL_LOADER_GLAD)
+

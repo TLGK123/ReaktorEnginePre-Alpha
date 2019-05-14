@@ -1,6 +1,8 @@
 #pragma once
 #include<string>
 #include"Core/SmartPtr.h"
+#include "imgui/imgui.h"
+
 namespace TmingEngine
 {
 	class Context;
