@@ -5,16 +5,18 @@ file(GLOB_RECURSE headers
 "FileSystem/*.h"
 "Scene/Components/Transform.h"
 "Scene/Components/IComponent.h"
-
+"imgui/*.h"
+"imgui/*.h??"
 "Math/Vector2.h"
 "Math/Vector3.h"
+"im.h"
 )
 file(GLOB_RECURSE sources 
 "Core/*.cpp" 
 "Log/*.cpp"
 "FileSystem/*.cpp" 
-"ImGui/*.c"
-"ImGui/*.c??"
+"imgui/*.c"
+"imgui/*.c??"
 "3Part/STB/*.cpp"
 "../../include/*.cpp"
 "Model/model.cpp"
@@ -45,4 +47,5 @@ target_link_libraries(TmingEngine ${GLFW})
 add_definitions(-DCOMPILING_LIB)
 
 add_subdirectory(3Part/Box2D)
+ADD_DEFINITIONS(-DIMGUI_IMPL_OPENGL_LOADER_GLAD)
 

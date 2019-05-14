@@ -50,7 +50,7 @@ namespace TmingEngine
 		}
 
 		if (ScrollToBottom)
-			ImGui::SetScrollHere(1.0f);
+			ImGui::SetScrollHereY(1.0f);
 		ScrollToBottom = false;
 		ImGui::EndChild();
 		ImGui::End();

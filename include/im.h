@@ -18,8 +18,9 @@
 #include "learnopengl/model.h"
 #include <iostream>
 
-#include "imgui.h"
-#include "imgui_impl_glfw_gl3.h"
+#include "../src/Engine/imgui/imgui.h"
+#include "../src/Engine/imgui/imgui_impl_opengl3.h"
+#include "../src/Engine/imgui/imgui_impl_glfw.h"
 
 #include "assimp/Importer.hpp"
 #include "assimp/scene.h"

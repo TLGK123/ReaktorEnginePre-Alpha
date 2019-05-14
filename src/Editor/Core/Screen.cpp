@@ -278,7 +278,8 @@ void Screen::CreateFrameBufer()
 
 void Screen::ShutDown()
 {
-	ImGui_ImplGlfwGL3_Shutdown();
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
 
 	glDeleteVertexArrays(1, &VAO);
@@ -296,7 +297,11 @@ void Screen::InitImgui()
 	// Setup ImGui binding
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	ImGui_ImplGlfwGL3_Init(window, true);
+    
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+    
+    const char * glsl_version ="#version 150";
+    ImGui_ImplOpenGL3_Init(glsl_version);
 	// Setup style
 	ImGui::StyleColorsDark();
 }
@@ -343,7 +348,9 @@ void Screen::Render_SkyBox()
 
 void Screen::Render_UI()
 {
-	ImGui_ImplGlfwGL3_NewFrame();
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
 	{
 		static float f = 0.0f;
 		static int counter = 0;
@@ -394,7 +401,7 @@ void Screen::Render_UI()
 	DrawScreen();
 
 	ImGui::Render();
-	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
