@@ -6,8 +6,11 @@ using namespace std;
 #include "stb_image.h"
 
 const unsigned int SCR_WIDTH = 1366;
-const unsigned int SCR_HEIGHT = 768;										// camera
-Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
+const unsigned int SCR_HEIGHT = 768;
+
+Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));     //  Editor  Scene  camera
+Camera GameCa(glm::vec3(0.0f, 0.0f, 5.0f));     //  Game          camera
+
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -117,7 +120,9 @@ void Screen::InitOpenGL()
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 	glEnable(GL_DEPTH_TEST);
+    
 	ourShader.Init("7.4.camera.vs", "7.4.camera.fs");
+    ourShaderCa.Init("7.4.camera.vs", "7.4.camera.fs");
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -186,11 +191,19 @@ void Screen::InitOpenGL()
 	stbi_image_free(data);
 
 	ourShader.use();
+    ourShaderCa.use();
+    
 	glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
 	ourShader.setInt("texture1", 0);
 	ourShader.setInt("texture2", 1);
+    
+    glUniform1i(glGetUniformLocation(ourShaderCa.ID, "texture1"), 0);
+    ourShaderCa.setInt("texture1", 0);
+    ourShaderCa.setInt("texture2", 1);
+
 
 	CreateFrameBufer();
+    CreateFrameBuferCa();
 }
 
 void Screen::InitSubSystem(Context * context)
@@ -207,10 +220,10 @@ void Screen::InitSubSystem(Context * context)
 	Debug::Log("log RegisterSubsystem over");
 }
 
-int Screen::GetCurrentFrameTexture()
-{
-	return CurrentFrameTextureID;
-}
+//int Screen::GetCurrentFrameTexture()
+//{
+//    return CurrentFrameTextureID;
+//}
 
 void Screen::Update()
 {
@@ -221,6 +234,8 @@ void Screen::Update()
 	lastFrame = currentFrame;
 	processInput(window);
 
+    
+  
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);   //帧缓冲的 开始
 	glEnable(GL_DEPTH_TEST);                          //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
 													  //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
@@ -231,6 +246,19 @@ void Screen::Update()
 	Render_SceneObject();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
+    
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, framebufferCa);   //帧缓冲的 开始
+    glEnable(GL_DEPTH_TEST);                          //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
+    //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    Render_SkyBox();
+    Render_SceneObjectCa();
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
+    
 
 	glDisable(GL_DEPTH_TEST);
 	glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
@@ -273,6 +301,41 @@ void Screen::CreateFrameBufer()
 
 	CurrentFrameTextureID = textureColorbuffer;
 	return;
+}
+
+
+void Screen::CreateFrameBuferCa()
+{
+    // 创建一个帧缓冲对象，并绑定它
+    //unsigned int framebuffer;
+    glGenFramebuffers(1, &framebufferCa);
+    glBindFramebuffer(GL_FRAMEBUFFER, framebufferCa);
+    // 创建一个纹理图像
+    //unsigned int textureColorbuffer;
+    glGenTextures(1, &textureColorbufferCa);
+    glBindTexture(GL_TEXTURE_2D, textureColorbufferCa);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    //纹理 附加到当前绑定的帧缓冲对象
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbufferCa, 0);
+    
+    //创建一个渲染缓冲对象
+    unsigned int rbo;
+    glGenRenderbuffers(1, &rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+    //创建一个深度和模板渲染缓冲对象
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT);
+    //附加这个渲染缓冲对象：
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
+    // now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    
+    CurrentFrameTextureIDCa = textureColorbufferCa;
+
 }
 
 void Screen::ShutDown()
@@ -341,6 +404,41 @@ void Screen::Render_SceneObject()
 	}
 }
 
+void Screen::Render_SceneObjectCa()
+{
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+    
+    ourShaderCa.use();
+    glm::mat4  projectionCa ;
+    
+    projectionCa = glm::perspective(glm::radians(GameCa.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+
+    ourShaderCa.setMat4("projection", projectionCa);
+    
+    glm::mat4 viewCa = GameCa.GetViewMatrix();
+    ourShaderCa.setMat4("view", viewCa);
+    
+    // render container
+    glBindVertexArray(VAO);
+    for (unsigned int i = 0; i < 10; i++)
+    {
+        // calculate the model matrix for each object and pass it to shader before drawing
+        glm::mat4 model;
+        model = glm::translate(model, cubePositions[i]);
+        float angle = 20.0f * i;
+        model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+        
+        ourShaderCa.setMat4("model", model);
+        
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+    }
+    
+}
+
+
 void Screen::Render_SkyBox()
 {
 }
@@ -397,6 +495,8 @@ void Screen::Render_UI()
 	screenContext->GetSubsystem<Console>()->Draw2("Hello Debug", &showDebug);
 
 	GetSubWidget<ViewPoint>()->ImageId = CurrentFrameTextureID;
+    
+    GetSubWidget<Game>()->ImageId = CurrentFrameTextureIDCa;
 	DrawScreen();
 
 	ImGui::Render();

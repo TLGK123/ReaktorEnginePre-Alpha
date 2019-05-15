@@ -35,7 +35,7 @@ class Screen :public Subsystem
 public:
 	GLFWwindow * window;
 	unsigned int texture1, texture2;
-	Shader ourShader;
+	Shader ourShader , ourShaderCa;
 	unsigned int VBO, VAO;
 	vector<Widget *> m_widgets;
 
@@ -46,9 +46,13 @@ public:
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 	Context * screenContext;
 	int CurrentFrameTextureID = 0;
-
+    int CurrentFrameTextureIDCa = 0;
+    
 	unsigned int framebuffer;
 	unsigned int textureColorbuffer;
+    
+    unsigned int framebufferCa;
+    unsigned int textureColorbufferCa;
 
 	void Initialize(Context * context);
 	void Update();
@@ -63,6 +67,7 @@ public:
 	int GetCurrentFrameTexture();
 
 	void CreateFrameBufer();
+    void CreateFrameBuferCa();
 
 	Screen(Context* context) : Subsystem(context)
 	{
@@ -109,6 +114,7 @@ public:
 private:
 	void InitImgui();
 	void Render_SceneObject();
+    void Render_SceneObjectCa();
 	void Render_SkyBox();
 	void Render_UI();
 };
