@@ -11,7 +11,6 @@ std::string FileSystem::getPath(std::string assetpath)
 
 	std::string  temp = path.substr(0, cutIndex + name.length()) + "/";
 	path = temp;
-	;
 	path = path + assetpath;
 	// std::cout<<"当前路径" <<path<<std::endl;
 	// std::cout <<"AssetPath: "+ path << std::endl;

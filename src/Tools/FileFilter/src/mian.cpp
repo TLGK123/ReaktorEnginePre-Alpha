@@ -117,9 +117,6 @@ void listFiles(const char * dir)
 			if (strcmp(findData.name, ".") == 0 || strcmp(findData.name, "..") == 0)
 				continue;
 
-			//cout << dir << "\\" << findData.name << "\t<dir>\n";
-
-			// 在目录后面加上"\\"和搜索到的目录名进行下一次搜索
 			strcpy(dirNew, dir);
 			strcat(dirNew, "\\");
 			strcat(dirNew, findData.name);
@@ -130,7 +127,7 @@ void listFiles(const char * dir)
 		{
 			string s = string(dir) + "\\" + string(findData.name);
 			auto ext = split(findData.name, '.');
-			//cout <<"."<< *(ext.end()-1) << endl;
+
 
 			vector<string>::iterator it;
 			string value = "." + *(ext.end() - 1);
@@ -142,7 +139,7 @@ void listFiles(const char * dir)
 		}
 	} while (_findnext(handle, &findData) == 0);
 
-	_findclose(handle);    // 关闭搜索句柄
+	_findclose(handle);
 }
 
 std::vector<std::string> FileFilter(const char * dir , std::vector<std::string> filefilters)
