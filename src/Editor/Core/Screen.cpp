@@ -206,6 +206,7 @@ void Screen::InitSubSystem(Context * context)
 	RegisteWidget(new Project(context));
 	RegisteWidget(new Hierachy(context));
     RegisteWidget(new Inspector(context));
+    RegisteWidget(new Game(context));
 	Debug::Log("log RegisterSubsystem over");
 }
 
