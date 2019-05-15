@@ -12,6 +12,7 @@
 #include "demo.h"
 #include "Project.h"
 #include "Hierachy.h"
+#include "Inspector.hpp"
 
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )

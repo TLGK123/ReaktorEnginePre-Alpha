@@ -1,0 +1,38 @@
+//
+//  Inspector.hpp
+//  01_CaculateCode
+//
+//  Created by WangYiMing on 2019/5/15.
+//
+#pragma once
+
+#ifndef Inspector_hpp
+#define Inspector_hpp
+#include <stdio.h>
+#include "Core/SubSystem.h"
+#include "Core/Context.h"
+#include "Widget.h"
+#include "im.h"
+
+namespace TmingEngine
+{
+    class Inspector :public Widget
+    {
+    public:
+        
+        Inspector(Context *context)
+        {
+            m_title = "Hierachy";
+        }
+        ~Inspector();
+        
+        void Begin();
+        void Update();
+        void End();
+        
+        int ImageId;
+        
+    };
+}
+
+#endif /* Inspector_hpp */
