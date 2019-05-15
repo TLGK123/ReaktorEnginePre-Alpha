@@ -1,13 +1,13 @@
 //
-//  Inspector.hpp
+//  Profiler.hpp
 //  01_CaculateCode
 //
 //  Created by WangYiMing on 2019/5/15.
 //
-#pragma once
 
-#ifndef Inspector_hpp
-#define Inspector_hpp
+#ifndef Profiler_hpp
+#define Profiler_hpp
+
 #include <stdio.h>
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
@@ -16,15 +16,15 @@
 
 namespace TmingEngine
 {
-    class Inspector :public Widget
+    class Profiler :public Widget
     {
     public:
         
-        Inspector(Context *context)
+        Profiler(Context *context)
         {
-            m_title = "Inspector";
+            m_title = "Profiler";
         }
-        ~Inspector();
+        ~Profiler();
         
         void Begin();
         void Update();
@@ -35,4 +35,5 @@ namespace TmingEngine
     };
 }
 
-#endif /* Inspector_hpp */
+
+#endif /* Profiler_hpp */
