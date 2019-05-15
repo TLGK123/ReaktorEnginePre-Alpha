@@ -18,7 +18,7 @@ void TmingEngine::Game::Update()
 {
     bool p_open = true;
     ImGui::SetNextWindowSize(ImVec2(350, 560), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Inspector", &p_open))
+    if (!ImGui::Begin("Game", &p_open))
     {
         ImGui::End();
         return;

@@ -14,6 +14,7 @@
 #include "Hierachy.h"
 #include "Inspector.hpp"
 #include "Game.hpp"
+#include "Profiler.hpp"
 
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )

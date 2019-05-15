@@ -5,10 +5,6 @@ using namespace std;
 
 #include "stb_image.h"
 
-//extern void stbi_set_flip_vertically_on_load(bool w);
-//extern void stbi_image_free (void *retval_from_stbi_load);
-//extern unsigned char * stbi_load (char const *filename, int *x, int *y, int *channels_in_file, int desired_channels);
-
 const unsigned int SCR_WIDTH = 1366;
 const unsigned int SCR_HEIGHT = 768;										// camera
 Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
@@ -207,6 +203,7 @@ void Screen::InitSubSystem(Context * context)
 	RegisteWidget(new Hierachy(context));
     RegisteWidget(new Inspector(context));
     RegisteWidget(new Game(context));
+    RegisteWidget(new Profiler(context));
 	Debug::Log("log RegisterSubsystem over");
 }
 
