@@ -30,7 +30,7 @@ include_directories("../Engine/3Part/Box2D/Testbed/Framework")    #添加头文�
 include_directories("Demo")    #添加头文件目录
 include_directories("Core")    #添加头文件目录
 
-add_executable(Editor ${headers} ${sources})
+add_executable_beautiful(Editor ${headers} ${sources})
 
 set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
 

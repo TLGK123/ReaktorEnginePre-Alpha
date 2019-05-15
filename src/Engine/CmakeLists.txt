@@ -39,7 +39,7 @@ elseif(APPLE)
 find_library (GLFW libglfw3.a ${libpath}) 
 endif()
 
-add_library(TmingEngine  ${headers} ${sources})
+add_library_beautiful(TmingEngine  ${headers} ${sources})
 target_link_libraries(TmingEngine lua)
 target_link_libraries(TmingEngine Box2D)
 target_link_libraries(TmingEngine ${GLFW})
