@@ -4,6 +4,24 @@
 #include "Widget.h"
 #include "im.h"
 
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include<sstream>
+#ifdef __APPLE__
+#include <sys/uio.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#else
+#include <io.h>
+#endif
+#include <stdlib.h>
+#include <fstream>
+#include <cstdlib>
+#include <string>
+
 namespace TmingEngine
 {
 	class Project :public Widget
@@ -20,7 +38,7 @@ namespace TmingEngine
 		void Update();
 		void End();
 
-		int ImageId;
+		std::vector<std::string> FileFilter(const char * dir , std::vector<std::string> filefilters);
 		
 	};
 }

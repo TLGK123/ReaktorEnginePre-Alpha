@@ -73,7 +73,27 @@ public:
 	{
 		context->RegisterSubsystem(this);
 		Initialize(context);
+        
+        for (auto& widget : m_widgets)
+        {
+            if (widget->GetIsWindow())
+            {
+                widget->Begin();
+            }
+        }
 	}
+    
+    ~Screen()
+    {
+        for (auto& widget : m_widgets)
+        {
+            if (widget->GetIsWindow())
+            {
+                widget->End();
+            }
+        }
+        
+    }
 
 	void RegisteWidget(Widget *widget)
 	{
@@ -96,17 +116,7 @@ public:
 	{
 		for (auto& widget : m_widgets)
 		{
-			if (widget->GetIsWindow())
-			{
-				widget->Begin();
-			}
-
 			widget->Update();
-
-			if (widget->GetIsWindow())
-			{
-				widget->End();
-			}
 		}
 	}
 
