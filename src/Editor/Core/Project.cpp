@@ -13,8 +13,7 @@ void TmingEngine::Project::Begin()
     string s = "";
     string str[] ={".*"};
     std::vector<string> fi(str,str+1);
-    //string currentPath =FileSystem::getPath(s);
-    string currentPath = "/Users/blue/Desktop/GitHub/LISP";
+    string currentPath =FileSystem::getPath(s);
     FileFilter(currentPath.c_str(),fi);
     vector<string>::iterator iter;
     cout <<endl;
@@ -22,7 +21,7 @@ void TmingEngine::Project::Begin()
     {
         //cout << *iter << endl;
         string s = *iter;
-        cout  <<"––––––"<< *iter <<endl;
+        cout  <<*iter <<endl;
         ;
     }
 }
@@ -144,10 +143,12 @@ void listFiles(const char * dir)
             auto ext = split(findData.name, '.');
             
             
-            vector<string>::iterator it;
+            vector<string>::iterator it , all;
             string value = "." + *(ext.end() - 1);
+			string alv = ".*";
+			all = find(filters.begin(), filters.end(), alv);
             it = find(filters.begin(), filters.end(), value);
-            if (it != filters.end())
+            if (it != filters.end()|| all != filters.end())
             {
                 files.push_back(s);
             }

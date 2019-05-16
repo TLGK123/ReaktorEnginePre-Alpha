@@ -9,9 +9,16 @@ std::string FileSystem::getPath(std::string assetpath)
 	std::string name = "TmingEngine";
 	int cutIndex = path.find(name);
 
-	std::string  temp = path.substr(0, cutIndex + name.length()) + "/";
-	path = temp;
-	path = path + assetpath;
+	std::string  temp = path.substr(0, cutIndex + name.length());
+	if (assetpath.length()>0)
+	{
+		path = temp + "/" + assetpath;
+	}
+	else
+	{
+		path = temp;
+	}
+	
 	// std::cout<<"当前路径" <<path<<std::endl;
 	// std::cout <<"AssetPath: "+ path << std::endl;
 	return path;
