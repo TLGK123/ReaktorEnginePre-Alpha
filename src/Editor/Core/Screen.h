@@ -15,6 +15,7 @@
 #include "Inspector.hpp"
 #include "Game.hpp"
 #include "Profiler.hpp"
+#include "Console.h"
 
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )

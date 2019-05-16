@@ -208,7 +208,7 @@ void Screen::InitOpenGL()
 
 void Screen::InitSubSystem(Context * context)
 {
-	context->RegisterSubsystem(new Console(context));
+	//context->RegisterSubsystem(new Console(context));
 
 	RegisteWidget(new ViewPoint(context));
 	RegisteWidget(new DemoMenu(context));
@@ -217,7 +217,8 @@ void Screen::InitSubSystem(Context * context)
     RegisteWidget(new Inspector(context));
     RegisteWidget(new Game(context));
     RegisteWidget(new Profiler(context));
-	Debug::Log("log RegisterSubsystem over");
+    RegisteWidget(new Console(context));
+	Debug::Log(" Editor 初始化窗口成功  ");
 }
 
 //int Screen::GetCurrentFrameTexture()
@@ -490,9 +491,9 @@ void Screen::Render_UI()
 		ImGui::ShowDemoWindow(&show_demo_window);
 	}
 
-	bool showDebug = true;
-	screenContext->GetSubsystem<Console>()->Draw("Hello Debug", &showDebug);
-	screenContext->GetSubsystem<Console>()->Draw2("Hello Debug", &showDebug);
+//	bool showDebug = true;
+//	screenContext->GetSubsystem<Console>()->Draw("Hello Debug", &showDebug);
+//	screenContext->GetSubsystem<Console>()->Draw2("Hello Debug", &showDebug);
 
 	GetSubWidget<ViewPoint>()->ImageId = CurrentFrameTextureID;
     

@@ -16,7 +16,6 @@ file(GLOB sources
 "imgui/*.cpp"
 "Model/*.cpp"
 "UI/Widgets/Widget.cpp"
-"UI/Widgets/Console.cpp"
 "UI/Widgets/DemoMenu.cpp" 
 "../Engine/3Part/Box2D/Testbed/Framework/DebugDraw.cpp"
 "../../include/*.cpp"
