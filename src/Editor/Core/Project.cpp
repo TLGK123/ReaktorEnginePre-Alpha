@@ -34,22 +34,36 @@ void TmingEngine::Project::Update()
 	}
 
 
-	if (ImGui::TreeNode("Basic trees"))
+	if (ImGui::TreeNode("Assets"))
 	{
 		for (int i = 0; i < 5; i++)
-			if (ImGui::TreeNode((void*)(intptr_t)i, "Child %d", i))
-			{
-				ImGui::Text("blah blah");
-				ImGui::SameLine();
-				if (ImGui::SmallButton("button")) {};
-				ImGui::TreePop();
-			}
+        {
+            if (ImGui::TreeNode((void*)(intptr_t)i, "Child %d", i))
+            {
+                ImGui::Text("blah blah");
+                ImGui::SameLine();
+                if (ImGui::SmallButton("button")) {};
+                ImGui::TreePop();
+            }
+        }
+        
 		ImGui::TreePop();
 	}
-
-	ImGui::Text("this is project view");
-
 	ImGui::End();
+}
+
+void AssetTree(string path)
+{
+    vector<string> allFoldAndFile;
+    vector<string>::iterator iter;
+    for(iter = allFoldAndFile.begin();iter!= allFoldAndFile.end();iter++)
+    {
+//        if(isFolder(*iter))
+//        {
+//            ImGui::TreeNode
+//        }
+    }
+    
 }
 
 void TmingEngine::Project::End()
