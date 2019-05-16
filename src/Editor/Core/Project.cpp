@@ -1,5 +1,6 @@
 #include "Project.h"
 
+void AssetTree(string path);
 
 TmingEngine::Project::~Project()
 {
@@ -23,6 +24,7 @@ void TmingEngine::Project::Begin()
     }
 }
 
+
 void TmingEngine::Project::Update()
 {
 	bool p_open = true;
@@ -32,21 +34,9 @@ void TmingEngine::Project::Update()
 		ImGui::End();
 		return;
 	}
-
-
 	if (ImGui::TreeNode("Assets"))
 	{
-		for (int i = 0; i < 5; i++)
-        {
-            if (ImGui::TreeNode((void*)(intptr_t)i, "Child %d", i))
-            {
-                ImGui::Text("blah blah");
-                ImGui::SameLine();
-                if (ImGui::SmallButton("button")) {};
-                ImGui::TreePop();
-            }
-        }
-        
+        AssetTree("/Users/blue/Desktop/GitHub/demumble");
 		ImGui::TreePop();
 	}
 	ImGui::End();
@@ -54,17 +44,33 @@ void TmingEngine::Project::Update()
 
 void AssetTree(string path)
 {
-    vector<string> allFoldAndFile;
-    vector<string>::iterator iter;
-    for(iter = allFoldAndFile.begin();iter!= allFoldAndFile.end();iter++)
+    struct dirent * dirp;
+    DIR * dir = opendir(path.c_str());
+    while ((dirp = readdir(dir)) != nullptr)
     {
-//        if(isFolder(*iter))
-//        {
-//            ImGui::TreeNode
-//        }
+        if (dirp->d_type == DT_REG)
+        {
+             ImGui::Text(dirp->d_name);
+        }
+        else if (dirp->d_type == DT_DIR)
+        {
+            string temp = string(dirp->d_name);
+            if (temp == "."|| temp =="..")
+            {
+             
+            }else
+            {
+                string s = string(path) + "/" + dirp->d_name;
+                if (ImGui::TreeNode(dirp->d_name))
+                {
+                    AssetTree(s);
+                    ImGui::TreePop();
+                }
+            }
+        }
     }
-    
 }
+
 
 void TmingEngine::Project::End()
 {
