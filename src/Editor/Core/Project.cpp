@@ -1,7 +1,5 @@
 #include "Project.h"
 
-std::vector<string> filters;
-std::vector<std::string> files;
 
 TmingEngine::Project::~Project()
 {
@@ -14,12 +12,11 @@ void TmingEngine::Project::Begin()
     string str[] ={".*"};
     std::vector<string> fi(str,str+1);
     string currentPath =FileSystem::getPath(s);
-    FileFilter(currentPath.c_str(),fi);
+   auto files = FileFilter(currentPath.c_str(),fi);
     vector<string>::iterator iter;
     cout <<endl;
     for (iter = files.begin(); iter != files.end(); iter++)
     {
-        //cout << *iter << endl;
         string s = *iter;
         cout  <<*iter <<endl;
         ;
@@ -75,7 +72,7 @@ std::vector<std::string> split(const std::string& s, char delimiter)
 
 
 #ifdef __APPLE__
-void listFiles(const char * path)
+void listFiles(const char * path , std::vector<std::string> files, std::vector<string> filters)
 {
     struct dirent * dirp;
     DIR * dir = opendir(path);
@@ -104,15 +101,17 @@ void listFiles(const char * path)
             {
                 // cout<< "Fold: "<<dirp->d_name<<endl;
                 string s = string(path) + "/" + dirp->d_name;
-                listFiles(s.c_str());
+                listFiles(s.c_str(),files,filters);
             }
         }
     }
 }
+
 #else
 
-void listFiles(const char * dir)
+void listFiles(const char * dir, std::vector<std::string> files,std::vector<string> filters)
 {
+	
     char dirNew[200];
     strcpy(dirNew, dir);
     strcat(dirNew, "\\*.*");
@@ -135,7 +134,7 @@ void listFiles(const char * dir)
             strcat(dirNew, "\\");
             strcat(dirNew, findData.name);
             
-            listFiles(dirNew);
+            listFiles(dirNew,files,filters);
         }
         else
         {
@@ -146,6 +145,7 @@ void listFiles(const char * dir)
             vector<string>::iterator it , all;
             string value = "." + *(ext.end() - 1);
 			string alv = ".*";
+
 			all = find(filters.begin(), filters.end(), alv);
             it = find(filters.begin(), filters.end(), value);
             if (it != filters.end()|| all != filters.end())
@@ -158,15 +158,13 @@ void listFiles(const char * dir)
     _findclose(handle);
 }
 
-
 #endif
 
 std::vector<std::string> TmingEngine::Project:: FileFilter(const char * dir , std::vector<std::string> filefilters)
 {
-    filters = filefilters;
-    files.clear();
-    listFiles(dir);
-    return files;
+	std::vector<string> res;
+    listFiles(dir, res, filefilters);
+    return res;
 }
 
 
