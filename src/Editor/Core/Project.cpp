@@ -44,13 +44,14 @@ void TmingEngine::Project::Update()
 
 void AssetTree(string path)
 {
+    cout<<"----->open: "<<path<<endl;
     struct dirent * dirp;
     DIR * dir = opendir(path.c_str());
     while ((dirp = readdir(dir)) != nullptr)
     {
         if (dirp->d_type == DT_REG)
         {
-             ImGui::Text(dirp->d_name);
+            ImGui::Text("%s", dirp->d_name);
         }
         else if (dirp->d_type == DT_DIR)
         {
