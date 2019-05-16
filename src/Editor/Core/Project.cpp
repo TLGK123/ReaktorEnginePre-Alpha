@@ -12,7 +12,7 @@ void TmingEngine::Project::Begin()
     string str[] ={".*"};
     std::vector<string> fi(str,str+1);
     string currentPath =FileSystem::getPath(s);
-   auto files = FileFilter(currentPath.c_str(),fi);
+    auto files = FileFilter(currentPath.c_str(),fi);
     vector<string>::iterator iter;
     cout <<endl;
     for (iter = files.begin(); iter != files.end(); iter++)
@@ -72,7 +72,7 @@ std::vector<std::string> split(const std::string& s, char delimiter)
 
 
 #ifdef __APPLE__
-void listFiles(const char * path , std::vector<std::string> files, std::vector<string> filters)
+void listFiles(const char * path , std::vector<std::string>&files, std::vector<string> filters)
 {
     struct dirent * dirp;
     DIR * dir = opendir(path);
@@ -109,7 +109,7 @@ void listFiles(const char * path , std::vector<std::string> files, std::vector<s
 
 #else
 
-void listFiles(const char * dir, std::vector<std::string> files,std::vector<string> filters)
+void listFiles(const char * dir, std::vector<std::string> & files,std::vector<string> filters)
 {
 	
     char dirNew[200];
