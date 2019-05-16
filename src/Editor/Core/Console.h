@@ -4,12 +4,13 @@
 
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
+#include "Widget.h"
 #include "im.h"
 
 
 namespace TmingEngine
 {
-	class Console :public Subsystem
+	class Console : public Widget
 	{
 	public:
 		ImGuiTextBuffer     Buf;
@@ -17,11 +18,15 @@ namespace TmingEngine
 		ImVector<int>       LineOffsets;        // Index to lines offset
 		bool                ScrollToBottom;
 
-		Console(Context *context) : Subsystem(context)
+		Console(Context *context)
 		{
 		}
 		~Console();
 
+        void Begin();
+        void Update();
+        void End();
+        
 		void Clear();
 		void AddLog(const char* fmt, ...);
 		void Draw(const char* title, bool* p_open);
