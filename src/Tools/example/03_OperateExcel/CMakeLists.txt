@@ -17,6 +17,7 @@ include_directories("../../FileReader/include")
 include_directories("../../xlnt-master/include")
 
 add_executable(${Project_name}  ${headers} ${sources})
-target_link_libraries(${Project_name} FileFilter)
-target_link_libraries(${Project_name} FileReader)
+
+#target_link_libraries(${Project_name} FileFilter)
+#target_link_libraries(${Project_name} FileReader)
 target_link_libraries(${Project_name} xlnt)

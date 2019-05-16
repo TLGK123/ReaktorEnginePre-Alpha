@@ -15,7 +15,7 @@ int main(int argc, char const *argv[])
 {
 	//不完美 中文目前还有问题
 	xlnt::workbook wb;
-	wb.load("F:\\DesktopFile\\test.xlsx");
+	wb.load("/Users/wangyiming/Downloads/bug.xlsx");
 
 	auto ws = wb.active_sheet();
 	xlnt::font run_font;
