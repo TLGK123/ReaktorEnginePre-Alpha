@@ -43,8 +43,6 @@ void TmingEngine::Project::Update()
 	ImGui::End();
 }
 
-
-
 struct PathObjInfo
 {
     string name;
@@ -77,13 +75,6 @@ vector<PathObjInfo> getPathFileOrFolderinfo(string path)
                 info.name = dirp->d_name;
                 info.isFolder =true;
                 restInfo.push_back(info);
-                //                string s = string(path) + "/" + dirp->d_name;
-                //                if (ImGui::TreeNode(dirp->d_name))
-                //                {
-                //                    ImGui::Text("%s@@@", dirp->d_name);
-                //                    //AssetTree(s);
-                //                    ImGui::TreePop();
-                //                }
             }
         }
     }
@@ -98,12 +89,39 @@ void AssetTree(string path)
     auto iter = pathCache.find(path);
     if(iter != pathCache.end())
     {
-        cout<<"cache path find"<<endl;
+//        cout<<"cache path find"<<endl;
+        auto infs =pathCache[path];
+        vector<PathObjInfo>::iterator iter;
+        for (iter =infs.begin(); iter!=infs.end(); iter++)
+        {
+            auto t = *iter;
+            if( t.isFolder )
+            {
+                if(t.name==".."||t.name==".")
+                {
+                    
+                }else
+                {
+                string s = string(path) + "/" + t.name;
+                if (ImGui::TreeNode(t.name.c_str()))
+                {
+                     ImGui::Text("%s", t.name.c_str());
+                     AssetTree(s);
+                  ImGui::TreePop();
+                }
+                    
+                }
+            }
+            else
+            {
+                
+            }
+        }
 
     }
     else
     {
-        cout<<"cache path can't find "<< path <<endl;
+//        cout<<"cache path can't find "<< path <<endl;
         auto res = getPathFileOrFolderinfo(path);
         pathCache.insert(pair<string, vector<PathObjInfo>>(path,res));
     }
