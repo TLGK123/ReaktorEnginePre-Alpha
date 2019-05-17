@@ -36,42 +36,78 @@ void TmingEngine::Project::Update()
 	}
 	if (ImGui::TreeNode("Assets"))
 	{
-        AssetTree("/Users/blue/Desktop/GitHub/demumble");
+        auto current = FileSystem::getPath("");
+        AssetTree(current);
 		ImGui::TreePop();
 	}
 	ImGui::End();
 }
 
-void AssetTree(string path)
+
+
+struct PathObjInfo
 {
-    cout<<"----->open: "<<path<<endl;
+    string name;
+    bool isFolder;
+};
+
+vector<PathObjInfo> getPathFileOrFolderinfo(string path)
+{
+    vector<PathObjInfo> restInfo;
     struct dirent * dirp;
     DIR * dir = opendir(path.c_str());
     while ((dirp = readdir(dir)) != nullptr)
     {
+        PathObjInfo info;
         if (dirp->d_type == DT_REG)
         {
-            ImGui::Text("%s", dirp->d_name);
+            info.name = dirp->d_name;
+            info.isFolder =false;
+            restInfo.push_back(info);
         }
         else if (dirp->d_type == DT_DIR)
         {
             string temp = string(dirp->d_name);
             if (temp == "."|| temp =="..")
             {
-             
-            }else
+                
+            }
+            else
             {
-                string s = string(path) + "/" + dirp->d_name;
-                if (ImGui::TreeNode(dirp->d_name))
-                {
-                    AssetTree(s);
-                    ImGui::TreePop();
-                }
+                info.name = dirp->d_name;
+                info.isFolder =true;
+                restInfo.push_back(info);
+                //                string s = string(path) + "/" + dirp->d_name;
+                //                if (ImGui::TreeNode(dirp->d_name))
+                //                {
+                //                    ImGui::Text("%s@@@", dirp->d_name);
+                //                    //AssetTree(s);
+                //                    ImGui::TreePop();
+                //                }
             }
         }
     }
+    
+    return restInfo;
 }
 
+map<string, vector<PathObjInfo>> pathCache;
+
+void AssetTree(string path)
+{
+    auto iter = pathCache.find(path);
+    if(iter != pathCache.end())
+    {
+        cout<<"cache path find"<<endl;
+
+    }
+    else
+    {
+        cout<<"cache path can't find "<< path <<endl;
+        auto res = getPathFileOrFolderinfo(path);
+        pathCache.insert(pair<string, vector<PathObjInfo>>(path,res));
+    }
+}
 
 void TmingEngine::Project::End()
 {
