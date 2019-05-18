@@ -22,6 +22,8 @@
 #include <cstdlib>
 #include <string>
 
+#include "TextEditor.h"
+
 namespace TmingEngine
 {
 	class Project :public Widget
