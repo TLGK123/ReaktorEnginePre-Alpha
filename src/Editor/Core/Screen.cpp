@@ -358,9 +358,11 @@ bool Screen::ScreenShouldClose()
 void Screen::InitImgui()
 {
 	// Setup ImGui binding
-	ImGui::CreateContext();
+    ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-    
+    string fontpath = FileSystem::getPath("resources/font/minizhunyuan.ttf");
+    ImFont* font = io.Fonts->AddFontFromFileTTF(fontpath.c_str(),16.0f, NULL, io.Fonts->GetGlyphRangesChineseFull());
+
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
     
     const char * glsl_version ="#version 150";
