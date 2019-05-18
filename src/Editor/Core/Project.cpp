@@ -9,19 +9,19 @@ TmingEngine::Project::~Project()
 
 void TmingEngine::Project::Begin()
 {
-    string s = "";
-    string str[] ={".*"};
-    std::vector<string> fi(str,str+1);
-    string currentPath =FileSystem::getPath(s);
-    auto files = FileFilter(currentPath.c_str(),fi);
-    vector<string>::iterator iter;
-    cout <<endl;
-    for (iter = files.begin(); iter != files.end(); iter++)
-    {
-        string s = *iter;
-        cout  <<*iter <<endl;
-        ;
-    }
+//    string s = "";
+//    string str[] ={".*"};
+//    std::vector<string> fi(str,str+1);
+//    string currentPath =FileSystem::getPath(s);
+//    auto files = FileFilter(currentPath.c_str(),fi);
+//    vector<string>::iterator iter;
+//    cout <<endl;
+//    for (iter = files.begin(); iter != files.end(); iter++)
+//    {
+//        string s = *iter;
+//        cout  <<*iter <<endl;
+//        ;
+//    }
 }
 
 
