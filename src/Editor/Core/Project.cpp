@@ -7,6 +7,7 @@ TmingEngine::Project::~Project()
 }
 
 TextEditor editor;
+string fileToEdit = "ImGuiColorTextEdit/TextEditor.cpp";
 
 void TmingEngine::Project::Begin()
 {
@@ -79,8 +80,6 @@ void TmingEngine::Project::Begin()
     editor.SetErrorMarkers(markers);
     
     
-    
-    static const char* fileToEdit = "ImGuiColorTextEdit/TextEditor.cpp";
     //    static const char* fileToEdit = "test.cpp";
     
     {
@@ -91,12 +90,7 @@ void TmingEngine::Project::Begin()
             editor.SetText(str);
         }
     }
-    
-    
-    
 }
-
-
 
 
 
@@ -117,7 +111,6 @@ void TmingEngine::Project::Update()
 	}
 	ImGui::End();
     
-    static const char* fileToEdit = "ImGuiColorTextEdit/TextEditor.cpp";
     auto cpos = editor.GetCursorPosition();
     ImGui::Begin("Text Editor Demo", nullptr, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_MenuBar);
     ImGui::SetWindowSize(ImVec2(800, 600), ImGuiCond_FirstUseEver);
@@ -183,7 +176,7 @@ void TmingEngine::Project::Update()
     ImGui::Text("%6d/%-6d %6d lines  | %s | %s | %s | %s", cpos.mLine + 1, cpos.mColumn + 1, editor.GetTotalLines(),
                 editor.IsOverwrite() ? "Ovr" : "Ins",
                 editor.CanUndo() ? "*" : " ",
-                editor.GetLanguageDefinition().mName.c_str(), fileToEdit);
+                editor.GetLanguageDefinition().mName.c_str(), fileToEdit.c_str());
     
     editor.Render("TextEditor");
     ImGui::End();
@@ -228,6 +221,36 @@ vector<PathObjInfo> getPathFileOrFolderinfo(string path)
     return restInfo;
 }
 
+
+
+string GetFileContent(string f)
+{
+    string content;
+    ifstream fin(f);
+    string  s;
+    while (getline(fin, s))
+    {
+        content += s+"\n";
+    }
+    fin.close();
+    return content;
+}
+//vector<string> GetFileContent(string f)
+//{
+//    vector<string> content;
+//    ifstream fin(f);
+//    string  s;
+//    while (getline(fin, s))
+//    {
+//        content.push_back(s);
+//    }
+//    fin.close();
+//    return content;
+//}
+
+
+
+
 map<string, vector<PathObjInfo>> pathCache;
 
 void AssetTree(string path)
@@ -265,11 +288,18 @@ void AssetTree(string path)
                 ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags,t.name.c_str());
                 if (ImGui::IsItemClicked())
                 {
+                    string fpath = path+"/"+t.name;
                     cout<<"选中文件: "<<path<<"/"+t.name<<endl;
+                    fileToEdit = fpath;
+                    string contentText = GetFileContent(fileToEdit);
+                    ImGui::SetClipboardText(contentText.c_str());
+                    editor.SetText("");
+                    editor.Paste();
+                    ImGui::SetClipboardText("");
+
                 }
             }
         }
-
     }
     else
     {
@@ -278,6 +308,10 @@ void AssetTree(string path)
         pathCache.insert(pair<string, vector<PathObjInfo>>(path,res));
     }
 }
+
+
+
+
 
 void TmingEngine::Project::End()
 {
