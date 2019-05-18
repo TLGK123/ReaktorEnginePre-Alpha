@@ -102,19 +102,25 @@ void AssetTree(string path)
                     
                 }else
                 {
-                string s = string(path) + "/" + t.name;
-                if (ImGui::TreeNode(t.name.c_str()))
-                {
+                    string s = string(path) + "/" + t.name;
+                    if (ImGui::TreeNode(t.name.c_str()))
+                    {
                      ImGui::Text("%s", t.name.c_str());
                      AssetTree(s);
-                  ImGui::TreePop();
-                }
-                    
+                     ImGui::TreePop();
+                    }
                 }
             }
             else
             {
-                
+                 ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+                node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+                int tempIndex = 9 ,node_clicked;
+                ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags,t.name.c_str());
+                if (ImGui::IsItemClicked())
+                {
+                    cout<<"选中文件: "<<path<<"/"+t.name<<endl;
+                }
             }
         }
 
