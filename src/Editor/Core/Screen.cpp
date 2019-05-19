@@ -447,8 +447,8 @@ void Screen::Render_SkyBox_update()
     glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
     skyboxShader.use();
     glm::mat4 projection;
-    projection = glm::perspective(glm::radians(GameCa.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = glm::mat4(glm::mat3(GameCa.GetViewMatrix())); // remove translation from the view matrix
+    projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
     skyboxShader.setMat4("view", view);
     skyboxShader.setMat4("projection", projection);
     // skybox cube
@@ -519,24 +519,33 @@ void Screen::Render_SkyBox_init()
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     
-    
+     //纹理贴图的x顺序是。右 左 上 下 后 前
     vector<std::string> faces
     {
-        FileSystem::getPath("resources/textures/skybox/right.jpg"),
         FileSystem::getPath("resources/textures/skybox/left.jpg"),
-        FileSystem::getPath("resources/textures/skybox/bottom.jpg"),
+        FileSystem::getPath("resources/textures/skybox/right.jpg"),
         FileSystem::getPath("resources/textures/skybox/top.jpg"),
+        FileSystem::getPath("resources/textures/skybox/bottom.jpg"),
         FileSystem::getPath("resources/textures/skybox/front.jpg"),
-        FileSystem::getPath("resources/textures/skybox/back.jpg"),
+        FileSystem::getPath("resources/textures/skybox/back.jpg")
     };
     
     unsigned int textureID;
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+    glGenTextures(1, &textureID);                                  //创建立方贴图的纹理
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);                 //绑定到纹理目标 GL_TEXTURE_CUBE_MAP
     
     int width, height, nrChannels;
-    for (unsigned int i = 0; i < faces.size(); i++)
+    for (unsigned int i = 0; i < faces.size(); i++)                 //有6张贴图，要加载6次
     {
+        
+//#define GL_TEXTURE_CUBE_MAP_POSITIVE_X 0x8515
+//#define GL_TEXTURE_CUBE_MAP_NEGATIVE_X 0x8516
+//#define GL_TEXTURE_CUBE_MAP_POSITIVE_Y 0x8517
+//#define GL_TEXTURE_CUBE_MAP_NEGATIVE_Y 0x8518
+//#define GL_TEXTURE_CUBE_MAP_POSITIVE_Z 0x8519
+//#define GL_TEXTURE_CUBE_MAP_NEGATIVE_Z 0x851A
+        
+        
         unsigned char *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
         if (data)
         {
