@@ -36,8 +36,12 @@ class Screen :public Subsystem
 public:
 	GLFWwindow * window;
 	unsigned int texture1, texture2;
-	Shader ourShader , ourShaderCa;
-	unsigned int VBO, VAO;
+	Shader ourShader , ourShaderCa , skyboxShader;
+	unsigned int VBO, VAO ;
+    
+    unsigned int skyboxVAO, skyboxVBO;
+    unsigned int cubemapTexture;
+    
 	vector<Widget *> m_widgets;
 
 	vector<DemoTest *> m_testDemos;
@@ -63,7 +67,7 @@ public:
 
 	void InitOpenGL();
 
-	void InitSubSystem(Context * context);
+	void InitEditorWidget(Context * context);
 
 	int GetCurrentFrameTexture();
 
@@ -124,10 +128,11 @@ public:
 
 private:
 	void InitImgui();
-	void Render_SceneObject();
+	void Render_SceneObject_update();
     void Render_SceneObjectCa();
-	void Render_SkyBox();
-	void Render_UI();
+	void Render_SkyBox_init();
+    void Render_SkyBox_update();
+	void Render_EditorUI();
 };
 
 #endif // 

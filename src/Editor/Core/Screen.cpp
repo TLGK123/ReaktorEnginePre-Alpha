@@ -84,7 +84,7 @@ void Screen::Initialize(Context * context)
 	cout << "Hello World" << endl;
 	InitOpenGL();
 	InitImgui();
-	InitSubSystem(screenContext);
+	InitEditorWidget(screenContext);
 }
 
 void Screen::InitOpenGL()
@@ -201,12 +201,12 @@ void Screen::InitOpenGL()
     ourShaderCa.setInt("texture1", 0);
     ourShaderCa.setInt("texture2", 1);
 
-
+    Render_SkyBox_init();
 	CreateFrameBufer();
     CreateFrameBuferCa();
 }
 
-void Screen::InitSubSystem(Context * context)
+void Screen::InitEditorWidget(Context * context)
 {
 	//context->RegisterSubsystem(new Console(context));
 
@@ -243,8 +243,8 @@ void Screen::Update()
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Render_SkyBox();
-	Render_SceneObject();
+	Render_SkyBox_update();
+	Render_SceneObject_update();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
     
@@ -255,7 +255,7 @@ void Screen::Update()
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    Render_SkyBox();
+    Render_SkyBox_update();
     Render_SceneObjectCa();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
@@ -265,7 +265,7 @@ void Screen::Update()
 	glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	Render_UI();
+	Render_EditorUI();
 
 	glfwSwapBuffers(window);
 }
@@ -294,8 +294,8 @@ void Screen::CreateFrameBufer()
 	//创建一个深度和模板渲染缓冲对象
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT);
 	//附加这个渲染缓冲对象：
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
-																								  // now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+    
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -371,7 +371,7 @@ void Screen::InitImgui()
 	ImGui::StyleColorsDark();
 }
 
-void Screen::Render_SceneObject()
+void Screen::Render_SceneObject_update()
 {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture1);
@@ -441,12 +441,130 @@ void Screen::Render_SceneObjectCa()
     
 }
 
-
-void Screen::Render_SkyBox()
+void Screen::Render_SkyBox_update()
 {
+    // draw skybox as last
+    glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+    skyboxShader.use();
+    glm::mat4 projection;
+    projection = glm::perspective(glm::radians(GameCa.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 view = glm::mat4(glm::mat3(GameCa.GetViewMatrix())); // remove translation from the view matrix
+    skyboxShader.setMat4("view", view);
+    skyboxShader.setMat4("projection", projection);
+    // skybox cube
+    glBindVertexArray(skyboxVAO);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+    glDepthFunc(GL_LESS); // set depth function back to default
 }
 
-void Screen::Render_UI()
+void Screen::Render_SkyBox_init()
+{
+    float skyboxVertices[] = {
+        // positions
+        -1.0f,  1.0f, -1.0f,
+        -1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        
+        -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+        
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        
+        -1.0f, -1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+        
+        -1.0f,  1.0f, -1.0f,
+        1.0f,  1.0f, -1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f, -1.0f,
+        
+        -1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+        1.0f, -1.0f,  1.0f
+    };
+    
+    
+    skyboxShader.Init("6.2.skybox.vs", "6.2.skybox.fs");
+    
+    unsigned int skyboxVAO, skyboxVBO;
+    glGenVertexArrays(1, &skyboxVAO);
+    glGenBuffers(1, &skyboxVBO);
+    glBindVertexArray(skyboxVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    
+    
+    vector<std::string> faces
+    {
+        FileSystem::getPath("resources/textures/skybox/right.jpg"),
+        FileSystem::getPath("resources/textures/skybox/left.jpg"),
+        FileSystem::getPath("resources/textures/skybox/bottom.jpg"),
+        FileSystem::getPath("resources/textures/skybox/top.jpg"),
+        FileSystem::getPath("resources/textures/skybox/front.jpg"),
+        FileSystem::getPath("resources/textures/skybox/back.jpg"),
+    };
+    
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+    
+    int width, height, nrChannels;
+    for (unsigned int i = 0; i < faces.size(); i++)
+    {
+        unsigned char *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+        if (data)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                         0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
+                         );
+            stbi_image_free(data);
+        }
+        else
+        {
+            std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
+            stbi_image_free(data);
+        }
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    
+    
+    cubemapTexture = textureID;
+ //   return textureID;       返回 的是天空盒的图片id
+    
+    
+}
+
+void Screen::Render_EditorUI()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
