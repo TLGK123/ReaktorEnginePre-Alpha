@@ -128,10 +128,11 @@ public:
 
 private:
 	void InitImgui();
-	void Render_SceneObject_update();
-    void Render_SceneObjectCa();
+	void Render_SceneObjectForEditorCamera();
+    void Render_SceneObjectForGameCamera();
 	void Render_SkyBox_init();
-    void Render_SkyBox_update();
+    void Render_SkyBox_ForGame();
+    void Render_SkyBox_ForEditor();
 	void Render_EditorUI();
 };
 

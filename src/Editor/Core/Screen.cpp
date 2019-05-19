@@ -8,8 +8,8 @@ using namespace std;
 const unsigned int SCR_WIDTH = 1366;
 const unsigned int SCR_HEIGHT = 768;
 
-Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));     //  Editor  Scene  camera
-Camera GameCa(glm::vec3(0.0f, 0.0f, 5.0f));     //  Game          camera
+Camera EditorCamera(glm::vec3(0.0f, 0.0f, 5.0f));     //  Editor  Scene  camera
+Camera GameCamera(glm::vec3(0.0f, 0.0f, 5.0f));     //   Game          camera
 
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
@@ -243,8 +243,8 @@ void Screen::Update()
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Render_SkyBox_update();
-	Render_SceneObject_update();
+	Render_SkyBox_ForEditor();
+	Render_SceneObjectForEditorCamera();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
     
@@ -255,8 +255,8 @@ void Screen::Update()
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    Render_SkyBox_update();
-    Render_SceneObjectCa();
+    Render_SkyBox_ForGame();
+    Render_SceneObjectForGameCamera();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
     
@@ -371,7 +371,7 @@ void Screen::InitImgui()
 	ImGui::StyleColorsDark();
 }
 
-void Screen::Render_SceneObject_update()
+void Screen::Render_SceneObjectForEditorCamera()
 {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture1);
@@ -380,11 +380,11 @@ void Screen::Render_SceneObject_update()
 
 	ourShader.use();
 	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
 	ourShader.setMat4("projection", projection);
 
-	glm::mat4 view = camera.GetViewMatrix();
+	glm::mat4 view = EditorCamera.GetViewMatrix();
 	ourShader.setMat4("view", view);
 
 	// render container
@@ -407,7 +407,7 @@ void Screen::Render_SceneObject_update()
 	}
 }
 
-void Screen::Render_SceneObjectCa()
+void Screen::Render_SceneObjectForGameCamera()
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture1);
@@ -416,12 +416,11 @@ void Screen::Render_SceneObjectCa()
     
     ourShaderCa.use();
     glm::mat4  projectionCa ;
-    
-    projectionCa = glm::perspective(glm::radians(GameCa.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    projectionCa = glm::perspective(glm::radians(GameCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
     ourShaderCa.setMat4("projection", projectionCa);
     
-    glm::mat4 viewCa = GameCa.GetViewMatrix();
+    glm::mat4 viewCa = GameCamera.GetViewMatrix();
     ourShaderCa.setMat4("view", viewCa);
     
     // render container
@@ -433,22 +432,39 @@ void Screen::Render_SceneObjectCa()
         model = glm::translate(model, cubePositions[i]);
         float angle = 20.0f * i;
         model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-        
         ourShaderCa.setMat4("model", model);
-        
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
     
 }
 
-void Screen::Render_SkyBox_update()
+void Screen::Render_SkyBox_ForEditor()
 {
     // draw skybox as last
     glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
     skyboxShader.use();
     glm::mat4 projection;
-    projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+    projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 view = glm::mat4(glm::mat3(EditorCamera.GetViewMatrix())); // remove translation from the view matrix
+    skyboxShader.setMat4("view", view);
+    skyboxShader.setMat4("projection", projection);
+    // skybox cube
+    glBindVertexArray(skyboxVAO);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+    glDepthFunc(GL_LESS); // set depth function back to default
+}
+
+void Screen::Render_SkyBox_ForGame()
+{
+    // draw skybox as last
+    glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+    skyboxShader.use();
+    glm::mat4 projection;
+    projection = glm::perspective(glm::radians(GameCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 view = glm::mat4(glm::mat3(GameCamera.GetViewMatrix())); // remove translation from the view matrix
     skyboxShader.setMat4("view", view);
     skyboxShader.setMat4("projection", projection);
     // skybox cube
@@ -644,13 +660,13 @@ void processInput(GLFWwindow *window)
 		glfwSetWindowShouldClose(window, true);
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera.ProcessKeyboard(FORWARD, deltaTime);
+		EditorCamera.ProcessKeyboard(FORWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera.ProcessKeyboard(BACKWARD, deltaTime);
+		EditorCamera.ProcessKeyboard(BACKWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera.ProcessKeyboard(LEFT, deltaTime);
+		EditorCamera.ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera.ProcessKeyboard(RIGHT, deltaTime);
+		EditorCamera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
@@ -671,11 +687,11 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	ImGuiIO& io = ImGui::GetIO();
 	if (&io != NULL && io.MouseDownDuration[1] >= 0)
 	{
-		camera.ProcessMouseMovement(xoffset, yoffset);
+		EditorCamera.ProcessMouseMovement(xoffset, yoffset);
 	}
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	camera.ProcessMouseScroll(yoffset);
+	EditorCamera.ProcessMouseScroll(yoffset);
 }
