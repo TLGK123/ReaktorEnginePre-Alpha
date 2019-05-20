@@ -22,7 +22,7 @@ namespace TmingEngine
 //        m_scaleLocal        = Vector3::One;
 //        m_worldTransform    = Matrix::Identity;
 //        m_localTransform    = Matrix::Identity;
-//        m_parent            = nullptr;
+        m_parent            = nullptr;
 	}
 
 	Transform::~Transform()
@@ -192,6 +192,14 @@ namespace TmingEngine
 	//================================================================================================
 
 	//= HIERARCHY ====================================================================================
+    
+    void Transform::SetParent(Transform* newParent)
+    {
+        m_parent = newParent;
+    }
+    
+    
+    
 	// Sets a parent for this transform
 //    void Transform::SetParent(Transform* newParent)
 //    {

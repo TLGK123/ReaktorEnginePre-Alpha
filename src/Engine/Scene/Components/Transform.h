@@ -60,9 +60,9 @@ namespace TmingEngine
 		//=========================
 
 		//= HIERARCHY ==============================================================
-//        bool IsRoot() { return !HasParent(); }
-//        bool HasParent() { return m_parent; }
-//        void SetParent(Transform* parent);
+        bool IsRoot() { return !HasParent(); }
+        bool HasParent() { return m_parent; }
+        void SetParent(Transform* parent);
 //        void BecomeOrphan();
 //        bool HasChildren() { return GetChildrenCount() > 0 ? true : false; }
 //        void AddChild(Transform* child);

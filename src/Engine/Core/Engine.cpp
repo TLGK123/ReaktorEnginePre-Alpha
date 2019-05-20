@@ -3,7 +3,7 @@
 #include "Timer.h"
 #include<memory>
 #include "GameObject.hpp"
-//#include"Log/Log.h"
+#include"Log/Log.h"
 //#include "Settings.h"
 //#include "../Logging/Log.h"
 //#include "../Threading/Threading.h"
@@ -76,7 +76,12 @@ namespace TmingEngine
 		}
 
         GameObject * SceneRoot = new GameObject("Untiled");
+        GameObject * ga = new GameObject("GameObject");
+        auto isRoot =SceneRoot->transform->IsRoot();
+        ga->transform->SetParent(SceneRoot->transform) ;
         
+        Debug::Log("current is root %s \n" ,  isRoot?"true":"false" );
+       // cout<< " current is root "<< isRoot << endl;
         
 		//// Input
 		//if (!m_context->GetSubsystem<Input>()->Initialize())
