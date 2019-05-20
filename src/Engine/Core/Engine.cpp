@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "Timer.h"
 #include<memory>
+#include "GameObject.hpp"
 //#include"Log/Log.h"
 //#include "Settings.h"
 //#include "../Logging/Log.h"
@@ -74,6 +75,9 @@ namespace TmingEngine
 			success = false;
 		}
 
+        GameObject * SceneRoot = new GameObject("Untiled");
+        
+        
 		//// Input
 		//if (!m_context->GetSubsystem<Input>()->Initialize())
 		//{
@@ -141,6 +145,9 @@ namespace TmingEngine
 		//Profiler::Get().Initialize(m_context);
 		//g_stopwatch->Start();
 
+        
+        
+        
 		return success;
 	}
 
