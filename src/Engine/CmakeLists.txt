@@ -1,7 +1,7 @@
 file(GLOB_RECURSE headers 
 "Core/*.h"
 "Log/*.h"
-"Core/*.h"
+"Core/*.h??"
 "FileSystem/*.h"
 "Scene/Components/Transform.h"
 "Scene/Components/IComponent.h"
