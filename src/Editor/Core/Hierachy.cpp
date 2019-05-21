@@ -20,10 +20,18 @@ namespace TmingEngine
                 {
                 showTransform((*ite)->GetGameObject()->transform);
                 ImGui::TreePop();
-                }     
+                }
             }else
             {
-              ImGui::Text((*ite)->GetGameObject()->name.c_str());
+                ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+                node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+                int tempIndex = 9 ,node_clicked;
+                ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags,(*ite)->GetGameObject()->name.c_str());
+                if (ImGui::IsItemClicked())
+                {
+                    
+                    Debug::Log("选中了场景中的物体 %s \n",(*ite)->GetGameObject()->name.c_str());
+                }
             }
             
         }
