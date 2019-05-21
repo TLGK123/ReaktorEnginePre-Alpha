@@ -16,14 +16,14 @@ namespace TmingEngine
         for (ite = root->m_children.begin();ite != root->m_children.end() ; ite++) {
             if ((*ite)->m_children.size()>0)
             {
-                ImGui::Text((*ite)->GetGameObjectName().c_str());
-                
+                if (ImGui::TreeNode((*ite)->GetGameObject()->name.c_str()))
+                {
+                showTransform((*ite)->GetGameObject()->transform);
+                ImGui::TreePop();
+                }     
             }else
             {
-                if (ImGui::TreeNode((*ite)->GetGameObjectName().c_str()))
-                {
-                    ImGui::TreePop();
-                }
+              ImGui::Text((*ite)->GetGameObject()->name.c_str());
             }
             
         }
@@ -40,7 +40,7 @@ namespace TmingEngine
         }
         
         
-        if (ImGui::TreeNode("Basic trees"))
+        if (ImGui::TreeNode("Scene"))
         {
             auto engine = Global<Context>().GetSubsystem<Engine>();
             auto scene = engine->currentScene;
@@ -48,8 +48,6 @@ namespace TmingEngine
             ImGui::TreePop();
         }
         
-        
-        ImGui::Text("this is project view");
         
         ImGui::End();
     }

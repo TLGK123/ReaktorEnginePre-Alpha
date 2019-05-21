@@ -196,6 +196,7 @@ namespace TmingEngine
     void Transform::SetParent(Transform* newParent)
     {
         m_parent = newParent;
+        newParent->m_children.push_back(this);
     }
     
     
