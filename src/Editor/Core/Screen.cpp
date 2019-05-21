@@ -440,6 +440,8 @@ void Screen::Render_SceneObjectForGameCamera()
 
 void Screen::Render_SkyBox_ForEditor()
 {
+//    Debug::Log(" 天空盒 update editor");
+    
     // draw skybox as last
     glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
     skyboxShader.use();
@@ -459,6 +461,7 @@ void Screen::Render_SkyBox_ForEditor()
 
 void Screen::Render_SkyBox_ForGame()
 {
+   // Debug::Log(" 天空盒 update Game");
     // draw skybox as last
     glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
     skyboxShader.use();
@@ -478,6 +481,8 @@ void Screen::Render_SkyBox_ForGame()
 
 void Screen::Render_SkyBox_init()
 {
+    Debug::Log("初始化 天空盒");
+    
     float skyboxVertices[] = {
         // positions
         -1.0f,  1.0f, -1.0f,

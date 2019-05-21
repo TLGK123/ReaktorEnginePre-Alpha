@@ -11,6 +11,7 @@
 #include <string>
 #include <stdio.h>
 #include "../../Core/GameObject.hpp"
+#include "../Scene/Components/Transform.h"
 
 using namespace std;
 namespace TmingEngine {
@@ -22,13 +23,12 @@ namespace TmingEngine {
         bool isDirty;
         bool isLoaded;
         string path;
-        string name;
+        const char * name;
         
         GameObject * GetRootGameObjects();
         bool IsValid();
-        
         Scene();
-        
+        vector<Transform *> RootGameobjects;
     };
  
 }
