@@ -5,6 +5,7 @@
 #include "im.h"
 #include "../../../src/Engine/Core/Engine.h"
 #include "../../../src/Engine/Scene/Components/Transform.h"
+#include "../../../src/Engine/Log/Log.h"
 namespace TmingEngine
 {
 	class Hierachy :public Widget

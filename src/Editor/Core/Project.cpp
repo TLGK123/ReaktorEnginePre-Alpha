@@ -282,7 +282,7 @@ void AssetTree(string path)
             }
             else
             {
-                 ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+                ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
                 node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
                 int tempIndex = 9 ,node_clicked;
                 ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags,t.name.c_str());
