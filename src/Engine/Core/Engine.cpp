@@ -4,6 +4,7 @@
 #include<memory>
 #include "GameObject.hpp"
 #include"Log/Log.h"
+#include "../Scene/Scene.hpp"
 //#include "Settings.h"
 //#include "../Logging/Log.h"
 //#include "../Threading/Threading.h"
@@ -75,12 +76,15 @@ namespace TmingEngine
 			success = false;
 		}
 
-        GameObject * SceneRoot = new GameObject("Untiled");
-        GameObject * ga = new GameObject("GameObject");
-        auto isRoot =SceneRoot->transform->IsRoot();
-        ga->transform->SetParent(SceneRoot->transform) ;
+        Scene start =  new Scene();
+       GameObject * SceneRoot = new GameObject("Untiled");
+        auto s = new GameObject();
+ //      GameObject * ga = new GameObject("root");
+//        auto isRoot =SceneRoot->transform->IsRoot();
+//        ga->transform->SetParent(SceneRoot->transform) ;
+//
+//        Debug::Log("current is root %s \n" ,  isRoot?"true":"false" );
         
-        Debug::Log("current is root %s \n" ,  isRoot?"true":"false" );
        // cout<< " current is root "<< isRoot << endl;
         
 		//// Input
