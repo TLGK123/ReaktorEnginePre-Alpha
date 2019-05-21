@@ -11,8 +11,16 @@ namespace TmingEngine {
 
     Scene::Scene()
     {
-        
+
+        SceneRoot = new GameObject("SceneRoot");
+        auto camera = new GameObject("Main Camera");
+        camera->transform->SetParent(SceneRoot->transform);
+
+        auto go = new GameObject("Cube");
+        go->transform->SetParent(SceneRoot->transform);
+        ;
     }
+    
     
     
 }

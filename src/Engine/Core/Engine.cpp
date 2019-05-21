@@ -64,26 +64,7 @@ namespace TmingEngine
 		//m_context->RegisterSubsystem(new Scene(m_context));
 	}
 
-    class tws
-    {
-    public:
-        int buildIndex;
-        bool isDirty;
-        bool isLoaded;
-        string path;
-        const char * name;
-        
-        GameObject * GetRootGameObjects();
-        bool IsValid();
-        tws()
-        {
-            
-        }
-        
-        
-    };
-    
-    
+
 	bool Engine::Initialize()
 	{
 		bool success = true;
@@ -96,7 +77,7 @@ namespace TmingEngine
 			success = false;
 		}
 
-        auto rootScene = new  Scene();
+        currentScene = new  Scene();
       // GameObject * SceneRoot = new GameObject("Untiled");
        // auto s = new GameObject();
  //      GameObject * ga = new GameObject("root");

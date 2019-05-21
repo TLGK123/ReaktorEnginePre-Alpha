@@ -23,12 +23,11 @@ namespace TmingEngine {
         bool isDirty;
         bool isLoaded;
         string path;
-        const char * name;
+        string name;
         
-        GameObject * GetRootGameObjects();
+        GameObject * SceneRoot;
         bool IsValid();
         Scene();
-        vector<Transform *> RootGameobjects;
     };
  
 }

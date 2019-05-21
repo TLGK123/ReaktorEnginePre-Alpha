@@ -28,6 +28,11 @@
         auto context = & Global<Context>();
         transform = new Transform( context,this,nullptr);
     }
+    
+    string GameObject::GetGameObjectName()
+    { 
+        return name;
+    }
 
     
 }

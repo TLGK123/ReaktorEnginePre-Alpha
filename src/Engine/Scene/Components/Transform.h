@@ -7,6 +7,7 @@
 #include "../../Math/Vector3.h"
 #include "../../Math/Quaternion.h"
 #include "../../Math/Matrix.h"
+#include "../../Core/GameObject.hpp"
 //#include "../Scene.h"
 //================================
 
@@ -80,7 +81,8 @@ namespace TmingEngine
 		void LookAt(const Math::Vector3& v) { m_lookAt = v; }
 		Math::Matrix& GetWorldTransform() { return m_worldTransform; }
 		Math::Matrix& GetLocalTransform() { return m_localTransform; }
-
+        std::vector<Transform*> m_children; // the children of this transform
+     
 	private:
 		// local
 		Math::Vector3 m_positionLocal;
@@ -92,7 +94,7 @@ namespace TmingEngine
 		Math::Vector3 m_lookAt;
 
 		Transform* m_parent; // the parent of this transform
-		std::vector<Transform*> m_children; // the children of this transform
+
 
 		//= HELPER FUNCTIONS ================================================================
 		Math::Matrix GetParentTransformMatrix();

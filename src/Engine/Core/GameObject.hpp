@@ -25,6 +25,8 @@ namespace TmingEngine {
         string name;
         Transform  * transform ;
         
+        string GetGameObjectName();
+        
         private :
         void Initializer();
         

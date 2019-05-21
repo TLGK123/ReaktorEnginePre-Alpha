@@ -2,6 +2,7 @@
 #include "Context.h"
 #define ENGINE_VERSION "v0.1 alpha"
 #define TmengineLib
+#include "../Scene/Scene.hpp"
 
 namespace TmingEngine
 {
@@ -48,6 +49,7 @@ namespace TmingEngine
 
 		Context* GetContext() { return m_context; }
 
+        Scene * currentScene;
 	private:
 		//static void* m_drawHandle;
 		//static void* m_windowHandle;
