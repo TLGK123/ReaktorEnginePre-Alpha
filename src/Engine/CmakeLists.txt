@@ -24,6 +24,8 @@ file(GLOB_RECURSE sources
 "Math/Vector3.cpp"
 "Scene/Components/Transform.cpp"
 "Scene/Components/IComponent.cpp"
+"Scene/*.cpp"
+"Scene/*.h??"
 ) 
 set(CXX_STANDARD 14)
 
