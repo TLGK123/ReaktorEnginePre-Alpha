@@ -6,11 +6,12 @@
 #include <memory>
 #include <string>
 #include "../../Core/EngineDefs.h"
+#include "../../Core/GameObject.hpp"
 //================================
 
 namespace TmingEngine
 {
-	class GameObject;
+	//class GameObject;
 	class Transform;
 	class Context;
 	class FileStream;

@@ -43,10 +43,10 @@ namespace TmingEngine
 
 	const string& IComponent::GetGameObjectName()
 	{
-		//if (!m_gameObject)
-		//	return NOT_ASSIGNED;
-		return nullptr;
-	//	return m_gameObject->GetName();
+        if (!m_gameObject)
+            return "NOT_ASSIGNED";
+
+        return m_gameObject->GetGameObjectName();
 	}
 
 	template <typename T>

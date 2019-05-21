@@ -3,7 +3,8 @@
 #include "Core/Context.h"
 #include "Widget.h"
 #include "im.h"
-
+#include "../../../src/Engine/Core/Engine.h"
+#include "../../../src/Engine/Scene/Components/Transform.h"
 namespace TmingEngine
 {
 	class Hierachy :public Widget
