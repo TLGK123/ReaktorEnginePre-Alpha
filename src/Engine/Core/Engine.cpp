@@ -64,6 +64,26 @@ namespace TmingEngine
 		//m_context->RegisterSubsystem(new Scene(m_context));
 	}
 
+    class tws
+    {
+    public:
+        int buildIndex;
+        bool isDirty;
+        bool isLoaded;
+        string path;
+        const char * name;
+        
+        GameObject * GetRootGameObjects();
+        bool IsValid();
+        tws()
+        {
+            
+        }
+        
+        
+    };
+    
+    
 	bool Engine::Initialize()
 	{
 		bool success = true;
@@ -72,13 +92,13 @@ namespace TmingEngine
 		m_timer = m_context->GetSubsystem<Timer>();
 		if (!m_timer->Initialize())
 		{
-			//Debug::Log("Failed to initialize Timer subsystem");
+			Debug::Log("Failed to initialize Timer subsystem");
 			success = false;
 		}
 
-        Scene start =  new Scene();
-       GameObject * SceneRoot = new GameObject("Untiled");
-        auto s = new GameObject();
+        auto rootScene = new  Scene();
+      // GameObject * SceneRoot = new GameObject("Untiled");
+       // auto s = new GameObject();
  //      GameObject * ga = new GameObject("root");
 //        auto isRoot =SceneRoot->transform->IsRoot();
 //        ga->transform->SetParent(SceneRoot->transform) ;
