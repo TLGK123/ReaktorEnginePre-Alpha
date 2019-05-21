@@ -10,3 +10,5 @@ CMakeFiles/
 bin/tm/Debug/
 
 src/Engine/3Part/Box2D/Contributions/Platforms/TestBed\.Net/obj/
+
+bin/
