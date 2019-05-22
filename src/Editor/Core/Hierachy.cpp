@@ -13,46 +13,47 @@ namespace TmingEngine
     void showTransform(Transform * root)
     {
         std::vector<Transform *>::iterator ite;
-        for (ite = root->m_children.begin();ite != root->m_children.end() ; ite++) {
+
+        for (ite = root->m_children.begin();ite != root->m_children.end() ; ite++)
+        {
             if ((*ite)->m_children.size()>0)
             {
-                ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-                node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-                int tempIndex = 9 ,node_clicked;
-                bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags,(*ite)->GetGameObject()->name.c_str());
-                if (ImGui::IsItemClicked())
-                {
-                    node_clicked =6;
-                    Debug::Log("选中了场景中的物体$$$$$$$$ %s \n",(*ite)->GetGameObject()->name.c_str());
-                    ImGui::TreePop();
-                }
-                if (node_open)
-                {
-                    showTransform((*ite)->GetGameObject()->transform);
-                 
-                }
-                
-                
+
 //                if (ImGui::TreeNode((*ite)->GetGameObject()->name.c_str()))
 //                {
 //                    showTransform((*ite)->GetGameObject()->transform);
 //                    ImGui::TreePop();
 //                }
+                ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+                if (ImGui::TreeNodeEx((void*)(intptr_t)9, node_flags, (*ite)->GetGameObject()->name.c_str()))
+                {
+                    if (ImGui::IsItemClicked())
+                    {
+                    Debug::Log("选中---父级对象 %s \n",(*ite)->GetGameObject()->name.c_str());
+                    }
+                    showTransform((*ite)->GetGameObject()->transform);
+                    ImGui::TreePop();
+                }
                 
             }else
             {
+
                 ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
                 node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
                 int tempIndex = 9 ,node_clicked;
-                ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags,(*ite)->GetGameObject()->name.c_str());
-                if (ImGui::IsItemClicked())
+                if( ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags,(*ite)->GetGameObject()->name.c_str()))
                 {
-                    Debug::Log("选中了场景中的物体 %s \n",(*ite)->GetGameObject()->name.c_str());
-                    ImGui::TreePop();
+                    if (ImGui::IsItemClicked())
+                    {
+                        Debug::Log("选中--末端物体 %s \n",(*ite)->GetGameObject()->name.c_str());
+                    }
+                    
                 }
+
             }
-            
         }
+        
+
     }
     
     void TmingEngine::Hierachy::Update()
