@@ -28,6 +28,10 @@ namespace TmingEngine {
         GameObject * SceneRoot;
         bool IsValid();
         Scene();
+        
+    private:
+        void Update();
+        void RendeObject();
     };
  
 }

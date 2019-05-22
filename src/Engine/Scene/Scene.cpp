@@ -33,6 +33,13 @@ namespace TmingEngine {
         ;
     }
     
+    void Scene::Update()
+    {
+        RendeObject();
+    }
     
-    
+    void Scene::RendeObject()
+    {
+        
+    }
 }

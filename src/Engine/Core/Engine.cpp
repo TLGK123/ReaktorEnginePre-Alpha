@@ -78,15 +78,7 @@ namespace TmingEngine
 		}
 
         currentScene = new  Scene();
-      // GameObject * SceneRoot = new GameObject("Untiled");
-       // auto s = new GameObject();
- //      GameObject * ga = new GameObject("root");
-//        auto isRoot =SceneRoot->transform->IsRoot();
-//        ga->transform->SetParent(SceneRoot->transform) ;
-//
-//        Debug::Log("current is root %s \n" ,  isRoot?"true":"false" );
-        
-       // cout<< " current is root "<< isRoot << endl;
+
         
 		//// Input
 		//if (!m_context->GetSubsystem<Input>()->Initialize())
@@ -189,6 +181,7 @@ namespace TmingEngine
 
 	void Engine::Update()
 	{
+        currentScene->Update();
 	}
 
 	void Engine::Shutdown()
