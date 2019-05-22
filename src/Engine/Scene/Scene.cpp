@@ -11,7 +11,7 @@ namespace TmingEngine {
 
     Scene::Scene()
     {
-
+        name = "Unitled";
         SceneRoot = new GameObject("SceneRoot");
         auto camera = new GameObject("Main Camera");
         camera->transform->SetParent(SceneRoot->transform);
@@ -27,6 +27,9 @@ namespace TmingEngine {
         
         auto go3 = new GameObject("Cube3");
         go3->transform->SetParent(go2->transform);
+        
+        auto go4 = new GameObject("Cube4");
+        go4->transform->SetParent(go2->transform);
         ;
     }
     
