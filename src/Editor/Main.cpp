@@ -13,8 +13,6 @@ int main()
 	Screen *screen;
 	Engine *engine;
 
-
-
 	screen = new Screen(&Global<Context>());
     
     engine = new Engine(&Global<Context>());
