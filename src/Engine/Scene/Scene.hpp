@@ -29,8 +29,9 @@ namespace TmingEngine {
         bool IsValid();
         Scene();
         
-    private:
         void Update();
+    private:
+        
         void RendeObject();
     };
  
