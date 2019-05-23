@@ -10,6 +10,15 @@ file(GLOB_RECURSE headers
 "Math/Vector2.h"
 "Math/Vector3.h"
 "im.h"
+"RHI/*.h"
+"RHI/*.h??"
+"Scene/*.h??"
+"RHI/D3D11/*.h??"
+"Scene/D3D11/*.h??"
+
+"RHI/Vulkan/*.h??"
+"Scene/Vulkan/*.h??"
+
 )
 file(GLOB_RECURSE sources 
 "Core/*.cpp" 
@@ -25,7 +34,15 @@ file(GLOB_RECURSE sources
 "Scene/Components/Transform.cpp"
 "Scene/Components/IComponent.cpp"
 "Scene/*.cpp"
-"Scene/*.h??"
+"RHI/*.c"
+"RHI/*.c??"
+
+"RHI/D3D11/*.c"
+"RHI/D3D11/*.c??"
+
+"RHI/Vulkan/*.c"
+"RHI/Vulkan/*.c??"
+
 ) 
 set(CXX_STANDARD 14)
 
