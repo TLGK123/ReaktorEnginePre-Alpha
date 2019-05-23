@@ -1,23 +1,4 @@
-/*
-Copyright(c) 2016-2019 Panos Karabelas
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-copies of the Software, and to permit persons to whom the Software is furnished
-to do so, subject to the following conditions :
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
 
 #pragma once
 
@@ -35,7 +16,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "../RHI_Device.h"
 //================================
 
-namespace Spartan::Vulkan_Common
+namespace TmingEngine::Vulkan_Common
 {
 	inline void log_available_extensions()
 	{
@@ -139,13 +120,13 @@ namespace Spartan::Vulkan_Common
 			const VkDebugUtilsMessengerCallbackDataEXT* p_callback_data,
 			void* p_user_data
 		){
-			auto type = Spartan::Log_Info;
-			type = message_severity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT ? Spartan::Log_Warning : type;
-			type = message_severity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT ? Spartan::Log_Error : type;
+			auto type = TmingEngine::Log_Info;
+			type = message_severity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT ? TmingEngine::Log_Warning : type;
+			type = message_severity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT ? TmingEngine::Log_Error : type;
 
-			Spartan::Log::m_caller_name = "Vulkan";
-			Spartan::Log::Write(p_callback_data->pMessage, type);
-			Spartan::Log::m_caller_name = "";
+			TmingEngine::Log::m_caller_name = "Vulkan";
+			TmingEngine::Log::Write(p_callback_data->pMessage, type);
+			TmingEngine::Log::m_caller_name = "";
 
 			return VK_FALSE;
 		}
@@ -158,7 +139,7 @@ namespace Spartan::Vulkan_Common
 			return VK_ERROR_EXTENSION_NOT_PRESENT;
 		}
 
-		inline void destroy(Spartan::RHI_Context* context)
+		inline void destroy(TmingEngine::RHI_Context* context)
 		{
 			if (!context->validation_enabled)
 				return;
@@ -249,7 +230,7 @@ namespace Spartan::Vulkan_Common
 
 		inline VkExtent2D choose_extent(const VkSurfaceCapabilitiesKHR& capabilities, uint32_t prefered_width, uint32_t prefered_height)
 		{
-			using namespace Spartan::Math::Helper;
+			using namespace TmingEngine::Math::Helper;
 
 			VkExtent2D actual_extent	= { prefered_width, prefered_height };
 			actual_extent.width			= Clamp(prefered_width, capabilities.minImageExtent.width, capabilities.maxImageExtent.width);
