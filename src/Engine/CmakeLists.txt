@@ -23,6 +23,12 @@ file(GLOB_RECURSE headers
 "3Part/Vulkan_1.1.106.0/vulkan/*.h??"
 "3Part/SPIRV-Cross-2019-03-29/*.h??"
 
+"3Part/Vulkan_1.1.106.0/shaderc/*.h"
+"3Part/Vulkan_1.1.106.0/vulkan/*.h"
+"3Part/SPIRV-Cross-2019-03-29/*.h"
+
+"Threading/*.h"
+
 )
 file(GLOB_RECURSE sources 
 "Core/*.cpp" 
@@ -41,8 +47,7 @@ file(GLOB_RECURSE sources
 "RHI/*.c"
 "RHI/*.c??"
 
-
-
+"Threading/*.c??"
 
 "RHI/D3D11/*.c"
 "RHI/D3D11/*.c??"
@@ -60,7 +65,10 @@ include_directories("../Engine/3Part/Box2D/Testbed/Framework")    #添加头文�
 
 include_directories("../Engine/3Part/Vulkan_1.1.106.0/shaderc/*.h??")
 include_directories("../Engine/3Part/Vulkan_1.1.106.0/vulkan/*.h??")
+include_directories("../Engine/3Part/Vulkan_1.1.106.0/shaderc/*.h")
+include_directories("../Engine/3Part/Vulkan_1.1.106.0/vulkan/*.h")
 include_directories("../Engine/3Part/SPIRV-Cross-2019-03-29/*.h??")
+include_directories("../Engine/3Part/SPIRV-Cross-2019-03-29/*.h")
 
 
 set(libpath ${PROJECT_SOURCE_DIR}/../Library/static)
