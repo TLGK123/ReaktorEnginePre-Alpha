@@ -1,0 +1,140 @@
+
+#include "Settings.h"
+#include <fstream>
+//#include "../Logging/Log.h"
+//#include "../FileSystem/FileSystem.h"
+#include "filesystem.h"
+//===================================
+
+//= NAMESPACES ================
+using namespace std;
+using namespace TmingEngine::Math;
+//=============================
+
+namespace SettingsIO
+{
+	ofstream fout;
+	ifstream fin;
+	string file_name = "TmingEngine.ini";
+}
+
+namespace TmingEngine
+{
+	template <class T>
+	void write_setting(ofstream& fout, const string& name, T value)
+	{
+		fout << name << "=" << value << endl;
+	}
+
+	template <class T>
+	void read_setting(ifstream& fin, const string& name, T& value)
+	{
+		for (string line; getline(fin, line); )
+		{
+			const auto first_index = line.find_first_of('=');
+			if (name == line.substr(0, first_index))
+			{
+				const auto lastindex = line.find_last_of('=');
+				const auto read_value = line.substr(lastindex + 1, line.length());
+				value = static_cast<T>(stof(read_value));
+				return;
+			}
+		}
+	}
+
+	Settings::Settings()
+	{
+		//m_max_thread_count = thread::hardware_concurrency();
+	}
+
+	void Settings::Initialize()
+	{
+//        if (FileSystem::FileExists(SettingsIO::file_name))
+//        {
+//            Load();
+//        }
+//        else
+//        {
+//            Save();
+//        }
+//
+//        LOGF_INFO("Resolution: %dx%d",        static_cast<int>(m_window_size.x), static_cast<int>(m_window_size.y));
+//        LOGF_INFO("Shadow resolution: %d",    m_shadow_map_resolution);
+//        LOGF_INFO("Anisotropy: %d",            m_anisotropy);
+//        LOGF_INFO("Max fps: %f",            m_fps_limit);
+//        LOGF_INFO("Max threads: %d",        m_max_thread_count);
+	}
+
+	void Settings::SetFpsLimit(float fps)
+	{
+		if (fps < 0.0f)
+			fps = -1.0f;
+
+		if (fps > 0.0f && fps < 1.0f)
+			fps = 0;
+
+		if (m_fps_limit == fps)
+			return;
+
+		m_fps_limit = fps;
+		m_fps_policy = fps < 0 ? Fps_FixedMonitor : fps == 0 ? Fps_Unlocked : Fps_Fixed;
+		LOGF_INFO("FPS limit set to %f", fps);
+	}
+
+	void Settings::Save() const
+	{
+		// Create a settings file
+		SettingsIO::fout.open(SettingsIO::file_name, ofstream::out);
+
+		// Write the settings
+		write_setting(SettingsIO::fout, "bFullScreen", m_is_fullscreen);
+		write_setting(SettingsIO::fout, "bIsMouseVisible", m_is_mouse_visible);
+		write_setting(SettingsIO::fout, "fResolutionWidth", m_window_size.x);
+		write_setting(SettingsIO::fout, "fResolutionHeight", m_window_size.y);
+		write_setting(SettingsIO::fout, "iShadowMapResolution", m_shadow_map_resolution);
+		write_setting(SettingsIO::fout, "iAnisotropy", m_anisotropy);
+		write_setting(SettingsIO::fout, "fFPSLimit", m_fps_limit);
+		write_setting(SettingsIO::fout, "iMaxThreadCount", m_max_thread_count);
+
+		// Close the file.
+		SettingsIO::fout.close();
+	}
+
+	void Settings::Load()
+	{
+		// Create a settings file
+		SettingsIO::fin.open(SettingsIO::file_name, ifstream::in);
+
+		float resolution_x = 0;
+		float resolution_y = 0;
+
+		// Read the settings
+		read_setting(SettingsIO::fin, "bFullScreen", m_is_fullscreen);
+		read_setting(SettingsIO::fin, "bIsMouseVisible", m_is_mouse_visible);
+		read_setting(SettingsIO::fin, "fResolutionWidth", resolution_x);
+		read_setting(SettingsIO::fin, "fResolutionHeight", resolution_y);
+		read_setting(SettingsIO::fin, "iShadowMapResolution", m_shadow_map_resolution);
+		read_setting(SettingsIO::fin, "iAnisotropy", m_anisotropy);
+		read_setting(SettingsIO::fin, "fFPSLimit", m_fps_limit);
+		read_setting(SettingsIO::fin, "iMaxThreadCount", m_max_thread_count);
+
+		m_window_size = Vector2(resolution_x, resolution_y);
+
+		if (m_fps_limit == 0.0f)
+		{
+			m_fps_policy = Fps_Unlocked;
+			m_fps_limit = FLT_MAX;
+		}
+		else if (m_fps_limit > 0.0f)
+		{
+			m_fps_policy = Fps_Fixed;
+		}
+		else
+		{
+			m_fps_policy = Fps_FixedMonitor;
+		}
+
+		// Close the file.
+		SettingsIO::fin.close();
+	}
+}

@@ -7,7 +7,7 @@
 
 namespace TmingEngine
 {
-	class SPARTAN_CLASS RHI_Object
+	class ENGINE_CLASS RHI_Object
 	{
 	public:
 		RHI_Object()					{ m_id = GENERATE_GUID; }

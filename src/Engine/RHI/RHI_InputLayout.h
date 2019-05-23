@@ -25,7 +25,7 @@ namespace TmingEngine
 		uint32_t offset;
 	};
 
-	class SPARTAN_CLASS RHI_InputLayout
+	class ENGINE_CLASS RHI_InputLayout
 	{
 	public:
 		RHI_InputLayout(const std::shared_ptr<RHI_Device>& rhi_device);

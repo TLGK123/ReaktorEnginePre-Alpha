@@ -9,7 +9,7 @@
 
 namespace TmingEngine
 {
-	class SPARTAN_CLASS RHI_Texture2D : public RHI_Texture
+	class ENGINE_CLASS RHI_Texture2D : public RHI_Texture
 	{
 	public:
 		// Creates an empty texture intended for deferred loading

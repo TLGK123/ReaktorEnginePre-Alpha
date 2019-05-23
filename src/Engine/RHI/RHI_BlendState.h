@@ -7,7 +7,7 @@
 
 namespace TmingEngine
 {
-	class SPARTAN_CLASS RHI_BlendState : public RHI_Object
+	class ENGINE_CLASS RHI_BlendState : public RHI_Object
 	{
 	public:
 		RHI_BlendState(const std::shared_ptr<RHI_Device>& device,

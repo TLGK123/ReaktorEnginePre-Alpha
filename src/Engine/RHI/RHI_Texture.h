@@ -12,7 +12,7 @@
 
 namespace TmingEngine
 {
-	class SPARTAN_CLASS RHI_Texture : public RHI_Object, public IResource
+	class ENGINE_CLASS RHI_Texture : public RHI_Object, public IResource
 	{
 	public:
 		RHI_Texture(Context* context);

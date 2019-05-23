@@ -54,7 +54,7 @@ namespace TmingEngine
 		void* data				= nullptr;
 	};
 
-	class SPARTAN_CLASS RHI_Device
+	class ENGINE_CLASS RHI_Device
 	{
 	public:
 		RHI_Device();
