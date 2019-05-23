@@ -10,7 +10,7 @@
 
 namespace TmingEngine
 {
-	class SPARTAN_CLASS RHI_DepthStencilState : public RHI_Object
+	class ENGINE_CLASS RHI_DepthStencilState : public RHI_Object
 	{
 	public:
 		RHI_DepthStencilState(

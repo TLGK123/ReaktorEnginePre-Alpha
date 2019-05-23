@@ -7,7 +7,7 @@
 
 namespace TmingEngine
 {
-	class SPARTAN_CLASS RHI_TextureCube : public RHI_Texture
+	class ENGINE_CLASS RHI_TextureCube : public RHI_Texture
 	{
 	public:
 		RHI_TextureCube(Context* context) : RHI_Texture(context) { m_resource_type = Resource_TextureCube; }

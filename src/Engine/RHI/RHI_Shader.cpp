@@ -2,7 +2,7 @@
 //= INCLUDES ========================
 #include "RHI_Shader.h"
 #include "RHI_InputLayout.h"
-#include <spirv_hlsl.hpp>
+#include "spirv_hlsl.hpp"
 #include "../Core/Context.h"
 #include "../Threading/Threading.h"
 #include "../FileSystem/FileSystem.h"

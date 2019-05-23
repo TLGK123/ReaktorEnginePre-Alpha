@@ -9,7 +9,7 @@
 
 namespace TmingEngine
 {
-	class SPARTAN_CLASS RHI_ConstantBuffer : public RHI_Object
+	class ENGINE_CLASS RHI_ConstantBuffer : public RHI_Object
 	{
 	public:
 		RHI_ConstantBuffer(const std::shared_ptr<RHI_Device>& rhi_device)

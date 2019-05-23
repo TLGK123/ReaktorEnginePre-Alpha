@@ -58,7 +58,7 @@ namespace TmingEngine
 		#endif
 	}
 
-	class SPARTAN_CLASS RHI_Shader : public RHI_Object
+	class ENGINE_CLASS RHI_Shader : public RHI_Object
 	{
 	public:
 
