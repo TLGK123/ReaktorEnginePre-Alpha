@@ -36,5 +36,5 @@ void DemoModel::Initlization() {
 	ourShader = new Shader();
 	ourModel = new Model();
 	ourShader->Init("1.model_loading.vs", "1.model_loading.fs");
-	ourModel->Init(FileSystem::getPath("resources/objects/nanosuit/nanosuit.obj"));
+	ourModel->Init(TmingEngine::FileSystem::getPath("resources/objects/nanosuit/nanosuit.obj"));
 }

@@ -1,7 +1,7 @@
 
 //= INCLUDES ==============
 #include "FileSystem.h"
-#include "filesystem.hpp"
+//#include "filesystem.hpp"
 #include <regex>
 #include <fstream>
 #include <sstream> 
@@ -322,7 +322,7 @@ namespace TmingEngine
 //                continue;
 //
 //            subDirs.emplace_back(itr->path().generic_string());
-		}
+//		}
 
 		return subDirs;
 	}
@@ -578,51 +578,53 @@ namespace TmingEngine
 	// Returns a file path which is relative to the engine's executable
 	string FileSystem::GetRelativeFilePath(const string& absoluteFilePath)
 	{		
-		// create absolute paths
-		path p = absolute(absoluteFilePath);
-		path r = absolute(GetWorkingDirectory());
-
-		// if root paths are different, return absolute path
-		if( p.root_path() != r.root_path())
-		    return p.generic_string();
-
-		// initialize relative path
-		path result;
-
-		// find out where the two paths diverge
-		path::const_iterator itr_path = p.begin();
-		path::const_iterator itr_relative_to = r.begin();
-		while( *itr_path == *itr_relative_to && itr_path != p.end() && itr_relative_to != r.end() ) 
-		{
-		    ++itr_path;
-		    ++itr_relative_to;
-		}
-
-		// add "../" for each remaining token in relative_to
-		if( itr_relative_to != r.end() ) 
-		{
-		    ++itr_relative_to;
-		    while( itr_relative_to != r.end() ) 
-			{
-		        result /= "..";
-		        ++itr_relative_to;
-		    }
-		}
-
-		// add remaining path
-		while( itr_path != p.end() ) 
-		{
-		    result /= *itr_path;
-		    ++itr_path;
-		}
-
-		return result.generic_string();
-	}
+//        // create absolute paths
+//        path p = absolute(absoluteFilePath);
+//        path r = absolute(GetWorkingDirectory());
+//
+//        // if root paths are different, return absolute path
+//        if( p.root_path() != r.root_path())
+//            return p.generic_string();
+//
+//        // initialize relative path
+//        path result;
+//
+//        // find out where the two paths diverge
+//        path::const_iterator itr_path = p.begin();
+//        path::const_iterator itr_relative_to = r.begin();
+//        while( *itr_path == *itr_relative_to && itr_path != p.end() && itr_relative_to != r.end() )
+//        {
+//            ++itr_path;
+//            ++itr_relative_to;
+//        }
+//
+//        // add "../" for each remaining token in relative_to
+//        if( itr_relative_to != r.end() )
+//        {
+//            ++itr_relative_to;
+//            while( itr_relative_to != r.end() )
+//            {
+//                result /= "..";
+//                ++itr_relative_to;
+//            }
+//        }
+//
+//        // add remaining path
+//        while( itr_path != p.end() )
+//        {
+//            result /= *itr_path;
+//            ++itr_path;
+//        }
+//
+//        return result.generic_string();
+        return "";
+    }
 
 	// Returns a file path which is where the engine's executable is located
 	string FileSystem::GetWorkingDirectory()
 	{
-		return current_path().generic_string() + "/";
+		//return current_path().generic_string() + "/";
+        return "";
 	}
 
 	string FileSystem::GetParentDirectory(const string& directory)
@@ -693,13 +695,14 @@ namespace TmingEngine
 
 	wstring FileSystem::StringToWstring(const string& str)
 	{
-		const auto slength =	 static_cast<int>(str.length()) + 1;
-		const auto len		= MultiByteToWideChar(CP_ACP, 0, str.c_str(), slength, nullptr, 0);
-		const auto buf		= new wchar_t[len];
-		MultiByteToWideChar(CP_ACP, 0, str.c_str(), slength, buf, len);
-		std::wstring result(buf);
-		delete[] buf;
-		return result;
+//        const auto slength =     static_cast<int>(str.length()) + 1;
+//        const auto len        = MultiByteToWideChar(CP_ACP, 0, str.c_str(), slength, nullptr, 0);
+//        const auto buf        = new wchar_t[len];
+//        MultiByteToWideChar(CP_ACP, 0, str.c_str(), slength, buf, len);
+//        std::wstring result(buf);
+//        delete[] buf;
+//		  return result;
+        return NULL;
 	}
 
 	string FileSystem::ResolveIncludeDirectives(const string& source, const string& directory)
@@ -744,8 +747,8 @@ namespace TmingEngine
 		return result;
 	}
 
-std::string FileSystem::getPath(std::string assetpath)
-{
+	std::string FileSystem::getPath(std::string assetpath)
+	{
 	char buffer[MAX_PATH];
 	getcwd(buffer, MAX_PATH);
 	std::string path = buffer;
@@ -765,6 +768,6 @@ std::string FileSystem::getPath(std::string assetpath)
 	// std::cout<<"当前路径" <<path<<std::endl;
 	// std::cout <<"AssetPath: "+ path << std::endl;
 	return path;
-}
+	}
 	
 }

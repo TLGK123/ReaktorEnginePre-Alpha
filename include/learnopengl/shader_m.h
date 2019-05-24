@@ -7,7 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <filesystem.h>
+#include <FileSystem/FileSystem.h>
 
 class Shader
 {
@@ -35,8 +35,8 @@ public:
 			vp = "shader/" + vp;
 			std::string fp = fragmentPath;
 			fp = "shader/" + fp;
-			vShaderFile.open(FileSystem::getPath(vp));
-			fShaderFile.open(FileSystem::getPath(fp));
+			vShaderFile.open(TmingEngine::FileSystem::getPath(vp));
+			fShaderFile.open(TmingEngine::FileSystem::getPath(fp));
 
 
 			std::stringstream vShaderStream, fShaderStream;
