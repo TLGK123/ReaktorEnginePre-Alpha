@@ -8,7 +8,8 @@
 
 //= NAMESPACES ================
 using namespace std;
-using namespace Spartan::Math;
+using namespace TmingEngine::Math;
+
 //=============================
 
 namespace TmingEngine
@@ -18,10 +19,10 @@ namespace TmingEngine
 		auto& mode = m_displayModes.emplace_back(width, height, refresh_rate_numerator, refresh_rate_denominator);
 
 		// Try to deduce the maximum frame rate based on how fast the monitor is
-		if (Settings::Get().GetFpsPolicy() == FPS_MonitorMatch)
-		{
-			Settings::Get().SetFpsLimit(Helper::Max(Settings::Get().GetFpsLimit(), mode.refreshRate));
-		}
+//        if (Settings::Get().GetFpsPolicy() == FPS_MonitorMatch)
+//        {
+//            Settings::Get().SetFpsLimit(Helper::Max(Settings::Get().GetFpsLimit(), mode.refreshRate));
+//        }
 	}
 
 	bool RHI_Device::GetDidsplayModeFastest(DisplayMode* display_mode)
@@ -49,18 +50,18 @@ namespace TmingEngine
 			return adapter1.memory > adapter2.memory;
 		});
 
-		LOGF_INFO("%s (%d MB)", name.c_str(), memory);
+//	LOGF_INFO("%s (%d MB)", name.c_str(), memory);
 	}
 
 	void RHI_Device::SetPrimaryAdapter(const DisplayAdapter* primary_adapter)
 	{
 		if (!primary_adapter)
 		{
-			LOG_ERROR_INVALID_PARAMETER();
+ //           LOG_ERROR_INVALID_PARAMETER();
 			return;
 		}
 
 		m_primaryAdapter = primary_adapter;
-		LOGF_INFO("%s (%d MB)", primary_adapter->name.c_str(), primary_adapter->memory);
+//		LOGF_INFO("%s (%d MB)", primary_adapter->name.c_str(), primary_adapter->memory);
 	}
 }

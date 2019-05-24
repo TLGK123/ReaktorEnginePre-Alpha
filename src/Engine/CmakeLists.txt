@@ -3,6 +3,7 @@ file(GLOB_RECURSE headers
 "Log/*.h"
 "Core/*.h??"
 "FileSystem/*.h"
+"FileSystem/*.hpp"
 "Scene/Components/Transform.h"
 "Scene/Components/IComponent.h"
 "imgui/*.h"
@@ -56,7 +57,7 @@ file(GLOB_RECURSE sources
 "RHI/Vulkan/*.c??"
 
 ) 
-set(CXX_STANDARD 14)
+set(CXX_STANDARD 17)
 
 include_directories("../../include")									#添加头文件目录
 include_directories("../Engine")    	
