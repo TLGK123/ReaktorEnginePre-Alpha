@@ -157,111 +157,111 @@ namespace TmingEngine
 
 	bool FileSystem::CreateDirectory_(const string& path)
 	{
-		try
-		{
-			return create_directories(path);
-		}
-		catch (filesystem_error& e)
-		{
-			LOGF_ERROR("FileSystem::CreateDirectory: %s, %s", e.what(), path.c_str());
-			return true;
-		}
+//		try
+//        {
+//            return create_directories(path);
+//        }
+//        catch (filesystem_error& e)
+//        {
+//            LOGF_ERROR("FileSystem::CreateDirectory: %s, %s", e.what(), path.c_str());
+            return true;
+//        }
 	}
 
 	bool FileSystem::DeleteDirectory(const string& directory)
 	{
-		try
-		{
-			return remove_all(directory);
-		}
-		catch (filesystem_error& e)
-		{
-			LOGF_ERROR("FileSystem::DeleteDirectory: %s, %s", e.what(), directory.c_str());
-			return true;
-		}
+//        try
+//        {
+//            return remove_all(directory);
+//        }
+//        catch (filesystem_error& e)
+//        {
+//            LOGF_ERROR("FileSystem::DeleteDirectory: %s, %s", e.what(), directory.c_str());
+           return true;
+//        }
 	}
 
 	bool FileSystem::DirectoryExists(const string& directory)
 	{
-		try
-		{
-			return exists(directory);
-		}
-		catch (filesystem_error& e)
-		{
-			LOGF_ERROR("FileSystem::DirectoryExists: %s, %s", e.what(), directory.c_str());
-			return true;
-		}
+//        try
+//        {
+//            return exists(directory);
+//        }
+//        catch (filesystem_error& e)
+//        {
+//            LOGF_ERROR("FileSystem::DirectoryExists: %s, %s", e.what(), directory.c_str());
+            return true;
+//        }
 	}
 
 	bool FileSystem::IsDirectory(const string& directory)
 	{
-		try
-		{
-			return is_directory(directory);
-		}
-		catch (filesystem_error& e)
-		{
-			LOGF_ERROR("FileSystem::IsDirectory: %s, %s", e.what(), directory.c_str());
-			return false;
-		}
+//        try
+//        {
+//            return is_directory(directory);
+//        }
+//        catch (filesystem_error& e)
+//        {
+//            LOGF_ERROR("FileSystem::IsDirectory: %s, %s", e.what(), directory.c_str());
+            return false;
+//        }
 	}
 
 	void FileSystem::OpenDirectoryWindow(const std::string& directory)
 	{
-		ShellExecute(nullptr, nullptr, StringToWstring(directory).c_str(), nullptr, nullptr, SW_SHOW);
+//        ShellExecute(nullptr, nullptr, StringToWstring(directory).c_str(), nullptr, nullptr, SW_SHOW);
 	}
 
 	bool FileSystem::FileExists(const string& file_path)
 	{
-		try
-		{
-			return exists(file_path);
-		}
-		catch (filesystem_error& e)
-		{
-			LOGF_ERROR("FileSystem::FileExists: %s, %s", e.what(), file_path.c_str());
-			return true;
-		}
+//        try
+//        {
+//            return exists(file_path);
+//        }
+//        catch (filesystem_error& e)
+//        {
+//            LOGF_ERROR("FileSystem::FileExists: %s, %s", e.what(), file_path.c_str());
+            return true;
+//        }
 	}
 
 	bool FileSystem::DeleteFile_(const string& file_path)
 	{
 		// If this is a directory path, return
-		if (is_directory(file_path))
-			return false;
-
-		try
-		{
-			return remove(file_path.c_str()) == 0;
-		}
-		catch (filesystem_error& e)
-		{
-			LOGF_ERROR("FileSystem::DeleteFile: %s, %s", e.what(), file_path.c_str());
-			return true;
-		}
+//        if (is_directory(file_path))
+//            return false;
+//
+//        try
+//        {
+//            return remove(file_path.c_str()) == 0;
+//        }
+//        catch (filesystem_error& e)
+//        {
+//            LOGF_ERROR("FileSystem::DeleteFile: %s, %s", e.what(), file_path.c_str());
+            return true;
+//        }
 	}
 
 	bool FileSystem::CopyFileFromTo(const string& source, const string& destination)
 	{
-		if (source == destination)
-			return true;
-
-		// In case the destination path doesn't exist, create it
-		if (!DirectoryExists(GetDirectoryFromFilePath(destination)))
-		{
-			CreateDirectory_(GetDirectoryFromFilePath(destination));
-		}
-
-		try 
-		{
-			return copy_file(source, destination, copy_options::overwrite_existing);
-		}
-		catch (filesystem_error& e) 
-		{
-			LOG_ERROR("FileSystem: Could not copy \"" + source + "\". " + string(e.what()));
-			return true;
-		}
+//        if (source == destination)
+//            return true;
+//
+//        // In case the destination path doesn't exist, create it
+//        if (!DirectoryExists(GetDirectoryFromFilePath(destination)))
+//        {
+//            CreateDirectory_(GetDirectoryFromFilePath(destination));
+//        }
+//
+//        try
+//        {
+//            return copy_file(source, destination, copy_options::overwrite_existing);
+//        }
+//        catch (filesystem_error& e)
+//        {
+//            LOG_ERROR("FileSystem: Could not copy \"" + source + "\". " + string(e.what()));
+            return true;
+//        }
 	}
 
 	string FileSystem::GetFileNameFromFilePath(const string& path)
@@ -315,13 +315,13 @@ namespace TmingEngine
 	vector<string> FileSystem::GetDirectoriesInDirectory(const string& directory)
 	{
 		vector<string> subDirs;
-		directory_iterator end_itr; // default construction yields past-the-end
-		for (directory_iterator itr(directory); itr != end_itr; ++itr)
-		{
-			if (!is_directory(itr->status()))
-				continue;
-
-			subDirs.emplace_back(itr->path().generic_string());
+//        directory_iterator end_itr; // default construction yields past-the-end
+//        for (directory_iterator itr(directory); itr != end_itr; ++itr)
+//        {
+//            if (!is_directory(itr->status()))
+//                continue;
+//
+//            subDirs.emplace_back(itr->path().generic_string());
 		}
 
 		return subDirs;
@@ -330,14 +330,14 @@ namespace TmingEngine
 	vector<string> FileSystem::GetFilesInDirectory(const string& directory)
 	{
 		vector<string> filePaths;
-		directory_iterator end_itr; // default construction yields past-the-end
-		for (directory_iterator itr(directory); itr != end_itr; ++itr)
-		{
-			if (!is_regular_file(itr->status()))
-				continue;
-
-			filePaths.emplace_back(itr->path().generic_string());
-		}
+//        directory_iterator end_itr; // default construction yields past-the-end
+//        for (directory_iterator itr(directory); itr != end_itr; ++itr)
+//        {
+//            if (!is_regular_file(itr->status()))
+//                continue;
+//
+//            filePaths.emplace_back(itr->path().generic_string());
+//        }
 
 		return filePaths;
 	}
