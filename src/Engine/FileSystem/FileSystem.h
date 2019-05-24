@@ -5,6 +5,19 @@
 #include <vector>
 #include <string>
 #include "../Core/EngineDefs.h"
+
+#include<iostream>
+
+#if !__APPLE__
+#include <stdio.h>
+#include <direct.h>
+#else
+#include "iostream"
+#include <unistd.h>
+#endif
+
+#define MAX_PATH 250
+
 //=============================
 
 //=========================================================
@@ -31,6 +44,7 @@ namespace TmingEngine
 	public:
 		static void Initialize();
 
+		static std::string getPath(std::string assetpath);
 		//= DIRECTORIES ==============================================
 		static bool CreateDirectory_(const std::string& path);
 		static bool DeleteDirectory(const std::string& directory);
