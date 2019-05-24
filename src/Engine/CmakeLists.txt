@@ -11,25 +11,25 @@ file(GLOB_RECURSE headers
 "Math/Vector2.h"
 "Math/Vector3.h"
 "im.h"
-"RHI/*.h"
-"RHI/*.h??"
+#"RHI/*.h"
+#"RHI/*.h??"
 "Scene/*.h??"
 
-"RHI/D3D11/*.h??"
-"Scene/D3D11/*.h??"
+#"RHI/D3D11/*.h??"
+#"Scene/D3D11/*.h??"
 
-"RHI/Vulkan/*.h??"
-"Scene/Vulkan/*.h??"
+#"RHI/Vulkan/*.h??"
+#"Scene/Vulkan/*.h??"
 
-"3Part/Vulkan_1.1.106.0/shaderc/*.h??"
-"3Part/Vulkan_1.1.106.0/vulkan/*.h??"
-"3Part/SPIRV-Cross-2019-03-29/*.h??"
+#"3Part/Vulkan_1.1.106.0/shaderc/*.h??"
+#"3Part/Vulkan_1.1.106.0/vulkan/*.h??"
+#"3Part/SPIRV-Cross-2019-03-29/*.h??"
 
-"3Part/Vulkan_1.1.106.0/shaderc/*.h"
-"3Part/Vulkan_1.1.106.0/vulkan/*.h"
-"3Part/SPIRV-Cross-2019-03-29/*.h"
+#"3Part/Vulkan_1.1.106.0/shaderc/*.h"
+#"3Part/Vulkan_1.1.106.0/vulkan/*.h"
+#"3Part/SPIRV-Cross-2019-03-29/*.h"
 
-"Threading/*.h"
+#"Threading/*.h"
 
 )
 file(GLOB_RECURSE sources 
@@ -46,16 +46,17 @@ file(GLOB_RECURSE sources
 "Scene/Components/Transform.cpp"
 "Scene/Components/IComponent.cpp"
 "Scene/*.cpp"
-"RHI/*.c"
-"RHI/*.c??"
 
-"Threading/*.c??"
+#"RHI/*.c"
+#"RHI/*.c??"
 
-"RHI/D3D11/*.c"
-"RHI/D3D11/*.c??"
+#"Threading/*.c??"
 
-"RHI/Vulkan/*.c"
-"RHI/Vulkan/*.c??"
+#"RHI/D3D11/*.c"
+#"RHI/D3D11/*.c??"
+
+#"RHI/Vulkan/*.c"
+#"RHI/Vulkan/*.c??"
 
 ) 
 set(CXX_STANDARD 17)
