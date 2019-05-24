@@ -3,7 +3,7 @@
 #include "RHI_Texture.h"
 #include "../IO/FileStream.h"
 //#include "../Rendering/Renderer.h"
-#include "../Resource/ResourceCache.h"
+//#include "../Resource/ResourceCache.h"
 //====================================
 
 //= NAMESPACES =====
