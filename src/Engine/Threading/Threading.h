@@ -7,8 +7,8 @@
 #include <mutex>
 #include <queue>
 #include <functional>
-#include "../Logging/Log.h"
-#include "../Core/ISubsystem.h"
+#include "../Log/Log.h"
+#include "../Core/Subsystem.h"
 //============================
 
 namespace TmingEngine
@@ -27,7 +27,7 @@ namespace TmingEngine
 	};
 	//======================================================================================
 
-	class Threading : public ISubsystem
+	class Threading : public Subsystem
 	{
 	public:
 		Threading(Context* context);
@@ -42,7 +42,7 @@ namespace TmingEngine
 		{
 			if (m_threads.empty())
 			{
-				LOG_WARNING("Threading::AddTask: No available threads, function will execute in the same thread");
+			//	LOG_WARNING("Threading::AddTask: No available threads, function will execute in the same thread");
 				function();
 				return;
 			}

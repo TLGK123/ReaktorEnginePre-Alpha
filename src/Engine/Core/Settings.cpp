@@ -2,8 +2,8 @@
 #include "Settings.h"
 #include <fstream>
 //#include "../Logging/Log.h"
-//#include "../FileSystem/FileSystem.h"
-#include "filesystem.h"
+#include "../FileSystem/FileSystem.h"
+//#include "filesystem.h"
 //===================================
 
 //= NAMESPACES ================
@@ -78,7 +78,7 @@ namespace TmingEngine
 
 		m_fps_limit = fps;
 		m_fps_policy = fps < 0 ? Fps_FixedMonitor : fps == 0 ? Fps_Unlocked : Fps_Fixed;
-		LOGF_INFO("FPS limit set to %f", fps);
+	//	LOGF_INFO("FPS limit set to %f", fps);
 	}
 
 	void Settings::Save() const
@@ -123,7 +123,7 @@ namespace TmingEngine
 		if (m_fps_limit == 0.0f)
 		{
 			m_fps_policy = Fps_Unlocked;
-			m_fps_limit = FLT_MAX;
+	//		m_fps_limit = FLT_MAX;
 		}
 		else if (m_fps_limit > 0.0f)
 		{
