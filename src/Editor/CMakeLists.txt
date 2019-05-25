@@ -8,9 +8,7 @@ file(GLOB headers
 file(GLOB sources 
 "*.cpp"
 "Core/*.cpp"
-"../ThirdParty/ImGui/*.cpp"
-"../ThirdParty/glad/*.c"
-"../ThirdParty/Stb_Image/*.cpp"
+
 "Model/*.cpp"
 "UI/Widgets/Widget.cpp"
 )
