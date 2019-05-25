@@ -10,8 +10,8 @@
 
 #include <string>
 #include <stdio.h>
-#include "../../Core/GameObject.hpp"
 #include "../Scene/Components/Transform.h"
+#include "../Core/GameObject.hpp"
 
 using namespace std;
 namespace TmingEngine {
