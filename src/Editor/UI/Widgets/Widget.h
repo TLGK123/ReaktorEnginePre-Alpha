@@ -1,7 +1,7 @@
 #pragma once
 #include<string>
 #include"Core/SmartPtr.h"
-#include "imgui/imgui.h"
+#include "ImGUI/imgui.h"
 
 namespace TmingEngine
 {

@@ -161,4 +161,4 @@ source_group(Rope FILES ${BOX2D_Rope_SRCS} ${BOX2D_Rope_HDRS})
 include_directories("${PROJECT_SOURCE_DIR}")
 add_library(Box2D ${SOURCE_FILES})
 
-
+add_subdirectory(Box2D)

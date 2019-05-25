@@ -9,7 +9,7 @@
 #ifndef Main_h
 #define Main_h
 
-#include "stb_image.h"
+#include "Stb_Image/stb_image.h"
 
 //#include"Screen.h"
 #include <stdio.h>

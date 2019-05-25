@@ -1,32 +1,23 @@
 file(GLOB headers 
 "*.h"
 "UI/Widgets/Widget.h"
-"../../include/im.h"
-"Demo/*.h"
-"../../include/stb_image.h"
 "Core/*.h"
 "Core/*.h??"
-"../Engine/imgui/*.h"
 )
 
 file(GLOB sources 
 "*.cpp"
 "Core/*.cpp"
-"Demo/*.cpp"
-"imgui/*.cpp"
+"../ThirdParty/ImGui/*.cpp"
+"../ThirdParty/glad/*.c"
+"../ThirdParty/Stb_Image/*.cpp"
 "Model/*.cpp"
 "UI/Widgets/Widget.cpp"
-"UI/Widgets/DemoMenu.cpp" 
-"../Engine/3Part/Box2D/Testbed/Framework/DebugDraw.cpp"
-"../../include/*.cpp"
-"../Engine/imgui/*.cpp"
 )
 
 include_directories("UI/Widgets")    #添加头文件目录
 include_directories("../../include")    #添加头文件目录
 include_directories("../Engine")    #添加头文件目录
-include_directories("../Engine/3Part/Box2D")    #添加头文件目录
-include_directories("../Engine/3Part/Box2D/Testbed/Framework")    #添加头文件目录
 include_directories("Demo")    #添加头文件目录
 include_directories("Core")    #添加头文件目录
 
