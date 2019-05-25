@@ -1,9 +1,9 @@
 #include "Screen.h"
 #include <iostream>
-#include "Test.h"
+//#include "Test.h"
 using namespace std;
 
-#include "stb_image.h"
+#include "Stb_Image/stb_image.h"
 
 const unsigned int SCR_WIDTH = 1366;
 const unsigned int SCR_HEIGHT = 768;
@@ -211,7 +211,7 @@ void Screen::InitEditorWidget(Context * context)
 	//context->RegisterSubsystem(new Console(context));
 
 	RegisteWidget(new ViewPoint(context));
-	RegisteWidget(new DemoMenu(context));
+//	RegisteWidget(new DemoMenu(context));
 	RegisteWidget(new Project(context));
 	RegisteWidget(new Hierachy(context));
     RegisteWidget(new Inspector(context));
@@ -400,11 +400,11 @@ void Screen::Render_SceneObjectForEditorCamera()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
-	int count = m_testDemos.size();
-
-	for (int i = 0; i < count; i++) {
-		m_testDemos[i]->Render_SceneObject();
-	}
+//    int count = m_testDemos.size();
+//
+//    for (int i = 0; i < count; i++) {
+//        m_testDemos[i]->Render_SceneObject();
+//    }
 }
 
 void Screen::Render_SceneObjectForGameCamera()

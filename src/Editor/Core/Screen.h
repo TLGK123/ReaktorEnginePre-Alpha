@@ -7,9 +7,9 @@
 #include "Console.h"
 #include "Widget.h"
 #include "ViewPoint.h"
-#include "DemoMenu.h"
+//#include "DemoMenu.h"
 #include "Log/Log.h"
-#include "demo.h"
+//#include "demo.h"
 #include "Project.h"
 #include "Hierachy.h"
 #include "Inspector.hpp"
@@ -44,7 +44,7 @@ public:
     
 	vector<Widget *> m_widgets;
 
-	vector<DemoTest *> m_testDemos;
+//	vector<DemoTest *> m_testDemos;
 
 	bool show_demo_window = true;
 	bool show_another_window = false;
