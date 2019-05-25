@@ -63,16 +63,11 @@ set(CXX_STANDARD 17)
 
 include_directories("../../include")									#添加头文件目录
 include_directories("../Engine")    	
-include_directories("../Engine/3Part/Box2D")
-include_directories("../Engine/3Part/Box2D/Testbed/Framework")    #添加头文件目录
-
-include_directories("../Engine/3Part/Vulkan_1.1.106.0/shaderc/*.h??")
-include_directories("../Engine/3Part/Vulkan_1.1.106.0/vulkan/*.h??")
-include_directories("../Engine/3Part/Vulkan_1.1.106.0/shaderc/*.h")
-include_directories("../Engine/3Part/Vulkan_1.1.106.0/vulkan/*.h")
-include_directories("../Engine/3Part/SPIRV-Cross-2019-03-29/*.h??")
-include_directories("../Engine/3Part/SPIRV-Cross-2019-03-29/*.h")
-
+include_directories("../ThirdParty/Box2D")
+include_directories("../ThirdParty/Box2D/Testbed/Framework")    #添加头文件目录
+include_directories("../ThirdParty/Vulkan_1.1.106.0/shaderc")
+include_directories("../ThirdParty/Vulkan_1.1.106.0/vulkan")
+include_directories("../ThirdParty/SPIRV-Cross-2019-03-29")
 
 set(libpath ${PROJECT_SOURCE_DIR}/../Library/static)
 if(WIN32)
@@ -88,7 +83,5 @@ target_link_libraries(TmingEngine ${GLFW})
 
 add_definitions(-DCOMPILING_LIB)
 
-add_subdirectory(3Part/Lua)
-add_subdirectory(3Part/Box2D)
 ADD_DEFINITIONS(-DIMGUI_IMPL_OPENGL_LOADER_GLAD)
 
