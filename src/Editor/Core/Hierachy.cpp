@@ -19,21 +19,31 @@ namespace TmingEngine
             if ((*ite)->m_children.size()>0)
             {
 
-//                if (ImGui::TreeNode((*ite)->GetGameObject()->name.c_str()))
-//                {
-//                    showTransform((*ite)->GetGameObject()->transform);
-//                    ImGui::TreePop();
-//                }
-                ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-                if (ImGui::TreeNodeEx((void*)(intptr_t)9, node_flags, (*ite)->GetGameObject()->name.c_str()))
+                if (ImGui::TreeNode((*ite)->GetGameObject()->name.c_str()))
                 {
                     if (ImGui::IsItemClicked())
                     {
-                    Debug::Log("选中---父级对象 %s \n",(*ite)->GetGameObject()->name.c_str());
+                    Debug::Log("选中--1-父级对象 %s \n",(*ite)->GetGameObject()->name.c_str());
                     }
                     showTransform((*ite)->GetGameObject()->transform);
                     ImGui::TreePop();
+                }else
+                {
+                    if (ImGui::IsItemClicked())
+                    {
+                        Debug::Log("选中--2-父级对象 %s \n",(*ite)->GetGameObject()->name.c_str());
+                    }
                 }
+//                ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+//                if (ImGui::TreeNodeEx((void*)(intptr_t)9, node_flags, (*ite)->GetGameObject()->name.c_str()))
+//                {
+//                    if (ImGui::IsItemClicked())
+//                    {
+//                        Debug::Log("选中---父级对象 %s \n",(*ite)->GetGameObject()->name.c_str());
+//                    }
+//                    showTransform((*ite)->GetGameObject()->transform);
+//                    ImGui::TreePop();
+//                }
                 
             }else
             {
