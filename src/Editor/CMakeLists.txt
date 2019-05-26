@@ -1,6 +1,7 @@
 file(GLOB headers 
 "*.h"
-"UI/Widgets/Widget.h"
+"UI/WidgetBase/*.h"
+"UI/*.h??"
 "Core/*.h"
 "Core/*.h??"
 )
@@ -8,16 +9,14 @@ file(GLOB headers
 file(GLOB sources 
 "*.cpp"
 "Core/*.cpp"
-
-"Model/*.cpp"
-"UI/Widgets/Widget.cpp"
+"UI/WidgetBase/*.cpp"
+"UI/*.cpp"
 )
 
-include_directories("UI/Widgets")    #添加头文件目录
+include_directories("UI/WidgetBase")    #添加头文件目录
 include_directories("../../include")    #添加头文件目录
-include_directories("../Engine")    #添加头文件目录
-include_directories("Demo")    #添加头文件目录
-include_directories("Core")    #添加头文件目录
+include_directories("../Engine")        #添加头文件目录
+include_directories("Core")             #添加头文件目录
 
 add_executable_beautiful(Editor ${headers} ${sources})
 
