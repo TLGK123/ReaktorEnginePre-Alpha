@@ -27,6 +27,7 @@ void TmingEngine::Inspector::Update()
     
     
     ImGui::Text("this  is Detial Panel ");
+    ImGui::Text(Selecttion::GetActiveObjectName().c_str());
     
     ImGui::End();
 }
