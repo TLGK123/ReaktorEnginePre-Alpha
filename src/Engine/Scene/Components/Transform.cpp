@@ -87,22 +87,24 @@ namespace TmingEngine
 //	}
 
 	//= TRANSLATION ==================================================================================
-//	void Transform::SetPosition(const Vector3& position)
-//	{
+//    void Transform::SetPosition(const Vector3& position)
+//    {
 //        if (GetPosition() == position)
 //            return;
 //
 //        SetPositionLocal(!HasParent() ? position : GetParent()->GetWorldTransform().Inverted() * position);
-//	}
+//    }
 
-//	void Transform::SetPositionLocal(const Vector3& position)
-//	{
-//        if (m_positionLocal == position)
-//            return;
-//
-//        m_positionLocal = position;
-//        UpdateTransform();
-//	}
+    void Transform::SetPositionLocal(const Vector3& position)
+    {
+        ;
+        if (m_positionLocal == position)
+            return;
+
+        m_positionLocal = position;
+        ;
+      //  UpdateTransform();
+    }
 	//================================================================================================
 
 	//= ROTATION =====================================================================================

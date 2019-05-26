@@ -31,10 +31,9 @@ namespace TmingEngine
 //        Math::Vector3 GetPosition() { return m_worldTransform.GetTranslation(); }
         const Math::Vector3& GetPositionLocal() {
             return m_positionLocal;
-            
         }
-//        void SetPosition(const Math::Vector3& position);
-//        void SetPositionLocal(const Math::Vector3& position);
+//       void SetPosition(const Math::Vector3& position);
+       void SetPositionLocal(const Math::Vector3& position);
 		//=======================================================================
 
 		//= ROTATION ============================================================
