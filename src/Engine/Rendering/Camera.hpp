@@ -1,9 +1,21 @@
-#ifndef CAMERA_H
-#define CAMERA_H
+//
+//  Camera.hpp
+//  Editor
+//
+//  Created by Blue on 2019/5/26.
+//
+
+#ifndef Camera_hpp
+#define Camera_hpp
+
+#include <stdio.h>
 
 #include "im.h"
-
+#include "Core/Context.h"
+#include "Core/GameObject.hpp"
 #include <vector>
+
+using namespace TmingEngine;
 
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum Camera_Movement {
@@ -38,7 +50,10 @@ public:
     float MovementSpeed;
     float MouseSensitivity;
     float Zoom;
-
+    
+    GameObject * gameObject;
+    
+    
     // Constructor with vectors
     Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
     {
@@ -57,13 +72,26 @@ public:
         Pitch = pitch;
         updateCameraVectors();
     }
-
+    
+    // Constructor with vectors
+    Camera(Context * context ,GameObject * go, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
+    {
+        currentContext = context;
+        gameObject = go;
+        
+        Position = position;
+        WorldUp = up;
+        Yaw = yaw;
+        Pitch = pitch;
+        updateCameraVectors();
+    }
+    
     // Returns the view matrix calculated using Euler Angles and the LookAt Matrix
     glm::mat4 GetViewMatrix()
     {
         return glm::lookAt(Position, Position + Front, Up);
     }
-
+    
     // Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
     void ProcessKeyboard(Camera_Movement direction, float deltaTime)
     {
@@ -77,16 +105,16 @@ public:
         if (direction == RIGHT)
             Position += Right * velocity;
     }
-
+    
     // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.
     void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true)
     {
         xoffset *= MouseSensitivity;
         yoffset *= MouseSensitivity;
-
+        
         Yaw   += xoffset;
         Pitch += yoffset;
-
+        
         // Make sure that when pitch is out of bounds, screen doesn't get flipped
         if (constrainPitch)
         {
@@ -95,11 +123,11 @@ public:
             if (Pitch < -89.0f)
                 Pitch = -89.0f;
         }
-
+        
         // Update Front, Right and Up Vectors using the updated Euler angles
         updateCameraVectors();
     }
-
+    
     // Processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
     void ProcessMouseScroll(float yoffset)
     {
@@ -110,8 +138,10 @@ public:
         if (Zoom >= 45.0f)
             Zoom = 45.0f;
     }
-
+    
 private:
+    
+    Context * currentContext;
     // Calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors()
     {
@@ -126,4 +156,6 @@ private:
         Up    = glm::normalize(glm::cross(Right, Front));
     }
 };
-#endif
+
+
+#endif /* Camera_hpp */

@@ -16,6 +16,7 @@
 #include "Game.hpp"
 #include "Profiler.hpp"
 #include "Console.h"
+#include "Rendering/Camera.hpp"
 
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )
