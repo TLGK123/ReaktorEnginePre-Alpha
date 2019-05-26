@@ -17,12 +17,13 @@ namespace TmingEngine
 {
 	Transform::Transform(Context* context, GameObject* gameObject, Transform* transform) : IComponent(context, gameObject, transform)
 	{
-//        m_positionLocal        = Vector3::Zero;
-//        m_rotationLocal        = Quaternion(0, 0, 0, 1);
-//        m_scaleLocal        = Vector3::One;
-//        m_worldTransform    = Matrix::Identity;
-//        m_localTransform    = Matrix::Identity;
-        m_parent            = nullptr;
+        m_positionLocal        = Vector3::Zero;
+        m_rotationLocal        = Quaternion(0, 0, 0, 1);
+        m_scaleLocal        = Vector3::One;
+    
+     //  m_worldTransform    = Matrix::Identity;
+      // m_localTransform    = Matrix::Identity;
+       m_parent            = nullptr;
 	}
 
 	Transform::~Transform()

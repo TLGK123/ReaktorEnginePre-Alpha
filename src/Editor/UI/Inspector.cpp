@@ -25,10 +25,16 @@ void TmingEngine::Inspector::Update()
         return;
     }
     
-    
-    ImGui::Text("this  is Detial Panel ");
-    ImGui::Text(Selecttion::GetActiveObjectName().c_str());
-    
+    auto selectActive =Selecttion::activeTransform;
+    if(selectActive != NULL)
+    {
+        ImGui::Text(Selecttion::GetActiveObjectName().c_str());
+        static Math::Vector3 pos = selectActive->GetPositionLocal();
+        ImGui::InputFloat("X",& pos.x , 1.0f);
+        ImGui::InputFloat("Y",& pos.y , 1.0f);
+        ImGui::InputFloat("Z",& pos.z , 1.0f);
+    }
+
     ImGui::End();
 }
 
