@@ -6,6 +6,8 @@
 #include "../../../src/Engine/Core/Engine.h"
 #include "../../../src/Engine/Scene/Components/Transform.h"
 #include "../../../src/Engine/Log/Log.h"
+#include "Selection.hpp"
+
 namespace TmingEngine
 {
 	class Hierachy :public Widget

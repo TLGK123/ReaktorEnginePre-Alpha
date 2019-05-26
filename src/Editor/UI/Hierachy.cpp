@@ -23,7 +23,8 @@ namespace TmingEngine
                 {
                     if (ImGui::IsItemClicked())
                     {
-                    Debug::Log("选中--1-父级对象 %s \n",(*ite)->GetGameObject()->name.c_str());
+                        Debug::Log("选中--1-父级对象 %s \n",(*ite)->GetGameObject()->name.c_str());
+                        Selecttion::activeTransform =  *ite;
                     }
                     showTransform((*ite)->GetGameObject()->transform);
                     ImGui::TreePop();
@@ -32,6 +33,7 @@ namespace TmingEngine
                     if (ImGui::IsItemClicked())
                     {
                         Debug::Log("选中--2-父级对象 %s \n",(*ite)->GetGameObject()->name.c_str());
+                        Selecttion::activeTransform =  *ite;
                     }
                 }
 //                ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
@@ -56,6 +58,7 @@ namespace TmingEngine
                     if (ImGui::IsItemClicked())
                     {
                         Debug::Log("选中--末端物体 %s \n",(*ite)->GetGameObject()->name.c_str());
+                        Selecttion::activeTransform =  *ite;
                     }
                     
                 }
