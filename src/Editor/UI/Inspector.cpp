@@ -33,6 +33,9 @@ void TmingEngine::Inspector::Update()
         ImGui::InputFloat("X",& pos.x , 1.0f);
         ImGui::InputFloat("Y",& pos.y , 1.0f);
         ImGui::InputFloat("Z",& pos.z , 1.0f);
+        selectActive->SetPositionLocal(pos);
+        
+        
     }
 
     ImGui::End();
