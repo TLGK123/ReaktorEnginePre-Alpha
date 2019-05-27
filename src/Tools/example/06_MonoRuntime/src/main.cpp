@@ -57,11 +57,17 @@ int main()
 extern "C"
 {
     void DoSomething ();
+    void DoSomething2 (const char * messgae );
+}
+
+void DoSomething2 (const char * messgae )
+{
+    std::cout << " some message  哈哈 define in c# ! "<< messgae <<std::endl;
 }
 
 void DoSomething ()
 {
-    std::cout << " some function define in c++ ! "<<std::endl;
+    std::cout << " some function 哈哈 define in c++ ! "<<std::endl;
 }
 #define MAX_PATH 250
 

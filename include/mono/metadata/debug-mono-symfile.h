@@ -1,0 +1,1 @@
+../../../src/ThirdParty/mono/metadata/debug-mono-symfile.h

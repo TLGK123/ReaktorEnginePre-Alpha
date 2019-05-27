@@ -1,0 +1,1 @@
+../../../src/ThirdParty/mono/metadata/sgen-bridge.h

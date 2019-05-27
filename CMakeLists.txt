@@ -199,6 +199,7 @@ set(CMAKE_CXX_STANDARD 17)          #使用c++ 17
 
 set(SYNERGY_ADD_HEADERS true)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/tm)
-
+set(DEST_LIB_DIR ${PROJECT_SOURCE_DIR}/Library)
 set(DEST_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
+
 add_subdirectory(src)               #添加一个子目录

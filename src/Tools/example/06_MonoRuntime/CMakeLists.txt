@@ -12,10 +12,40 @@ file(GLOB sources
 )
 
 include_directories("include")
-include_directories("/usr/local/include/mono-2.0")
+include_directories(${DEST_INCLUDE_DIR})
 
 add_executable_beautiful(${Project_name} ${headers} ${sources})
 
-set(libpath /usr/local/lib)
-find_library (MONO libmono-2.0.a ${libpath})
-target_link_libraries(${Project_name} ${MONO})
+set (useStaticmono false)
+
+if(useStaticmono)
+  set(libpath ${DEST_LIB_DIR}/static)
+else()
+  set(libpath ${DEST_LIB_DIR}/shared)
+endif()
+
+#message(${libpath})
+
+if(useStaticmono)
+find_library (mono libmono-2.0.a ${libpath})
+find_library (mononative libmono-native.a ${libpath})
+find_library (boehm libmonoboehm-2.0.a ${libpath})
+find_library (Support libMonoSupportW.a ${libpath})
+else()
+
+find_library (mono libmono-2.0.dylib ${libpath})
+
+endif()
+
+
+if(useStaticmono)
+#target_link_libraries(${Project_name} ${mononative})
+#target_link_libraries(${Project_name} ${boehm})
+#target_link_libraries(${Project_name} ${Support})
+endif()
+target_link_libraries(${Project_name} ${mono})
+
+add_custom_command(TARGET ${Project_name} POST_BUILD        #拷贝文件夹
+COMMAND ${CMAKE_COMMAND} -E copy_directory
+"${libpath}"                                                #需要被拷贝的共享dll文件夹
+$<TARGET_FILE_DIR:${Project_name}>)
