@@ -115,10 +115,21 @@ macro (install_header_files)
                         if (NOT EXISTS ${PATH})
                         file (MAKE_DIRECTORY ${PATH})
                     endif ()
+                  
+                    if(NOT EXISTS ${ARG_DESTINATION}/${NAME})
+                        
                         create_symlink (${INSTALL_SOURCE}${NAME} ${ARG_DESTINATION}/${NAME} BASE ${ARG_BASE} FALLBACK_TO_COPY)
                         if (ARG_ACCUMULATE)
                             list (APPEND ${ARG_ACCUMULATE} ${ARG_DESTINATION}/${NAME})
                         endif ()
+
+                    endif(NOT EXISTS ${ARG_DESTINATION}/${NAME})
+                    
+                   # message(${INSTALL_SOURCE}${NAME})
+                   # message(${ARG_DESTINATION}/${NAME})
+                   # message(${ARG_BASE})
+
+
                     endforeach ()
                 else ()
                     # Use a single symlink pointing to the source directory
