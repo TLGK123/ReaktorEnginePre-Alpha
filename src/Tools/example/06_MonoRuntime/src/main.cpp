@@ -43,9 +43,11 @@ int main()
         MonoMethodDesc *method_desc = mono_method_desc_new("TestDll.Main:SayHello()", true);
         MonoMethod *method = mono_method_desc_search_in_class(method_desc, mono_class);
         mono_method_desc_free(method_desc);
+        
         // 调用方法
         mono_runtime_invoke(method, nullptr, nullptr, nullptr);
         // 释放JIT
+
         mono_jit_cleanup(domain);
     }
     catch (std::exception* e)
@@ -54,21 +56,44 @@ int main()
     }
 }
 
+typedef void (*CsharpFunction)(const char * data);
+
 extern "C"
 {
     void DoSomething ();
     void DoSomething2 (const char * messgae );
+    const char * DoSomething3(const char * messgae);
+    void DoSomething4 (CsharpFunction handle);
 }
+
+
 
 void DoSomething2 (const char * messgae )
 {
     std::cout << " some message  哈哈 define in c# ! "<< messgae <<std::endl;
 }
 
+
 void DoSomething ()
 {
     std::cout << " some function 哈哈 define in c++ ! "<<std::endl;
 }
+
+
+const char *  DoSomething3(const char * messgae )
+{
+    std::string msg(messgae);
+    msg += " native data fom c++ ";
+  
+    return msg.c_str();
+}
+
+void DoSomething4 (CsharpFunction handle)
+{
+    handle("c++ data 123");
+   
+}
+
 #define MAX_PATH 250
 
 std::string getPath(std::string assetpath)
