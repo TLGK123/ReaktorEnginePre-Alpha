@@ -12,3 +12,7 @@ bin/tm/Debug/
 src/Engine/3Part/Box2D/Contributions/Platforms/TestBed\.Net/obj/
 
 bin/
+
+src/Tools/example/06_MonoRuntime/dll/DllTest/\.idea/
+
+src/Tools/example/06_MonoRuntime/dll/DllTest/TestDll/obj/
