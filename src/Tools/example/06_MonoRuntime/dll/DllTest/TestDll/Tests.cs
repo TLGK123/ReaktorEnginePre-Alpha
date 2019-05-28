@@ -10,7 +10,7 @@ namespace TestDll
         public static void SayHello()
         {
            string s = "おはよう";
-           Console.WriteLine(s);
+           Console.WriteLine(" c# 中文输出");
            DoSomething();
            DoSomething2("我也很无奈啊");
         }
