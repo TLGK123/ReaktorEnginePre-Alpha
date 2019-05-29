@@ -14,12 +14,12 @@ namespace TestDll
            Console.WriteLine(s);
            DoSomething();
            DoSomething2("我也很无奈啊");
-<<<<<<< Updated upstream
+
         //   DoSomething3("这段数据来自c#");
            
            DoSomething4((f)=>Console.WriteLine("C# Print c++ data :"+ f));
            
-=======
+
            
            Console.WriteLine("Main treard start ---");
            
@@ -37,7 +37,7 @@ namespace TestDll
            Console.WriteLine("Main thread: Call Join(), to wait until ThreadProc ends.");
            t.Join();
            Console.WriteLine("Main thread: ThreadProc.Join has returned. ");
->>>>>>> Stashed changes
+
         }
 
         public delegate void  CallFromNative(string cshapdata);
@@ -46,7 +46,7 @@ namespace TestDll
         static extern void DoSomething();
         
         [DllImport ("__Internal", EntryPoint="DoSomething2")]
-<<<<<<< Updated upstream
+
         static extern void DoSomething2(string message);  
         
         [DllImport ("__Internal", EntryPoint="DoSomething3")]
@@ -56,9 +56,6 @@ namespace TestDll
         static extern void DoSomething4(CallFromNative d);
        
         
-=======
-        static extern void DoSomething2(string message);
-
 
         public static void PrintNum()
         {
@@ -90,6 +87,6 @@ namespace TestDll
             
         }
 
->>>>>>> Stashed changes
+
     }
 }
