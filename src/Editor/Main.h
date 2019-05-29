@@ -11,12 +11,11 @@
 
 #include "Stb_Image/stb_image.h"
 
-//#include"Screen.h"
 #include <stdio.h>
 #include "Core/Engine.h"
 #include "Core/EngineDefs.h"
 #include "Log/Log.h"
 #include "Core/SmartPtr.h"
-void EngineInit();
+
 
 #endif /* Main_h */

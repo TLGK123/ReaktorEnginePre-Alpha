@@ -96,6 +96,7 @@ void TmingEngine::Project::Begin()
 
 void TmingEngine::Project::Update()
 {
+  
 	bool p_open = true;
 	ImGui::SetNextWindowSize(ImVec2(350, 560), ImGuiCond_FirstUseEver);
 	if (!ImGui::Begin("Project", &p_open))
@@ -103,17 +104,25 @@ void TmingEngine::Project::Update()
 		ImGui::End();
 		return;
 	}
+    
+    ImGui::BeginChild("left pane", ImVec2(200, 0), true);
 	if (ImGui::TreeNode("Assets"))
 	{
         auto current = FileSystem::getPath("");
         AssetTree(current);
 		ImGui::TreePop();
 	}
-	ImGui::End();
+    
+    ImGui::EndChild();
+  //  ImGui::End();
+    ImGui::SameLine();
+    ImGui::SameLine();
+    
+    ImGui::BeginChild("item view", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()));
     
     auto cpos = editor.GetCursorPosition();
-    ImGui::Begin("Text Editor Demo", nullptr, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_MenuBar);
-    ImGui::SetWindowSize(ImVec2(800, 600), ImGuiCond_FirstUseEver);
+  //  ImGui::Begin("Text Editor Demo", nullptr, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_MenuBar);
+   // ImGui::SetWindowSize(ImVec2(800, 600), ImGuiCond_FirstUseEver);
     if (ImGui::BeginMenuBar())
     {
         if (ImGui::BeginMenu("File"))
@@ -179,7 +188,9 @@ void TmingEngine::Project::Update()
                 editor.GetLanguageDefinition().mName.c_str(), fileToEdit.c_str());
     
     editor.Render("TextEditor");
+    ImGui::EndChild();
     ImGui::End();
+   
 }
 
 struct PathObjInfo
