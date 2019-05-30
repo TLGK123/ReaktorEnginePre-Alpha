@@ -55,7 +55,6 @@ namespace TmingEngine
             }
         }
         
-
     }
     
     void TmingEngine::Hierachy::Update()
