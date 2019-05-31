@@ -88,5 +88,11 @@ namespace TestDll
         }
 
 
+        public int C(int n, int m)   // chong
+        {
+            
+        }
+
+
     }
 }

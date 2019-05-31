@@ -10,22 +10,7 @@ TextEditor editor;
 string fileToEdit = "ImGuiColorTextEdit/TextEditor.cpp";
 
 void TmingEngine::Project::Begin()
-{
-//    string s = "";
-//    string str[] ={".*"};
-//    std::vector<string> fi(str,str+1);
-//    string currentPath =FileSystem::getPath(s);
-//    auto files = FileFilter(currentPath.c_str(),fi);
-//    vector<string>::iterator iter;
-//    cout <<endl;
-//    for (iter = files.begin(); iter != files.end(); iter++)
-//    {
-//        string s = *iter;
-//        cout  <<*iter <<endl;
-//        ;
-//    }
-    
-    
+{    
     auto lang = TextEditor::LanguageDefinition::CPlusPlus();
     static const char* ppnames[] = { "NULL", "PM_REMOVE",
         "ZeroMemory", "DXGI_SWAP_EFFECT_DISCARD", "D3D_FEATURE_LEVEL", "D3D_DRIVER_TYPE_HARDWARE", "WINAPI","D3D11_SDK_VERSION", "assert" };
