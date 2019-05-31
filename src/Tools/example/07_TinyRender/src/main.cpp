@@ -44,7 +44,7 @@ void triangle(Vector2 p1, Vector2 p2 , Vector2 p3 ,TGAImage &image, TGAColor col
 int main(int argc, char** argv) {
 	TGAImage image(1000, 1000, TGAImage::RGB);
    // line( Vector2(1000,0),Vector2(0,1000), image, red);
-    triangle( Vector2(20,20),Vector2(800,500),Vector2(300,900), image,red);
+    triangle(Vector2(20,20),Vector2(800,500),Vector2(300,900), image,red);
 	image.flip_vertically(); // i want to have the origin at the left bottom corner of the image
 	image.write_tga_file("output.tga");
 	return 0;
