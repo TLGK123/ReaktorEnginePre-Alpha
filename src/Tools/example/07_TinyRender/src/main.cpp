@@ -1,9 +1,16 @@
 #include "tgaimage.h"
+#include "model.h"
 
 // https://github.com/ssloy/tinyrenderer/wiki
 
 const TGAColor white = TGAColor(255, 255, 255, 255);
 const TGAColor red   = TGAColor(255, 0,   0,   255);
+const TGAColor green = TGAColor(0, 255,   0,   255);
+
+const int ScreenWidth  = 512;
+const int ScreenHeight = 512;
+
+Model *model = NULL;
 
 struct Vector2
 {
@@ -134,12 +141,46 @@ void triangleFilled(Vector2 p1, Vector2 p2 , Vector2 p3 ,TGAImage &image, TGACol
 
 
 int main(int argc, char** argv) {
-	TGAImage image(1000, 1000, TGAImage::RGB);
-    line( Vector2(0,500),Vector2(1000,500), image, red);
-    line( Vector2(500,0),Vector2(500,1000), image, red);
-    //triangle(Vector2(20,20),Vector2(800,500),Vector2(300,650), image,red);
+	TGAImage image(ScreenWidth, ScreenHeight, TGAImage::RGB);
+    //line( Vector2(0,ScreenHeight/2),Vector2(ScreenWidth,ScreenHeight/2), image, red);
+    //line( Vector2(ScreenWidth /2,0),Vector2(ScreenWidth /2,ScreenHeight), image, red);
+    //triangle(Vector2(10,10),Vector2(400,250),Vector2(150,325), image,red);
     
-     triangleFilled(Vector2(20,20),Vector2(800,500),Vector2(300,650), image,red);
+    //triangleFilled(Vector2(20,20),Vector2(800,500),Vector2(300,650), image,red);
+    //triangleFilled(Vector2(200,230),Vector2(650,500),Vector2(777,450), image,green);
+    // model = new Model("/Users/blue/Desktop/Gitee/TmingEngine/src/Tools/example/07_TinyRender/obj/african_head.obj");
+    model = new Model("/Users/blue/Desktop/Gitee/TmingEngine/src/Tools/example/07_TinyRender/obj/african_head.obj");
+    
+    
+    for (int i=0 ; i< model->nfaces(); i++)
+    {
+        std::vector<int> face = model->face(i);
+//        for (int j=0; j< 3; j++)
+//        {
+//            auto v0 = model->vert(face[j]);
+//            auto v1 = model->vert(face[(j+1)%3]);
+//
+//            int  x0 = (v0.x + 1.0f) * ScreenWidth /2;
+//            int  y0 = (v0.y + 1.0f) * ScreenHeight /2;
+//
+//            int  x1 = (v1.x + 1.0f) * ScreenWidth /2;
+//            int  y1 = (v1.y + 1.0f) * ScreenHeight /2;
+//
+//            line(Vector2(x0,y0), Vector2(x1,y1), image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
+//        }
+        
+        std::vector<Vector2> facePoint;
+        for (int  j=0; j <3; j++)
+        {
+             auto v0 = model->vert(face[j]);
+             int  x0 = (v0.x + 1.0f) * ScreenWidth /2;
+             int  y0 = (v0.y + 1.0f) * ScreenHeight /2;
+             facePoint.push_back(Vector2(x0,y0));
+        }
+        triangleFilled(facePoint[0],facePoint[1],facePoint[2],image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
+        
+    }
+    
     
 	image.flip_vertically(); // i want to have the origin at the left bottom corner of the image
 	image.write_tga_file("output.tga");
