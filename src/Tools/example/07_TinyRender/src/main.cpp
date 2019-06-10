@@ -1,5 +1,6 @@
 #include "tgaimage.h"
 #include "model.h"
+#include "geometry.h"
 
 // https://github.com/ssloy/tinyrenderer/wiki
 
@@ -7,10 +8,11 @@ const TGAColor white = TGAColor(255, 255, 255, 255);
 const TGAColor red   = TGAColor(255, 0,   0,   255);
 const TGAColor green = TGAColor(0, 255,   0,   255);
 
-const int ScreenWidth  = 512;
-const int ScreenHeight = 512;
+const int ScreenWidth  = 1000;
+const int ScreenHeight = 1000;
 
 Model *model = NULL;
+Vec3f light_dir(1,1,1);
 
 struct Vector2
 {
@@ -30,6 +32,12 @@ void SwapVector(Vector2 & p1,Vector2 & p2)
     Vector2 temp = p2;
     p2 =p1;
     p1= temp;
+}
+
+
+void point(Vec2i p ,TGAImage &image, TGAColor color)
+{
+      image.set(p.x, p.y, color);
 }
 
 void line(Vector2 p1, Vector2 p2, TGAImage &image, TGAColor color)
@@ -66,6 +74,12 @@ void triangle(Vector2 p1, Vector2 p2 , Vector2 p3 ,TGAImage &image, TGAColor col
     line(p2,p3,image,color);
     line(p3,p1,image,color);
 }
+
+void line(Vec2i p1, Vec2i p2,TGAImage &image, TGAColor color)
+{
+    line( Vector2(p1.x ,p1.y), Vector2(p2.x,p2.y), image, color);
+}
+
 
 void triangleFilled(Vector2 p1, Vector2 p2 , Vector2 p3 ,TGAImage &image, TGAColor color )
 {
@@ -139,6 +153,10 @@ void triangleFilled(Vector2 p1, Vector2 p2 , Vector2 p3 ,TGAImage &image, TGACol
     }
 }
 
+void triangleFilled(Vec2i p1, Vec2i p2 , Vec2i p3 ,TGAImage &image, TGAColor color )
+{
+    triangleFilled(Vector2(p1.x ,p1.y),Vector2(p2.x,p2.y),Vector2(p3.x,p3.y),image,color);
+}
 
 int main(int argc, char** argv) {
 	TGAImage image(ScreenWidth, ScreenHeight, TGAImage::RGB);
@@ -149,12 +167,14 @@ int main(int argc, char** argv) {
     //triangleFilled(Vector2(20,20),Vector2(800,500),Vector2(300,650), image,red);
     //triangleFilled(Vector2(200,230),Vector2(650,500),Vector2(777,450), image,green);
     // model = new Model("/Users/blue/Desktop/Gitee/TmingEngine/src/Tools/example/07_TinyRender/obj/african_head.obj");
-    model = new Model("/Users/blue/Desktop/Gitee/TmingEngine/src/Tools/example/07_TinyRender/obj/african_head.obj");
-    
-    
+    model = new Model("/Users/blue/Desktop/Gitee/TmingEngine/resources/objects/rock/rock.obj");
+ 
+  //
     for (int i=0 ; i< model->nfaces(); i++)
     {
         std::vector<int> face = model->face(i);
+        
+        //------线框模型
 //        for (int j=0; j< 3; j++)
 //        {
 //            auto v0 = model->vert(face[j]);
@@ -168,17 +188,44 @@ int main(int argc, char** argv) {
 //
 //            line(Vector2(x0,y0), Vector2(x1,y1), image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
 //        }
+        //------线框模型---end
         
-        std::vector<Vector2> facePoint;
+        //-------填随机色块模型
+//        std::vector<Vector2> facePoint;
+//        for (int  j=0; j <3; j++)
+//        {
+//             auto v0 = model->vert(face[j]);
+//             int  x0 = (v0.x + 1.0f) * ScreenWidth /2;
+//             int  y0 = (v0.y + 1.0f) * ScreenHeight /2;
+//             facePoint.push_back(Vector2(x0,y0));
+//        }
+//        triangleFilled(facePoint[0],facePoint[1],facePoint[2],image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
+        //-------填随机色块模型----end
+        
+        Vec2i screen_coords[3];
+        Vec3f world_coords[3];
+
         for (int  j=0; j <3; j++)
         {
-             auto v0 = model->vert(face[j]);
-             int  x0 = (v0.x + 1.0f) * ScreenWidth /2;
-             int  y0 = (v0.y + 1.0f) * ScreenHeight /2;
-             facePoint.push_back(Vector2(x0,y0));
+            auto v0 = model->vert(face[j]);
+            int  x0 = (v0.x + 1.0f) * ScreenWidth / 2.0f;
+            int  y0 = (v0.y + 1.0f) * ScreenHeight / 2.0f;
+            screen_coords[j] = Vec2i(x0,y0);
+             world_coords[j] = v0;
+            point(screen_coords[j], image, red);
         }
-        triangleFilled(facePoint[0],facePoint[1],facePoint[2],image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
         
+      //  Vec3f n = (world_coords[2]-world_coords[0])^(world_coords[1]-world_coords[0]);
+      //  n.normalize();
+        
+     //   line(screen_coords[0],Vec2i((n.x + 1.0f) * ScreenWidth / 2.0f ,  (n.y + 1.0f) * ScreenHeight / 2.0f) , image, red);
+        
+//        float intensity = n * light_dir;
+//        if(intensity>0)
+//        {
+//            triangleFilled(screen_coords[0],screen_coords[1],screen_coords[2],image, TGAColor(255 * intensity, 255 * intensity, 255 * intensity, 255));
+//        }
+
     }
     
     
