@@ -79,7 +79,6 @@ set(libpath ${PROJECT_SOURCE_DIR}/../Library/static)
 if(WIN32)
 find_library (GLFW glfw3.lib ${libpath})
 elseif(APPLE)
-message(${libpath})
 find_library (GLFW libglfw3.a ${libpath})
 endif()
 
