@@ -50,10 +50,31 @@ namespace TmingEngine
         if (ScrollToBottom)
             ImGui::SetScrollHereY(1.0f);
         ScrollToBottom = false;
+        
+        
+        ImGui::Separator();
+        // Command-line
+        static char InputBuf[256] = "";
+        ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf));
+        
+        if (ImGui::Button("Command"))
+        {
+            Debug::Log(InputBuf);
+            string s = string(InputBuf);
+            Scheme_init();
+            FILE * file_demo;
+            fputs(s.c_str(), file_demo);
+            Schem_eval(file_demo);
+            
+        }
+        
         ImGui::EndChild();
+
         ImGui::End();
         
     }
+    
+ 
     
     void Console::End()
     {

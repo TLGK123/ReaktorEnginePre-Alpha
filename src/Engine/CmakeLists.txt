@@ -90,4 +90,5 @@ target_link_libraries(TmingEngine ${GLFW})
 target_link_libraries(TmingEngine stb)
 target_link_libraries(TmingEngine ImGui)
 target_link_libraries(TmingEngine glad)
+target_link_libraries(TmingEngine scheme)
 
