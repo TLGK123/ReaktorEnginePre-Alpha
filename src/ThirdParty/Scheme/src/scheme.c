@@ -1757,6 +1757,16 @@ void write(FILE *out, object *obj) {
         write(stdout, eval(exp, the_global_environment));
     }
 
+    void Schem_eval_out(FILE *in , FILE *out)
+    {
+        object *exp;
+        exp = read(in);
+        if (exp == NULL) {
+        return;
+        }
+    write(out, eval(exp, the_global_environment));
+}
+
 
 int main0(void) {
     object *exp;
