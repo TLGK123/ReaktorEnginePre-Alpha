@@ -55,22 +55,31 @@ namespace TmingEngine
         ImGui::Separator();
         // Command-line
         static char InputBuf[256] = "";
+        static char ResualtBuf[256] = "";
         ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf));
         
         if (ImGui::Button("Command"))
         {
-            Debug::Log(InputBuf);
+           //Debug::Log(InputBuf);
             string s = string(InputBuf);
             Scheme_init();
             printf("\n");
-            FILE * file_demo;
-            //file_demo = fopen("demo.txt", "at+");
+            FILE *  file_demo;
             file_demo = fopen("demo.txt", "w+");
             fputs(s.c_str(), file_demo);
-             file_demo = fopen("demo.txt", "r");
+            fclose(file_demo);
+            file_demo = fopen("demo.txt", "r");
+            FILE *  evalOut =fopen("evalOut.txt", "w+");
+            //file_demo = fopen("stdlib.scm", "r");
             //fgets(InputBuf, 255, (FILE*)file_demo);
-            Schem_eval(file_demo);
-            
+            Schem_eval_out(file_demo,evalOut);
+            fclose(evalOut);
+            evalOut =fopen("evalOut.txt", "r");
+            fgets(ResualtBuf, 255, (FILE*)evalOut);
+            Buf.append("\n");
+            Buf.append(ResualtBuf);
+            fclose(file_demo);
+            fclose(evalOut);
         }
         
         ImGui::EndChild();

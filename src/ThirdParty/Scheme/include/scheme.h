@@ -12,5 +12,6 @@
 
 EXPORT_API void Scheme_init();
 EXPORT_API void Schem_eval(FILE *in);
+EXPORT_API void Schem_eval_out(FILE *in , FILE *out);
 
 
