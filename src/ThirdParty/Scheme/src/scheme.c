@@ -575,7 +575,7 @@ object *read_char_proc(object *arguments) {
     in = is_the_empty_list(arguments) ?
              stdin :
              car(arguments)->data.input_port.stream;
-    result = getc(in);
+    result = fgetc(in);
     return (result == EOF) ? eof_object : make_character(result);
 }
 
@@ -945,7 +945,7 @@ char is_initial(int c) {
 int peek(FILE *in) {
     int c;
 
-    c = getc(in);
+    c = fgetc(in);
     ungetc(c, in);
     return c;
 }
@@ -953,12 +953,12 @@ int peek(FILE *in) {
 void eat_whitespace(FILE *in) {
     int c;
     
-    while ((c = getc(in)) != EOF) {
+    while ((c = fgetc(in)) != EOF) {
         if (isspace(c)) {
             continue;
         }
         else if (c == ';') { /* comments are whitespace also */
-            while (((c = getc(in)) != EOF) && (c != '\n'));
+            while (((c = fgetc(in)) != EOF) && (c != '\n'));
             continue;
         }
         ungetc(c, in);
@@ -970,7 +970,7 @@ void eat_expected_string(FILE *in, char *str) {
     int c;
 
     while (*str != '\0') {
-        c = getc(in);
+        c = fgetc(in);
         if (c != *str) {
             fprintf(stderr, "unexpected character '%c'\n", c);
             exit(1);
@@ -989,7 +989,7 @@ void peek_expected_delimiter(FILE *in) {
 object *read_character(FILE *in) {
     int c;
 
-    c = getc(in);
+    c = fgetc(in);
     switch (c) {
         case EOF:
             fprintf(stderr, "incomplete character literal\n");
@@ -1020,7 +1020,7 @@ object *read_pair(FILE *in) {
     
     eat_whitespace(in);
     
-    c = getc(in);
+    c = fgetc(in);
     if (c == ')') { /* read the empty list */
         return the_empty_list;
     }
@@ -1030,7 +1030,7 @@ object *read_pair(FILE *in) {
 
     eat_whitespace(in);
     
-    c = getc(in);    
+    c = fgetc(in);
     if (c == '.') { /* read improper list */
         c = peek(in);
         if (!is_delimiter(c)) {
@@ -1039,7 +1039,7 @@ object *read_pair(FILE *in) {
         }
         cdr_obj = read(in);
         eat_whitespace(in);
-        c = getc(in);
+        c = fgetc(in);
         if (c != ')') {
             fprintf(stderr,
                     "where was the trailing right paren?\n");
@@ -1062,12 +1062,12 @@ object *read(FILE *in) {
 #define BUFFER_MAX 1000
     char buffer[BUFFER_MAX];
 
-    eat_whitespace(in);
+    //eat_whitespace(in);
 
-    c = getc(in);    
+    c = fgetc(in);
     char t =(char)c;
     if (c == '#') { /* read a boolean or character */
-        c = getc(in);
+        c = fgetc(in);
         switch (c) {
             case 't':
                 return true;
@@ -1089,7 +1089,7 @@ object *read(FILE *in) {
         else {
             ungetc(c, in);
         }
-        while (isdigit(c = getc(in))) {
+        while (isdigit(c = fgetc(in))) {
             num = (num * 10) + (c - '0');
         }
         num *= sign;
@@ -1117,7 +1117,7 @@ object *read(FILE *in) {
                         "Maximum length is %d\n", BUFFER_MAX);
                 exit(1);
             }
-            c = getc(in);
+            c = fgetc(in);
         }
         if (is_delimiter(c)) {
             buffer[i] = '\0';
@@ -1132,9 +1132,9 @@ object *read(FILE *in) {
     }
     else if (c == '"') { /* read a string */
         i = 0;
-        while ((c = getc(in)) != '"') {
+        while ((c = fgetc(in)) != '"') {
             if (c == '\\') {
-                c = getc(in);
+                c = fgetc(in);
                 if (c == 'n') {
                     c = '\n';
                 }
@@ -1740,20 +1740,21 @@ void write(FILE *out, object *obj) {
 
 /***************************** REPL ******************************/
 
-void Scheme_init()
-{
-    init();
-}
-
-void Schem_eval(FILE *in)
-{
-    object *exp;
-    exp = read(in);
-    if (exp == NULL) {
-        return;
+    void Scheme_init()
+    {
+        init();
     }
-    write(stdout, eval(exp, the_global_environment));
-}
+    
+    void Schem_eval(FILE *in)
+    {
+        object *exp;
+        exp = read(in);
+        if (exp == NULL) {
+            return;
+        }
+        write(stdout, eval(exp, the_global_environment));
+    }
+
 
 int main0(void) {
     object *exp;

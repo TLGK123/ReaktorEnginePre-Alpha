@@ -7,7 +7,12 @@
 #include "Widget.h"
 #include "im.h"
 #include "../../../src/Engine/Log/Log.h"
+
+
+extern "C"
+{
 #include "Scheme/include/scheme.h"
+}
 
 
 namespace TmingEngine
