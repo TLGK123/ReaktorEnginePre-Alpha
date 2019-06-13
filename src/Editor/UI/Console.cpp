@@ -59,13 +59,15 @@ namespace TmingEngine
         
         if (ImGui::Button("Command"))
         {
-            //Debug::Log(InputBuf);
-            //string s = string(InputBuf);
-            //Scheme_init();
+            Debug::Log(InputBuf);
+            string s = string(InputBuf);
+            Scheme_init();
+            printf("\n");
             FILE * file_demo;
             //file_demo = fopen("demo.txt", "at+");
-            file_demo = fopen("demo.txt", "r");
-            //fputs(s.c_str(), file_demo);
+            file_demo = fopen("demo.txt", "w+");
+            fputs(s.c_str(), file_demo);
+             file_demo = fopen("demo.txt", "r");
             //fgets(InputBuf, 255, (FILE*)file_demo);
             Schem_eval(file_demo);
             

@@ -946,13 +946,14 @@ int peek(FILE *in) {
     int c;
 
     c = fgetc(in);
+    char t = (char)c;
     ungetc(c, in);
     return c;
 }
 
 void eat_whitespace(FILE *in) {
     int c;
-    
+    char t =(char)c;
     while ((c = fgetc(in)) != EOF) {
         if (isspace(c)) {
             continue;
@@ -1066,6 +1067,7 @@ object *read(FILE *in) {
 
     c = fgetc(in);
     char t =(char)c;
+    //printf("%c",t);
     if (c == '#') { /* read a boolean or character */
         c = fgetc(in);
         switch (c) {
