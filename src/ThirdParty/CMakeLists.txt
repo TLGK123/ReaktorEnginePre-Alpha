@@ -1,5 +1,5 @@
 add_subdirectory(glad)
-add_subdirectory(Lua)
+#add_subdirectory(Lua)
 add_subdirectory(Box2D)
 add_subdirectory(KHR)
 add_subdirectory(GLFW)
