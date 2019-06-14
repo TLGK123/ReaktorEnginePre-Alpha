@@ -1498,7 +1498,6 @@ list (APPEND SOURCE_FILES ${H_FILES})
 
 
 add_library_beautiful(SDL ${SOURCE_FILES})
-message("项目：  " ${TARGET_NAME})
 
 # Install headers for building and using the Urho3D library (install dependency for InputEvents.h)
 install_header_files (DIRECTORY include/ DESTINATION ${DEST_INCLUDE_DIR}/SDL FILES_MATCHING PATTERN *.h USE_FILE_SYMLINK)    # Note: the trailing slash is significant
