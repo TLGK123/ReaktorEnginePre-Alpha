@@ -1,7 +1,7 @@
 file(GLOB ROOT_SOURCE *.cpp)
 file(GLOB ROOT_INLINE *.inl)
 file(GLOB ROOT_HEADER *.hpp)
-file(GLOB ROOT_TEXT ../*.txt)
+file(GLOB ROOT_TEXT *.txt)
 file(GLOB ROOT_MD ../*.md)
 file(GLOB ROOT_NAT ../util/glm.natvis)
 
@@ -21,7 +21,7 @@ file(GLOB_RECURSE SIMD_SOURCE ./simd/*.cpp)
 file(GLOB_RECURSE SIMD_INLINE ./simd/*.inl)
 file(GLOB_RECURSE SIMD_HEADER ./simd/*.h)
 
-source_group("Text Files" FILES ${ROOT_TEXT} ${ROOT_MD})
+#source_group("Text Files" FILES ${ROOT_TEXT} ${ROOT_MD})
 source_group("Core Files" FILES ${CORE_SOURCE})
 source_group("Core Files" FILES ${CORE_INLINE})
 source_group("Core Files" FILES ${CORE_HEADER})
