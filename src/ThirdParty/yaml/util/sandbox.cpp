@@ -25,7 +25,12 @@ struct Monster { //怪兽
     std::vector <Power> powers;
 };
 
-// now the extraction operators for these types //重载 >> 预算符。。。。
+template<typename T>
+void operator >> (const YAML::Node& node, T& i)
+{
+    i = node.as<T>();
+}
+
 void operator >> (const YAML::Node& node, Vec3& v) {
     node[0] >> v.x;
     node[1] >> v.y;
@@ -51,14 +56,16 @@ void operator >> (const YAML::Node& node, Monster& monster) {
 
 int main() //测试程序
 {
-    std::ifstream fin("/Users/blue/Desktop/Gitee/TmingEngine/src/Tools/example/test.yml"); // 读入yaml配置文件。
-    YAML::Parser parser(fin); //yaml 分析输入的配文件。出错抛出YAML::ParserException
-    YAML::Node doc;
-    parse(fin); (doc); //doc 就是我们的yaml配置文件
-    for(unsigned i=0;i<doc.size();i++) {//i的实际值是0，1，2 ；关联yaml 中三个大的struct：ogre，dragon，wizard
+//    std::ifstream fin("/Users/blue/Desktop/Gitee/TmingEngine/src/Tools/example/test.yml"); // 读入yaml配置文件。
+//    YAML::Parser parser(fin); //yaml 分析输入的配文件。出错抛出YAML::ParserException
+    YAML::Node doc = YAML::LoadFile("/Users/blue/Desktop/Gitee/TmingEngine/src/Tools/example/test.yml");
+    for(unsigned i=0;i<doc.size();i++)
+    {//i的实际值是0，1，2 ；关联yaml 中三个大的struct：ogre，dragon，wizard
         Monster monster;
-        doc[i] >> monster;
-        std::cout << monster.name << "\n";
+        doc[i]>> monster;
+        ;
+        std::cout <<monster.name << "\n";
+ 
     }
     return 0;
 }
