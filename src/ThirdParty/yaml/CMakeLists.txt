@@ -21,10 +21,10 @@ set(YAML_CPP_VERSION "${YAML_CPP_VERSION_MAJOR}.${YAML_CPP_VERSION_MINOR}.${YAML
 ### Project options
 ###
 ## Project stuff
-option(YAML_CPP_BUILD_TESTS "Enable testing" ON)
-option(YAML_CPP_BUILD_TOOLS "Enable parse tools" ON)
+option(YAML_CPP_BUILD_TESTS "Enable testing" OFF)
+option(YAML_CPP_BUILD_TOOLS "Enable parse tools" OFF)
 option(YAML_CPP_BUILD_CONTRIB "Enable contrib stuff in library" ON)
-option(YAML_CPP_INSTALL "Enable generation of install target" ON)
+option(YAML_CPP_INSTALL "Enable generation of install target" OFF)
 
 ## Build options
 # --> General
@@ -357,8 +357,8 @@ if(YAML_CPP_BUILD_TOOLS)
 endif()
 
 ### Formatting
-get_property(all_sources GLOBAL PROPERTY SRCS_LIST)
-add_custom_target(format
-	COMMAND clang-format --style=file -i ${all_sources}
-	COMMENT "Running clang-format"
-	VERBATIM)
+#get_property(all_sources GLOBAL PROPERTY SRCS_LIST)
+#add_custom_target(format
+#	COMMAND clang-format --style=file -i ${all_sources}
+#	COMMENT "Running clang-format"
+#	VERBATIM)
