@@ -211,7 +211,7 @@ void Screen::InitEditorWidget(Context * context)
 {
 	//context->RegisterSubsystem(new Console(context));
 
-	RegisteWidget(new ViewPoint(context));
+	RegisteWidget(new SceneView(context));
 //	RegisteWidget(new DemoMenu(context));
 	RegisteWidget(new Project(context));
 	RegisteWidget(new Hierachy(context));
@@ -646,7 +646,7 @@ void Screen::Render_EditorUI()
 //	screenContext->GetSubsystem<Console>()->Draw("Hello Debug", &showDebug);
 //	screenContext->GetSubsystem<Console>()->Draw2("Hello Debug", &showDebug);
 
-	GetSubWidget<ViewPoint>()->ImageId = CurrentFrameTextureID;
+	GetSubWidget<SceneView>()->ImageId = CurrentFrameTextureID;
     
     GetSubWidget<Game>()->ImageId = CurrentFrameTextureIDCa;
 	DrawScreen();

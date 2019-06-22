@@ -6,7 +6,7 @@
 #include "Core/Context.h"
 #include "Console.h"
 #include "Widget.h"
-#include "ViewPoint.h"
+#include "SceneView.h"
 //#include "DemoMenu.h"
 #include "Log/Log.h"
 //#include "demo.h"
