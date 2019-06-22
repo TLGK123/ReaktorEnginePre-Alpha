@@ -1,8 +1,5 @@
 //
-//  Game.cpp
-//  01_CaculateCode
 //
-//  Created by WangYiMing on 2019/5/15.
 //
 
 #include "Game.hpp"
