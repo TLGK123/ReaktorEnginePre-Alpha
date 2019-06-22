@@ -1,22 +1,22 @@
-#include "ViewPoint.h"
+#include "SceneView.h"
 
 namespace TmingEngine
 {
   
 
 
-TmingEngine::ViewPoint::~ViewPoint()
+TmingEngine::SceneView::~SceneView()
 {
 }
 
-void TmingEngine::ViewPoint::Begin()
+void TmingEngine::SceneView::Begin()
 {
     
 }
 
 extern  void showTransform(Transform * root);
     
-void TmingEngine::ViewPoint::Update()
+void TmingEngine::SceneView::Update()
 {
 	bool p_open = true;
 	ImGui::SetNextWindowSize(ImVec2(350, 560), ImGuiCond_FirstUseEver);
@@ -55,11 +55,11 @@ void TmingEngine::ViewPoint::Update()
 	ImGui::End();
 }
 
-void TmingEngine::ViewPoint::End()
+void TmingEngine::SceneView::End()
 {
 }
 
-void TmingEngine::ViewPoint::SetTexture(int Id)
+void TmingEngine::SceneView::SetTexture(int Id)
 {
 	ImageId = Id;
 }

@@ -10,15 +10,15 @@
 
 namespace TmingEngine
 {
-	class ViewPoint :public Widget
+	class SceneView :public Widget
 	{
 	public:
 
-		ViewPoint(Context *context)
+		SceneView(Context *context)
 		{
 			m_title = "ViewPoint";
 		}
-		~ViewPoint();
+		~SceneView();
 
 		void Begin();
 		void Update();
