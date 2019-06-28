@@ -16,3 +16,7 @@ bin/
 src/Tools/example/06_MonoRuntime/dll/DllTest/\.idea/
 
 src/Tools/example/06_MonoRuntime/dll/DllTest/TestDll/obj/
+
+include/mono/
+
+include/ThirdParty/

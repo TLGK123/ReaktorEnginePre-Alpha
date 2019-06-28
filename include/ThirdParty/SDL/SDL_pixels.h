@@ -1,1 +1,0 @@
-../../../src/ThirdParty/SDL/include/SDL_pixels.h
