@@ -1,1 +1,0 @@
-../../../src/ThirdParty/SDL/include/close_code.h
