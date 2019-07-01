@@ -1,1 +1,7 @@
-../../../src/ThirdParty/glm/gtc/type_precision.inl
+/// @ref gtc_swizzle
+/// @file glm/gtc/swizzle.inl
+
+namespace glm
+{
+
+}
