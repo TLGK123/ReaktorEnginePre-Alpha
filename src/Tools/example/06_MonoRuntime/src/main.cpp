@@ -15,6 +15,14 @@
 #include <unistd.h>
 #endif
 
+
+#if _MSC_VER
+#define EXPORT_API __declspec(dllexport)
+#else
+#define EXPORT_API
+#endif // _MSC_VER
+
+
 //#include <direct.h>
 
 std::string getPath(std::string assetpath);
@@ -60,37 +68,37 @@ typedef void (*CsharpFunction)(const char * data);
 
 extern "C"
 {
-    void DoSomething ();
-    void DoSomething2 (const char * messgae );
-    const char * DoSomething3(const char * messgae);
-    void DoSomething4 (CsharpFunction handle);
+	EXPORT_API void DoSomething ();
+	EXPORT_API void DoSomething2 (const char * messgae );
+	EXPORT_API const char * DoSomething3(const char * messgae);
+	EXPORT_API void DoSomething4 (CsharpFunction handle);
 }
 
-
-
-void DoSomething2 (const char * messgae )
+ void DoSomething2 (const char * messgae )
 {
-    std::cout << " some message  哈哈 define in c# ! "<< messgae <<std::endl;
+	 std::string ss = std::string(messgae);
+    std::cout << " some message  哈哈 define in c# ! "<< ss <<std::endl;
 }
 
-
-void DoSomething ()
+ void DoSomething ()
 {
     std::cout << " some function 哈哈 define in c++ ! "<<std::endl;
 }
 
-
-const char *  DoSomething3(const char * messgae )
+ const char *  DoSomething3(const char * messgae )
 {
     std::string msg(messgae);
+
     msg += " native data fom c++ ";
   
     return msg.c_str();
 }
 
-void DoSomething4 (CsharpFunction handle)
+ void DoSomething4 (CsharpFunction handle)
 {
-    handle("c++ data 123");
+	std::string cn = std::string("c++ Data 123 ");
+	auto s = cn.c_str();
+    handle(s);
    
 }
 
