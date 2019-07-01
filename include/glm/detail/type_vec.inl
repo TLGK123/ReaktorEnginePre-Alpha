@@ -1,1 +1,2 @@
-../../../src/ThirdParty/glm/detail/type_vec.inl
+/// @ref core
+/// @file glm/detail/type_vec.inl

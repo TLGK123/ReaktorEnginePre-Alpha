@@ -1,1 +1,6 @@
-../../src/ThirdParty/glm/integer.hpp
+/// @ref core
+/// @file glm/integer.hpp
+
+#pragma once
+
+#include "detail/func_integer.hpp"

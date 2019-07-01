@@ -1,1 +1,3 @@
-../../../src/ThirdParty/glm/detail/type_mat.inl
+/// @ref core
+/// @file glm/detail/type_mat.inl
+

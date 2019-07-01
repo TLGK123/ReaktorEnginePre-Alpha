@@ -1,1 +1,6 @@
-../../src/ThirdParty/glm/packing.hpp
+/// @ref core
+/// @file glm/packing.hpp
+
+#pragma once
+
+#include "detail/func_packing.hpp"
