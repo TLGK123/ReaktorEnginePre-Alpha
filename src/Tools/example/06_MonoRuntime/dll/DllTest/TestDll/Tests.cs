@@ -15,9 +15,10 @@ namespace TestDll
            DoSomething();
            DoSomething2("我也很无奈啊");
 
-           //var c= DoSomething3("这段数据来自c#");
-           //Console.WriteLine(c);
-
+            //var c= DoSomething3("这段数据来自c#");
+            //Console.WriteLine(c);
+            int ws = 90;
+            ws += 7;
             DoSomething4((f)=>Console.WriteLine("C# Print c++ data :"+ f));
            
 
