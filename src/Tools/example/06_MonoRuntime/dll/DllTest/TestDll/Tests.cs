@@ -15,9 +15,10 @@ namespace TestDll
            DoSomething();
            DoSomething2("我也很无奈啊");
 
-        //   DoSomething3("这段数据来自c#");
-           
-           DoSomething4((f)=>Console.WriteLine("C# Print c++ data :"+ f));
+           //var c= DoSomething3("这段数据来自c#");
+           //Console.WriteLine(c);
+
+            DoSomething4((f)=>Console.WriteLine("C# Print c++ data :"+ f));
            
 
            
@@ -84,12 +85,6 @@ namespace TestDll
                 Console.WriteLine( " subTread name :  " + names);
                 Thread.Sleep(100);
             }
-            
-        }
-
-
-        public int C(int n, int m)   // chong
-        {
             
         }
 
