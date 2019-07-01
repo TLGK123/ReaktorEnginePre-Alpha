@@ -39,6 +39,8 @@ int main()
     const char *csharp_dll = s.c_str();
     try
     {
+		std::string s;
+		std::cin >> s ;
         // 初始化JIT
         domain = mono_jit_init("TestDll");
         // 加载程序集
@@ -49,6 +51,8 @@ int main()
         // 获取方法
         //MonoMethodDesc *method_desc = mono_method_desc_new("csharp.BindingTest:Main()", true);
         MonoMethodDesc *method_desc = mono_method_desc_new("TestDll.Main:SayHello()", true);
+
+
         MonoMethod *method = mono_method_desc_search_in_class(method_desc, mono_class);
         mono_method_desc_free(method_desc);
         
