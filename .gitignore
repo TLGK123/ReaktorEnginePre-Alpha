@@ -22,3 +22,17 @@ include/mono/
 include/ThirdParty/
 
 src/Tools/example/06_MonoRuntime/dll/DllTest/\.vs/
+
+include/assimp/
+
+include/Box2D/
+
+include/Stb_Image/
+
+include/ImGui/
+
+include/glm/
+
+include/GLFW/
+
+include/glad/
