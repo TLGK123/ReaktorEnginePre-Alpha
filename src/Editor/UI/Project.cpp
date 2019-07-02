@@ -187,32 +187,32 @@ struct PathObjInfo
 vector<PathObjInfo> getPathFileOrFolderinfo(string path)
 {
     vector<PathObjInfo> restInfo;
-    struct dirent * dirp;
-    DIR * dir = opendir(path.c_str());
-    while ((dirp = readdir(dir)) != nullptr)
-    {
-        PathObjInfo info;
-        if (dirp->d_type == DT_REG)
-        {
-            info.name = dirp->d_name;
-            info.isFolder =false;
-            restInfo.push_back(info);
-        }
-        else if (dirp->d_type == DT_DIR)
-        {
-            string temp = string(dirp->d_name);
-            if (temp == "."|| temp =="..")
-            {
-                
-            }
-            else
-            {
-                info.name = dirp->d_name;
-                info.isFolder =true;
-                restInfo.push_back(info);
-            }
-        }
-    }
+    //struct dirent * dirp;
+    //DIR * dir = opendir(path.c_str());
+    //while ((dirp = readdir(dir)) != nullptr)
+    //{
+    //    PathObjInfo info;
+    //    if (dirp->d_type == DT_REG)
+    //    {
+    //        info.name = dirp->d_name;
+    //        info.isFolder =false;
+    //        restInfo.push_back(info);
+    //    }
+    //    else if (dirp->d_type == DT_DIR)
+    //    {
+    //        string temp = string(dirp->d_name);
+    //        if (temp == "."|| temp =="..")
+    //        {
+    //            
+    //        }
+    //        else
+    //        {
+    //            info.name = dirp->d_name;
+    //            info.isFolder =true;
+    //            restInfo.push_back(info);
+    //        }
+    //    }
+    //}
     
     return restInfo;
 }
