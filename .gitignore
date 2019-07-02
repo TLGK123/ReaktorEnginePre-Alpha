@@ -37,6 +37,4 @@ include/GLFW/
 
 include/glad/
 
-include/SDL/
-
 include/KHR/
