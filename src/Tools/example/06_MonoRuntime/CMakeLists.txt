@@ -60,7 +60,5 @@ elseif(APPLE)
 
 endif()
 
-message("12312312312")
-execute_process(COMMAND touch aaa.jpg)
 execute_process(COMMAND premake5 vs2019)
-message("-----")
+
