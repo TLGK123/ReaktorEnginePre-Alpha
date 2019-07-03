@@ -1,4 +1,4 @@
-﻿#include "Project.h"
+#include "Project.h"
 
 void AssetTree(string path);
 
@@ -187,7 +187,7 @@ struct PathObjInfo
 vector<PathObjInfo> getPathFileOrFolderinfo(string path)
 {
     vector<PathObjInfo> restInfo;
-#if APPLE
+#ifdef __APPLE__
 	struct dirent* dirp;
 	DIR* dir = opendir(path.c_str());
 	while ((dirp = readdir(dir)) != nullptr)
