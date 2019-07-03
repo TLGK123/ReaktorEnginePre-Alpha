@@ -22,7 +22,7 @@
 #include <cstdlib>
 #include <string>
 
-#include "TextEditor.h"
+#include "TextEditor/TextEditor.h"
 
 namespace TmingEngine
 {
