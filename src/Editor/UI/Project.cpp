@@ -187,32 +187,81 @@ struct PathObjInfo
 vector<PathObjInfo> getPathFileOrFolderinfo(string path)
 {
     vector<PathObjInfo> restInfo;
-    //struct dirent * dirp;
-    //DIR * dir = opendir(path.c_str());
-    //while ((dirp = readdir(dir)) != nullptr)
-    //{
-    //    PathObjInfo info;
-    //    if (dirp->d_type == DT_REG)
-    //    {
-    //        info.name = dirp->d_name;
-    //        info.isFolder =false;
-    //        restInfo.push_back(info);
-    //    }
-    //    else if (dirp->d_type == DT_DIR)
-    //    {
-    //        string temp = string(dirp->d_name);
-    //        if (temp == "."|| temp =="..")
-    //        {
-    //            
-    //        }
-    //        else
-    //        {
-    //            info.name = dirp->d_name;
-    //            info.isFolder =true;
-    //            restInfo.push_back(info);
-    //        }
-    //    }
-    //}
+#if APPLE
+	struct dirent* dirp;
+	DIR* dir = opendir(path.c_str());
+	while ((dirp = readdir(dir)) != nullptr)
+	{
+		PathObjInfo info;
+		if (dirp->d_type == DT_REG)
+		{
+			info.name = dirp->d_name;
+			info.isFolder = false;
+			restInfo.push_back(info);
+		}
+		else if (dirp->d_type == DT_DIR)
+		{
+			string temp = string(dirp->d_name);
+			if (temp == "." || temp == "..")
+			{
+
+			}
+			else
+			{
+				info.name = dirp->d_name;
+				info.isFolder = true;
+				restInfo.push_back(info);
+			}
+		}
+	}
+#else // APPLE
+	
+	HANDLE hFind;
+	WIN32_FIND_DATA findData;
+	LARGE_INTEGER size;
+	char dirNew[100];
+
+	// 向目录加通配符，用于搜索第一个文件 
+	strcpy(dirNew, path.c_str());
+	strcat(dirNew, "\\*.*");
+
+	hFind = FindFirstFile(dirNew, &findData);
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		cout << "Failed to find first file!\n";
+		return restInfo;
+	}
+	do
+	{
+		// 忽略"."和".."两个结果 
+		if (strcmp(findData.cFileName, ".") == 0 || strcmp(findData.cFileName, "..") == 0)
+			continue;
+
+		PathObjInfo info;
+		if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)    // 是否是目录 
+		{
+			info.name = findData.cFileName;
+			info.isFolder = true;
+			restInfo.push_back(info);
+
+			cout << findData.cFileName << "\t<dir>\n";
+		}
+		else
+		{
+			info.name = findData.cFileName;
+			info.isFolder = false;
+			restInfo.push_back(info);
+
+			size.LowPart = findData.nFileSizeLow;
+			size.HighPart = findData.nFileSizeHigh;
+
+			cout << findData.cFileName << "\t" << size.QuadPart << " bytes\n";
+		}
+	} while (FindNextFile(hFind, &findData));
+	cout << "Done!\n";
+	
+
+#endif
     
     return restInfo;
 }
