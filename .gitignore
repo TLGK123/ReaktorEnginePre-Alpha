@@ -50,3 +50,5 @@ src/Tools/example/06_MonoRuntime/dll/obj/
 src/Tools/example/06_MonoRuntime/dll/\.idea/
 
 src/Tools/example/06_MonoRuntime/dll/\.vs/
+
+include/Scheme/include/
