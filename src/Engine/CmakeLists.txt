@@ -97,5 +97,7 @@ target_link_libraries(TmingEngine ImGui)
 target_link_libraries(TmingEngine glad)
 target_link_libraries(TmingEngine scheme)
 target_link_libraries(TmingEngine ${ASSIMP})
+target_link_libraries(TmingEngine TextEditor)
+
 
 

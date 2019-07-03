@@ -24,7 +24,6 @@ include_directories("UI")             #添加头文件目录
 add_executable_beautiful(Editor ${headers} ${sources})
 
 set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
-
 target_link_libraries(Editor TmingEngine)
 
 if(APPLE)                        #glfw3 需要一些mac 的原生库
