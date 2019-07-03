@@ -40,3 +40,7 @@ include/glad/
 include/KHR/
 
 include/SDL/
+
+src/Tools/example/06_MonoRuntime/dll/CSharpDLL\.csproj
+
+src/Tools/example/06_MonoRuntime/dll/CSharpDLL\.sln
