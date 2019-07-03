@@ -1,0 +1,6 @@
+D:\Gitee\TmingEngine\src\Tools\example\06_MonoRuntime\dll\obj\Debug\HelloWorld.csprojAssemblyReference.cache
+D:\Gitee\TmingEngine\src\Tools\example\06_MonoRuntime\dll\obj\Debug\HelloWorld.csproj.CoreCompileInputs.cache
+D:\Gitee\TmingEngine\src\Tools\example\06_MonoRuntime\dll\bin\Debug\HelloWorld.dll
+D:\Gitee\TmingEngine\src\Tools\example\06_MonoRuntime\dll\bin\Debug\HelloWorld.pdb
+D:\Gitee\TmingEngine\src\Tools\example\06_MonoRuntime\dll\obj\Debug\HelloWorld.dll
+D:\Gitee\TmingEngine\src\Tools\example\06_MonoRuntime\dll\obj\Debug\HelloWorld.pdb
