@@ -75,13 +75,18 @@ include_directories("../ThirdParty/Vulkan_1.1.106.0/shaderc")
 include_directories("../ThirdParty/Vulkan_1.1.106.0/vulkan")
 include_directories("../ThirdParty/SPIRV-Cross-2019-03-29")
 
+set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
+link_directories(${libpath})
+
 add_library_beautiful(TmingEngine  ${headers} ${sources})
 
-set(libpath ${PROJECT_SOURCE_DIR}/../Library/static)
+
 if(WIN32)
 find_library (GLFW glfw3.lib ${libpath})
+find_library (ASSIMP assimp-vc140-mt.lib ${libpath})
 elseif(APPLE)
-find_library (GLFW libglfw3.a ${libpath})
+find_library (GLFW libglfw3.a ${libpath}) 
+find_library (ASSIMP libassimp.4.1.0.dylib ${libpath})
 endif()
 
 #target_link_libraries(TmingEngine lua)
@@ -91,4 +96,6 @@ target_link_libraries(TmingEngine stb)
 target_link_libraries(TmingEngine ImGui)
 target_link_libraries(TmingEngine glad)
 target_link_libraries(TmingEngine scheme)
+target_link_libraries(TmingEngine ${ASSIMP})
+
 
