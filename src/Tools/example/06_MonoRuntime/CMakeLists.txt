@@ -53,3 +53,14 @@ if(WIN32)
 #$<TARGET_FILE_DIR:${Project_name}>)
 
 endif()
+
+if(WIN32)
+#set( ENV{PATH} ../../../../Data/Tool )
+elseif(APPLE)
+
+endif()
+
+message("12312312312")
+execute_process(COMMAND touch aaa.jpg)
+execute_process(COMMAND premake5 vs2019)
+message("-----")
