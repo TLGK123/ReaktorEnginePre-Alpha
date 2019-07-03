@@ -1,4 +1,4 @@
-﻿#include "Screen.h"
+#include "Screen.h"
 #include <iostream>
 //#include "Test.h"
 using namespace std;
@@ -691,13 +691,19 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	lastY = ypos;
 
 	ImGuiIO& io = ImGui::GetIO();
+
+    
 	if (&io != NULL && io.MouseDownDuration[1] >= 0)
 	{
+       // bool fu =  ImGui::IsWindowFocused();
+        ;
 		EditorCamera.ProcessMouseMovement(xoffset, yoffset);
 	}
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	EditorCamera.ProcessMouseScroll(yoffset);
+    ImGuiContext* c = ImGui::GetCurrentContext();
+    
+	//EditorCamera.ProcessMouseScroll(yoffset);
 }
