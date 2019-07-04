@@ -11,7 +11,7 @@ string fileToEdit = "ImGuiColorTextEdit/TextEditor.cpp";
 
 void TmingEngine::Project::Begin()
 {    
-    auto lang = TextEditor::LanguageDefinition::CPlusPlus();
+    auto lang = TextEditor::LanguageDefinition::GLSL();
     static const char* ppnames[] = { "NULL", "PM_REMOVE",
         "ZeroMemory", "DXGI_SWAP_EFFECT_DISCARD", "D3D_FEATURE_LEVEL", "D3D_DRIVER_TYPE_HARDWARE", "WINAPI","D3D11_SDK_VERSION", "assert" };
     
