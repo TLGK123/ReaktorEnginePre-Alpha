@@ -8,6 +8,7 @@ TmingEngine::Project::~Project()
 
 TextEditor editor;
 string fileToEdit = "ImGuiColorTextEdit/TextEditor.cpp";
+void SaveFile(string path, string content);
 
 void TmingEngine::Project::Begin()
 {    
@@ -103,7 +104,7 @@ void TmingEngine::Project::Update()
     ImGui::SameLine();
     ImGui::SameLine();
     
-    ImGui::BeginChild("item view", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()));
+    ImGui::BeginChild("right editor", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()),false,  ImGuiWindowFlags_MenuBar);
     
     auto cpos = editor.GetCursorPosition();
   //  ImGui::Begin("Text Editor Demo", nullptr, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_MenuBar);
@@ -115,6 +116,7 @@ void TmingEngine::Project::Update()
             if (ImGui::MenuItem("Save"))
             {
                 auto textToSave = editor.GetText();
+				SaveFile(fileToEdit,textToSave);
                 /// save text....
             }
             if (ImGui::MenuItem("Quit", "Alt-F4"))
@@ -266,7 +268,13 @@ vector<PathObjInfo> getPathFileOrFolderinfo(string path)
     return restInfo;
 }
 
-
+void SaveFile(string path ,string content)
+{
+	ofstream fout(path);
+	if (!fout)return;
+	fout << content << endl;
+	fout.close();
+}
 
 string GetFileContent(string f)
 {
@@ -280,19 +288,6 @@ string GetFileContent(string f)
     fin.close();
     return content;
 }
-//vector<string> GetFileContent(string f)
-//{
-//    vector<string> content;
-//    ifstream fin(f);
-//    string  s;
-//    while (getline(fin, s))
-//    {
-//        content.push_back(s);
-//    }
-//    fin.close();
-//    return content;
-//}
-
 
 
 
