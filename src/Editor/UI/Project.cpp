@@ -332,10 +332,11 @@ void AssetTree(string path)
                     cout<<"选中文件: "<<path<<"/"+t.name<<endl;
                     fileToEdit = fpath;
                     string contentText = GetFileContent(fileToEdit);
-                    ImGui::SetClipboardText(contentText.c_str());
+                    //ImGui::SetClipboardText(contentText.c_str());
                     editor.SetText("");
-                    editor.Paste();
-                    ImGui::SetClipboardText("");
+                    //editor.Paste();
+                    //ImGui::SetClipboardText("");
+					editor.SetText(contentText);
 
                 }
             }
