@@ -1,4 +1,4 @@
-﻿#include "Screen.h"
+#include "Screen.h"
 #include <iostream>
 //#include "Test.h"
 using namespace std;
@@ -79,13 +79,13 @@ glm::vec3 cubePositions[] = {
 };
 //---------------------Edn Data---------
 
-void Screen::Initialize(Context* context)
+bool Screen::Initialize()
 {
-	screenContext = context;
 	cout << "Hello World" << endl;
 	InitOpenGL();
 	InitImgui();
 	InitEditorWidget(screenContext);
+    return true;
 }
 
 void Screen::InitOpenGL()
