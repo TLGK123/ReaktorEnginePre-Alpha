@@ -13,9 +13,12 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include "learnopengl/shader_m.h"
-//#include "learnopengl/camera.h"
-#include "learnopengl/model.h"
+#include "../src/Engine/Rendering/Shader.hpp"
+#include "../src/Engine/Rendering/Camera.hpp"
+#include "../src/Engine/Rendering/Model.hpp"
+#include "../src/Engine/Rendering/Vertex.hpp"
+#include "../src/Engine/Rendering/Mesh.hpp"
+#include "../src/Engine/Rendering/Texture.hpp"
 #include <iostream>
 
 #include "ImGui/imgui.h"
