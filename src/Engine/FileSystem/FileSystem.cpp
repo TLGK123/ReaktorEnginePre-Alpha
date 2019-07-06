@@ -765,8 +765,8 @@ namespace TmingEngine
 		path = temp; 
 	}
 	
-	// std::cout<<"当前路径" <<path<<std::endl;
-	// std::cout <<"AssetPath: "+ path << std::endl;
+    string s = "AssetPath: " + path+"\n";
+    Debug::Log(s.c_str());
 	return path;
 	}
 	

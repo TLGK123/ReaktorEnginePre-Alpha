@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include "../Core/EngineDefs.h"
-
+#include "../Log/Log.h"
 #include<iostream>
 
 #if !__APPLE__

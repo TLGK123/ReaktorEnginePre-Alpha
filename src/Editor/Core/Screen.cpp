@@ -81,10 +81,10 @@ glm::vec3 cubePositions[] = {
 
 bool Screen::Initialize()
 {
-	cout << "Hello World scrreen" << endl;
+    Debug::Log("Hello World scrreen \n");
 	InitOpenGL();
 	InitImgui();
-	InitEditorWidget(screenContext);
+	InitEditorWidget(m_context);
     return true;
 }
 
@@ -236,10 +236,9 @@ void Screen::Update()
 	lastFrame = currentFrame;
 	processInput(window);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);   //帧缓冲的 开始
-	glEnable(GL_DEPTH_TEST);                       //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
-        //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer); //帧缓冲的 开始
+	glEnable(GL_DEPTH_TEST);                        //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);           //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	Render_SkyBox_ForEditor();
@@ -247,16 +246,16 @@ void Screen::Update()
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
 
-	glBindFramebuffer(GL_FRAMEBUFFER, framebufferCa);   //帧缓冲的 开始
-	glEnable(GL_DEPTH_TEST);                          //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
-	//由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	Render_SkyBox_ForGame();
-	Render_SceneObjectForGameCamera();
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
+//	glBindFramebuffer(GL_FRAMEBUFFER, framebufferCa);   //帧缓冲的 开始
+//	glEnable(GL_DEPTH_TEST);                          //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
+//	//由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
+//	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//
+//	Render_SkyBox_ForGame();
+//	Render_SceneObjectForGameCamera();
+//
+//	glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
 
 	glDisable(GL_DEPTH_TEST);
 	glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
@@ -434,9 +433,9 @@ void Screen::Render_SceneObjectForGameCamera()
 
 void Screen::Render_SkyBox_ForEditor()
 {
-	//    Debug::Log(" 天空盒 update editor");
+    //Debug::Log(" 天空盒 update editor");
 
-		// draw skybox as last
+    // draw skybox as last
 	glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
 	skyboxShader.use();
 	glm::mat4 projection;
@@ -475,7 +474,7 @@ void Screen::Render_SkyBox_ForGame()
 
 void Screen::Render_SkyBox_init()
 {
-	Debug::Log("初始化 天空盒\n");
+	Debug::Log("初始化 天空盒 获取立方贴图 \n");
 
 	float skyboxVertices[] = {
 		// positions
