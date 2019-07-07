@@ -10,24 +10,26 @@ using namespace TmingEngine;
 
 int main()
 {
-	Screen *screen;
-	Engine *engine;
 
-    screen = new Screen(&Global<Context>());
-    
+	Engine *engine;
+    Screen *screen;
+
     engine = new Engine(&Global<Context>());
+    screen = new Screen(&Global<Context>());
     if (!engine->Initialize())
     {
         return -1;
     };
-    
+    if (!screen->Initialize())
+    {
+        return -1;
+    };
     Debug::Log("hello world");
     
 
-	while (!screen->ScreenShouldClose())
-	{
-		screen->Update();
-		engine->Tick();
+ while (!screen->ScreenShouldClose())
+	{		engine->Tick();
+        screen->Update();
 	}
 
 	screen->ShutDown();
