@@ -79,13 +79,13 @@ glm::vec3 cubePositions[] = {
 };
 //---------------------Edn Data---------
 
-bool Screen::Initialize()
+void Screen::Initialize(Context* context)
 {
-    Debug::Log("Hello World scrreen \n");
+	cout << "Hello World" << endl;
 	InitOpenGL();
 	InitImgui();
 	InitEditorWidget(m_context);
-    return true;
+
 }
 
 void Screen::InitOpenGL()
