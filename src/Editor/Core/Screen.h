@@ -42,7 +42,7 @@ public:
     
     unsigned int skyboxVAO, skyboxVBO;
     unsigned int cubemapTexture;
-    
+    bool Initialize() override;
 	vector<Widget *> m_widgets;
 
 //	vector<DemoTest *> m_testDemos;
@@ -59,7 +59,6 @@ public:
     unsigned int framebufferCa;
     unsigned int textureColorbufferCa;
 
-    void Initialize(Context * context);
 	void Update();
 	void ShutDown();
 
@@ -77,7 +76,6 @@ public:
 	Screen(Context* context) : Subsystem(context)
 	{
 		context->RegisterSubsystem(this);
-        Initialize(context);
         for (auto& widget : m_widgets)
         {
             if (widget->GetIsWindow())
