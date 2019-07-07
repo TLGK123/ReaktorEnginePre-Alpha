@@ -13,19 +13,17 @@ int main()
 	Screen *screen;
 	Engine *engine;
 
-
+    screen = new Screen(&Global<Context>());
+    
     engine = new Engine(&Global<Context>());
     if (!engine->Initialize())
     {
         return -1;
     };
     
-    screen = new Screen(&Global<Context>());
-    if (!screen->Initialize())
-    {
-        return -1;
-    };
- 
+    Debug::Log("hello world");
+    
+
 	while (!screen->ScreenShouldClose())
 	{
 		screen->Update();

@@ -59,11 +59,12 @@ public:
     unsigned int framebufferCa;
     unsigned int textureColorbufferCa;
 
+    void Initialize(Context * context);
 	void Update();
 	void ShutDown();
 
 	bool ScreenShouldClose();
-    bool Initialize() override;
+
 	void InitOpenGL();
 
 	void InitEditorWidget(Context * context);
@@ -76,6 +77,7 @@ public:
 	Screen(Context* context) : Subsystem(context)
 	{
 		context->RegisterSubsystem(this);
+        Initialize(context);
         for (auto& widget : m_widgets)
         {
             if (widget->GetIsWindow())
