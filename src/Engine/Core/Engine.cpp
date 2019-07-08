@@ -69,15 +69,15 @@ namespace TmingEngine
 	{
 		bool success = true;
 
-		// Timer
-		m_timer = m_context->GetSubsystem<Timer>();
-		if (!m_timer->Initialize())
-		{
-			Debug::Log("Failed to initialize Timer subsystem");
-			success = false;
-		}
+//		// Timer
+//		m_timer = m_context->GetSubsystem<Timer>();
+//		if (!m_timer->Initialize())
+//		{
+//			Debug::Log("Failed to initialize Timer subsystem");
+//			success = false;
+//		}
 
-        currentScene = new  Scene();
+   //     currentScene = new  Scene();
 
         
 		//// Input
@@ -181,7 +181,7 @@ namespace TmingEngine
 
 	void Engine::Update()
 	{
-        currentScene->Update();
+     //   currentScene->Update();
 	}
 
 	void Engine::Shutdown()

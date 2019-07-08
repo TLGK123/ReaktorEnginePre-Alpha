@@ -242,7 +242,7 @@ void Screen::Update()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	Render_SkyBox_ForEditor();
-	Render_SceneObjectForEditorCamera();
+	//Render_SceneObjectForEditorCamera();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
 
