@@ -17,11 +17,11 @@ namespace TmingEngine
 
 	void Timer::Tick()
 	{
-		auto currentTime = high_resolution_clock::now();
-		duration<double, milli> ms = currentTime - m_previousTime;
-		m_previousTime = currentTime;
-
-		m_deltaTimeMs = (float)ms.count();
-		m_deltaTimeSec = (float)(ms.count() / 1000);
+//		auto currentTime = high_resolution_clock::now();
+//		duration<double, milli> ms = currentTime - m_previousTime;
+//		m_previousTime = currentTime;
+//
+//		m_deltaTimeMs = (float)ms.count();
+//		m_deltaTimeSec = (float)(ms.count() / 1000);
 	}
 }

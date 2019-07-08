@@ -15,11 +15,13 @@ int main()
     Screen *screen;
 
     engine = new Engine(&Global<Context>());
-    screen = new Screen(&Global<Context>());
+    
     if (!engine->Initialize())
     {
         return -1;
     };
+      screen = new Screen(&Global<Context>());
+ 
     if (!screen->Initialize())
     {
         return -1;
