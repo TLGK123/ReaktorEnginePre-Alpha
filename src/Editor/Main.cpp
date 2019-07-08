@@ -30,7 +30,8 @@ int main()
     
 
  while (!screen->ScreenShouldClose())
-	{		engine->Tick();
+	{
+        engine->Tick();
         screen->Update();
 	}
 
