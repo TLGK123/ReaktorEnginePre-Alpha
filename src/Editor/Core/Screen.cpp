@@ -532,7 +532,7 @@ void Screen::Render_SkyBox_init()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
-	//纹理贴图的x顺序是。右 左 上 下 后 前
+	//纹理贴图的x顺序是。 左  右 上 下 前 后
 	vector<std::string> faces
 	{
 		FileSystem::getPath("resources/textures/skybox/left.jpg"),
