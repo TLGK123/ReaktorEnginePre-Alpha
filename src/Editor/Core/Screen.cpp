@@ -77,6 +77,7 @@ glm::vec3 cubePositions[] = {
 	glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 //---------------------Edn Data---------
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 bool Screen::Initialize()
 {
@@ -124,11 +125,13 @@ void Screen::InitOpenGL()
 	ourShader.Init("6.1.cube.vs", "6.1.cube.fs");
 	ourShaderCa.Init("7.4.camera.vs", "7.4.camera.fs");
 
+    lightingShader.Init("1.colors.vs", "1.colors.fs");
+    lampShader.Init("1.lamp.vs", "1.lamp.fs");
+    
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	glBindVertexArray(VAO);
-
+    glBindVertexArray(VAO);
+    
+	glGenBuffers(1, &VBO);                  //就是把内存中顶点数据，传入到显存的操作对象
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
    
@@ -138,7 +141,14 @@ void Screen::InitOpenGL()
     glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 
-
+    //创建一个光
+  
+    glGenVertexArrays(1,&lightVAO);
+    glBindVertexArray(lightVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    
 	// texture 1
 	// ---------
 	glGenTextures(1, &texture1);
@@ -240,9 +250,9 @@ void Screen::Update()
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);           //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Render_SkyBox_ForEditor();
 	Render_SceneObjectForEditorCamera();
-
+    Render_SkyBox_ForEditor();
+    glDisable(GL_DEPTH_TEST);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
 
 //	glBindFramebuffer(GL_FRAMEBUFFER, framebufferCa);   //帧缓冲的 开始
@@ -256,7 +266,7 @@ void Screen::Update()
 //
 //	glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
 
-	glDisable(GL_DEPTH_TEST);
+	
 	glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -399,6 +409,35 @@ void Screen::Render_SceneObjectForEditorCamera()
 	//    for (int i = 0; i < count; i++) {
 	//        m_testDemos[i]->Render_SceneObject();
 	//    }
+    
+    
+    lightingShader.use();
+    lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+    lightingShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
+    
+    
+    lightingShader.setMat4("projection", projection);
+    lightingShader.setMat4("view", view);
+    
+    // world transformation
+    glm::mat4 model = glm::mat4(1.0f);
+    lightingShader.setMat4("model", model);
+    
+    
+    
+    lampShader.use();
+    lampShader.setMat4("projection", projection);
+    lampShader.setMat4("view", view);
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, lightPos);
+    model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
+    lampShader.setMat4("model", model);
+    
+    glBindVertexArray(lightVAO);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+    
 }
 
 void Screen::Render_SceneObjectForGameCamera()

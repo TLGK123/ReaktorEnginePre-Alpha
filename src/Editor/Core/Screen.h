@@ -38,9 +38,12 @@ public:
 	GLFWwindow * window;
 	unsigned int texture1, texture2;
 	Shader ourShader ,ourShaderCa, skyboxShader;
+    Shader lightingShader;
+    Shader lampShader;
 	unsigned int VBO, VAO ;
     
     unsigned int skyboxVAO, skyboxVBO;
+    unsigned int lightVAO;
     unsigned int cubemapTexture;
     bool Initialize() override;
 	vector<Widget *> m_widgets;
