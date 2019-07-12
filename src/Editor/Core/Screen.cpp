@@ -114,7 +114,7 @@ void Screen::InitVertextData()
     glEnableVertexAttribArray(1); //属性1 颜色，3个float数。总数据大小， 数据起始偏移位置，偏移掉前面的顶点
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     
-    //创建一个光
+    //创建一个光源需要的顶点属性
     
     glGenVertexArrays(1,&lightVAO);
     glBindVertexArray(lightVAO);
@@ -382,6 +382,22 @@ void Screen::Render_SceneObjectForEditorCamera()
         ourShader.setVec3("cameraPos", EditorCamera.Position);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
+    
+    glBindVertexArray(VAO);
+    {
+        lightingShader.use();
+        lightingShader.setVec3("objectColor", 0.7f, 0.8f, 0.36f);
+        lightingShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
+        
+        lightingShader.setMat4("projection", projection);
+        lightingShader.setMat4("view", view);
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, cubePositions[2]);
+        lightingShader.setMat4("model", model);
+        
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+    
+    }
 
     
     // world transformation
@@ -391,7 +407,7 @@ void Screen::Render_SceneObjectForEditorCamera()
     lampShader.setMat4("view", view);
     model = glm::mat4(1.0f);
     model = glm::translate(model, lightPos);
-    model = glm::scale(model, glm::vec3(0.1f)); // a smaller cube
+    model = glm::scale(model, glm::vec3(0.5f)); // a smaller cube
     lampShader.setMat4("model", model);
     
     glBindVertexArray(lightVAO);
