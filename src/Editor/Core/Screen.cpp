@@ -189,10 +189,6 @@ void Screen::InitShader()
     lampShader.Init("1.lamp.vs", "1.lamp.fs");
     ourShader.Init("6.1.cube.vs", "6.1.cube.fs");
     
-    ourShader.use();
-    lightingShader.use();
-    lampShader.use();
-
 }
 
 void Screen::InitOpenGL()
@@ -276,11 +272,11 @@ void Screen::RenderFrameBuffer()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer); //帧缓冲的 开始
     glEnable(GL_DEPTH_TEST);                        //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
-    glClearColor(0.4f, 0.3f, 0.3f, 1.0f);           //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
+    glClearColor(0, 0, 0, 0);                       //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     Render_SceneObjectForEditorCamera();
-    Render_SkyBox_ForEditor();
+    //Render_SkyBox_ForEditor();
     
     glDisable(GL_DEPTH_TEST);
     glBindFramebuffer(GL_FRAMEBUFFER,0);
@@ -388,6 +384,7 @@ void Screen::Render_SceneObjectForEditorCamera()
         lightingShader.use();
         lightingShader.setVec3("objectColor", 0.7f, 0.8f, 0.36f);
         lightingShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
+        lightingShader.setVec3("lightPos", lightPos);
         
         lightingShader.setMat4("projection", projection);
         lightingShader.setMat4("view", view);

@@ -43,8 +43,8 @@ void TmingEngine::SceneView::Update()
     
     ImGui::BeginChild("scene view", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()));
 	ImTextureID my_tex_id = (void *)ImageId;
-	float my_tex_w = 683;
-	float my_tex_h = 384;
+	float my_tex_w = 1366;
+	float my_tex_h = 768;
 
 	ImGui::Text(" Scene  %.0fx%.0f", my_tex_w, my_tex_h);
 	//----------------------------------------------------------------- -1 -1  Image reversal
