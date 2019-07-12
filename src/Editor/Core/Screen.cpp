@@ -22,9 +22,8 @@ float lastFrame = 0.0f;
 
 //---------------------Data-------------
 // 位置变量的属性位置值为 0
-// 颜色变量的属性位置值为 1
+// 法线变量的属性位置值为 1
 float vertices[] = {
-    // 位置              // 颜色
     -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
     0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -111,7 +110,7 @@ void Screen::InitVertextData()
     glEnableVertexAttribArray(0); //属性0 顶点，3个float数。总数据大小， 数据起始偏移位置，
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     
-    glEnableVertexAttribArray(1); //属性1 颜色，3个float数。总数据大小， 数据起始偏移位置，偏移掉前面的顶点
+    glEnableVertexAttribArray(1); //属性1 法线，3个float数。总数据大小， 数据起始偏移位置，偏移掉前面的顶点
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     
     //创建一个光源需要的顶点属性
@@ -188,6 +187,8 @@ void Screen::InitShader()
     lightingShader.Init("2.base.light.vs", "2.base.light.fs");
     lampShader.Init("1.lamp.vs", "1.lamp.fs");
     ourShader.Init("6.1.cube.vs", "6.1.cube.fs");
+    
+    lightingShader.setVec3("lightPos", lightPos);
 }
 
 void Screen::InitOpenGL()
