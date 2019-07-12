@@ -76,7 +76,7 @@ public:
 
 	int GetCurrentFrameTexture();
 
-	void CreateFrameBufer();
+	void InitFrameBufer();
     void CreateFrameBuferCa();
     void RenderFrameBuffer();
     
@@ -134,7 +134,7 @@ private:
 	void InitImgui();
 	void Render_SceneObjectForEditorCamera();
     void Render_SceneObjectForGameCamera();
-	void Render_SkyBox_init();
+	void InitSkyBox();
     void Render_SkyBox_ForGame();
     void Render_SkyBox_ForEditor();
 	void Render_EditorUI();
