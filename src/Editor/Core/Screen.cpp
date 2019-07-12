@@ -366,21 +366,15 @@ void Screen::Render_SceneObjectForEditorCamera()
 	ourShader.setMat4("view", view);
 
 	// render container
-//    glBindVertexArray(VAO);
-//    //for (unsigned int i = 0; i < 10; i++)
-//    {
-//        // calculate the model matrix for each object and pass it to shader before drawing
-//         glm::mat4 model = glm::mat4(1.0f);
-//        //model = glm::translate(model, cubePositions[0]);
-//        //float angle = 20.0f * i;
-//        //model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-//        ourShader.setMat4("model", model);
-//        ourShader.setVec3("cameraPos", EditorCamera.Position);
-//        glDrawArrays(GL_TRIANGLES, 0, 36);
-//    }
-    
     glBindVertexArray(VAO);
+    for (unsigned int i = 0; i < 10; i++)
     {
+        // calculate the model matrix for each object and pass it to shader before drawing
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, cubePositions[i]);
+        float angle = 20.0f * i;
+        model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+
         lightingShader.use();
         lightingShader.setVec3("objectColor", 0.7f, 0.8f, 0.36f);
         lightingShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
@@ -390,13 +384,29 @@ void Screen::Render_SceneObjectForEditorCamera()
         lightingShader.setMat4("view", view);
         
         lightingShader.setVec3("viewPos", EditorCamera.Position);
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, cubePositions[0]);
         lightingShader.setMat4("model", model);
         
         glDrawArrays(GL_TRIANGLES, 0, 36);
-    
     }
+    
+//    glBindVertexArray(VAO);
+//    {
+//        lightingShader.use();
+//        lightingShader.setVec3("objectColor", 0.7f, 0.8f, 0.36f);
+//        lightingShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
+//        lightingShader.setVec3("lightPos", lightPos);
+//
+//        lightingShader.setMat4("projection", projection);
+//        lightingShader.setMat4("view", view);
+//
+//        lightingShader.setVec3("viewPos", EditorCamera.Position);
+//        glm::mat4 model = glm::mat4(1.0f);
+//        model = glm::translate(model, cubePositions[0]);
+//        lightingShader.setMat4("model", model);
+//
+//        glDrawArrays(GL_TRIANGLES, 0, 36);
+//
+//    }
 
     
     // world transformation
@@ -406,7 +416,7 @@ void Screen::Render_SceneObjectForEditorCamera()
     lampShader.setMat4("view", view);
     model = glm::mat4(1.0f);
     model = glm::translate(model, lightPos);
-    model = glm::scale(model, glm::vec3(0.5f)); // a smaller cube
+    model = glm::scale(model, glm::vec3(0.1f)); // a smaller cube
     lampShader.setMat4("model", model);
     
     glBindVertexArray(lightVAO);
