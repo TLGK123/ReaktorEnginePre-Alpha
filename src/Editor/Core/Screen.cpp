@@ -388,6 +388,8 @@ void Screen::Render_SceneObjectForEditorCamera()
         
         lightingShader.setMat4("projection", projection);
         lightingShader.setMat4("view", view);
+        
+        lightingShader.setVec3("viewPos", EditorCamera.Position);
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, cubePositions[0]);
         lightingShader.setMat4("model", model);
