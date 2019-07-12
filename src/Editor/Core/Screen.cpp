@@ -10,7 +10,7 @@ const unsigned int SCR_WIDTH = 1366;
 const unsigned int SCR_HEIGHT = 768;
 
 Camera EditorCamera(glm::vec3(0.0f, 0.0f, 5.0f));     //  Editor  Scene  camera
-
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
@@ -80,7 +80,6 @@ glm::vec3 cubePositions[] = {
 	glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 //---------------------Edn Data---------
 
@@ -103,6 +102,12 @@ void Screen::InitVertextData()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
+    //OpenGL解析内存中的顶点数据格式，以及它该如何将顶点数据链接到顶点着色器的属性上
+    //注意顶点shader中的layout(location = 0) 表示使用的是 0 号属性值，下面就开始设置
+    //如果我们设置为GL_TRUE，所有数据都会被映射到0（对于有符号型signed数据是-1）到1之间。我们把它设置为GL_FALSE。
+    
+    //在调用glVertexAttribPointer时，GL_ARRAY_BUFFER 绑定了哪个VBO，这个VBO的格式就被设置了
+    
     glEnableVertexAttribArray(0); //属性0 顶点，3个float数。总数据大小， 数据起始偏移位置，
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     
@@ -114,8 +119,15 @@ void Screen::InitVertextData()
     glGenVertexArrays(1,&lightVAO);
     glBindVertexArray(lightVAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+
+    //？？？思考 正常渲染一个物体步骤 是不是 1 上传它的顶点数据 2 设置它的顶点格式
+    //3 把数据传给顶点shader 4 使用顶点shader去处理顶点 5 opengl画三角形
+    //？？？ 按理来说是这样的，如果顶点的属性很多，有颜色，法显，切线，等等属性，每次都要为物体设置，顶点属性格式，
+    //很麻烦啊。所以 VAO 的作用来了，它就是一个记录顶点配置信息的指针 ， VAO 先生成，再进行VBO 的初始化，
+    //这时候，VBO的属性都记录在VAO了，下次shader要使用数据的时候，直接指定VAO就好了 想要的数据都在
+    
 }
 
 void Screen::InitTextureData()
