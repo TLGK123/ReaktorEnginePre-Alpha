@@ -185,10 +185,9 @@ void Screen::InitTextureData()
 
 void Screen::InitShader()
 {
-    lightingShader.Init("1.colors.vs", "1.colors.fs");
+    lightingShader.Init("2.base.light.vs", "2.base.light.fs");
     lampShader.Init("1.lamp.vs", "1.lamp.fs");
     ourShader.Init("6.1.cube.vs", "6.1.cube.fs");
-    
 }
 
 void Screen::InitOpenGL()
@@ -366,18 +365,18 @@ void Screen::Render_SceneObjectForEditorCamera()
 	ourShader.setMat4("view", view);
 
 	// render container
-	glBindVertexArray(VAO);
-	//for (unsigned int i = 0; i < 10; i++)
-	{
-		// calculate the model matrix for each object and pass it to shader before drawing
-		 glm::mat4 model = glm::mat4(1.0f);
-		//model = glm::translate(model, cubePositions[0]);
-		//float angle = 20.0f * i;
-		//model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-		ourShader.setMat4("model", model);
-        ourShader.setVec3("cameraPos", EditorCamera.Position);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-	}
+//    glBindVertexArray(VAO);
+//    //for (unsigned int i = 0; i < 10; i++)
+//    {
+//        // calculate the model matrix for each object and pass it to shader before drawing
+//         glm::mat4 model = glm::mat4(1.0f);
+//        //model = glm::translate(model, cubePositions[0]);
+//        //float angle = 20.0f * i;
+//        //model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+//        ourShader.setMat4("model", model);
+//        ourShader.setVec3("cameraPos", EditorCamera.Position);
+//        glDrawArrays(GL_TRIANGLES, 0, 36);
+//    }
     
     glBindVertexArray(VAO);
     {
@@ -389,7 +388,7 @@ void Screen::Render_SceneObjectForEditorCamera()
         lightingShader.setMat4("projection", projection);
         lightingShader.setMat4("view", view);
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, cubePositions[2]);
+        model = glm::translate(model, cubePositions[0]);
         lightingShader.setMat4("model", model);
         
         glDrawArrays(GL_TRIANGLES, 0, 36);
