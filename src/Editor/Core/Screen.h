@@ -37,7 +37,7 @@ class Screen :public Subsystem
 public:
 	GLFWwindow * window;
 	unsigned int texture1, texture2;
-	Shader ourShader ,ourShaderCa, skyboxShader;
+	Shader ourShader , skyboxShader;
     Shader lightingShader;
     Shader lampShader;
 	unsigned int VBO, VAO ;

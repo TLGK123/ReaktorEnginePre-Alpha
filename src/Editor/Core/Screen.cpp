@@ -10,7 +10,7 @@ const unsigned int SCR_WIDTH = 1366;
 const unsigned int SCR_HEIGHT = 768;
 
 Camera EditorCamera(glm::vec3(0.0f, 0.0f, 5.0f));     //  Editor  Scene  camera
-Camera GameCamera(glm::vec3(0.0f, 0.0f, 5.0f));       //  Game          camera
+
 
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
@@ -21,7 +21,10 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 //---------------------Data-------------
+// 位置变量的属性位置值为 0
+// 颜色变量的属性位置值为 1
 float vertices[] = {
+    // 位置              // 颜色
     -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
     0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -123,8 +126,7 @@ void Screen::InitOpenGL()
 	glEnable(GL_DEPTH_TEST);
 
 	ourShader.Init("6.1.cube.vs", "6.1.cube.fs");
-	ourShaderCa.Init("7.4.camera.vs", "7.4.camera.fs");
-
+	
     lightingShader.Init("1.colors.vs", "1.colors.fs");
     lampShader.Init("1.lamp.vs", "1.lamp.fs");
     
@@ -135,7 +137,7 @@ void Screen::InitOpenGL()
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
    
-    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(0); //属性0 ，3个float数。总数据大小， 数据起始偏移位置，
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	// color attribute
     glEnableVertexAttribArray(1);
@@ -201,19 +203,20 @@ void Screen::InitOpenGL()
 	stbi_image_free(data);
 
 	ourShader.use();
-	ourShaderCa.use();
+
+    lightingShader.use();
+    lampShader.use();
 
 	glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
 	ourShader.setInt("texture1", 0);
 	ourShader.setInt("texture2", 1);
 
-	glUniform1i(glGetUniformLocation(ourShaderCa.ID, "texture1"), 0);
-	ourShaderCa.setInt("texture1", 0);
-	ourShaderCa.setInt("texture2", 1);
-
 	Render_SkyBox_init();
 	CreateFrameBufer();
-	CreateFrameBuferCa();
+    
+    int nrAttributes;
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+    std::cout << "顶点属性上限: " << nrAttributes << std::endl;
 }
 
 void Screen::InitEditorWidget(Context* context)
@@ -231,11 +234,6 @@ void Screen::InitEditorWidget(Context* context)
 	Debug::Log(" Editor 初始化窗口成功  ");
 }
 
-//int Screen::GetCurrentFrameTexture()
-//{
-//    return CurrentFrameTextureID;
-//}
-
 void Screen::Update()
 {
 	glfwPollEvents();
@@ -244,34 +242,22 @@ void Screen::Update()
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 	processInput(window);
-
+   
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer); //帧缓冲的 开始
-	glEnable(GL_DEPTH_TEST);                        //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);           //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
+    glEnable(GL_DEPTH_TEST);                        //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
+	glClearColor(0.4f, 0.3f, 0.3f, 1.0f);           //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	Render_SceneObjectForEditorCamera();
     Render_SkyBox_ForEditor();
+
     glDisable(GL_DEPTH_TEST);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
-
-//	glBindFramebuffer(GL_FRAMEBUFFER, framebufferCa);   //帧缓冲的 开始
-//	glEnable(GL_DEPTH_TEST);                          //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
-//	//由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
-//	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//
-//	Render_SkyBox_ForGame();
-//	Render_SceneObjectForGameCamera();
-//
-//	glBindFramebuffer(GL_FRAMEBUFFER, 0);            //帧缓冲的 结束  在开始和结束中间的所有变化都会保存到帧缓里
-
-	
+    glBindFramebuffer(GL_FRAMEBUFFER,0);
 	glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	Render_EditorUI();
-
+  
 	glfwSwapBuffers(window);
 }
 
@@ -309,38 +295,6 @@ void Screen::CreateFrameBufer()
 	return;
 }
 
-void Screen::CreateFrameBuferCa()
-{
-	// 创建一个帧缓冲对象，并绑定它
-	//unsigned int framebuffer;
-	glGenFramebuffers(1, &framebufferCa);
-	glBindFramebuffer(GL_FRAMEBUFFER, framebufferCa);
-	// 创建一个纹理图像
-	//unsigned int textureColorbuffer;
-	glGenTextures(1, &textureColorbufferCa);
-	glBindTexture(GL_TEXTURE_2D, textureColorbufferCa);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//纹理 附加到当前绑定的帧缓冲对象
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbufferCa, 0);
-
-	//创建一个渲染缓冲对象
-	unsigned int rbo;
-	glGenRenderbuffers(1, &rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	//创建一个深度和模板渲染缓冲对象
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT);
-	//附加这个渲染缓冲对象：
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
-	// now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	CurrentFrameTextureIDCa = textureColorbufferCa;
-}
 
 void Screen::ShutDown()
 {
@@ -430,7 +384,7 @@ void Screen::Render_SceneObjectForEditorCamera()
     lampShader.setMat4("view", view);
     model = glm::mat4(1.0f);
     model = glm::translate(model, lightPos);
-    model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
+    model = glm::scale(model, glm::vec3(0.1f)); // a smaller cube
     lampShader.setMat4("model", model);
     
     glBindVertexArray(lightVAO);
@@ -440,35 +394,6 @@ void Screen::Render_SceneObjectForEditorCamera()
     
 }
 
-void Screen::Render_SceneObjectForGameCamera()
-{
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture1);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-
-	ourShaderCa.use();
-	glm::mat4  projectionCa;
-	projectionCa = glm::perspective(glm::radians(GameCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-
-	ourShaderCa.setMat4("projection", projectionCa);
-
-	glm::mat4 viewCa = GameCamera.GetViewMatrix();
-	ourShaderCa.setMat4("view", viewCa);
-
-	// render container
-	glBindVertexArray(VAO);
-	for (unsigned int i = 0; i < 10; i++)
-	{
-		// calculate the model matrix for each object and pass it to shader before drawing
-		glm::mat4 model;
-		model = glm::translate(model, cubePositions[i]);
-		float angle = 20.0f * i;
-		model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-		ourShaderCa.setMat4("model", model);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-	}
-}
 
 void Screen::Render_SkyBox_ForEditor()
 {
@@ -491,30 +416,9 @@ void Screen::Render_SkyBox_ForEditor()
 	glDepthFunc(GL_LESS); // set depth function back to default
 }
 
-void Screen::Render_SkyBox_ForGame()
-{
-	// Debug::Log(" 天空盒 update Game");
-	 // draw skybox as last
-	glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
-	skyboxShader.use();
-	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(GameCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-	glm::mat4 view = glm::mat4(glm::mat3(GameCamera.GetViewMatrix())); // remove translation from the view matrix
-	skyboxShader.setMat4("view", view);
-	skyboxShader.setMat4("projection", projection);
-	// skybox cube
-	glBindVertexArray(skyboxVAO);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glBindVertexArray(0);
-	glDepthFunc(GL_LESS); // set depth function back to default
-}
 
 void Screen::Render_SkyBox_init()
 {
-	Debug::Log("初始化 天空盒 获取立方贴图 \n");
-
 	float skyboxVertices[] = {
 		// positions
 		-1.0f,  1.0f, -1.0f,
