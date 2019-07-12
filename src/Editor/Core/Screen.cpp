@@ -79,8 +79,11 @@ glm::vec3 cubePositions[] = {
 	glm::vec3(1.5f,  0.2f, -1.5f),
 	glm::vec3(-1.3f,  1.0f, -1.5f)
 };
-//---------------------Edn Data---------
+
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+
+//---------------------Edn Data---------
+
 
 bool Screen::Initialize()
 {
@@ -100,10 +103,10 @@ void Screen::InitVertextData()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
-    glEnableVertexAttribArray(0); //属性0 ，3个float数。总数据大小， 数据起始偏移位置，
+    glEnableVertexAttribArray(0); //属性0 顶点，3个float数。总数据大小， 数据起始偏移位置，
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    // color attribute
-    glEnableVertexAttribArray(1);
+    
+    glEnableVertexAttribArray(1); //属性1 颜色，3个float数。总数据大小， 数据起始偏移位置，偏移掉前面的顶点
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     
     //创建一个光
@@ -177,10 +180,7 @@ void Screen::InitShader()
     ourShader.use();
     lightingShader.use();
     lampShader.use();
-    
-    glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
-    ourShader.setInt("texture1", 0);
-    ourShader.setInt("texture2", 1);
+
 }
 
 void Screen::InitOpenGL()
@@ -215,14 +215,12 @@ void Screen::InitOpenGL()
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
-	glEnable(GL_DEPTH_TEST);
 
-    InitShader();
     InitVertextData();
     InitTextureData();
-
-	Render_SkyBox_init();
-	CreateFrameBufer();
+    InitShader();
+	InitSkyBox();
+	InitFrameBufer();
     
     int nrAttributes;
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
@@ -276,7 +274,7 @@ void Screen::RenderFrameBuffer()
     glBindFramebuffer(GL_FRAMEBUFFER,0);
 }
 
-void Screen::CreateFrameBufer()
+void Screen::InitFrameBufer()
 {
 	// 创建一个帧缓冲对象，并绑定它
 	//unsigned int framebuffer;
@@ -412,7 +410,7 @@ void Screen::Render_SkyBox_ForEditor()
 }
 
 
-void Screen::Render_SkyBox_init()
+void Screen::InitSkyBox()
 {
 	float skyboxVertices[] = {
 		// positions
