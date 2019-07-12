@@ -91,6 +91,98 @@ bool Screen::Initialize()
     return true;
 }
 
+void Screen::InitVertextData()
+{
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+    
+    glGenBuffers(1, &VBO);                  //就是把内存中顶点数据，传入到显存的操作对象
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    
+    glEnableVertexAttribArray(0); //属性0 ，3个float数。总数据大小， 数据起始偏移位置，
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    // color attribute
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    
+    //创建一个光
+    
+    glGenVertexArrays(1,&lightVAO);
+    glBindVertexArray(lightVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+}
+
+void Screen::InitTextureData()
+{
+    // texture 1
+    // ---------
+    glGenTextures(1, &texture1);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    // set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    int width, height, nrChannels;
+    
+    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+    unsigned char* data = stbi_load(FileSystem::getPath("resources/textures/container.jpg").c_str(), &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+    // texture 2
+    // ---------
+    glGenTextures(1, &texture2);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);    // set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    data = stbi_load(FileSystem::getPath("resources/textures/awesomeface.png").c_str(), &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+}
+
+void Screen::InitShader()
+{
+    lightingShader.Init("1.colors.vs", "1.colors.fs");
+    lampShader.Init("1.lamp.vs", "1.lamp.fs");
+    ourShader.Init("6.1.cube.vs", "6.1.cube.fs");
+    
+    ourShader.use();
+    lightingShader.use();
+    lampShader.use();
+    
+    glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
+    ourShader.setInt("texture1", 0);
+    ourShader.setInt("texture2", 1);
+}
+
 void Screen::InitOpenGL()
 {
 	// glfw: initialize and configure
@@ -125,91 +217,9 @@ void Screen::InitOpenGL()
 	glfwSetScrollCallback(window, scroll_callback);
 	glEnable(GL_DEPTH_TEST);
 
-	ourShader.Init("6.1.cube.vs", "6.1.cube.fs");
-	
-    lightingShader.Init("1.colors.vs", "1.colors.fs");
-    lampShader.Init("1.lamp.vs", "1.lamp.fs");
-    
-	glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-    
-	glGenBuffers(1, &VBO);                  //就是把内存中顶点数据，传入到显存的操作对象
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-   
-    glEnableVertexAttribArray(0); //属性0 ，3个float数。总数据大小， 数据起始偏移位置，
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	// color attribute
-    glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-
-    //创建一个光
-  
-    glGenVertexArrays(1,&lightVAO);
-    glBindVertexArray(lightVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    
-	// texture 1
-	// ---------
-	glGenTextures(1, &texture1);
-	glBindTexture(GL_TEXTURE_2D, texture1);
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	// set texture wrapping to GL_REPEAT (default wrapping method)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// load image, create texture and generate mipmaps
-	int width, height, nrChannels;
-
-	stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-											// The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
-	unsigned char* data = stbi_load(FileSystem::getPath("resources/textures/container.jpg").c_str(), &width, &height, &nrChannels, 0);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
-	// texture 2
-	// ---------
-	glGenTextures(1, &texture2);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);    // set texture wrapping to GL_REPEAT (default wrapping method)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// load image, create texture and generate mipmaps
-	data = stbi_load(FileSystem::getPath("resources/textures/awesomeface.png").c_str(), &width, &height, &nrChannels, 0);
-	if (data)
-	{
-		// note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
-
-	ourShader.use();
-
-    lightingShader.use();
-    lampShader.use();
-
-	glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
-	ourShader.setInt("texture1", 0);
-	ourShader.setInt("texture2", 1);
+    InitShader();
+    InitVertextData();
+    InitTextureData();
 
 	Render_SkyBox_init();
 	CreateFrameBufer();
@@ -242,23 +252,28 @@ void Screen::Update()
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 	processInput(window);
-   
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer); //帧缓冲的 开始
-    glEnable(GL_DEPTH_TEST);                        //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
-	glClearColor(0.4f, 0.3f, 0.3f, 1.0f);           //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    RenderFrameBuffer();
 
-	Render_SceneObjectForEditorCamera();
-    Render_SkyBox_ForEditor();
-
-    glDisable(GL_DEPTH_TEST);
-    glBindFramebuffer(GL_FRAMEBUFFER,0);
 	glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	Render_EditorUI();
   
 	glfwSwapBuffers(window);
+}
+
+void Screen::RenderFrameBuffer()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer); //帧缓冲的 开始
+    glEnable(GL_DEPTH_TEST);                        //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
+    glClearColor(0.4f, 0.3f, 0.3f, 1.0f);           //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    Render_SceneObjectForEditorCamera();
+    Render_SkyBox_ForEditor();
+    
+    glDisable(GL_DEPTH_TEST);
+    glBindFramebuffer(GL_FRAMEBUFFER,0);
 }
 
 void Screen::CreateFrameBufer()
@@ -358,27 +373,9 @@ void Screen::Render_SceneObjectForEditorCamera()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
-	//    int count = m_testDemos.size();
-	//
-	//    for (int i = 0; i < count; i++) {
-	//        m_testDemos[i]->Render_SceneObject();
-	//    }
-    
-    
-    lightingShader.use();
-    lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-    lightingShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
-    
-    
-    lightingShader.setMat4("projection", projection);
-    lightingShader.setMat4("view", view);
     
     // world transformation
     glm::mat4 model = glm::mat4(1.0f);
-    lightingShader.setMat4("model", model);
-    
-    
-    
     lampShader.use();
     lampShader.setMat4("projection", projection);
     lampShader.setMat4("view", view);
@@ -390,8 +387,6 @@ void Screen::Render_SceneObjectForEditorCamera()
     glBindVertexArray(lightVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 
-
-    
 }
 
 
@@ -579,7 +574,7 @@ void Screen::Render_EditorUI()
 
 	GetSubWidget<SceneView>()->ImageId = CurrentFrameTextureID;
 
-	GetSubWidget<Game>()->ImageId = CurrentFrameTextureIDCa;
+	GetSubWidget<Game>()->ImageId = 0;
 	DrawScreen();
 
 	ImGui::Render();

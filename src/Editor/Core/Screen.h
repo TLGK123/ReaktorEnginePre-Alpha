@@ -68,6 +68,9 @@ public:
 	bool ScreenShouldClose();
 
 	void InitOpenGL();
+    void InitShader();
+    void InitVertextData();
+    void InitTextureData();
 
 	void InitEditorWidget(Context * context);
 
@@ -75,7 +78,8 @@ public:
 
 	void CreateFrameBufer();
     void CreateFrameBuferCa();
-
+    void RenderFrameBuffer();
+    
 	Screen(Context* context) : Subsystem(context)
 	{
 		context->RegisterSubsystem(this);
