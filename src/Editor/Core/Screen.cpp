@@ -184,7 +184,7 @@ void Screen::InitTextureData()
 
 void Screen::InitShader()
 {
-    lightingShader.Init("2.base.light.vs", "2.base.light.fs");
+    lightingShader.Init("3.phong.light.vs", "3.phong.light.fs");
     lampShader.Init("1.lamp.vs", "1.lamp.fs");
     ourShader.Init("6.1.cube.vs", "6.1.cube.fs");
     
@@ -351,19 +351,9 @@ void Screen::InitImgui()
 
 void Screen::Render_SceneObjectForEditorCamera()
 {
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture1);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-
-	ourShader.use();
 	glm::mat4 projection;
 	projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-
-	ourShader.setMat4("projection", projection);
-
 	glm::mat4 view = EditorCamera.GetViewMatrix();
-	ourShader.setMat4("view", view);
 
 	// render container
     glBindVertexArray(VAO);
@@ -376,15 +366,28 @@ void Screen::Render_SceneObjectForEditorCamera()
         model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 
         lightingShader.use();
-        lightingShader.setVec3("objectColor", 0.7f, 0.8f, 0.36f);
-        lightingShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
-        lightingShader.setVec3("lightPos", lightPos);
+        lightingShader.setVec3("light.position", lightPos);
+        lightingShader.setVec3("viewPos", EditorCamera.Position);
+   
+        
+        glm::vec3 lightColor;
+        lightColor.x = sin(glfwGetTime() * 2.0f);
+        lightColor.y = sin(glfwGetTime() * 0.7f);
+        lightColor.z = sin(glfwGetTime() * 1.3f);
+        glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f); // decrease the influence
+        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
+        lightingShader.setVec3("light.ambient", ambientColor);
+        lightingShader.setVec3("light.diffuse", diffuseColor);
+        lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
         
         lightingShader.setMat4("projection", projection);
         lightingShader.setMat4("view", view);
-        
-        lightingShader.setVec3("viewPos", EditorCamera.Position);
         lightingShader.setMat4("model", model);
+        
+        lightingShader.setVec3("material.ambient",  1.0f, 0.5f, 0.31f);
+        lightingShader.setVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
+        lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+        lightingShader.setFloat("material.shininess", 32.0f);
         
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
