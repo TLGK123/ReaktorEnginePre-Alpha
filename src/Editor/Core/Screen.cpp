@@ -355,6 +355,7 @@ void Screen::Render_SceneObjectForEditorCamera()
 	projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 	glm::mat4 view = EditorCamera.GetViewMatrix();
 
+    glm::vec3 lightColor;
 	// render container
     glBindVertexArray(VAO);
     for (unsigned int i = 0; i < 10; i++)
@@ -370,7 +371,7 @@ void Screen::Render_SceneObjectForEditorCamera()
         lightingShader.setVec3("viewPos", EditorCamera.Position);
    
         
-        glm::vec3 lightColor;
+      
         lightColor.x = sin(glfwGetTime() * 2.0f);
         lightColor.y = sin(glfwGetTime() * 0.7f);
         lightColor.z = sin(glfwGetTime() * 1.3f);
@@ -421,6 +422,7 @@ void Screen::Render_SceneObjectForEditorCamera()
     model = glm::translate(model, lightPos);
     model = glm::scale(model, glm::vec3(0.1f)); // a smaller cube
     lampShader.setMat4("model", model);
+    lampShader.setVec3("lightColor", lightColor);
     
     glBindVertexArray(lightVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
