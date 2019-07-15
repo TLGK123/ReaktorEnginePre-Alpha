@@ -12,7 +12,7 @@ struct Material
 {
     //vec3 ambient;      //大多数情况下和漫反射颜色一致
     sampler2D diffuse;   //使用漫反射贴图代替物体漫反射颜色
-    vec3 specular;
+    sampler2D specular;
     float shininess;
 };
 
@@ -40,8 +40,8 @@ void main()
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, normal);
     float spec = pow(max(dot(viewDir,reflectDir),0),material.shininess);
-    vec3 specular = light.specular * (spec * material.specular);
+    vec3 specular = light.specular * (spec * vec3(texture(material.specular,TexCoords)));
 
     vec3 result = ambient + diffuse + specular;
-    FragColor = vec4(result , 0);
+    FragColor = vec4(result , 1.0);
 }
