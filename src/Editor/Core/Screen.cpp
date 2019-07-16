@@ -380,9 +380,10 @@ void Screen::Render_SceneObjectForEditorCamera()
         lightingShader.setVec3("light.position", lightPos);
         lightingShader.setVec3("viewPos", EditorCamera.Position);
    
-        lightColor.x = sin(glfwGetTime() * 2.0f);
-        lightColor.y = sin(glfwGetTime() * 0.7f);
-        lightColor.z = sin(glfwGetTime() * 1.3f);
+//        lightColor.x = sin(glfwGetTime() * 2.0f);
+//        lightColor.y = sin(glfwGetTime() * 0.7f);
+//        lightColor.z = sin(glfwGetTime() * 1.3f);
+        lightColor = glm::vec3(1.0f);
         glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f); // decrease the influence
         glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
         lightingShader.setVec3("light.ambient", ambientColor);
