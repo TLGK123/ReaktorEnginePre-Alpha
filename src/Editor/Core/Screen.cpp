@@ -377,9 +377,9 @@ void Screen::Render_SceneObjectForEditorCamera()
         model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 
         lightingShader.use();
-        lightingShader.setVec3("light.position", lightPos);
+       // lightingShader.setVec3("light.position", lightPos);
         lightingShader.setVec3("viewPos", EditorCamera.Position);
-   
+        lightingShader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
 //        lightColor.x = sin(glfwGetTime() * 2.0f);
 //        lightColor.y = sin(glfwGetTime() * 0.7f);
 //        lightColor.z = sin(glfwGetTime() * 1.3f);
@@ -389,6 +389,7 @@ void Screen::Render_SceneObjectForEditorCamera()
         lightingShader.setVec3("light.ambient", ambientColor);
         lightingShader.setVec3("light.diffuse", diffuseColor);
         lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+        
         
         lightingShader.setMat4("projection", projection);
         lightingShader.setMat4("view", view);

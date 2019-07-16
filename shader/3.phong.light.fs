@@ -19,7 +19,9 @@ struct Material
 
 struct Light
 {
-    vec3 position;
+    //vec3 position;     // 使用平行光（定向光）模式。位置信息就不重要
+    vec3 direction;      //光照计算需求一个从片段至光源的光线方向，人们更习惯定义定向光为一个从光源出发的全局方向
+
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
@@ -32,7 +34,8 @@ uniform Light light;
 void main()
 {
     vec3 ambient = light.ambient * vec3(texture(material.diffuse,TexCoords));
-    vec3 lightDir = normalize(light.position - FragPos);
+    //vec3 lightDir = normalize(light.position - FragPos);
+    vec3 lightDir = normalize(-light.direction);
     vec3 normal = normalize(Normal);
     float diff = max(dot(normal , lightDir),0);
     vec3 diffuse = light.diffuse * vec3(texture(material.diffuse,TexCoords)) * diff;
