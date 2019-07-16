@@ -196,7 +196,8 @@ void Screen::InitShader()
     
     lightingShader.use();
     lightingShader.setVec3("lightPos", lightPos);
-    lightingShader.setInt("material.diffusr", texture1);
+    lightingShader.setInt("material.diffuse", 0);
+    lightingShader.setInt("material.specular", 1);
     
 }
 
@@ -394,10 +395,13 @@ void Screen::Render_SceneObjectForEditorCamera()
         
        // lightingShader.setVec3("material.ambient",  1.0f, 0.5f, 0.31f);
        // lightingShader.setVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
-        lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+       // lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
         lightingShader.setFloat("material.shininess", 32.0f);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
+        
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture2);
         
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
