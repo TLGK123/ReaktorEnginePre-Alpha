@@ -21,6 +21,9 @@ struct Light
 {
     vec3 position;     // 点光源的 位置信息
     //vec3 direction;   //平行光的方向 光照计算需求一个从片段至光源的光线方向，人们更习惯定义定向光为一个从光源出发的全局方向
+    vec3 direction;    //聚光灯 的光线方向
+    float cutOff;      //聚光灯 的切光角 （超过这个角度就没光了） 
+
 
     vec3 ambient;
     vec3 diffuse;
@@ -37,11 +40,21 @@ uniform Light light;
 
 void main()
 {
+    
+    vec3 lightDir0 = normalize(light.position - FragPos); //点光源点方向计算
+   float theta = dot(lightDir0, normalize(-light.direction));
+   if(theta  < light.cutOff)
+   {
+     vec3 ambient = light.ambient * vec3(texture(material.diffuse,TexCoords));
+     FragColor = vec4(ambient , 1.0);
+   }
+   else
+   {
+    
+    vec3 ambient = light.ambient * vec3(texture(material.diffuse,TexCoords));
     float distance = length(light.position - FragPos); //像素点距离光源距离，下面是衰弱计算
     float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
 
-
-    vec3 ambient = light.ambient * vec3(texture(material.diffuse,TexCoords));
     vec3 lightDir = normalize(light.position - FragPos); //点光源点方向计算
     //vec3 lightDir = normalize(-light.direction);   //平行光点方向
     vec3 normal = normalize(Normal);
@@ -59,4 +72,7 @@ void main()
 
     vec3 result = ambient + diffuse + specular;
     FragColor = vec4(result , 1.0);
+   } 
+
+   
 }

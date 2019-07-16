@@ -377,9 +377,11 @@ void Screen::Render_SceneObjectForEditorCamera()
         model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 
         lightingShader.use();
-        lightingShader.setVec3("light.position", lightPos);
         lightingShader.setVec3("viewPos", EditorCamera.Position);
-      //  lightingShader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
+        
+        lightingShader.setVec3("light.position", EditorCamera.Position);
+        lightingShader.setVec3("light.direction", EditorCamera.Front);
+        lightingShader.setFloat("light.cutOff",   glm::cos(glm::radians(12.5f)));
 //        lightColor.x = sin(glfwGetTime() * 2.0f);
 //        lightColor.y = sin(glfwGetTime() * 0.7f);
 //        lightColor.z = sin(glfwGetTime() * 1.3f);
