@@ -201,6 +201,11 @@ void Screen::InitShader()
     
 }
 
+void Screen::InitModel()
+{
+    ourModel.Init(FileSystem::getPath("resources/objects/character/_2.obj"));
+}
+
 void Screen::InitOpenGL()
 {
 	// glfw: initialize and configure
@@ -236,6 +241,7 @@ void Screen::InitOpenGL()
 
     InitVertextData();
     InitTextureData();
+    InitModel();
     InitShader();
 	InitSkyBox();
 	InitFrameBufer();
@@ -381,7 +387,8 @@ void Screen::Render_SceneObjectForEditorCamera()
         
         lightingShader.setVec3("light.position", EditorCamera.Position);
         lightingShader.setVec3("light.direction", EditorCamera.Front);
-        lightingShader.setFloat("light.cutOff",   glm::cos(glm::radians(12.5f)));
+//        lightingShader.setFloat("light.cutOff",   glm::cos(glm::radians(12.5f)));
+
 //        lightColor.x = sin(glfwGetTime() * 2.0f);
 //        lightColor.y = sin(glfwGetTime() * 0.7f);
 //        lightColor.z = sin(glfwGetTime() * 1.3f);
@@ -413,24 +420,8 @@ void Screen::Render_SceneObjectForEditorCamera()
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
     
-//    glBindVertexArray(VAO);
-//    {
-//        lightingShader.use();
-//        lightingShader.setVec3("objectColor", 0.7f, 0.8f, 0.36f);
-//        lightingShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
-//        lightingShader.setVec3("lightPos", lightPos);
-//
-//        lightingShader.setMat4("projection", projection);
-//        lightingShader.setMat4("view", view);
-//
-//        lightingShader.setVec3("viewPos", EditorCamera.Position);
-//        glm::mat4 model = glm::mat4(1.0f);
-//        model = glm::translate(model, cubePositions[0]);
-//        lightingShader.setMat4("model", model);
-//
-//        glDrawArrays(GL_TRIANGLES, 0, 36);
-//
-//    }
+   
+
 
     
     // world transformation
@@ -446,6 +437,9 @@ void Screen::Render_SceneObjectForEditorCamera()
     
     glBindVertexArray(lightVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
+    
+    lightingShader.use();
+    ourModel.Draw(lightingShader);
 
 }
 
