@@ -48,6 +48,7 @@ public:
     bool Initialize() override;
 	vector<Widget *> m_widgets;
 
+    Model ourModel;
 //	vector<DemoTest *> m_testDemos;
 
 	bool show_demo_window = true;
@@ -69,6 +70,7 @@ public:
 
 	void InitOpenGL();
     void InitShader();
+    void InitModel();
     void InitVertextData();
     void InitTextureData();
 
