@@ -291,7 +291,7 @@ void Screen::RenderFrameBuffer()
     glClearColor(0, 0, 0, 0);                       //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    Render_SceneObjectForEditorCamera();
+    RenderSceneObjectForEditorCamera();
     //Render_SkyBox_ForEditor();
     
     glDisable(GL_DEPTH_TEST);
@@ -365,7 +365,7 @@ void Screen::InitImgui()
 	ImGui::StyleColorsDark();
 }
 
-void Screen::Render_SceneObjectForEditorCamera()
+void Screen::RenderSceneObjectForEditorCamera()
 {
 	glm::mat4 projection;
 	projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
