@@ -374,13 +374,14 @@ void Screen::Render_SceneObjectForEditorCamera()
     glm::vec3 lightColor;
 	// render container
     glBindVertexArray(VAO);
-    for (unsigned int i = 0; i < 10; i++)
+   // for (unsigned int i = 0; i < 10; i++)
     {
         // calculate the model matrix for each object and pass it to shader before drawing
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, cubePositions[i]);
-        float angle = 20.0f * i;
-        model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+        model = glm::translate(model,glm::vec3(3,1,1));
+      //  model = glm::translate(model, cubePositions[i]);
+      //  float angle = 20.0f * i;
+      // model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 
         lightingShader.use();
         lightingShader.setVec3("viewPos", EditorCamera.Position);
@@ -439,6 +440,8 @@ void Screen::Render_SceneObjectForEditorCamera()
     glDrawArrays(GL_TRIANGLES, 0, 36);
     
     lightingShader.use();
+    model = glm::mat4(1.0f);
+    lightingShader.setMat4("model", model);
     ourModel.Draw(lightingShader);
 
 }
