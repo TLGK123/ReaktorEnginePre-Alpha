@@ -134,7 +134,7 @@ public:
 
 private:
 	void InitImgui();
-	void Render_SceneObjectForEditorCamera();
+	void RenderSceneObjectForEditorCamera();
     void Render_SceneObjectForGameCamera();
 	void InitSkyBox();
     void Render_SkyBox_ForGame();
