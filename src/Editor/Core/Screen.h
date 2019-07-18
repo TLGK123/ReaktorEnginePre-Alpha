@@ -40,6 +40,7 @@ public:
 	Shader ourShader , skyboxShader;
     Shader lightingShader;
     Shader lampShader;
+    Shader OutLineShader;
 	unsigned int VBO, VAO ;
     
     unsigned int skyboxVAO, skyboxVBO;
