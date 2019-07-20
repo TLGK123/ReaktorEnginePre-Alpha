@@ -193,7 +193,8 @@ void Screen::InitShader()
     lightingShader.Init("3.phong.light.vs", "3.phong.light.fs");
     lampShader.Init("1.lamp.vs", "1.lamp.fs");
     ourShader.Init("6.1.cube.vs", "6.1.cube.fs");
-    
+    OutLineShader.Init("1.model.outline.vs", "1.model.outline.fs");
+   
     lightingShader.use();
     lightingShader.setVec3("lightPos", lightPos);
     lightingShader.setInt("material.diffuse", 0);
@@ -443,6 +444,23 @@ void Screen::RenderSceneObjectForEditorCamera()
     model = glm::mat4(1.0f);
     lightingShader.setMat4("model", model);
     ourModel.Draw(lightingShader);
+    
+//   void glCullFace(GLenum mode);
+//   mode 参数有三个可选项
+//    GL_FRONT                           // 正面剔除
+//    GL_BACK                            // 背面剔除（默认值）
+//    GL_FRONT_AND_BACK                 // 正面、背面都剔除
+    
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    OutLineShader.use();
+    OutLineShader.setMat4("model", model);
+    OutLineShader.setMat4("projection", projection);
+    OutLineShader.setMat4("view", view);
+    OutLineShader.setFloat("outLine", 0.007f);
+    ourModel.Draw(OutLineShader);
+    glDisable(GL_CULL_FACE);
+   
 
 }
 
