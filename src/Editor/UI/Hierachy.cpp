@@ -61,7 +61,7 @@ namespace TmingEngine
     {
         bool p_open = true;
         ImGui::SetNextWindowSize(ImVec2(350, 560), ImGuiCond_FirstUseEver);
-        if (!ImGui::Begin("Hierachy", &p_open))
+        if (!ImGui::Begin("Hierachy", &p_open,ImGuiWindowFlags_NoMove))
         {
             ImGui::End();
             return;
