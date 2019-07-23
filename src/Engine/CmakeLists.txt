@@ -98,6 +98,7 @@ target_link_libraries(TmingEngine glad)
 target_link_libraries(TmingEngine scheme)
 target_link_libraries(TmingEngine ${ASSIMP})
 target_link_libraries(TmingEngine TextEditor)
+target_link_libraries(TmingEngine ImNodes)
 
 
 
