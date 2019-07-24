@@ -17,7 +17,8 @@ void TmingEngine::SceneView::Begin()
 void TmingEngine::SceneView::Update()
 {
 	bool p_open = true;
-	ImGui::SetNextWindowSize(ImVec2(0, 0), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(650, 370), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowPos(ImVec2(20, 20));
 	if (!ImGui::Begin("Scene", &p_open,ImGuiWindowFlags_NoMove))
 	{
 		ImGui::End();

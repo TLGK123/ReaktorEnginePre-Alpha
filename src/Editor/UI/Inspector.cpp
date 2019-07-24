@@ -19,7 +19,7 @@ void TmingEngine::Inspector::Update()
 {
     bool p_open = true;
     ImGui::SetNextWindowSize(ImVec2(350, 560), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Inspector", &p_open))
+    if (!ImGui::Begin("Inspector", &p_open,ImGuiWindowFlags_NoMove))
     {
         ImGui::End();
         return;
