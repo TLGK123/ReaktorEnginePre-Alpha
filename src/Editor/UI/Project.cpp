@@ -85,7 +85,7 @@ void TmingEngine::Project::Update()
   
 	bool p_open = true;
 	ImGui::SetNextWindowSize(ImVec2(350, 560), ImGuiCond_FirstUseEver);
-	if (!ImGui::Begin("Project", &p_open))
+	if (!ImGui::Begin("Project", &p_open,ImGuiWindowFlags_NoMove))
 	{
 		ImGui::End();
 		return;
