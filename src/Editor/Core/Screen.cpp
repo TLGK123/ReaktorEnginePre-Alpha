@@ -9,6 +9,9 @@ using namespace TmingEngine;
 const unsigned int SCR_WIDTH = 1886;
 const unsigned int SCR_HEIGHT = 1220;
 
+const unsigned int frame_width = 1366;
+const unsigned int frame_heigh = 768;
+
 Camera EditorCamera(glm::vec3(0.0f, 0.0f, 5.0f));     //  Editor  Scene  camera
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
@@ -235,7 +238,7 @@ void Screen::InitOpenGL()
 		return;
 	}
 
-	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+	glViewport(0, 0, 1366, 768);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
@@ -310,7 +313,7 @@ void Screen::InitFrameBufer()
 	glGenTextures(1, &textureColorbuffer);
 	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_heigh, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	//纹理 附加到当前绑定的帧缓冲对象
@@ -321,7 +324,7 @@ void Screen::InitFrameBufer()
 	glGenRenderbuffers(1, &rbo);
 	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
 	//创建一个深度和模板渲染缓冲对象
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, frame_width, frame_heigh);
 	//附加这个渲染缓冲对象：
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
@@ -369,7 +372,7 @@ void Screen::InitImgui()
 void Screen::RenderSceneObjectForEditorCamera()
 {
 	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
 	glm::mat4 view = EditorCamera.GetViewMatrix();
 
     glm::vec3 lightColor;
@@ -473,7 +476,7 @@ void Screen::Render_SkyBox_ForEditor()
 	glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
 	skyboxShader.use();
 	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
 	glm::mat4 view = glm::mat4(glm::mat3(EditorCamera.GetViewMatrix())); // remove translation from the view matrix
 	skyboxShader.setMat4("view", view);
 	skyboxShader.setMat4("projection", projection);
@@ -658,7 +661,7 @@ void Screen::Render_EditorUI()
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-	glViewport(0, 0, width, height);
+	glViewport(0, 0, frame_width, frame_heigh);
 }
 
 void processInput(GLFWwindow* window)
