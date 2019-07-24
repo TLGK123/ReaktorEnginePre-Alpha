@@ -6,8 +6,8 @@ using namespace TmingEngine;
 
 #include "Stb_Image/stb_image.h"
 
-const unsigned int SCR_WIDTH = 1366;
-const unsigned int SCR_HEIGHT = 768;
+const unsigned int SCR_WIDTH = 1886;
+const unsigned int SCR_HEIGHT = 1220;
 
 Camera EditorCamera(glm::vec3(0.0f, 0.0f, 5.0f));     //  Editor  Scene  camera
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
