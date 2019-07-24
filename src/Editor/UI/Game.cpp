@@ -14,9 +14,9 @@ void TmingEngine::Game::Begin()
 void TmingEngine::Game::Update()
 {
     bool p_open = true;
-    ImGui::SetNextWindowSize(ImVec2(350, 560), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowPos(ImVec2(20, 560));
-    if (!ImGui::Begin("Game", &p_open,ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoResize))
+    ImGui::SetNextWindowSize(ImVec2(640, 360), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowPos(ImVec2(20, 500));
+    if (!ImGui::Begin("Game", &p_open,ImGuiWindowFlags_NoMove))
     {
         ImGui::End();
         return;
