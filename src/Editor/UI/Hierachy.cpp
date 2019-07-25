@@ -68,13 +68,13 @@ namespace TmingEngine
             return;
         }
         
-//        auto engine = Global<Context>().GetSubsystem<Engine>();
-//        auto scene = engine->currentScene;
-//        if (ImGui::TreeNode(scene->name.c_str()))
-//        {
-//            showTransform(scene->SceneRoot->transform);
-//            ImGui::TreePop();
-//        }
+        auto engine = Global<Context>().GetSubsystem<Engine>();
+        auto scene = engine->currentScene;
+        if (ImGui::TreeNode(scene->name.c_str()))
+        {
+            showTransform(scene->SceneRoot->transform);
+            ImGui::TreePop();
+        }
         
         
         ImGui::End();

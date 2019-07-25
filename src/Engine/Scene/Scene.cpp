@@ -6,7 +6,7 @@
 //
 
 #include "Scene.hpp"
-
+using namespace TmingEngine::Math;
 namespace TmingEngine {
 
     Scene::Scene()
@@ -15,6 +15,7 @@ namespace TmingEngine {
         SceneRoot = new GameObject("SceneRoot");
         auto camera = new GameObject("Main Camera");
         camera->transform->SetParent(SceneRoot->transform);
+        camera->transform->SetPositionLocal(Vector3(0.0f, 0.0f, 5.0f));
 
 //        auto go = new GameObject("Cube");
 //        go->transform->SetParent(SceneRoot->transform);
