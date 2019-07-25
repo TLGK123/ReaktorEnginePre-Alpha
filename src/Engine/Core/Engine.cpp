@@ -77,7 +77,7 @@ namespace TmingEngine
 //			success = false;
 //		}
 
-   //     currentScene = new  Scene();
+        currentScene = new  Scene();
 
         
 		//// Input
@@ -181,7 +181,7 @@ namespace TmingEngine
 
 	void Engine::Update()
 	{
-     //   currentScene->Update();
+        currentScene->Update();
 	}
 
 	void Engine::Shutdown()
