@@ -8,6 +8,9 @@
 #include <sstream>
 #include <iostream>
 #include <FileSystem/FileSystem.h>
+#include "Core/GameObject.hpp"
+
+using namespace TmingEngine::Math;
 
 class Shader
 {
@@ -135,6 +138,11 @@ public:
 		glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 	}
 	// ------------------------------------------------------------------------
+    void setVec2(const std::string &name, const Vector2 &value) const
+    {
+        glUniform2f(glGetUniformLocation(ID, name.c_str()), value.x, value.y);
+    }
+    
 	void setVec2(const std::string &name, const glm::vec2 &value) const
 	{
 		glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
@@ -144,6 +152,10 @@ public:
 		glUniform2f(glGetUniformLocation(ID, name.c_str()), x, y);
 	}
 	// ------------------------------------------------------------------------
+    void setVec3(const std::string &name, const Vector3 &value) const
+    {
+        glUniform3f(glGetUniformLocation(ID, name.c_str()),value.x, value.y, value.z);
+    }
 	void setVec3(const std::string &name, const glm::vec3 &value) const
 	{
 		glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
