@@ -77,7 +77,7 @@ namespace TmingEngine
 		void* m_draw_handle						= nullptr;
 		void* m_window_handle					= nullptr;
 		void* m_windowInstance					= nullptr;
-		Math::Vector2 m_window_size				= Math::Vector2::Zero;
+		Vector2 m_window_size				    = Vector2::Zero;
 		bool m_is_fullscreen					= false;
 		bool m_is_mouse_visible					= true;
 		uint32_t m_shadow_map_resolution	= 4096;
