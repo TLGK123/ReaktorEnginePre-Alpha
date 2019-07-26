@@ -14,7 +14,7 @@
 #include "Core/Context.h"
 #include "Core/GameObject.hpp"
 #include <vector>
-using namespace TmingEngine::Math;
+
 
 namespace TmingEngine
 {
