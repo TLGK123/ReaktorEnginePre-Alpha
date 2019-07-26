@@ -12,7 +12,8 @@
 #	endif
 #endif //GLM_SWIZZLE == GLM_SWIZZLE_ENABLED
 #include <cstddef>
-
+#include "Core/GameObject.hpp"
+using namespace TmingEngine::Math;
 namespace glm
 {
 	template <typename T, precision P = defaultp>
@@ -80,6 +81,7 @@ namespace glm
 		/// Return the count of components of the vector
 		typedef length_t length_type;
 		GLM_FUNC_DECL static length_type length(){return 3;}
+        Vector3 toVector3(){return Vector3(x,y,z);}
 
 		GLM_FUNC_DECL T & operator[](length_type i);
 		GLM_FUNC_DECL T const & operator[](length_type i) const;

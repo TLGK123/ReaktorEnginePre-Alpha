@@ -1,6 +1,7 @@
 #pragma once
 
 //= INCLUDES ==================
+#include "im.h"
 #include <string>
 #include "../Core/EngineDefs.h"
 #include "MathHelper.h"
@@ -212,6 +213,12 @@ namespace TmingEngine::Math
 		static const Vector3 One;
 		static const Vector3 Infinity;
 		static const Vector3 InfinityNeg;
+        
+        glm::vec3<float> toVec3()
+        {
+            new glm::vec3(x,y,z);
+        }
+        
 	};
 
 	// Reverse order operators
