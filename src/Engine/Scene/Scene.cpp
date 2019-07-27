@@ -6,7 +6,7 @@
 //
 
 #include "Scene.hpp"
-using namespace TmingEngine::Math;
+
 namespace TmingEngine {
 
     Scene::Scene()

@@ -1,7 +1,7 @@
 //
 ////= INCLUDES ==================
-#include "../Core/EngineDefs.h"
-#include <string>
+//#include "../Core/EngineDefs.h"
+//#include <string>
 ////=============================
 //
 //namespace TmingEngine
@@ -112,7 +112,10 @@
 //    };
 //}
 
-namespace TmingEngine {
+#include "../Core/EngineDefs.h"
+#include <string>
+namespace TmingEngine
+{
     ENGINE_CLASS class Vector2
     {
      

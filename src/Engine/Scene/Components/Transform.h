@@ -28,38 +28,38 @@ namespace TmingEngine
 		void UpdateTransform();
 
 		//= POSITION ============================================================
-//        Math::Vector3 GetPosition() { return m_worldTransform.GetTranslation(); }
-        const Math::Vector3& GetPositionLocal() {
+//        Vector3 GetPosition() { return m_worldTransform.GetTranslation(); }
+        const Vector3& GetPositionLocal() {
             return m_positionLocal;
         }
-//       void SetPosition(const Math::Vector3& position);
-       void SetPositionLocal(const Math::Vector3& position);
+//       void SetPosition(const Vector3& position);
+       void SetPositionLocal(const Vector3& position);
 		//=======================================================================
 
 		//= ROTATION ============================================================
-//        Math::Quaternion GetRotation() { return m_worldTransform.GetRotation(); }
-//        const Math::Quaternion& GetRotationLocal() { return m_rotationLocal; }
-//        void SetRotation(const Math::Quaternion& rotation);
-//        void SetRotationLocal(const Math::Quaternion& rotation);
+//        Quaternion GetRotation() { return m_worldTransform.GetRotation(); }
+//        const Quaternion& GetRotationLocal() { return m_rotationLocal; }
+//        void SetRotation(const Quaternion& rotation);
+//        void SetRotationLocal(const Quaternion& rotation);
 		//=======================================================================
 
 		//= SCALE ======================================================
-//        Math::Vector3 GetScale() { return m_worldTransform.GetScale(); }
-//        const Math::Vector3& GetScaleLocal() { return m_scaleLocal; }
-//        void SetScale(const Math::Vector3& scale);
-//        void SetScaleLocal(const Math::Vector3& scale);
+//        Vector3 GetScale() { return m_worldTransform.GetScale(); }
+//        const Vector3& GetScaleLocal() { return m_scaleLocal; }
+//        void SetScale(const Vector3& scale);
+//        void SetScaleLocal(const Vector3& scale);
 		//==============================================================
 
 		//= TRANSLATION/ROTATION =======================
-//        void Translate(const Math::Vector3& delta);
-//        void Rotate(const Math::Quaternion& delta);
-//        void RotateLocal(const Math::Quaternion& delta);
+//        void Translate(const Vector3& delta);
+//        void Rotate(const Quaternion& delta);
+//        void RotateLocal(const Quaternion& delta);
 		//==============================================
 
 		//= DIRECTIONS ============
-		Math::Vector3 GetUp();
-		Math::Vector3 GetForward();
-		Math::Vector3 GetRight();
+		Vector3 GetUp();
+		Vector3 GetForward();
+		Vector3 GetRight();
 		//=========================
 
 		//= HIERARCHY ==============================================================
@@ -81,25 +81,25 @@ namespace TmingEngine
 //        void GetDescendants(std::vector<Transform*>* descendants);
 		//==========================================================================
 
-		void LookAt(const Math::Vector3& v) { m_lookAt = v; }
-		Math::Matrix& GetWorldTransform() { return m_worldTransform; }
-		Math::Matrix& GetLocalTransform() { return m_localTransform; }
+		void LookAt(const Vector3& v) { m_lookAt = v; }
+		Matrix& GetWorldTransform() { return m_worldTransform; }
+		Matrix& GetLocalTransform() { return m_localTransform; }
         std::vector<Transform*> m_children; // the children of this transform
      
 	private:
 		// local
-		Math::Vector3 m_positionLocal;
-		Math::Quaternion m_rotationLocal;
-		Math::Vector3 m_scaleLocal;
+		Vector3 m_positionLocal;
+		Quaternion m_rotationLocal;
+		Vector3 m_scaleLocal;
 
-		Math::Matrix m_worldTransform;
-		Math::Matrix m_localTransform;
-		Math::Vector3 m_lookAt;
+		Matrix m_worldTransform;
+		Matrix m_localTransform;
+		Vector3 m_lookAt;
 
 		Transform* m_parent; // the parent of this transform
 
 
 		//= HELPER FUNCTIONS ================================================================
-		Math::Matrix GetParentTransformMatrix();
+		Matrix GetParentTransformMatrix();
 	};
 }

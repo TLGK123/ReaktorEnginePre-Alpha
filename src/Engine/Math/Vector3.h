@@ -228,6 +228,7 @@
 
 #include "../Core/EngineDefs.h"
 #include <string>
+#include <math.h>
 
 namespace TmingEngine {
     ENGINE_CLASS class Vector3
@@ -260,5 +261,50 @@ namespace TmingEngine {
                 static const Vector3 Infinity;
                 static const Vector3 InfinityNeg;
         std::string ToString() const;
+        
+        bool operator==(const Vector3 & other) const
+        {
+            return x == other.x && y == other.y && z == other.z;
+        }
+        
+        Vector3 operator+(const Vector3 & other)const
+        {
+            return Vector3(x+other.x, y + other.y,z + other.z);
+        }
+        
+        void operator+=(const Vector3 & other)
+        {
+            x += other.x;
+            y += other.y;
+            z += other.z;
+        }
+        
+        void operator-=(const Vector3 & other)
+        {
+            x -= other.x;
+            y -= other.y;
+            z -= other.z;
+        }
+        
+        static Vector3 Cross(const Vector3& v1, const Vector3& v2)
+        {
+            float x = v1.y * v2.z - v2.y * v1.z;
+            float y = -(v1.x * v2.z - v2.x * v1.z);
+            float z = v1.x * v2.y - v2.x * v1.y;
+            return Vector3(x, y, z);
+        }
+        
+        static Vector3 Normalize(const Vector3& v )
+        {
+            float len = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+            return Vector3(v.x/len , v.y / len , v.y / len);
+        }
+        
+        Vector3 operator*(const float other)const
+        {
+            return Vector3(x * other, y * other ,z * other);
+        }
+        
+        
     };
 }

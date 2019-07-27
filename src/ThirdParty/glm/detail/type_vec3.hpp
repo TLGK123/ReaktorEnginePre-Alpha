@@ -13,7 +13,7 @@
 #endif //GLM_SWIZZLE == GLM_SWIZZLE_ENABLED
 #include <cstddef>
 #include "Core/GameObject.hpp"
-using namespace TmingEngine::Math;
+using namespace TmingEngine;
 namespace glm
 {
 	template <typename T, precision P = defaultp>
