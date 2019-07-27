@@ -1,11 +1,8 @@
 #include "Vector2.h"
 #include <stdio.h>
-////==================
-//
-////= NAMESPACES =====
+
 using namespace std;
-////==================
-//
+
 namespace TmingEngine
 {
     const Vector2 Vector2::Zero(0.0f, 0.0f);

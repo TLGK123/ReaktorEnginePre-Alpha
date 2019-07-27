@@ -417,3 +417,30 @@
 //	// Reverse order operators
 //	inline ENGINE_CLASS Vector3 operator*(const Vector3& lhs, const Matrix& rhs) { return rhs * lhs; }
 //}
+
+#include "../Core/EngineDefs.h"
+#include <string>
+#include "Vector3.h"
+
+namespace TmingEngine
+{
+    ENGINE_CLASS class Matrix
+    {
+        
+    public:
+            float m00, m10, m20, m30;
+            float m01, m11, m21, m31;
+            float m02, m12, m22, m32;
+            float m03, m13, m23, m33;
+        
+        Matrix()
+        {
+            
+        }
+        
+       Matrix LookAt()
+        {
+            
+        }
+    };
+}

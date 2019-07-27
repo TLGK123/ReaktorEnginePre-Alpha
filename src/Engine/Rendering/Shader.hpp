@@ -10,7 +10,6 @@
 #include <FileSystem/FileSystem.h>
 #include "Core/GameObject.hpp"
 
-using namespace TmingEngine::Math;
 
 class Shader
 {
@@ -138,10 +137,10 @@ public:
 		glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 	}
 	// ------------------------------------------------------------------------
-    void setVec2(const std::string &name, const Vector2 &value) const
-    {
-        glUniform2f(glGetUniformLocation(ID, name.c_str()), value.x, value.y);
-    }
+//    void setVec2(const std::string &name, const Vector2 &value) const
+//    {
+//        glUniform2f(glGetUniformLocation(ID, name.c_str()), value.x, value.y);
+//    }
     
 	void setVec2(const std::string &name, const glm::vec2 &value) const
 	{

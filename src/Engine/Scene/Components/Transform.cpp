@@ -10,7 +10,7 @@
 
 //= NAMESPACES ================
 using namespace std;
-using namespace TmingEngine::Math;
+
 //=============================
 
 namespace TmingEngine

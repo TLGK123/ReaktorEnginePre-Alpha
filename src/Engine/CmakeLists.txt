@@ -11,6 +11,8 @@ file(GLOB_RECURSE headers
 "Math/Vector2.h"
 "Math/Vector3.h"
 "Math/Matrix.h"
+"Math/Quaternion.h"
+
 "im.h"
 #"RHI/*.h"
 #"RHI/*.h??"
@@ -48,6 +50,8 @@ file(GLOB_RECURSE sources
 "Math/Vector2.cpp"
 "Math/Vector3.cpp"
 "Math/Matrix.cpp"
+"Math/Quaternion.cpp"
+
 "Scene/Components/Transform.cpp"
 "Scene/Components/IComponent.cpp"
 "Scene/*.cpp"
