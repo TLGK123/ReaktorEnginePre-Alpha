@@ -417,12 +417,14 @@
 //	// Reverse order operators
 //	inline ENGINE_CLASS Vector3 operator*(const Vector3& lhs, const Matrix& rhs) { return rhs * lhs; }
 //}
+#pragma once
 
 #include "../Core/EngineDefs.h"
 #include <string>
 #include "Vector3.h"
 #include <math.h>
 #include "Radian.h"
+
 
 namespace TmingEngine
 {
@@ -437,8 +439,17 @@ namespace TmingEngine
         
     Matrix()
     {
-            
+       
     }
+    
+    Matrix(float v)
+    {
+        m00 = v; m01 = v; m02 = v; m03 = v;
+        m10 = v; m11 = v; m12 = v; m13 = v;
+        m20 = v; m21 = v; m22 = v; m23 = v;
+        m30 = v; m31 = v; m32 = v; m33 = v;
+    }
+        
         
     Matrix operator*(const  Matrix& m2) const
     {
@@ -498,7 +509,7 @@ namespace TmingEngine
         
         Matrix static LookAt(Vector3 cameraPos, Vector3 cameraTarget , Vector3 worldUp)
         {
-            Matrix mat4;
+            Matrix mat4 = Matrix(0);
             Vector3 cameraDirection = Vector3::Normalize(cameraPos - cameraTarget);
             Vector3 cameraRight =Vector3::Normalize(Vector3::Cross(worldUp , cameraDirection));
             Vector3 cameraUp =Vector3::Cross(cameraDirection, cameraRight);
@@ -522,10 +533,25 @@ namespace TmingEngine
             return   1/tan(v);
         }
         
+        Matrix static Translate(Vector3 v)
+        {
+            Matrix tran = Matrix(0);
+            tran.m03 = v.x;
+            tran.m13 = v.y;
+            tran.m23 = v.z;
+            tran.m33 = 1;
+            
+            tran.m00 = 1;
+            tran.m11 = 1;
+            tran.m22 = 1;
+
+            return tran;
+        }
+        
         //弧度 宽高比 近面距离 远面距离
         Matrix static Perspective(Radian radian ,float aspect ,float near ,float far )
         {
-            Matrix mt;
+            Matrix mt = Matrix(0);
             mt.m00 = cot(radian.GetRadian()/2) / aspect;
             mt.m11 = cot(radian.GetRadian()/2);
             mt.m22 = (far + near) / (far - near) * -1;
