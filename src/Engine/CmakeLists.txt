@@ -11,6 +11,7 @@ file(GLOB_RECURSE headers
 "Math/Vector2.h"
 "Math/Vector3.h"
 "Math/Matrix.h"
+"Math/Radian.h"
 "Math/Quaternion.h"
 
 "im.h"

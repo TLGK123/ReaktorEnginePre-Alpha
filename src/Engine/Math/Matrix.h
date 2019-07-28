@@ -421,6 +421,8 @@
 #include "../Core/EngineDefs.h"
 #include <string>
 #include "Vector3.h"
+#include <math.h>
+#include "Radian.h"
 
 namespace TmingEngine
 {
@@ -436,27 +438,6 @@ namespace TmingEngine
     Matrix()
     {
             
-    }
-        
-    Matrix static LookAt(Vector3 cameraPos, Vector3 cameraTarget , Vector3 worldUp)
-    {
-        Matrix mat4;
-        Vector3 cameraDirection = Vector3::Normalize(cameraPos - cameraTarget);
-        Vector3 cameraRight =Vector3::Normalize(Vector3::Cross(worldUp , cameraDirection));
-        Vector3 cameraUp =Vector3::Cross(cameraDirection, cameraRight);
-        
-        mat4.m00 = cameraRight.x;     mat4.m01 = cameraRight.y;     mat4.m02 = cameraRight.z;
-        mat4.m10 = cameraUp.x;        mat4.m11 = cameraUp.y;        mat4.m12 = cameraUp.z;
-        mat4.m20 = cameraDirection.x; mat4.m21 = cameraDirection.y; mat4.m22 = cameraDirection.z;
-        mat4.m33 =1;
-        
-        Matrix matP;
-        matP.m03 = -cameraTarget.x;
-        matP.m13 = -cameraTarget.y;
-        matP.m23 = -cameraTarget.z;
-        matP.m33 = 1;
-        
-        return mat4 * matP;
     }
         
     Matrix operator*(const  Matrix& m2) const
@@ -485,6 +466,47 @@ namespace TmingEngine
         
         return mt;
     }
+        
+        Matrix static LookAt(Vector3 cameraPos, Vector3 cameraTarget , Vector3 worldUp)
+        {
+            Matrix mat4;
+            Vector3 cameraDirection = Vector3::Normalize(cameraPos - cameraTarget);
+            Vector3 cameraRight =Vector3::Normalize(Vector3::Cross(worldUp , cameraDirection));
+            Vector3 cameraUp =Vector3::Cross(cameraDirection, cameraRight);
+            
+            mat4.m00 = cameraRight.x;     mat4.m01 = cameraRight.y;     mat4.m02 = cameraRight.z;
+            mat4.m10 = cameraUp.x;        mat4.m11 = cameraUp.y;        mat4.m12 = cameraUp.z;
+            mat4.m20 = cameraDirection.x; mat4.m21 = cameraDirection.y; mat4.m22 = cameraDirection.z;
+            mat4.m33 =1;
+            
+            Matrix matP;
+            matP.m03 = -cameraTarget.x;
+            matP.m13 = -cameraTarget.y;
+            matP.m23 = -cameraTarget.z;
+            matP.m33 = 1;
+            
+            return mat4 * matP;
+        }
+        
+        static float cot(float v)
+        {
+            return   1/tan(v);
+        }
+        
+        //弧度 宽高比 近面距离 远面距离
+        Matrix static Perspective(Radian radian ,float aspect ,float near ,float far )
+        {
+            Matrix mt;
+            mt.m00 = cot(radian.GetRadian()/2) / aspect;
+            mt.m11 = cot(radian.GetRadian()/2);
+            mt.m22 = (far + near) / (far - near) * -1;
+            mt.m23 = (2 * near * far)/(far - near) * -1;
+            mt.m32 = -1;
+            
+            return mt;
+        }
+        
+
         
     };
 }
