@@ -373,7 +373,7 @@ void Screen::InitImgui()
 void Screen::RenderSceneObjectForEditorCamera()
 {
 	Matrix projection;
-	projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
+	projection = Matrix::Perspective(glm::radians(EditorCamera.Zoom), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
 	Matrix view = EditorCamera.GetViewMatrix();
 
     glm::vec3 lightColor;
