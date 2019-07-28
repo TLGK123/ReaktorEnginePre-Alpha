@@ -30,13 +30,13 @@ void TmingEngine::Inspector::Update()
     if(selectActive != NULL)
     {
         ImGui::Text(Selecttion::GetActiveObjectName().c_str());
-        Math::Vector3 pos = selectActive->GetPositionLocal();
+        Vector3 pos = selectActive->GetPositionLocal();
         
         ImGui::InputFloat("X",& pos.x , 1.0f);
         ImGui::InputFloat("Y",& pos.y , 1.0f);
         ImGui::InputFloat("Z",& pos.z , 1.0f);
         
-        Math::Vector3 v =  Math::Vector3(pos.x,pos.y,pos.z);
+        Vector3 v =  Vector3(pos.x,pos.y,pos.z);
         selectActive->SetPositionLocal(v);
         
         

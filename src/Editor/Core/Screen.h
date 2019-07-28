@@ -17,6 +17,7 @@
 #include "Profiler.hpp"
 #include "Console.h"
 #include "Rendering/Camera.hpp"
+#include "Math/Matrix.h"
 
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )

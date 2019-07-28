@@ -4,7 +4,7 @@
 
 using namespace std;
 using namespace TmingEngine;
-using namespace TmingEngine::Math;
+
 
 
 const unsigned int SCR_WIDTH = 1886;
@@ -372,9 +372,9 @@ void Screen::InitImgui()
 
 void Screen::RenderSceneObjectForEditorCamera()
 {
-	glm::mat4 projection;
+	Matrix projection;
 	projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
-	glm::mat4 view = EditorCamera.GetViewMatrix();
+	Matrix view = EditorCamera.GetViewMatrix();
 
     glm::vec3 lightColor;
 	// render container
