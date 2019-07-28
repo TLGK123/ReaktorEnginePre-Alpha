@@ -1,3 +1,4 @@
+#pragma once
 #include "../Core/EngineDefs.h"
 #include <string>
 

@@ -478,7 +478,7 @@ void Screen::Render_SkyBox_ForEditor()
 	skyboxShader.use();
 	glm::mat4 projection;
 	projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
-	glm::mat4 view = glm::mat4(glm::mat3(EditorCamera.GetViewMatrix())); // remove translation from the view matrix
+	Matrix view = EditorCamera.GetViewMatrix(); // remove translation from the view matrix
 	skyboxShader.setMat4("view", view);
 	skyboxShader.setMat4("projection", projection);
 	// skybox cube

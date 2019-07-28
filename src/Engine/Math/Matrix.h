@@ -466,6 +466,35 @@ namespace TmingEngine
         
         return mt;
     }
+      
+        
+    Matrix operator= (const Matrix& m2) const
+        {
+            Matrix mt;
+            
+            mt.m00 =m2.m00;
+            mt.m01 =m2.m01;
+            mt.m02 =m2.m02;
+            mt.m03 =m2.m03;
+    
+            mt.m10 =m2.m10;
+            mt.m11 =m2.m11;
+            mt.m12 =m2.m12;
+            mt.m13 =m2.m13;
+            
+            mt.m20 =m2.m20;
+            mt.m21 =m2.m21;
+            mt.m22 =m2.m22;
+            mt.m23 =m2.m23;
+            
+            mt.m30 =m2.m30;
+            mt.m31 =m2.m31;
+            mt.m32 =m2.m32;
+            mt.m33 =m2.m33;
+            
+            return mt;
+        }
+            
         
         Matrix static LookAt(Vector3 cameraPos, Vector3 cameraTarget , Vector3 worldUp)
         {

@@ -9,7 +9,7 @@
 #include <iostream>
 #include <FileSystem/FileSystem.h>
 #include "Core/GameObject.hpp"
-
+#include "Math/Matrix.h"
 
 class Shader
 {
@@ -187,6 +187,11 @@ public:
 	{
 		glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 	}
+    
+    void setMat4(const std::string &name, const Matrix &mat) const
+    {
+        glUniform4f(glGetUniformLocation(ID, name.c_str()), mat.m03, mat.m13, mat.m23, mat.m33);
+    }
 
 private:
 	// utility function for checking shader compilation/linking errors.
