@@ -14,7 +14,7 @@
 #include "Core/Context.h"
 #include "Core/GameObject.hpp"
 #include <vector>
-
+#include "../Math/Matrix.h"
 
 namespace TmingEngine
 {
@@ -89,9 +89,9 @@ public:
     }
     
     // Returns the view matrix calculated using Euler Angles and the LookAt Matrix
-    glm::mat4 GetViewMatrix()
+     Matrix GetViewMatrix()
     {
-        return glm::lookAt(Position, Position + Front, Up);
+        return Matrix::LookAt(Position, Position + Front, Up);
     }
     
     // Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
@@ -152,7 +152,7 @@ private:
         front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
         front.y = sin(glm::radians(Pitch));
         front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-        Front = glm::normalize(front);
+        Front = Vector3::Normalize(front);
         // Also re-calculate the Right and Up vector
         Right = Vector3::Normalize(Vector3::Cross(Front,WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
         Up    = Vector3::Normalize(Vector3::Cross(Right, Front));

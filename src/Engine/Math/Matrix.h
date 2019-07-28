@@ -1,5 +1,5 @@
 //
-//#pragma once
+#pragma once
 //
 ////= INCLUDES ==========
 //#include "Quaternion.h"
@@ -428,19 +428,63 @@ namespace TmingEngine
     {
         
     public:
-            float m00, m10, m20, m30;
-            float m01, m11, m21, m31;
-            float m02, m12, m22, m32;
-            float m03, m13, m23, m33;
+            float m00, m01, m02, m03;
+            float m10, m11, m12, m13;
+            float m20, m21, m22, m23;
+            float m30, m31, m32, m33;
         
-        Matrix()
-        {
+    Matrix()
+    {
             
-        }
+    }
         
-       Matrix LookAt()
-        {
-            
-        }
+    Matrix static LookAt(Vector3 cameraPos, Vector3 cameraTarget , Vector3 worldUp)
+    {
+        Matrix mat4;
+        Vector3 cameraDirection = Vector3::Normalize(cameraPos - cameraTarget);
+        Vector3 cameraRight =Vector3::Normalize(Vector3::Cross(worldUp , cameraDirection));
+        Vector3 cameraUp =Vector3::Cross(cameraDirection, cameraRight);
+        
+        mat4.m00 = cameraRight.x;     mat4.m01 = cameraRight.y;     mat4.m02 = cameraRight.z;
+        mat4.m10 = cameraUp.x;        mat4.m11 = cameraUp.y;        mat4.m12 = cameraUp.z;
+        mat4.m20 = cameraDirection.x; mat4.m21 = cameraDirection.y; mat4.m22 = cameraDirection.z;
+        mat4.m33 =1;
+        
+        Matrix matP;
+        matP.m03 = -cameraTarget.x;
+        matP.m13 = -cameraTarget.y;
+        matP.m23 = -cameraTarget.z;
+        matP.m33 = 1;
+        
+        return mat4 * matP;
+    }
+        
+    Matrix operator*(const  Matrix& m2) const
+    {
+        Matrix mt;
+        
+        mt.m00 = m00 * m2.m00 + m01 * m2.m10 + m02 * m2.m20+ m03 * m2.m30;
+        mt.m01 = m00 * m2.m01 + m01 * m2.m11 + m02 * m2.m21+ m03 * m2.m31;
+        mt.m02 = m00 * m2.m02 + m01 * m2.m12 + m02 * m2.m22+ m03 * m2.m32;
+        mt.m03 = m00 * m2.m03 + m01 * m2.m13 + m02 * m2.m23+ m03 * m2.m33;
+        
+        mt.m10 = m10 * m2.m00 + m11 * m2.m10 +m12 * m2.m20+ m13 * m2.m30;
+        mt.m11 = m10 * m2.m01 + m11 * m2.m11 +m12 * m2.m21+ m13 * m2.m31;
+        mt.m12 = m10 * m2.m02 + m11 * m2.m12 +m12 * m2.m22+ m13 * m2.m32;
+        mt.m13 = m10 * m2.m03 + m11 * m2.m13 +m12 * m2.m23+ m13 * m2.m33;
+        
+        mt.m20 = m20 * m2.m00 + m21 * m2.m10 +m22 * m2.m20+ m23 * m2.m30;
+        mt.m21 = m20 * m2.m01 + m21 * m2.m11 +m22 * m2.m21+ m23 * m2.m31;
+        mt.m22 = m20 * m2.m02 + m21 * m2.m12 +m22 * m2.m22+ m23 * m2.m32;
+        mt.m23 = m20 * m2.m03 + m21 * m2.m13 +m22 * m2.m23+ m23 * m2.m33;
+        
+        mt.m30 = m30 * m2.m00 + m31 * m2.m10 +m32 * m2.m20+ m33 * m2.m30;
+        mt.m31 = m30 * m2.m01 + m31 * m2.m11 +m32 * m2.m21+ m33 * m2.m31;
+        mt.m32 = m30 * m2.m02 + m31 * m2.m12 +m32 * m2.m22+ m33 * m2.m32;
+        mt.m33 = m30 * m2.m03 + m31 * m2.m13 +m32 * m2.m23+ m33 * m2.m33;
+        
+        return mt;
+    }
+        
     };
 }
