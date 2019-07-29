@@ -424,8 +424,10 @@
 #include "Vector3.h"
 #include <math.h>
 #include "Radian.h"
+#include <string>
+#include <stdio.h>
 
-
+using namespace std;
 namespace TmingEngine
 {
     ENGINE_CLASS class Matrix
@@ -561,7 +563,12 @@ namespace TmingEngine
             return mt;
         }
         
-
+            string ToString() const
+            {
+                char tempBuffer[200];
+                sprintf(tempBuffer, "\n%f, %f, %f, %f,\n%f, %f, %f, %f,\n%f, %f, %f, %f,\n%f, %f, %f, %f\n", m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33);
+                return string(tempBuffer);
+            }
         
     };
 }

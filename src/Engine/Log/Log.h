@@ -3,6 +3,7 @@
 #include <chrono>
 #include <iostream>
 #include <list>
+#include <string>
 
 //====================
 
@@ -12,6 +13,7 @@ namespace TmingEngine
 	{
 	public:
 		static void Log(const char * message, ...);
+        static void Log(std::string msg);
 	private:
 	};
 }
