@@ -7,4 +7,10 @@ namespace TmingEngine
 		printf(message);
 		//Global<Context>().GetSubsystem<Console>()->AddLog(message);
 	}
+    
+    void Debug::Log(string msg)
+    {
+        printf(msg.c_str());
+        //Global<Context>().GetSubsystem<Console>()->AddLog(message);
+    }
 }

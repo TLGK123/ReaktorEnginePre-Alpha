@@ -374,6 +374,7 @@ void Screen::RenderSceneObjectForEditorCamera()
 {
 	Matrix projection;
 	projection = Matrix::Perspective(glm::radians(EditorCamera.Zoom), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
+    Debug::Log(projection.ToString());
 	Matrix view = EditorCamera.GetViewMatrix();
 
     glm::vec3 lightColor;
@@ -384,6 +385,8 @@ void Screen::RenderSceneObjectForEditorCamera()
         // calculate the model matrix for each object and pass it to shader before drawing
 
       Matrix model = Matrix::Translate(Vector3(3,1,1));
+      Debug::Log(model.ToString());
+        
       //  model = glm::translate(model, cubePositions[i]);
       //  float angle = 20.0f * i;
       // model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));

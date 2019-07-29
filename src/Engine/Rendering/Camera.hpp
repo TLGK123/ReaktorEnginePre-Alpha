@@ -51,13 +51,13 @@ public:
     // Camera options
     float MovementSpeed;
     float MouseSensitivity;
-    float Zoom;
+    float Fov;
     
     GameObject * gameObject;
     
     
     // Constructor with vectors
-    Camera(Vector3 position = Vector3(0.0f, 0.0f, 0.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
+    Camera(Vector3 position = Vector3(0.0f, 0.0f, 0.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
     {
         Position = position;
         WorldUp = up;
@@ -66,7 +66,7 @@ public:
         updateCameraVectors();
     }
     // Constructor with scalar values
-    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
+    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
     {
         Position = Vector3(posX, posY, posZ);
         WorldUp = Vector3(upX, upY, upZ);
@@ -76,7 +76,7 @@ public:
     }
     
     // Constructor with vectors
-    Camera(Context * context ,GameObject * go, Vector3 position = Vector3(0.0f, 0.0f, 0.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
+    Camera(Context * context ,GameObject * go, Vector3 position = Vector3(0.0f, 0.0f, 0.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
     {
         currentContext = context;
         gameObject = go;
@@ -133,12 +133,12 @@ public:
     // Processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
     void ProcessMouseScroll(float yoffset)
     {
-        if (Zoom >= 1.0f && Zoom <= 45.0f)
-            Zoom -= yoffset;
-        if (Zoom <= 1.0f)
-            Zoom = 1.0f;
-        if (Zoom >= 45.0f)
-            Zoom = 45.0f;
+        if (Fov >= 1.0f && Fov <= 45.0f)
+            Fov -= yoffset;
+        if (Fov <= 1.0f)
+            Fov = 1.0f;
+        if (Fov >= 45.0f)
+            Fov = 45.0f;
     }
     
 private:
