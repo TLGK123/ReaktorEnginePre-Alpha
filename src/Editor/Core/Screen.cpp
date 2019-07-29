@@ -372,8 +372,7 @@ void Screen::InitImgui()
 
 void Screen::RenderSceneObjectForEditorCamera()
 {
-	Matrix projection;
-	projection = Matrix::Perspective(glm::radians(EditorCamera.Zoom), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
+	Matrix projection = Matrix::Perspective(Radian(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
     Debug::Log(projection.ToString());
 	Matrix view = EditorCamera.GetViewMatrix();
 
@@ -422,10 +421,8 @@ void Screen::RenderSceneObjectForEditorCamera()
         lightingShader.setFloat("material.shininess", 32.0f);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
-        
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
-        
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
     
@@ -480,7 +477,7 @@ void Screen::Render_SkyBox_ForEditor()
 	glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
 	skyboxShader.use();
 	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(EditorCamera.Zoom), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
 	Matrix view = EditorCamera.GetViewMatrix(); // remove translation from the view matrix
 	skyboxShader.setMat4("view", view);
 	skyboxShader.setMat4("projection", projection);
