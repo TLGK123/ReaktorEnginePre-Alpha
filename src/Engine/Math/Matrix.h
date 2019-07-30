@@ -556,9 +556,10 @@ namespace TmingEngine
             Matrix mt = Matrix(0);
             mt.m00 = cot(radian.GetRadian()/2) / aspect;
             mt.m11 = cot(radian.GetRadian()/2);
-            mt.m22 = (far + near) / (far - near) * -1;
-            mt.m23 = (2 * near * far)/(far - near) * -1;
-            mt.m32 = -1;
+            mt.m22 = far  / (far - near);
+            mt.m23 = 1;
+            mt.m32 = (near * far)/(near -far);
+       
             
             return mt;
         }
