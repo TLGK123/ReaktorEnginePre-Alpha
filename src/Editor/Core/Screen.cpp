@@ -375,7 +375,10 @@ void Screen::RenderSceneObjectForEditorCamera()
 	Matrix projection = Matrix::Perspective(Radian(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
     Debug::Log(projection.ToString());
 	Matrix view = EditorCamera.GetViewMatrix();
-
+    
+    Debug::Log(view.ToString());
+    auto v2 =  EditorCamera.GetViewMatrix2();
+    
     glm::vec3 lightColor;
 	// render container
     glBindVertexArray(VAO);
