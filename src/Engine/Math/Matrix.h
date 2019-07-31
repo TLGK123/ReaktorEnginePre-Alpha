@@ -451,6 +451,17 @@ namespace TmingEngine
         m20 = v; m21 = v; m22 = v; m23 = v;
         m30 = v; m31 = v; m32 = v; m33 = v;
     }
+   
+     Matrix(float v1, float v2,  float v3, float v4,
+            float v5, float v6,  float v7, float v8,
+            float v9, float v10, float v11,float v12,
+            float v13,float v14, float v15,float v16)
+        {
+            m00 = v1;  m01 = v2;  m02 = v3;  m03 = v4;
+            m10 = v5;  m11 = v6;  m12 = v7;  m13 = v8;
+            m20 = v9;  m21 = v10; m22 = v11; m23 = v12;
+            m30 = v13; m31 = v14; m32 = v15; m33 = v16;
+        }
         
         
     Matrix operator*(const  Matrix& m2) const
@@ -556,14 +567,13 @@ namespace TmingEngine
             Matrix mt = Matrix(0);
             mt.m00 = cot(radian.GetRadian()/2) / aspect;
             mt.m11 = cot(radian.GetRadian()/2);
-            mt.m22 = far  / (far - near);
-            mt.m23 = 1;
-            mt.m32 = (near * far)/(near -far);
-       
-            
+            mt.m22 = (far + near)  / (near - far);
+            mt.m32 = -1;
+            mt.m23 = 2 * near * far /(near -far );
             return mt;
         }
         
+
             string ToString() const
             {
                 char tempBuffer[200];
