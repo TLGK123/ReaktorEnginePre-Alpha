@@ -304,7 +304,11 @@ namespace TmingEngine {
         static Vector3 Normalize(const Vector3& v )
         {
             float len = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-            return Vector3(v.x/len , v.y / len , v.y / len);
+            float v1 = abs( v.x / len)<=0.00001 ? 0 :v.x/len;
+            float v2 = abs( v.y / len)<=0.00001 ? 0 :v.y/len;
+            float v3 = abs( v.z / len)<=0.00001 ? 0 :v.z/len;
+            
+            return Vector3(v1 , v2 ,v3);
         }
         
         Vector3 operator*(const float other)const
