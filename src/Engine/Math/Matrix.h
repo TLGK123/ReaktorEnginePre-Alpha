@@ -523,9 +523,9 @@ namespace TmingEngine
         Matrix static LookAt(Vector3 cameraPos, Vector3 cameraTarget , Vector3 worldUp)
         {
             Matrix mat4 = Matrix(0);
-            Vector3 cameraDirection = Vector3::Normalize(cameraPos - cameraTarget);
-            Vector3 cameraRight =Vector3::Normalize(Vector3::Cross(worldUp , cameraDirection));
-            Vector3 cameraUp =Vector3::Cross(cameraDirection, cameraRight);
+            Vector3 cameraDirection = Vector3::Normalize(cameraTarget - cameraPos);
+            Vector3 cameraRight     = Vector3::Normalize(Vector3::Cross(worldUp , cameraDirection));
+            Vector3 cameraUp        = Vector3::Normalize(Vector3::Cross(cameraDirection, cameraRight));
             
             mat4.m00 = cameraRight.x;     mat4.m01 = cameraRight.y;     mat4.m02 = cameraRight.z;
             mat4.m10 = cameraUp.x;        mat4.m11 = cameraUp.y;        mat4.m12 = cameraUp.z;

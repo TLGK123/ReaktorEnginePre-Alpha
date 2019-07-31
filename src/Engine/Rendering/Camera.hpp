@@ -94,6 +94,13 @@ public:
         return Matrix::LookAt(Position, Position + Front, Up);
     }
     
+    glm::mat4 GetViewMatrix2()
+    {
+        return glm::lookAt(glm::vec3(Position.x, Position.y, Position.z),
+                           glm::vec3(Position.x + Front.x, Position.y + Front.y, Position.z + Front.z),
+                           glm::vec3(Up.x, Up.y, Up.z));
+    }
+    
     // Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
     void ProcessKeyboard(Camera_Movement direction, float deltaTime)
     {
