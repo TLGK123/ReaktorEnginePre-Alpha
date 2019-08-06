@@ -376,15 +376,15 @@ void Screen::RenderSceneObjectForEditorCamera()
     Debug::Log("自定义的 P：");
     Debug::Log(projection.ToString());
     Debug::Log("glm 的 P：");
-    glm::mat4 projection3 = glm::perspective(glm::radians(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
-    Debug::Log(projection3);
+    glm::mat4 projection1 = glm::perspective(glm::radians(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
+    Debug::Log(projection1);
  
     Debug::Log("自定义的 V：");
     Matrix view = EditorCamera.GetViewMatrix();
     Debug::Log(view.ToString());
     Debug::Log("glm 的 V：");
-    glm::mat4 view2 =  EditorCamera.GetViewMatrix2();
-    Debug::Log(view2);
+    glm::mat4 view1 =  EditorCamera.GetViewMatrix2();
+    Debug::Log(view1);
 
     glm::vec3 lightColor;
 	// render container
@@ -436,13 +436,11 @@ void Screen::RenderSceneObjectForEditorCamera()
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
     
-   
-    glm::mat4 projection2 = glm::perspective(glm::radians(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
     // world transformation
     glm::mat4 model = glm::mat4(1.0f);
     lampShader.use();
-    lampShader.setMat4("projection", projection2);
-    lampShader.setMat4("view", view2);
+    lampShader.setMat4("projection", projection);
+    lampShader.setMat4("view", view);
     model = glm::mat4(1.0f);
     model = glm::translate(model, lightPos);
     model = glm::scale(model, glm::vec3(0.1f)); // a smaller cube
@@ -457,18 +455,12 @@ void Screen::RenderSceneObjectForEditorCamera()
     lightingShader.setMat4("model", model);
     ourModel.Draw(lightingShader);
     
-//   void glCullFace(GLenum mode);
-//   mode 参数有三个可选项
-//    GL_FRONT                           // 正面剔除
-//    GL_BACK                            // 背面剔除（默认值）
-//    GL_FRONT_AND_BACK                 // 正面、背面都剔除
-    
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     OutLineShader.use();
-    OutLineShader.setMat4("model", model);
     OutLineShader.setMat4("projection", projection);
     OutLineShader.setMat4("view", view);
+    OutLineShader.setMat4("model", model);
     OutLineShader.setFloat("outLine", 0.007f);
     ourModel.Draw(OutLineShader);
     glDisable(GL_CULL_FACE);
