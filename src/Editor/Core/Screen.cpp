@@ -373,12 +373,19 @@ void Screen::InitImgui()
 void Screen::RenderSceneObjectForEditorCamera()
 {
 	Matrix projection = Matrix::Perspective(Radian(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
-    //Debug::Log(projection.ToString());
-	Matrix view = EditorCamera.GetViewMatrix();
-    
-   // Debug::Log(view.ToString());
-   // auto v2 =  EditorCamera.GetViewMatrix2();
-    
+    Debug::Log("自定义的 P：");
+    Debug::Log(projection.ToString());
+    Debug::Log("glm 的 P：");
+    glm::mat4 projection3 = glm::perspective(glm::radians(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
+    Debug::Log(projection3);
+ 
+    Debug::Log("自定义的 V：");
+    Matrix view = EditorCamera.GetViewMatrix();
+    Debug::Log(view.ToString());
+    Debug::Log("glm 的 V：");
+    glm::mat4 view2 =  EditorCamera.GetViewMatrix2();
+    Debug::Log(view2);
+
     glm::vec3 lightColor;
 	// render container
     glBindVertexArray(VAO);
@@ -430,14 +437,12 @@ void Screen::RenderSceneObjectForEditorCamera()
     }
     
    
-
-
-    
+    glm::mat4 projection2 = glm::perspective(glm::radians(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
     // world transformation
     glm::mat4 model = glm::mat4(1.0f);
     lampShader.use();
-    lampShader.setMat4("projection", projection);
-    lampShader.setMat4("view", view);
+    lampShader.setMat4("projection", projection2);
+    lampShader.setMat4("view", view2);
     model = glm::mat4(1.0f);
     model = glm::translate(model, lightPos);
     model = glm::scale(model, glm::vec3(0.1f)); // a smaller cube

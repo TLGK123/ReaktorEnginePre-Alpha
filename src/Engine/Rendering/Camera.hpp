@@ -92,7 +92,7 @@ public:
      Matrix GetViewMatrix()
     {
         auto as = Matrix::LookAt(Position, Position + Front, Up);
-       // Debug::Log(as.ToString());
+        //Debug::Log(as.ToString());
         return as;
     }
     

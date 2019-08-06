@@ -522,7 +522,7 @@ namespace TmingEngine
         
         Matrix static LookAt(Vector3 cameraPos, Vector3 cameraTarget , Vector3 worldUp)
         {
-            Matrix mat4 = Matrix(1);
+            Matrix mat4 = Matrix(0);
             Vector3 cameraDirection = Vector3::Normalize(cameraTarget - cameraPos);
             Vector3 cameraRight     = Vector3::Normalize(Vector3::Cross(cameraDirection, worldUp));
             Vector3 cameraUp        = Vector3::Normalize(Vector3::Cross(cameraRight , cameraDirection));
@@ -534,8 +534,9 @@ namespace TmingEngine
         
             mat4.m30 = -Vector3::Dot(cameraRight , cameraPos);
             mat4.m31 = -Vector3::Dot(cameraUp , cameraPos);
-            mat4.m32 = -Vector3::Dot(cameraDirection , cameraPos);
-               
+            mat4.m32 = Vector3::Dot(cameraDirection , cameraPos);
+            
+            mat4.m33 =1;
             return mat4 ;
         }
         
@@ -582,7 +583,7 @@ namespace TmingEngine
         float * ToArray() const
         {
             float arry[] ={m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33};
-            return &arry[0];
+            return arry;
          
         }
     };
