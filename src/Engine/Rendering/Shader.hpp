@@ -190,7 +190,7 @@ public:
     
     void setMat4(const std::string &name, const Matrix &mat) const
     {
-        glUniform4f(glGetUniformLocation(ID, name.c_str()), mat.m03, mat.m13, mat.m23, mat.m33);
+        glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()) , 1 , GL_FALSE,  mat.ToArray());
     }
 
 private:

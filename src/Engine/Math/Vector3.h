@@ -301,6 +301,12 @@ namespace TmingEngine {
             return Vector3(x, y, z);
         }
         
+        static float Dot(const Vector3& v1, const Vector3& v2)
+        {
+
+            return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z ;
+        }
+        
         static Vector3 Normalize(const Vector3& v )
         {
             float len = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);

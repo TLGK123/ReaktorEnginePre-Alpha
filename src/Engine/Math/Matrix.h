@@ -522,23 +522,21 @@ namespace TmingEngine
         
         Matrix static LookAt(Vector3 cameraPos, Vector3 cameraTarget , Vector3 worldUp)
         {
-            Matrix mat4 = Matrix(0);
+            Matrix mat4 = Matrix(1);
             Vector3 cameraDirection = Vector3::Normalize(cameraTarget - cameraPos);
-            Vector3 cameraRight     = Vector3::Normalize(Vector3::Cross(worldUp , cameraDirection));
-            Vector3 cameraUp        = Vector3::Normalize(Vector3::Cross(cameraDirection, cameraRight));
+            Vector3 cameraRight     = Vector3::Normalize(Vector3::Cross(cameraDirection, worldUp));
+            Vector3 cameraUp        = Vector3::Normalize(Vector3::Cross(cameraRight , cameraDirection));
             
-            mat4.m00 = cameraRight.x;     mat4.m01 = cameraRight.y;     mat4.m02 = cameraRight.z;
-            mat4.m10 = cameraUp.x;        mat4.m11 = cameraUp.y;        mat4.m12 = cameraUp.z;
-            mat4.m20 = cameraDirection.x; mat4.m21 = cameraDirection.y; mat4.m22 = cameraDirection.z;
-            mat4.m33 =1;
-            
-            Matrix matP;
-            matP.m03 = -cameraTarget.x;
-            matP.m13 = -cameraTarget.y;
-            matP.m23 = -cameraTarget.z;
-            matP.m33 = 1;
-            
-            return mat4 * matP;
+            mat4.m00 = cameraRight.x;   mat4.m01 =   cameraUp.x;      mat4.m02 = - cameraDirection.x;
+            mat4.m10 = cameraRight.y;   mat4.m11 = cameraUp.y;        mat4.m12 = -cameraDirection.y;
+            mat4.m20 = cameraRight.z;   mat4.m21 =  cameraUp.z;       mat4.m22 = -cameraDirection.z;
+         
+        
+            mat4.m30 = -Vector3::Dot(cameraRight , cameraPos);
+            mat4.m31 = -Vector3::Dot(cameraUp , cameraPos);
+            mat4.m32 = -Vector3::Dot(cameraDirection , cameraPos);
+               
+            return mat4 ;
         }
         
         static float cot(float v)
@@ -568,18 +566,24 @@ namespace TmingEngine
             mt.m00 = cot(radian.GetRadian()/2) / aspect;
             mt.m11 = cot(radian.GetRadian()/2);
             mt.m22 = (far + near)  / (near - far);
-            mt.m32 = -1;
-            mt.m23 = 2 * near * far /(near -far );
+            mt.m23 = -1;
+            mt.m32 = 2 * near * far /(near -far );
             return mt;
         }
         
 
-            string ToString() const
-            {
+        string ToString() const
+        {
                 char tempBuffer[200];
                 sprintf(tempBuffer, "\n%10f, %10f, %10f, %10f,\n%10f, %10f, %10f, %10f,\n%10f, %10f, %10f, %10f,\n%10f, %10f, %10f, %10f\n", m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33);
                 return string(tempBuffer);
-            }
+        }
         
+        float * ToArray() const
+        {
+            float arry[] ={m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33};
+            return &arry[0];
+         
+        }
     };
 }
