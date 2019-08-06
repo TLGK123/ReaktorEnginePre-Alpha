@@ -91,7 +91,9 @@ public:
     // Returns the view matrix calculated using Euler Angles and the LookAt Matrix
      Matrix GetViewMatrix()
     {
-        return Matrix::LookAt(Position, Position + Front, Up);
+        auto as = Matrix::LookAt(Position, Position + Front, Up);
+       // Debug::Log(as.ToString());
+        return as;
     }
     
     glm::mat4 GetViewMatrix2()
