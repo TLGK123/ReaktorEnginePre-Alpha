@@ -422,7 +422,7 @@ void Screen::RenderSceneObjectForEditorCamera()
         lightingShader.setFloat("light.quadratic", 0.032f);
         
         lightingShader.setMat4("projection", projection);
-        lightingShader.setMat4("view", view);
+        lightingShader.setMat4("view", view1);
         lightingShader.setMat4("model", model);
         
        // lightingShader.setVec3("material.ambient",  1.0f, 0.5f, 0.31f);
