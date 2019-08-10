@@ -183,17 +183,33 @@ public:
 		glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 	}
 	// ------------------------------------------------------------------------
+    
+    void printPoint(const float * p ) const
+    {
+        std::cout<<"M:---------------- "<<std::endl;
+        while (p != NULL) {
+        std::cout<<"M: "<< *p <<std::endl;
+        p++;
+        }
+    }
+    
 	void setMat4(const std::string &name, const glm::mat4 &mat) const
 	{
         auto c = &mat[0][0];
+        //printPoint(c);
 		glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 	}
     
     void setMat4(const std::string &name, const Matrix mat) const
     {
-        auto b = mat.ToArray();
-        glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()) , 1 , GL_FALSE,  mat.ToArray());
+        float * b = new float [16];
+        mat.ToArray(b);
+        //printPoint(b);
+        glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()) , 1 , GL_FALSE,  b);
     }
+    
+    
+    
 
 private:
 	// utility function for checking shader compilation/linking errors.

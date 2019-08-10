@@ -580,18 +580,29 @@ namespace TmingEngine
                 return string(tempBuffer);
         }
         
-       const float * ToArray() const
+       void ToArray(float arry[16] ) const
         {
-           const float arry[] = {
+            arry[0] = m00;
+            arry[1] = m01;
+            arry[2] = m02;
+            arry[3] = m03;
+            
+            arry[4] = m10;
+            arry[5] = m11;
+            arry[6] = m12;
+            arry[7] = m13;
+            
+            arry[8] = m20;
+            arry[9] = m21;
+            arry[10] = m22;
+            arry[11] = m23;
+            
+            arry[12] = m30;
+            arry[13] = m31;
+            arry[14] = m32;
+            arry[15] = m33;
                 
-                m00, m01, m02, m03,
-                m10, m11, m12, m13,
-                m20, m21, m22, m23,
-                m30, m31, m32, m33
-                
-            };
-            return arry;
-         
+
         }
     };
 }
