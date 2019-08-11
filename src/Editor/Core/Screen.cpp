@@ -373,88 +373,9 @@ void Screen::InitImgui()
 void Screen::RenderSceneObjectForEditorCamera()
 {
 	Matrix projection = Matrix::Perspective(Radian(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
-    Debug::Log("自定义的 P：");
-    Debug::Log(projection.ToString());
-    Debug::Log("glm 的 P：");
-    glm::mat4 projection1 = glm::perspective(glm::radians(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
-    Debug::Log(projection1);
- 
-    Debug::Log("自定义的 V：");
     Matrix view = EditorCamera.GetViewMatrix();
-    Debug::Log(view.ToString());
-    Debug::Log("glm 的 V：");
-    glm::mat4 view1 =  EditorCamera.GetViewMatrix2();
-    Debug::Log(view1);
+    Matrix model = Matrix::Identity;
 
-    glm::vec3 lightColor;
-	// render container
-    glBindVertexArray(VAO);
-   // for (unsigned int i = 0; i < 10; i++)
-    {
-        // calculate the model matrix for each object and pass it to shader before drawing
-
-      Matrix model = Matrix::Translate(Vector3(3,1,1));
-//      Debug::Log(model.ToString());
-        
-      //  model = glm::translate(model, cubePositions[i]);
-      //  float angle = 20.0f * i;
-      // model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-
-        lightingShader.use();
-        lightingShader.setVec3("viewPos", EditorCamera.Position);
-        
-        lightingShader.setVec3("light.position", EditorCamera.Position);
-        lightingShader.setVec3("light.direction", EditorCamera.Front);
-//        lightingShader.setFloat("light.cutOff",   glm::cos(glm::radians(12.5f)));
-
-//        lightColor.x = sin(glfwGetTime() * 2.0f);
-//        lightColor.y = sin(glfwGetTime() * 0.7f);
-//        lightColor.z = sin(glfwGetTime() * 1.3f);
-        lightColor = glm::vec3(1.0f);
-        glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f); // decrease the influence
-        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
-        lightingShader.setVec3("light.ambient", ambientColor);
-        lightingShader.setVec3("light.diffuse", diffuseColor);
-        lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
-        
-        lightingShader.setFloat("light.constant",  1.0f);
-        lightingShader.setFloat("light.linear",    0.09f);
-        lightingShader.setFloat("light.quadratic", 0.032f);
-        
-        lightingShader.setMat4("projection", projection);
-        lightingShader.setMat4("view", view1);
-        lightingShader.setMat4("model", model);
-        
-       // lightingShader.setVec3("material.ambient",  1.0f, 0.5f, 0.31f);
-       // lightingShader.setVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
-       // lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-        lightingShader.setFloat("material.shininess", 32.0f);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture1);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture2);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-    }
-    
-    // world transformation
-    glm::mat4 model = glm::mat4(1.0f);
-    lampShader.use();
-    lampShader.setMat4("projection", projection);
-    lampShader.setMat4("view", view);
-    model = glm::mat4(1.0f);
-    model = glm::translate(model, lightPos);
-    model = glm::scale(model, glm::vec3(0.1f)); // a smaller cube
-    lampShader.setMat4("model", model);
-    lampShader.setVec3("lightColor", lightColor);
-    
-    glBindVertexArray(lightVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-    
-    lightingShader.use();
-    model = glm::mat4(1.0f);
-    lightingShader.setMat4("model", model);
-    ourModel.Draw(lightingShader);
-    
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     OutLineShader.use();

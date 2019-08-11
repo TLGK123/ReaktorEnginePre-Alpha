@@ -24,3 +24,14 @@
 //		return string(tempBuffer);
 //	}
 //}
+
+
+#include "Matrix.h"
+using namespace TmingEngine;
+    const Matrix Matrix::Identity
+    (
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+    );
