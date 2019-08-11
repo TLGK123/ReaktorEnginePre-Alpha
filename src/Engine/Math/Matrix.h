@@ -580,7 +580,10 @@ namespace TmingEngine
                 return string(tempBuffer);
         }
         
-       void ToArray(float arry[16] ) const
+        static const Matrix Identity;
+  
+        
+        void ToArray(float arry[16] ) const
         {
             arry[0] = m00;
             arry[1] = m01;
@@ -602,7 +605,6 @@ namespace TmingEngine
             arry[14] = m32;
             arry[15] = m33;
                 
-
         }
     };
 }
