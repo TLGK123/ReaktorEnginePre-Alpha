@@ -348,8 +348,8 @@ ENDIF()
 # Only generate this target if no higher-level project already has
 IF (NOT TARGET uninstall)
   # add make uninstall capability
-  CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules/cmake_uninstall.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake" IMMEDIATE @ONLY)
-  ADD_CUSTOM_TARGET(uninstall "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
+  #CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules/cmake_uninstall.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake" IMMEDIATE @ONLY)
+  #ADD_CUSTOM_TARGET(uninstall "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 ENDIF()
 
 IF(HUNTER_ENABLED)
@@ -577,7 +577,7 @@ IF ( ASSIMP_BUILD_SAMPLES)
 ENDIF ( ASSIMP_BUILD_SAMPLES )
 
 IF ( ASSIMP_BUILD_TESTS )
-  ADD_SUBDIRECTORY( test/ )
+#  ADD_SUBDIRECTORY( test/ )
 ENDIF ( ASSIMP_BUILD_TESTS )
 
 # Generate a pkg-config .pc for the Assimp library.
