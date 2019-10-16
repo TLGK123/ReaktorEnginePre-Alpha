@@ -85,7 +85,7 @@ include_directories("../ThirdParty/SPIRV-Cross-2019-03-29")
 set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
 link_directories(${libpath})
 
-add_library_beautiful(TmingEngine  ${headers} ${sources})
+add_library_beautiful(TmingEngine STATIC ${headers} ${sources})
 
 
 if(WIN32)

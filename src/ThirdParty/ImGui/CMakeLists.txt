@@ -3,7 +3,7 @@ file (GLOB heads *.h)
 file( GLOB sources *.cpp)
 include_directories("../../../include")
 
-add_library_beautiful(ImGui ${heads} ${sources})
+add_library_beautiful(ImGui STATIC ${heads} ${sources})
 
 add_definitions(-DCOMPILING_LIB)
 add_definitions(-DIMGUI_IMPL_OPENGL_LOADER_GLAD)
