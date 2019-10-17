@@ -276,10 +276,11 @@
 #include "../Core/EngineDefs.h"
 #include <string>
 
+
+using namespace std;
 namespace TmingEngine
 {
-    //一个纯量（a）和向量（bi + cj + dk）的组合。
-    ENGINE_CLASS class Quaternion
+	ENGINE_CLASS class Quaternion
     {
     public:
         float x;
