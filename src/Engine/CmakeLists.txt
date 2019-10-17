@@ -72,7 +72,6 @@ file(GLOB_RECURSE sources
 "Rendering/*.c??"
 
 ) 
-set(CXX_STANDARD 17)
 
 include_directories("../../include")									#添加头文件目录
 include_directories("../Engine")    	
