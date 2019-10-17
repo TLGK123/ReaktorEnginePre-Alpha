@@ -1,4 +1,4 @@
-#include "Screen.h"
+﻿#include "Screen.h"
 #include <iostream>
 #include "Stb_Image/stb_image.h"
 
@@ -305,7 +305,7 @@ void Screen::RenderFrameBuffer()
 
 void Screen::InitFrameBufer()
 {
-	// 创建一个帧缓冲对象，并绑定它
+	//创建一个帧缓冲对象，并绑定它
 	//unsigned int framebuffer;
 	glGenFramebuffers(1, &framebuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
@@ -360,7 +360,7 @@ void Screen::InitImgui()
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	string fontpath = FileSystem::getPath("resources/font/minizhunyuan.ttf");
-	ImFont* font = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 16.0f, NULL, io.Fonts->GetGlyphRangesChineseFull());
+	//ImFont* font = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 16.0f, NULL, io.Fonts->GetGlyphRangesChineseFull());
 
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 
