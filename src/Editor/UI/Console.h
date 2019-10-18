@@ -6,7 +6,7 @@
 #include "Core/Context.h"
 #include "Widget.h"
 #include "im.h"
-#include "../../../src/Engine/Log/Log.h"
+#include "Core/Log/Log.h"
 
 
 extern "C"

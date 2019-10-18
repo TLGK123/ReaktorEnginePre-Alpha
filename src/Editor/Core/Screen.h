@@ -8,7 +8,6 @@
 #include "Widget.h"
 #include "SceneView.h"
 //#include "DemoMenu.h"
-#include "Log/Log.h"
 //#include "demo.h"
 #include "Project.h"
 #include "Hierachy.h"
@@ -19,6 +18,7 @@
 #include "Rendering/Camera.hpp"
 #include "../../Engine/Core/Math/Radian.h"
 #include "../../Engine/Core/Math/Matrix.h"
+#include "../../Engine/Core/Log/Log.h"
 
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )

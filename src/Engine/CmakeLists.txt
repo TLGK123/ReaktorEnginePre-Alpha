@@ -1,13 +1,11 @@
 file(GLOB_RECURSE headers 
 "Core/*.h"
-"Log/*.h"
+"Core/Log/*.h"
 "Core/*.h??"
 "Plantform/FileSystem/*.h"
 "Plantform/FileSystem/*.hpp"
 "Scene/Components/Transform.h"
 "Scene/Components/IComponent.h"
-"imgui/*.h"
-"imgui/*.h??"
 "Core/Math/Vector2.h"
 "Core/Math/Vector3.h"
 "Core/Math/Matrix.h"
@@ -41,7 +39,7 @@ file(GLOB_RECURSE headers
 )
 file(GLOB_RECURSE sources 
 "Core/*.cpp" 
-"Log/*.cpp"
+"Core/Log/*.cpp"
 "Plantform/FileSystem/*.cpp" 
 "imgui/*.c"
 "imgui/*.c??"
@@ -74,7 +72,7 @@ file(GLOB_RECURSE sources
 ) 
 
 include_directories("../../include")									#添加头文件目录
-include_directories("../Engine")    	
+include_directories(".")    	
 include_directories("../ThirdParty/Box2D")
 include_directories("../ThirdParty/Box2D/Testbed/Framework")            #添加头文件目录
 include_directories("../ThirdParty/Vulkan_1.1.106.0/shaderc")
@@ -89,10 +87,8 @@ add_library_beautiful(TmingEngine STATIC ${headers} ${sources})
 
 if(WIN32)
 find_library (GLFW glfw3.lib ${libpath})
-#find_library (ASSIMP assimp-vc140-mt.lib ${libpath})
 elseif(APPLE)
-find_library (GLFW libglfw3.a ${libpath}) 
-#find_library (ASSIMP libassimp.4.1.0.dylib ${libpath})
+find_library (GLFW libglfw3.a ${libpath})
 endif()
 
 #target_link_libraries(TmingEngine lua)

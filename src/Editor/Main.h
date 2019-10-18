@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include "Core/Engine.h"
 #include "Core/EngineDefs.h"
-#include "Log/Log.h"
+#include "Core/Log/Log.h"
 #include "Core/SmartPtr.h"
 
 
