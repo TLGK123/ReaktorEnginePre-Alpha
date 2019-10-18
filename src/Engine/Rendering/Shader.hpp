@@ -7,9 +7,9 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <FileSystem/FileSystem.h>
+#include "../Plantform/FileSystem/FileSystem.h"
 #include "Core/GameObject.hpp"
-#include "Math/Matrix.h"
+#include "../Core/Math/Matrix.h"
 
 class Shader
 {

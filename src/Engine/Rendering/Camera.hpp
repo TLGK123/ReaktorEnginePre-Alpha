@@ -14,7 +14,7 @@
 #include "Core/Context.h"
 #include "Core/GameObject.hpp"
 #include <vector>
-#include "../Math/Matrix.h"
+#include "../Core/Math/Matrix.h"
 
 namespace TmingEngine
 {

@@ -6,7 +6,7 @@
 #include <string>
 //=============================
 
-namespace TmingEngine::Math
+namespace TmingEngine
 {
 	class Vector3;
 	class Matrix;

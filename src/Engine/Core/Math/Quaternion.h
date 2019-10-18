@@ -273,7 +273,7 @@
 //	inline ENGINE_CLASS Quaternion operator*(float lhs, const Quaternion& rhs) { return rhs * lhs; }
 //}
 
-#include "../Core/EngineDefs.h"
+#include "../EngineDefs.h"
 #include <string>
 
 
