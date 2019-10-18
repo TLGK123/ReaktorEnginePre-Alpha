@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/EngineDefs.h"
+#include "../EngineDefs.h"
 #include <string>
 
 namespace TmingEngine
