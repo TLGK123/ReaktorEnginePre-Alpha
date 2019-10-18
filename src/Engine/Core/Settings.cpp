@@ -8,7 +8,7 @@
 
 //= NAMESPACES ================
 using namespace std;
-using namespace TmingEngine::Math;
+using namespace TmingEngine;
 //=============================
 
 namespace SettingsIO
