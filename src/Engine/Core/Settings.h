@@ -3,8 +3,8 @@
 
 //= INCLUDES ===============
 #include "EngineDefs.h"
-#include "../Math/Vector2.h"
-#include "../Math/Vector4.h"
+#include "Math/Vector2.h"
+#include "Math/Vector4.h"
 //==========================
 
 namespace TmingEngine

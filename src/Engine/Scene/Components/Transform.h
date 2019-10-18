@@ -4,9 +4,9 @@
 //= INCLUDES =====================
 #include "IComponent.h"
 #include <vector>
-#include "../../Math/Vector3.h"
-#include "../../Math/Quaternion.h"
-#include "../../Math/Matrix.h"
+#include "../../Core/Math/Vector3.h"
+#include "../../Core/Math/Quaternion.h"
+#include "../../Core/Math/Matrix.h"
 #include "../../Core/GameObject.hpp"
 //#include "../Scene.h"
 //================================

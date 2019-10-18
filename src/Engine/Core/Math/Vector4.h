@@ -2,7 +2,7 @@
 #pragma once
 
 //= INCLUDES ==================
-#include "../Core/EngineDefs.h"
+#include "../EngineDefs.h"
 #include <string>
 //=============================
 
