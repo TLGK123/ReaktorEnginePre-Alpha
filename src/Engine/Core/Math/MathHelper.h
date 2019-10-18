@@ -5,7 +5,7 @@
 #include <cmath>
 #include <math.h>
 #include <limits>
-#include "../Core/EngineDefs.h"
+#include "../EngineDefs.h"
 //=============================
 
 namespace TmingEngine

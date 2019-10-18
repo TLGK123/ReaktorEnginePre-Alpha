@@ -419,7 +419,7 @@
 //}
 #pragma once
 
-#include "../Core/EngineDefs.h"
+#include "../EngineDefs.h"
 #include <string>
 #include "Vector3.h"
 #include <math.h>
