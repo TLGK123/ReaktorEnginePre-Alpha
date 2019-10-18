@@ -3,9 +3,9 @@
 #include "Core/Context.h"
 #include "Widget.h"
 #include "im.h"
-#include "../../../src/Engine/Core/Engine.h"
-#include "../../../src/Engine/Scene/Components/Transform.h"
-#include "../../../src/Engine/Log/Log.h"
+#include "Core/Engine.h"
+#include "Scene/Components/Transform.h"
+#include "Core/Log/Log.h"
 #include "Selection.hpp"
 
 namespace TmingEngine
