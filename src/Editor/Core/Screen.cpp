@@ -372,10 +372,13 @@ void Screen::InitImgui()
 
 void Screen::RenderSceneObjectForEditorCamera()
 {
-	Matrix projection = Matrix::Perspective(Radian(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
-    Matrix view = EditorCamera.GetViewMatrix();
-    Matrix model = Matrix::Identity;
-
+	//Matrix projection = Matrix::Perspective(Radian(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
+    //Matrix view = EditorCamera.GetViewMatrix();
+    //Matrix model = Matrix::Identit
+	//Matrix view = EditorCamera.GetViewMatrix(); // remove translation from the view matrix
+	glm::mat4 projection = glm::perspective(glm::radians(EditorCamera.Fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+	glm::mat4 view = EditorCamera.GetViewMatrixGlm();
+	glm::mat4 model = glm::mat4(1);
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     OutLineShader.use();
@@ -395,11 +398,13 @@ void Screen::Render_SkyBox_ForEditor()
     //Debug::Log(" 天空盒 update editor");
 
     // draw skybox as last
-	glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+	glDepthFunc(GL_LEQUAL);
 	skyboxShader.use();
-	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
-	Matrix view = EditorCamera.GetViewMatrix(); // remove translation from the view matrix
+	//Matrix projection = glm::perspective(glm::radians(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(EditorCamera.Fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+	
+	//Matrix view = EditorCamera.GetViewMatrix(); // remove translation from the view matrix
+	glm::mat4 view = EditorCamera.GetViewMatrixGlm();
 	skyboxShader.setMat4("view", view);
 	skyboxShader.setMat4("projection", projection);
 	// skybox cube
