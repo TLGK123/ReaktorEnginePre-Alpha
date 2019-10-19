@@ -1,4 +1,4 @@
-#ifndef SHADER_H
+﻿#ifndef SHADER_H
 #define SHADER_H
 
 #include "im.h"
@@ -151,10 +151,10 @@ public:
 		glUniform2f(glGetUniformLocation(ID, name.c_str()), x, y);
 	}
 	// ------------------------------------------------------------------------
-    void setVec3(const std::string &name, const Vector3 &value) const
-    {
-        glUniform3f(glGetUniformLocation(ID, name.c_str()),value.x, value.y, value.z);
-    }
+    //void setVec3(const std::string &name, const Vector3 &value) const
+    //{
+    //    glUniform3f(glGetUniformLocation(ID, name.c_str()),value.x, value.y, value.z);
+    //}
 	void setVec3(const std::string &name, const glm::vec3 &value) const
 	{
 		glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
@@ -200,13 +200,13 @@ public:
 		glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 	}
     
-    void setMat4(const std::string &name, const Matrix mat) const
-    {
-        float * b = new float [16];
-        mat.ToArray(b);
-        //printPoint(b);
-        glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()) , 1 , GL_FALSE,  b);
-    }
+    //void setMat4(const std::string &name, const Matrix mat) const
+    //{
+    //    float * b = new float [16];
+    //    mat.ToArray(b);
+    //    //printPoint(b);
+    //    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()) , 1 , GL_FALSE,  b);
+    //}
     
     
     
