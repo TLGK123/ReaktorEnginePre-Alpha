@@ -28,7 +28,7 @@ int main()
     Debug::Log("hello world");
     
 
- while (!screen->ScreenShouldClose())
+	while (!screen->ScreenShouldClose())
 	{
         engine->Tick();
         screen->Update();
