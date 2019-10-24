@@ -7,8 +7,8 @@ using namespace TmingEngine;
 
 
 
-const unsigned int SCR_WIDTH = 1886;
-const unsigned int SCR_HEIGHT = 1220;
+const unsigned int SCR_WIDTH = 1366;
+const unsigned int SCR_HEIGHT = 768;
 
 const unsigned int frame_width = 1366;
 const unsigned int frame_heigh = 768;
@@ -215,7 +215,13 @@ void Screen::InitOpenGL()
 {
 	// glfw: initialize and configure
 	// ------------------------------
-	glfwInit();
+	if (!glfwInit())
+	{
+		IM_ASSERT("glfwInit()  failure");
+		return;
+	}
+		
+
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -224,13 +230,14 @@ void Screen::InitOpenGL()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // uncomment this statement to fix compilation on OS X
 #endif
 
-	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "TmingEngine", NULL, NULL);
 	if (window == NULL)
 	{
-		std::cout << "Failed to create GLFW window" << std::endl;
+		IM_ASSERT("Failed to create GLFW window");
 		glfwTerminate();
 		return;
 	}
+	IM_ASSERT(1 > 3 && "Failed to test IM_ASSERT");
 	glfwMakeContextCurrent(window);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
