@@ -359,6 +359,14 @@ void Screen::InitImgui()
 	// Setup ImGui binding
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+	//io.ConfigViewportsNoAutoMerge = true;
+	//io.ConfigViewportsNoTaskBarIcon = true;
+
 	string fontpath = FileSystem::getPath("resources/font/minizhunyuan.ttf");
 	//ImFont* font = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 16.0f, NULL, io.Fonts->GetGlyphRangesChineseFull());
 
@@ -526,12 +534,16 @@ void Screen::InitSkyBox()
 	//   return textureID;       返回 的是天空盒的图片id
 }
 
+bool show_demo_window = true;
 void Screen::Render_EditorUI()
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 	{
+		if (show_demo_window)
+			ImGui::ShowDemoWindow(&show_demo_window);
+
 		static float f = 0.0f;
 		static int counter = 0;
 		static bool showLog = false;
@@ -584,6 +596,18 @@ void Screen::Render_EditorUI()
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+	// Update and Render additional Platform Windows
+// (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
+//  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
+	ImGuiIO& io = ImGui::GetIO();
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		GLFWwindow* backup_current_context = glfwGetCurrentContext();
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+		glfwMakeContextCurrent(backup_current_context);
+	}
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
