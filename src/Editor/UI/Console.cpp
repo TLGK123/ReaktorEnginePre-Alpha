@@ -16,7 +16,7 @@ namespace TmingEngine
     {
         bool p_open =true;
         ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-        if (!ImGui::Begin("Console", &p_open, ImGuiWindowFlags_None))
+        if (!ImGui::Begin("Console", &p_open))
         {
             ImGui::End();
             return;
