@@ -217,7 +217,7 @@ void Screen::InitOpenGL()
 	// ------------------------------
 	if (!glfwInit())
 	{
-		IM_ASSERT("glfwInit()  failure");
+		IM_ASSERT(false && "glfwInit()  failure");
 		return;
 	}
 		
@@ -237,8 +237,9 @@ void Screen::InitOpenGL()
 		glfwTerminate();
 		return;
 	}
-	IM_ASSERT(1 > 3 && "Failed to test IM_ASSERT");
+	//IM_ASSERT(1 > 3 && "Failed to test IM_ASSERT");
 	glfwMakeContextCurrent(window);
+	glfwSwapInterval(1); // Enable vsync  开启垂直同步 游戏最大帧率和显示器刷新帧率一致
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -353,6 +354,7 @@ void Screen::ShutDown()
 
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
+	glfwDestroyWindow(window);
 	glfwTerminate();
 }
 
@@ -363,7 +365,9 @@ bool Screen::ScreenShouldClose()
 
 void Screen::InitImgui()
 {
-	// Setup ImGui binding
+	const char* glsl_version = "#version 150";
+	// Setup Dear ImGui context
+	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
@@ -374,15 +378,36 @@ void Screen::InitImgui()
 	//io.ConfigViewportsNoAutoMerge = true;
 	//io.ConfigViewportsNoTaskBarIcon = true;
 
-	string fontpath = FileSystem::getPath("resources/font/minizhunyuan.ttf");
-	//ImFont* font = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 16.0f, NULL, io.Fonts->GetGlyphRangesChineseFull());
+	// Setup style
+	ImGuiStyle& style = ImGui::GetStyle();
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		style.WindowRounding = 0.0f;
+		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+	}
 
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
-
-	const char* glsl_version = "#version 150";
 	ImGui_ImplOpenGL3_Init(glsl_version);
-	// Setup style
-	ImGui::StyleColorsDark();
+
+	// Load Fonts
+	// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
+	// - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
+	// - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
+	// - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
+	// - Read 'misc/fonts/README.txt' for more instructions and details.
+	// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
+	//io.Fonts->AddFontDefault();
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
+	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
+	//IM_ASSERT(font != NULL);
+
+	//string fontpath = FileSystem::getPath("resources/font/minizhunyuan.ttf");
+	//ImFont* font = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 16.0f, NULL, io.Fonts->GetGlyphRangesChineseFull());
+
+
 }
 
 void Screen::RenderSceneObjectForEditorCamera()
@@ -564,14 +589,13 @@ void Screen::Render_EditorUI()
 		if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
 			counter++;
 
-		if (ImGui::Button("ShowLog"))
-		{
-			showLog = true;
-		}
+		//if (ImGui::Button("ShowLog"))
+		//{
+		//	showLog = true;
+		//}
 
 		ImGui::SameLine();
 		ImGui::Text("counter = %d", counter);
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 		ImGui::Image((void*)textureColorbuffer, ImVec2(320, 180), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
@@ -586,11 +610,11 @@ void Screen::Render_EditorUI()
 		ImGui::End();
 	}
 
-	if (show_demo_window)
-	{
-		ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!
-		ImGui::ShowDemoWindow(&show_demo_window);
-	}
+	//if (show_demo_window)
+	//{
+	//	ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!
+	//	ImGui::ShowDemoWindow(&show_demo_window);
+	//}
 
 	//	bool showDebug = true;
 	//	screenContext->GetSubsystem<Console>()->Draw("Hello Debug", &showDebug);
@@ -604,7 +628,7 @@ void Screen::Render_EditorUI()
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-	// Update and Render additional Platform Windows
+// Update and Render additional Platform Windows
 // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
 //  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
 	ImGuiIO& io = ImGui::GetIO();
