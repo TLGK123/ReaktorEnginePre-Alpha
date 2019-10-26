@@ -5,6 +5,10 @@ TextEditor editor;
 string fileToEdit = "ImGuiColorTextEdit/TextEditor.cpp";
 void SaveFile(string path, string content);
 
+TmingEngine::CodeEditor::~CodeEditor()
+{
+}
+
 void TmingEngine::CodeEditor::Begin()
 {
 	auto lang = TextEditor::LanguageDefinition::GLSL();
@@ -75,7 +79,13 @@ void TmingEngine::CodeEditor::Begin()
 
 void TmingEngine::CodeEditor::Update()
 {
-	ImGui::BeginChild("right editor", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()), false, ImGuiWindowFlags_MenuBar);
+	bool p_open = true;
+	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+	if (!ImGui::Begin("CodeEditor", &p_open))
+	{
+		ImGui::End();
+		return;
+	}
 
 	auto cpos = editor.GetCursorPosition();
 	//  ImGui::Begin("Text Editor Demo", nullptr, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_MenuBar);
@@ -146,6 +156,10 @@ void TmingEngine::CodeEditor::Update()
 		editor.GetLanguageDefinition().mName.c_str(), fileToEdit.c_str());
 
 	editor.Render("TextEditor");
-	ImGui::EndChild();
+	ImGui::End();
  
+}
+
+void TmingEngine::CodeEditor::End()
+{
 }
