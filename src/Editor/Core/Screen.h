@@ -28,7 +28,7 @@ void processInput(GLFWwindow *window);
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-
+void ShowExampleAppDockSpace(bool* p_open);
 
 
 
@@ -80,7 +80,6 @@ public:
 	void InitEditorWidget(Context * context);
 
 	int GetCurrentFrameTexture();
-
 	void InitFrameBufer();
     void CreateFrameBuferCa();
     void RenderFrameBuffer();
