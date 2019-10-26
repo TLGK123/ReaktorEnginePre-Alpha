@@ -15,6 +15,7 @@
 #include "Game.hpp"
 #include "Profiler.hpp"
 #include "Console.h"
+#include "CodeEditor.h"
 #include "Rendering/Camera.hpp"
 #include "../../Engine/Core/Math/Radian.h"
 #include "../../Engine/Core/Math/Matrix.h"

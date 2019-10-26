@@ -276,6 +276,7 @@ void Screen::InitEditorWidget(Context* context)
 	RegisteWidget(new Game(context));
 	RegisteWidget(new Profiler(context));
 	RegisteWidget(new Console(context));
+	RegisteWidget(new CodeEditor(context));
 	Debug::Log(" Editor 初始化窗口成功  ");
 }
 

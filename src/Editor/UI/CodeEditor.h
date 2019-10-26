@@ -14,10 +14,7 @@ namespace TmingEngine
 	class CodeEditor : public Widget
 	{
 	public:
-		//ImGuiTextBuffer     Buf;
-		//ImGuiTextFilter     Filter;
-		//ImVector<int>       LineOffsets;        // Index to lines offset
-		//bool                ScrollToBottom;
+
 
 		CodeEditor(Context* context)
 		{
@@ -28,10 +25,6 @@ namespace TmingEngine
 		void Update();
 		void End();
 
-		void Clear();
-		void AddLog(const char* fmt, ...);
-		void Draw(const char* title, bool* p_open);
-		void Draw2(const char* title, bool* p_open);
 	};
 }
 #endif
