@@ -22,10 +22,17 @@
 #include <cstdlib>
 #include <string>
 
-#include "TextEditor/TextEditor.h"
+
 
 namespace TmingEngine
 {
+
+	enum ProjectStyle
+	{
+		OneLoyout,
+		TwoLayout,
+	};
+
 	class Project :public Widget
 	{
 	public:
@@ -41,6 +48,7 @@ namespace TmingEngine
 		void End();
 
 		std::vector<std::string> FileFilter(const char * dir , std::vector<std::string> filefilters);
+
 		
 	};
 }
