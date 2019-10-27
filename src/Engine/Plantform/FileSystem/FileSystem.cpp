@@ -766,7 +766,7 @@ namespace TmingEngine
 	}
 	
     string s = "AssetPath: " + path+"\n";
-    Debug::Log(s.c_str());
+    //Debug::Log(s.c_str());
 	return path;
 	}
 	
