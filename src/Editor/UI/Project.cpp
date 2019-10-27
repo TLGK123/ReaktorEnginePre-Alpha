@@ -176,7 +176,7 @@ void AssetTree(string path)
                     string s = string(path) + "/" + t.name;
                     if (ImGui::TreeNode(t.name.c_str()))
                     {
-                     ImGui::Text("%s", t.name.c_str());
+                     //ImGui::Text("%s", t.name.c_str());
                      AssetTree(s);
                      ImGui::TreePop();
                     }
