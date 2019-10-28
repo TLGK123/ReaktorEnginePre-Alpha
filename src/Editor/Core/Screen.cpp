@@ -710,7 +710,11 @@ void Screen::ShowExampleAppDockSpace(bool* p_open)
 			if (ImGui::MenuItem("Profile"))
 			{
 				GetSubWidget<Profiler>()->Show();
-			}		
+			}
+			if (ImGui::MenuItem("CodeEditor"))
+			{
+				GetSubWidget<CodeEditor>()->Show();
+			}
 			ImGui::EndMenu();
 		}
 
