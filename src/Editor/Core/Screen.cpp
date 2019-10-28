@@ -568,6 +568,7 @@ void Screen::InitSkyBox()
 }
 
 bool show_demo_window = true;
+bool show_debug_window = true;
 void Screen::Render_EditorUI()
 {
 	ImGui_ImplOpenGL3_NewFrame();
@@ -577,29 +578,7 @@ void Screen::Render_EditorUI()
 		if (show_demo_window)
 			ImGui::ShowDemoWindow(&show_demo_window);
 
-		static float f = 0.0f;
-		static int counter = 0;
-		static bool showLog = false;
-		ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
-		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-		ImGui::ColorEdit3("clear color", (float*)& clear_color); // Edit 3 floats representing a color
-
-		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our windows open/close state
-		ImGui::Checkbox("Another Window", &show_another_window);
-
-		if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
-			counter++;
-
-		//if (ImGui::Button("ShowLog"))
-		//{
-		//	showLog = true;
-		//}
-
-		ImGui::SameLine();
-		ImGui::Text("counter = %d", counter);
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
-		ImGui::Image((void*)textureColorbuffer, ImVec2(320, 180), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+	
 	}
 
 	if (show_another_window)
@@ -636,6 +615,34 @@ void Screen::Render_EditorUI()
 	}
 }
 
+//没有指定任何的Window就是创建到Debug Windows中
+void Screen::ShowDebugWindows(bool* p_open)
+{
+	static float f = 0.0f;
+	static int counter = 0;
+	static bool showLog = false;
+	ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
+	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+	ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+
+	ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our windows open/close state
+	ImGui::Checkbox("Another Window", &show_another_window);
+
+	if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
+		counter++;
+
+	//if (ImGui::Button("ShowLog"))
+	//{
+	//	showLog = true;
+	//}
+
+	ImGui::SameLine();
+	ImGui::Text("counter = %d", counter);
+	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+	ImGui::Image((void*)textureColorbuffer, ImVec2(320, 180), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+
+}
 
 void Screen::ShowExampleAppDockSpace(bool* p_open)
 {
