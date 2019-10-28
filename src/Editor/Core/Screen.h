@@ -29,7 +29,7 @@ void processInput(GLFWwindow *window);
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void ShowExampleAppDockSpace(bool* p_open);
+
 
 
 
@@ -84,7 +84,8 @@ public:
 	void InitFrameBufer();
     void CreateFrameBuferCa();
     void RenderFrameBuffer();
-    
+	void ShowExampleAppDockSpace(bool* p_open);
+
 	Screen(Context* context) : Subsystem(context)
 	{
 		context->RegisterSubsystem(this);

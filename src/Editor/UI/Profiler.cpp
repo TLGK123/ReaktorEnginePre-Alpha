@@ -2,19 +2,20 @@
 //  Profiler.cpp
 //  01_CaculateCode
 //
-//  Created by WangYiMing on 2019/5/15.
+//  Created by blue on 2019/5/15.
 //
 
 #include "Profiler.hpp"
 #include "ImNodes/ImNodes.h"
 #include "ImNodes/ImNodesEz.h"
-TmingEngine::Profiler::~Profiler()
+
+using namespace TmingEngine;
+
+Profiler::~Profiler()
 {
+
 }
 
-void TmingEngine::Profiler::Begin()
-{
-}
 
 /// A structure defining a connection between two slots of two nodes.
 struct Connection
@@ -102,12 +103,16 @@ std::map<std::string, MyNode*(*)()> available_nodes{
 };
 std::vector<MyNode*> nodes;
 
-
-void TmingEngine::Profiler::Update()
+void Profiler::Begin()
 {
-    bool p_open = true;
+	m_isVisible = false;
+}
+
+void Profiler::Update()
+{
+
     ImGui::SetNextWindowSize(ImVec2(350, 180), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Profiler", &p_open))
+    if (!ImGui::Begin("Profiler", &m_isVisible))
     {
         ImGui::End();
         return;
@@ -237,6 +242,6 @@ void TmingEngine::Profiler::Update()
     
 }
 
-void TmingEngine::Profiler::End()
+void Profiler::End()
 {
 }

@@ -617,7 +617,6 @@ void Screen::Render_EditorUI()
 	//	screenContext->GetSubsystem<Console>()->Draw2("Hello Debug", &showDebug);
 
 	GetSubWidget<SceneView>()->ImageId = CurrentFrameTextureID;
-
 	GetSubWidget<Game>()->ImageId = 0;
 	DrawScreen();
 
@@ -638,7 +637,7 @@ void Screen::Render_EditorUI()
 }
 
 
-void ShowExampleAppDockSpace(bool* p_open)
+void Screen::ShowExampleAppDockSpace(bool* p_open)
 {
 	static bool opt_fullscreen_persistant = true;
 	bool opt_fullscreen = opt_fullscreen_persistant;
@@ -689,7 +688,7 @@ void ShowExampleAppDockSpace(bool* p_open)
 
 	if (ImGui::BeginMenuBar())
 	{
-		if (ImGui::BeginMenu("Docking"))
+		if (ImGui::BeginMenu("File"))
 		{
 			// Disabling fullscreen would allow the window to be moved to the front of other windows,
 			// which we can't undo at the moment without finer window depth/z control.
@@ -705,6 +704,16 @@ void ShowExampleAppDockSpace(bool* p_open)
 				*p_open = false;
 			ImGui::EndMenu();
 		}
+
+		if (ImGui::BeginMenu("Window"))
+		{
+			if (ImGui::MenuItem("Profile"))
+			{
+				GetSubWidget<Profiler>()->Show();
+			}		
+			ImGui::EndMenu();
+		}
+
 		ImGui::EndMenuBar();
 	}
 

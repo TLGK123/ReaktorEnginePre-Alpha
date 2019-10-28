@@ -2,7 +2,7 @@
 //  Inspector.cpp
 //  01_CaculateCode
 //
-//  Created by WangYiMing on 2019/5/15.
+//  Created by blue on 2019/5/15.
 //
 
 #include "Inspector.hpp"

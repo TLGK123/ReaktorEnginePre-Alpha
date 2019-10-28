@@ -1,8 +1,6 @@
 //
 //  Profiler.hpp
-//  01_CaculateCode
-//
-//  Created by WangYiMing on 2019/5/15.
+//  Created by blue on 2019/5/15.
 //
 
 #ifndef Profiler_hpp
@@ -31,7 +29,6 @@ namespace TmingEngine
         void End();
         
         int ImageId;
-        
     };
 }
 

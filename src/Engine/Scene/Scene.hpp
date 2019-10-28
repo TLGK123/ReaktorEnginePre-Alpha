@@ -2,7 +2,7 @@
 //  Scene.hpp
 //  TmingEngine
 //
-//  Created by WangYiMing on 2019/5/21.
+//  Created by blue on 2019/5/21.
 //
 
 #ifndef Scene_hpp
