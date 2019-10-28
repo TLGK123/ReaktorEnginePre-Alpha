@@ -46,7 +46,7 @@ namespace TmingEngine
 		void Begin();
 		void Update();
 		void End();
-
+		std::string rightContent;
 		std::vector<std::string> FileFilter(const char * dir , std::vector<std::string> filefilters);
 
 		

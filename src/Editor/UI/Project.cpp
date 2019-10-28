@@ -34,7 +34,14 @@ void TmingEngine::Project::Update()
 		auto current = FileSystem::getPath("");
 		//AssetTree(current);
 		AssetTreeL(current);
-		//AssetTreeR(current);
+		ImGui::NextColumn;
+
+		if (!rightContent.empty())
+		{
+			AssetTreeR(rightContent);
+		}
+		
+		ImGui::NextColumn;
 		ImGui::TreePop();
 	}
 	ImGui::Columns(1);
@@ -247,6 +254,7 @@ void AssetTreeL(string path)
 					{
 						//AssetTreeR(current);
 						rightContent = current;
+						std::cout<<" ------------- rightContent: "<< rightContent <<std::endl;
 					}
 				}
 			}
@@ -311,6 +319,7 @@ void AssetTreeR(string path)
 				//		ImGui::TreePop();
 				//	}
 				//}
+				ImGui::Text(t.name.c_str());
 			}
 			else
 			{
@@ -331,9 +340,9 @@ void AssetTreeR(string path)
 				//				   //editor.SetText(contentText);
 				//}
 
-				ImGui::NextColumn();
+				
 				ImGui::Text(t.name.c_str());
-				ImGui::NextColumn();
+			
 			}
 		}
 	}
