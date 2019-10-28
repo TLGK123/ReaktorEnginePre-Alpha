@@ -16,12 +16,12 @@ namespace TmingEngine
 		virtual void Update() = 0;
 		virtual void End();
 		bool GetIsWindow() { return m_isWindow; }
-		void Show() { m_isVisible = true; };
-		void Hide() { m_isVisible = false; };
+		void Show() { p_open = true; };
+		void Hide() { p_open = false; };
 
 	protected:
 		TmingEngine::Context* m_context = nullptr;
-		bool m_isVisible = false;
+		bool p_open = false;
 		bool m_isWindow = true;
 		std::string m_title;
 		int m_windowFlags = 0;

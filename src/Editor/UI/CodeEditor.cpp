@@ -79,7 +79,10 @@ void TmingEngine::CodeEditor::Begin()
 
 void TmingEngine::CodeEditor::Update()
 {
-	bool p_open = true;
+	if (!p_open)
+	{
+		return;
+	}
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 	if (!ImGui::Begin("CodeEditor", &p_open))
 	{
