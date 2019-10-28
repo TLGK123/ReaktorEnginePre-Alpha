@@ -85,6 +85,7 @@ public:
     void CreateFrameBuferCa();
     void RenderFrameBuffer();
 	void ShowExampleAppDockSpace(bool* p_open);
+	void ShowDebugWindows(bool* p_open);
 
 	Screen(Context* context) : Subsystem(context)
 	{
