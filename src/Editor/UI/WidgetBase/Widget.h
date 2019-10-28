@@ -16,6 +16,8 @@ namespace TmingEngine
 		virtual void Update() = 0;
 		virtual void End();
 		bool GetIsWindow() { return m_isWindow; }
+		void Show() { m_isVisible = true; };
+		void Hide() { m_isVisible = false; };
 
 	protected:
 		TmingEngine::Context* m_context = nullptr;
