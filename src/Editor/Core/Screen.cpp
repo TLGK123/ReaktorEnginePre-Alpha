@@ -574,12 +574,17 @@ void Screen::Render_EditorUI()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	{
-		if (show_demo_window)
+	
+  if (show_demo_window)
 			ImGui::ShowDemoWindow(&show_demo_window);
 
+  if (show_debug_window)
+  {
+	  ShowDebugWindows(&show_debug_window);
+  }
+
 	
-	}
+	
 
 	if (show_another_window)
 	{
@@ -642,6 +647,29 @@ void Screen::ShowDebugWindows(bool* p_open)
 
 	ImGui::Image((void*)textureColorbuffer, ImVec2(320, 180), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 
+
+	if (ImGui::Button("Delete.."))
+		ImGui::OpenPopup("Delete?");
+
+	if (ImGui::BeginPopupModal("Delete?", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::Text("All those beautiful files will be deleted.\nThis operation cannot be undone!\n\n");
+		ImGui::Separator();
+
+		//static int dummy_i = 0;
+		//ImGui::Combo("Combo", &dummy_i, "Delete\0Delete harder\0");
+
+		static bool dont_ask_me_next_time = false;
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+		ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
+		ImGui::PopStyleVar();
+
+		if (ImGui::Button("OK", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+		ImGui::SetItemDefaultFocus();
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+		ImGui::EndPopup();
+	}
 }
 
 void Screen::ShowExampleAppDockSpace(bool* p_open)
@@ -708,7 +736,10 @@ void Screen::ShowExampleAppDockSpace(bool* p_open)
 			if (ImGui::MenuItem("Flag: AutoHideTabBar", "", (dockspace_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0))          dockspace_flags ^= ImGuiDockNodeFlags_AutoHideTabBar;
 			ImGui::Separator();
 			if (ImGui::MenuItem("Exit ", NULL, false, p_open != NULL))
-				*p_open = false;
+			{
+
+			}
+				
 			ImGui::EndMenu();
 		}
 
@@ -726,7 +757,10 @@ void Screen::ShowExampleAppDockSpace(bool* p_open)
 			{
 				show_demo_window = true;
 			}
-		
+			if (ImGui::MenuItem("DebugWindows"))
+			{
+				show_debug_window = true;
+			}
 			ImGui::EndMenu();
 		}
 
