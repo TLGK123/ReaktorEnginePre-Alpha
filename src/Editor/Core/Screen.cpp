@@ -715,6 +715,11 @@ void Screen::ShowExampleAppDockSpace(bool* p_open)
 			{
 				GetSubWidget<CodeEditor>()->Show();
 			}
+			if (ImGui::MenuItem("DemoWindows"))
+			{
+				show_demo_window = true;
+			}
+		
 			ImGui::EndMenu();
 		}
 
