@@ -17,9 +17,7 @@ void TmingEngine::Project::Begin()
 
 void TmingEngine::Project::Update()
 {
-
-	bool p_open = true;
-	ImGui::SetNextWindowSize(ImVec2(350, 560), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(400, 560), ImGuiCond_FirstUseEver);
 	if (!ImGui::Begin("Project", &p_open))
 	{
 		ImGui::End();
@@ -36,8 +34,6 @@ void TmingEngine::Project::Update()
 
 	ImGui::EndChild();
 	ImGui::SameLine();
-	ImGui::SameLine();
-
 	ImGui::End();
 
 }
