@@ -60,26 +60,26 @@ namespace TmingEngine
         
         if (ImGui::Button("Command"))
         {
-           //Debug::Log(InputBuf);
+            Debug::Log(InputBuf);
+			printf("\n");
             string s = string(InputBuf);
-            Scheme_init();
-            printf("\n");
-            FILE *  file_demo;
-            file_demo = fopen("demo.txt", "w+");
-            fputs(s.c_str(), file_demo);
-            fclose(file_demo);
-            file_demo = fopen("demo.txt", "r");
-            FILE *  evalOut =fopen("evalOut.txt", "w+");
+            //Scheme_init();
+            //FILE *  file_demo;
+            //file_demo = fopen("demo.txt", "w+");
+            //fputs(s.c_str(), file_demo);
+            //fclose(file_demo);
+            //file_demo = fopen("demo.txt", "r");
+            //FILE *  evalOut =fopen("evalOut.txt", "w+");
             //file_demo = fopen("stdlib.scm", "r");
             //fgets(InputBuf, 255, (FILE*)file_demo);
-            Schem_eval_out(file_demo,evalOut);
-            fclose(evalOut);
-            evalOut =fopen("evalOut.txt", "r");
-            fgets(ResualtBuf, 255, (FILE*)evalOut);
-            Buf.append("\n");
-            Buf.append(ResualtBuf);
-            fclose(file_demo);
-            fclose(evalOut);
+            //Schem_eval_out(stdin,stdout);
+            //fclose(evalOut);
+            //evalOut =fopen("evalOut.txt", "r");
+            //fgets(ResualtBuf, 255, (FILE*)evalOut);
+            //Buf.append("\n");
+            //Buf.append(ResualtBuf);
+            //fclose(file_demo);
+            //fclose(evalOut);
         }
         
         ImGui::EndChild();

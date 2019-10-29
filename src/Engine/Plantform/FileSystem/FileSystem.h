@@ -43,8 +43,8 @@ namespace TmingEngine
 	{
 	public:
 		static void Initialize();
-		void SaveFile(string path, string content);
-		string GetFileContent(string f);
+		void SaveFile(std::string path, std::string content);
+		std::string GetFileContent(std::string f);
 		static std::string getPath(std::string assetpath);
 		//= DIRECTORIES ==============================================
 		static bool CreateDirectory_(const std::string& path);
