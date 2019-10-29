@@ -1063,7 +1063,7 @@ object *read(FILE *in) {
 #define BUFFER_MAX 1000
     char buffer[BUFFER_MAX];
 
-    //eat_whitespace(in);
+    eat_whitespace(in);
 
     c = fgetc(in);
     char t =(char)c;
