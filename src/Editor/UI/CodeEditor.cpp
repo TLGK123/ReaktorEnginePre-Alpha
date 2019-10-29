@@ -1,9 +1,9 @@
 #include "CodeEditor.h"
 #include <TextEditor/TextEditor.h>
 
-TextEditor editor;
-string fileToEdit = "ImGuiColorTextEdit/TextEditor.cpp";
-void SaveFile(string path, string content);
+
+
+
 
 TmingEngine::CodeEditor::~CodeEditor()
 {
@@ -100,7 +100,7 @@ void TmingEngine::CodeEditor::Update()
 			if (ImGui::MenuItem("Save"))
 			{
 				auto textToSave = editor.GetText();
-				SaveFile(fileToEdit, textToSave);
+			Global<Context>().GetSubsystem<FileSystem>()->SaveFile(fileToEdit, textToSave);
 				/// save text....
 			}
 			if (ImGui::MenuItem("Quit", "Alt-F4"))

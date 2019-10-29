@@ -12,7 +12,7 @@ int main()
 {
 
 	Engine *engine;
-    Screen *screen;
+    ScreenSystem *screen;
 
     engine = new Engine(&Global<Context>());
     if (!engine->Initialize())
@@ -20,7 +20,7 @@ int main()
         return -1;
     };
     
-    screen = new Screen(&Global<Context>());
+    screen = new ScreenSystem(&Global<Context>());
     if (!screen->Initialize())
     {
         return -1;
