@@ -32,16 +32,16 @@ void TmingEngine::Project::Update()
 	{
 	
 		auto current = FileSystem::getPath("");
-		//AssetTree(current);
-		AssetTreeL(current);
-		ImGui::NextColumn;
+		AssetTree(current);
+		//AssetTreeL(current);
+		//ImGui::NextColumn;
 
-		if (!rightContent.empty())
-		{
-			AssetTreeR(rightContent);
-		}
-		
-		ImGui::NextColumn;
+		//if (!rightContent.empty())
+		//{
+		//	AssetTreeR(rightContent);
+		//}
+		//
+		//ImGui::NextColumn;
 		ImGui::TreePop();
 	}
 	ImGui::Columns(1);
@@ -139,27 +139,6 @@ vector<PathObjInfo> getPathFileOrFolderinfo(string path)
 	return restInfo;
 }
 
-void SaveFile(string path, string content)
-{
-	ofstream fout(path);
-	if (!fout)return;
-	fout << content << endl;
-	fout.close();
-}
-
-string GetFileContent(string f)
-{
-	string content;
-	ifstream fin(f);
-	string  s;
-	while (getline(fin, s))
-	{
-		content += s + "\n";
-	}
-	fin.close();
-	return content;
-}
-
 
 
 map<string, vector<PathObjInfo>> pathCache;
@@ -200,15 +179,27 @@ void AssetTree(string path)
 				ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags, t.name.c_str());
 				if (ImGui::IsItemClicked())
 				{
-					string fpath = path + "/" + t.name;
-					cout << "选中文件: " << path << "/" + t.name << endl;
-					//               fileToEdit = fpath;
-					//               string contentText = GetFileContent(fileToEdit);
-					//               //ImGui::SetClipboardText(contentText.c_str());
-					//               editor.SetText("");
-					//               //editor.Paste();
-					//               //ImGui::SetClipboardText("");
-								   //editor.SetText(contentText);
+					string fpath = path + "/" + t.name;				
+					Debug::Log(string("Select: ")+ path + "/" + t.name+"\n");
+
+					if ((t.name.find(".glsl")!= string::npos)
+						|| (t.name.find(".hlsl") != string::npos)
+						|| (t.name.find(".fs") != string::npos)
+						|| (t.name.find(".vs") != string::npos)
+						)
+					{
+						auto screen = Global<Context>().GetSubsystem<ScreenSystem>();
+						auto codeEditor = screen->GetSubWidget<CodeEditor>();
+						auto txt = Global<Context>().GetSubsystem<FileSystem>()->GetFileContent(fpath);
+
+						codeEditor->fileToEdit = fpath;
+						ImGui::SetClipboardText(txt.c_str());
+						codeEditor->editor.SetText("");
+						codeEditor->editor.Paste();
+						ImGui::SetClipboardText("");
+						codeEditor->Show();
+					}
+
 				}
 			}
 		}

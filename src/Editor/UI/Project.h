@@ -22,7 +22,7 @@
 #include <cstdlib>
 #include <string>
 
-
+#include "Screen.h"
 
 namespace TmingEngine
 {

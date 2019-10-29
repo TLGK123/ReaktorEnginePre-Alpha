@@ -89,7 +89,7 @@ glm::vec3 cubePositions[] = {
 //---------------------Edn Data---------
 
 
-bool Screen::Initialize()
+bool ScreenSystem::Initialize()
 {
 	cout << "Hello World" << endl;
 	InitOpenGL();
@@ -98,7 +98,7 @@ bool Screen::Initialize()
     return true;
 }
 
-void Screen::InitVertextData()
+void ScreenSystem::InitVertextData()
 {
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -138,7 +138,7 @@ void Screen::InitVertextData()
     
 }
 
-void Screen::InitTextureData()
+void ScreenSystem::InitTextureData()
 {
    //创建一个图片处理对象
     glGenTextures(1, &texture1);
@@ -192,7 +192,7 @@ void Screen::InitTextureData()
     stbi_image_free(data);
 }
 
-void Screen::InitShader()
+void ScreenSystem::InitShader()
 {
     lightingShader.Init("3.phong.light.vs", "3.phong.light.fs");
     lampShader.Init("1.lamp.vs", "1.lamp.fs");
@@ -206,12 +206,12 @@ void Screen::InitShader()
     
 }
 
-void Screen::InitModel()
+void ScreenSystem::InitModel()
 {
     ourModel.Init(FileSystem::getPath("resources/objects/character/_2.obj"));
 }
 
-void Screen::InitOpenGL()
+void ScreenSystem::InitOpenGL()
 {
 	// glfw: initialize and configure
 	// ------------------------------
@@ -264,7 +264,7 @@ void Screen::InitOpenGL()
     std::cout << "顶点属性上限: " << nrAttributes << std::endl;
 }
 
-void Screen::InitEditorWidget(Context* context)
+void ScreenSystem::InitEditorWidget(Context* context)
 {
 	//context->RegisterSubsystem(new Console(context));
 
@@ -280,7 +280,7 @@ void Screen::InitEditorWidget(Context* context)
 	Debug::Log(" Editor 初始化窗口成功  ");
 }
 
-void Screen::Update()
+void ScreenSystem::Update()
 {
 	glfwPollEvents();
 
@@ -298,7 +298,7 @@ void Screen::Update()
 	glfwSwapBuffers(window);
 }
 
-void Screen::RenderFrameBuffer()
+void ScreenSystem::RenderFrameBuffer()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer); //帧缓冲的 开始
     glEnable(GL_DEPTH_TEST);                        //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
@@ -312,7 +312,7 @@ void Screen::RenderFrameBuffer()
     glBindFramebuffer(GL_FRAMEBUFFER,0);
 }
 
-void Screen::InitFrameBufer()
+void ScreenSystem::InitFrameBufer()
 {
 	//创建一个帧缓冲对象，并绑定它
 	//unsigned int framebuffer;
@@ -347,7 +347,7 @@ void Screen::InitFrameBufer()
 }
 
 
-void Screen::ShutDown()
+void ScreenSystem::ShutDown()
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
@@ -359,12 +359,12 @@ void Screen::ShutDown()
 	glfwTerminate();
 }
 
-bool Screen::ScreenShouldClose()
+bool ScreenSystem::ScreenShouldClose()
 {
 	return glfwWindowShouldClose(window);
 }
 
-void Screen::InitImgui()
+void ScreenSystem::InitImgui()
 {
 	const char* glsl_version = "#version 150";
 	// Setup Dear ImGui context
@@ -411,7 +411,7 @@ void Screen::InitImgui()
 
 }
 
-void Screen::RenderSceneObjectForEditorCamera()
+void ScreenSystem::RenderSceneObjectForEditorCamera()
 {
 	//Matrix projection = Matrix::Perspective(Radian(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
     //Matrix view = EditorCamera.GetViewMatrix();
@@ -434,7 +434,7 @@ void Screen::RenderSceneObjectForEditorCamera()
 }
 
 
-void Screen::Render_SkyBox_ForEditor()
+void ScreenSystem::Render_SkyBox_ForEditor()
 {
     //Debug::Log(" 天空盒 update editor");
 
@@ -458,7 +458,7 @@ void Screen::Render_SkyBox_ForEditor()
 }
 
 
-void Screen::InitSkyBox()
+void ScreenSystem::InitSkyBox()
 {
 	float skyboxVertices[] = {
 		// positions
@@ -569,7 +569,7 @@ void Screen::InitSkyBox()
 
 bool show_demo_window = true;
 bool show_debug_window = true;
-void Screen::Render_EditorUI()
+void ScreenSystem::Render_EditorUI()
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
@@ -621,7 +621,7 @@ void Screen::Render_EditorUI()
 }
 
 //没有指定任何的Window就是创建到Debug Windows中
-void Screen::ShowDebugWindows(bool* p_open)
+void ScreenSystem::ShowDebugWindows(bool* p_open)
 {
 	static float f = 0.0f;
 	static int counter = 0;
@@ -672,7 +672,7 @@ void Screen::ShowDebugWindows(bool* p_open)
 	}
 }
 
-void Screen::ShowExampleAppDockSpace(bool* p_open)
+void ScreenSystem::ShowExampleAppDockSpace(bool* p_open)
 {
 	static bool opt_fullscreen_persistant = true;
 	bool opt_fullscreen = opt_fullscreen_persistant;

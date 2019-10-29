@@ -39,11 +39,12 @@ static const char* EXTENSION_MESH			= ".mesh";
 
 namespace TmingEngine
 {
-	class ENGINE_CLASS FileSystem
+	class ENGINE_CLASS FileSystem :public Subsystem
 	{
 	public:
 		static void Initialize();
-
+		void SaveFile(string path, string content);
+		string GetFileContent(string f);
 		static std::string getPath(std::string assetpath);
 		//= DIRECTORIES ==============================================
 		static bool CreateDirectory_(const std::string& path);
