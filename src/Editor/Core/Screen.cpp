@@ -277,7 +277,10 @@ void ScreenSystem::InitEditorWidget(Context* context)
 	RegisteWidget(new Profiler(context));
 	RegisteWidget(new Console(context));
 	RegisteWidget(new CodeEditor(context));
+	RegisteWidget(new Preview(context));
 	Debug::Log(" Editor 初始化窗口成功  ");
+
+	InitWidgets();
 }
 
 void ScreenSystem::Update()
@@ -760,6 +763,10 @@ void ScreenSystem::ShowExampleAppDockSpace(bool* p_open)
 			if (ImGui::MenuItem("DebugWindows"))
 			{
 				show_debug_window = true;
+			}
+			if (ImGui::MenuItem("Preview"))
+			{
+				GetSubWidget<Preview>()->Show();
 			}
 			ImGui::EndMenu();
 		}
