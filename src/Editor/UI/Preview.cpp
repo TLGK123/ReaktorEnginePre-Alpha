@@ -50,7 +50,7 @@ void TmingEngine::Preview::PreviewTexture(string path)
 	// set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	//// load image, create texture and generate mipmaps
 	int width, height, nrChannels;
@@ -60,8 +60,32 @@ void TmingEngine::Preview::PreviewTexture(string path)
 	unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 	if (data)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		try
+		{
+			if (nrChannels == 4)
+			{
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			}
+			else if (nrChannels == 3)
+			{
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			}
+			else if (nrChannels == 1)
+			{
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, data);
+			}
+			else
+			{
+				int c = nrChannels;
+			}
+
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
+		catch (const std::exception&)
+		{
+
+		}
+
 	}
 	else
 	{
@@ -69,5 +93,4 @@ void TmingEngine::Preview::PreviewTexture(string path)
 	}
 	stbi_image_free(data);
 	ImageId = texture1;
-	glBindTexture(GL_TEXTURE_2D, 0);
 }
