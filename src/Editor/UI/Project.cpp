@@ -203,6 +203,8 @@ void AssetTree(string path)
 						|| (t.name.find(".jpg") != string::npos)
 						|| (t.name.find(".PNG") != string::npos)
 						|| (t.name.find(".JPG") != string::npos)
+						|| (t.name.find(".tga") != string::npos)
+						|| (t.name.find(".TGA") != string::npos)
 						)
 					{
 						auto screen = Global<Context>().GetSubsystem<ScreenSystem>();
