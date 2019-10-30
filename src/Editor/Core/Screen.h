@@ -16,10 +16,11 @@
 #include "Profiler.hpp"
 #include "Console.h"
 #include "CodeEditor.h"
+#include "Preview.hpp"
 #include "Rendering/Camera.hpp"
-#include "../../Engine/Core/Math/Radian.h"
-#include "../../Engine/Core/Math/Matrix.h"
-#include "../../Engine/Core/Log/Log.h"
+#include "Core/Math/Radian.h"
+#include "Core/Math/Matrix.h"
+#include "Core/Log/Log.h"
 
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )
@@ -79,6 +80,7 @@ public:
     void InitVertextData();
     void InitTextureData();
 
+
 	void InitEditorWidget(Context * context);
 
 	int GetCurrentFrameTexture();
@@ -91,13 +93,18 @@ public:
 	ScreenSystem(Context* context) : Subsystem(context)
 	{
 		context->RegisterSubsystem(this);
-        for (auto& widget : m_widgets)
-        {
-            if (widget->GetIsWindow())
-            {
-                widget->Begin();
-            }
-        }
+
+	}
+
+	void InitWidgets()
+	{
+		for (auto& widget : m_widgets)
+		{
+			if (widget->GetIsWindow())
+			{
+				widget->Begin();
+			}
+		}
 	}
     
     ~ScreenSystem()
@@ -125,7 +132,6 @@ public:
 			if (typeid(T) == typeid(*subwidget))
 				return static_cast<T*>(subwidget);
 		}
-
 		return nullptr;
 	}
 
