@@ -199,6 +199,18 @@ void AssetTree(string path)
 						ImGui::SetClipboardText("");
 						codeEditor->Show();
 					}
+					else if ((t.name.find(".png") != string::npos)
+						|| (t.name.find(".jpg") != string::npos)
+						|| (t.name.find(".PNG") != string::npos)
+						|| (t.name.find(".JPG") != string::npos)
+						)
+					{
+						auto screen = Global<Context>().GetSubsystem<ScreenSystem>();
+						auto previewer = screen->GetSubWidget<Preview>();
+						previewer->PreviewTexture(fpath);
+						previewer->Show();
+
+					}
 
 				}
 			}
