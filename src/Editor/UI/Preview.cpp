@@ -69,4 +69,5 @@ void TmingEngine::Preview::PreviewTexture(string path)
 	}
 	stbi_image_free(data);
 	ImageId = texture1;
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
