@@ -23,7 +23,9 @@ namespace TmingEngine
         void Update();
         void End();
         
-        int ImageId;
+        unsigned int ImageId;
+		unsigned int texture1;
+		void PreviewTexture(string path);
         
     };
 }
