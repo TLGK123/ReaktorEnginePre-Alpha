@@ -3,7 +3,7 @@
 //
 
 #include "Preview.hpp"
-#include <Stb_Image\stb_image.h>
+#include "Stb_Image/stb_image.h"
 TmingEngine::Preview::~Preview()
 {
 }
