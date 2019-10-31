@@ -42,7 +42,7 @@ namespace TmingEngine
 	class ENGINE_CLASS FileSystem :public Subsystem
 	{
 	public:
-		static void Initialize();
+        bool Initialize();
 		void SaveFile(std::string path, std::string content);
 		std::string GetFileContent(std::string f);
 		static std::string getPath(std::string assetpath);

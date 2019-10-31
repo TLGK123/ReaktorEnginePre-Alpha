@@ -24,7 +24,7 @@ namespace TmingEngine
 	vector<string> FileSystem::m_supportedScriptFormats;
 	vector<string> FileSystem::m_supportedFontFormats;
 
-	void FileSystem::Initialize()
+	bool FileSystem::Initialize()
 	{
 		// Supported image formats
 		m_supportedImageFormats =
@@ -153,6 +153,7 @@ namespace TmingEngine
 			".bdf",
 			".pfr"
 		};
+        return true;
 	}
 
 	bool FileSystem::CreateDirectory_(const string& path)
