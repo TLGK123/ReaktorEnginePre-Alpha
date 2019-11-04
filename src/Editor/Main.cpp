@@ -1,7 +1,7 @@
 //
 //  Main.c
 //  Editor
-//  Created by blue on 2018/6/16.
+//  Created by lillteblue on 2018/6/16.
 #include "Main.h"
 #include "Screen.h"
 #include <iostream>
