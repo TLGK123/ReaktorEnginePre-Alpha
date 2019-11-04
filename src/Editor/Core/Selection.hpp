@@ -2,7 +2,7 @@
 //  Selection.hpp
 //  Editor
 //
-//  Created by Blue on 2019/5/26.
+//  Created by lillteblue on 2019/5/26.
 //
 
 #ifndef Selection_hpp

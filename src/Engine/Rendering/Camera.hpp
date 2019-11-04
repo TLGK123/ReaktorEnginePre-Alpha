@@ -2,7 +2,7 @@
 //  Camera.hpp
 //  Editor
 //
-//  Created by Blue on 2019/5/26.
+//  Created by littleblue on 2019/5/26.
 //
 
 #ifndef Camera_hpp
