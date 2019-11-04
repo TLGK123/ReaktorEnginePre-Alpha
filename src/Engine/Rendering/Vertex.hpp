@@ -2,7 +2,7 @@
 //  Vertex.h
 //  TmingEngine
 //
-//  Created by Blue on 2019/7/5.
+//  Created by lillteblue on 2019/7/5.
 //
 
 #ifndef Vertex_h

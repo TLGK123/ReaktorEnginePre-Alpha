@@ -1,19 +1,8 @@
-
-//= INCLUDES ==============
 #include "FileSystem.h"
-//#include "filesystem.hpp"
 #include <regex>
 #include <fstream>
 #include <sstream> 
-//#include "../Logging/Log.h"
-//#include <Windows.h>
-//#include <shellapi.h>
-//=========================
-
-//= NAMESPACES =================
 using namespace std;
-//using namespace std::filesystem;
-//==============================
 
 namespace TmingEngine
 {

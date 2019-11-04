@@ -2,7 +2,7 @@
 //  GameObject.cpp
 //  01_CaculateCode
 //
-//  Created by blue = on 2019/5/20.
+//  Created by lillteblue = on 2019/5/20.
 //
 
 //= INCLUDES ==========

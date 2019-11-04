@@ -2,7 +2,7 @@
 //  Texture.h
 //  TmingEngine
 //
-//  Created by Blue on 2019/7/5.
+//  Created by lillteblue on 2019/7/5.
 //
 
 #ifndef Texture_h
