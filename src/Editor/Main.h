@@ -2,7 +2,7 @@
 //  Main.h
 //  Editor
 //
-//  Created by blue on 2018/6/16.
+//  Created by littlelillteblue on 2018/6/16.
 //
 #pragma once
 
