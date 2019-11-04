@@ -1,14 +1,9 @@
-//= INCLUDES =================
 #include "Widget.h"
-//============================
-
-//= NAMESPACES ==========
 using namespace TmingEngine;
-//=======================
 
 void Widget::Initialize(Context* context)
 {
-	m_windowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize;
+	m_windowFlags = ImGuiWindowFlags_None;
 	m_context = context;
 
 	m_xMin = 455;
