@@ -34,10 +34,19 @@ target_link_libraries(Editor "-framework IOKit")
 target_link_libraries(Editor "-framework CoreVideo")
 endif(APPLE)
 
-add_custom_command(TARGET Editor POST_BUILD     #拷贝文件夹             
-COMMAND ${CMAKE_COMMAND} -E copy_directory                     
-"${PROJECT_SOURCE_DIR}/Library/shared"                                                     
-$<TARGET_FILE_DIR:Editor>)
+if(WIN32)
+set(monoPath ${PROJECT_SOURCE_DIR}/Data/mono)
+link_directories(${monoPath}/bin) #必须在添加 target 前进行设置
+set(libpath ${monoPath}/lib)
+find_library (mono mono-2.0-sgen.lib ${libpath})
+set_property(TARGET Editor PROPERTY VS_DEBUGGER_WORKING_DIRECTORY ${monoPath}/bin)
+target_link_libraries(Editor ${mono})
+endif()
+
+#add_custom_command(TARGET Editor POST_BUILD     #拷贝文件夹             
+#COMMAND ${CMAKE_COMMAND} -E copy_directory                     
+#"${PROJECT_SOURCE_DIR}/Library/shared"                                                     
+#$<TARGET_FILE_DIR:Editor>)
 
 ADD_DEFINITIONS(-DIMGUI_IMPL_OPENGL_LOADER_GLAD)
 
