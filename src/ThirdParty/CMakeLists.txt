@@ -13,6 +13,9 @@ add_subdirectory(mono)
 add_subdirectory(yaml)
 add_subdirectory(TextEditor)
 add_subdirectory(ImNodes)
+
+set (SDL_STATIC TRUE)
+
 add_subdirectory(SDL2-2.0.10)
 
 SET_PROPERTY(TARGET glad  PROPERTY FOLDER "ThirdParty")
@@ -31,4 +34,7 @@ SET_PROPERTY(TARGET zlib  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET zlibstatic  PROPERTY FOLDER "ThirdParty")
 endif()
 SET_PROPERTY(TARGET IrrXML  PROPERTY FOLDER "ThirdParty")
-SET_PROPERTY(TARGET assimp  PROPERTY FOLDER "ThirdParty")
+SET_PROPERTY(TARGET SDL2main  PROPERTY FOLDER "ThirdParty")
+SET_PROPERTY(TARGET SDL2-static  PROPERTY FOLDER "ThirdParty")
+SET_PROPERTY(TARGET SDL2 PROPERTY FOLDER "ThirdParty")
+SET_PROPERTY(TARGET assimp PROPERTY FOLDER "ThirdParty")
