@@ -14,31 +14,12 @@ file(GLOB_RECURSE headers
 "Core/Math/Quaternion.h"
 
 "im.h"
-#"RHI/*.h"
-#"RHI/*.h??"
 "Scene/*.h??"
 "Rendering/*.h"
 "Rendering/*.h??"
 
-
-
-#"RHI/D3D11/*.h??"
-#"Scene/D3D11/*.h??"
-
-#"RHI/Vulkan/*.h??"
-#"Scene/Vulkan/*.h??"
-
-#"3Part/Vulkan_1.1.106.0/shaderc/*.h??"
-#"3Part/Vulkan_1.1.106.0/vulkan/*.h??"
-#"3Part/SPIRV-Cross-2019-03-29/*.h??"
-
-#"3Part/Vulkan_1.1.106.0/shaderc/*.h"
-#"3Part/Vulkan_1.1.106.0/vulkan/*.h"
-#"3Part/SPIRV-Cross-2019-03-29/*.h"
-
-#"Threading/*.h"
-
 )
+
 file(GLOB_RECURSE sources 
 "Core/*.cpp" 
 "Core/Log/*.cpp"
@@ -57,17 +38,6 @@ file(GLOB_RECURSE sources
 "Scene/Components/IComponent.cpp"
 "Scene/*.cpp"
 
-#"RHI/*.c"
-#"RHI/*.c??"
-
-#"Threading/*.c??"
-
-#"RHI/D3D11/*.c"
-#"RHI/D3D11/*.c??"
-
-#"RHI/Vulkan/*.c"
-#"RHI/Vulkan/*.c??"
-
 "Rendering/*.c"
 "Rendering/*.c??"
 
@@ -75,6 +45,22 @@ file(GLOB_RECURSE sources
 
 ) 
 
+if(WIN32)
+file(GLOB_RECURSE windows_sources 
+"Plantform/Windows/win/*.cpp" 
+"Plantform/Windows/win/*.c" 
+)
+file(GLOB_RECURSE windows_header
+"Plantform/Windows/win/*.hpp" 
+"Plantform/Windows/win/*.h" 
+)
+list(APPEND sources ${windows_sources})
+list(APPEND headers ${windows_header})
+elseif(APPLE)
+
+endif()
+
+include_directories("../../include/SDL/include")
 include_directories("../../include")									#添加头文件目录
 include_directories(".")    	
 include_directories("../ThirdParty/Box2D")
@@ -82,12 +68,14 @@ include_directories("../ThirdParty/Box2D/Testbed/Framework")            #添加�
 include_directories("../ThirdParty/Vulkan_1.1.106.0/shaderc")
 include_directories("../ThirdParty/Vulkan_1.1.106.0/vulkan")
 include_directories("../ThirdParty/SPIRV-Cross-2019-03-29")
+include_directories("../../include/ImGui")
 
 set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
 link_directories(${libpath})
 
-add_library_beautiful(TmingEngine STATIC ${headers} ${sources})
+#add_library_beautiful(TmingEngine STATIC ${headers} ${sources})
 
+add_executable_beautiful(TmingEngine ${headers} ${sources})
 
 if(WIN32)
 find_library (GLFW glfw3.lib ${libpath})
@@ -106,6 +94,7 @@ target_link_libraries(TmingEngine glm)
 target_link_libraries(TmingEngine assimp)
 target_link_libraries(TmingEngine TextEditor)
 target_link_libraries(TmingEngine ImNodes)
-
+target_link_libraries(TmingEngine SDL2main)
+target_link_libraries(TmingEngine SDL2-static)
 
 
