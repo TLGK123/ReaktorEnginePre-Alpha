@@ -2,6 +2,7 @@ project (ImGui)
 file (GLOB heads *.h)
 file( GLOB sources *.cpp)
 include_directories("../../../include")
+include_directories("../../../include/SDL/include")
 
 add_library_beautiful(ImGui STATIC ${heads} ${sources})
 
