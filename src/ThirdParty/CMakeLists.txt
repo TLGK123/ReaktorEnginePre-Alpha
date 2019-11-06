@@ -13,6 +13,7 @@ add_subdirectory(mono)
 add_subdirectory(yaml)
 add_subdirectory(TextEditor)
 add_subdirectory(ImNodes)
+add_subdirectory(SDL2-2.0.10)
 
 SET_PROPERTY(TARGET glad  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET Box2D  PROPERTY FOLDER "ThirdParty")
