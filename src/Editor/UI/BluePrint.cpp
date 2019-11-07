@@ -20,98 +20,36 @@
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "BluePrint.hpp"
-TmingEngine::BluePrint::~BluePrint()
-{
-}
-
+using namespace TmingEngine;
 void TmingEngine::BluePrint::Begin()
-{
-}
-
-void TmingEngine::BluePrint::Update()
-{
-    bool p_open = true;
-    ImGui::SetNextWindowSize(ImVec2(640, 360), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Game", &p_open))
-    {
-        ImGui::End();
-        return;
-    }
-    ImTextureID my_tex_id = (void *)ImageId;
-    float my_tex_w = 640;
-    float my_tex_h = 360;
-    
-    ImGui::Text("%.0fx%.0f", my_tex_w, my_tex_h);
-    //----------------------------------------------------------------- -1 -1  Image reversal
-    ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
-    ImGui::End();
-}
-
-void TmingEngine::BluePrint::End()
-{
-}
-
-
-
-
-# include "imgui_node_editor.h"
-# define IMGUI_DEFINE_MATH_OPERATORS
-# include "ImGui/imgui_internal.h"
-
-namespace ed = ax::NodeEditor;
-
-// Struct to hold basic information about connection between
-// pins. Note that connection (aka. link) has its own ID.
-// This is useful later with dealing with selections, deletion
-// or other operations.
-struct LinkInfo
-{
-	ed::LinkId Id;
-	ed::PinId  InputId;
-	ed::PinId  OutputId;
-};
-
-static ed::EditorContext* g_Context = nullptr;    // Editor context, required to trace a editor state.
-static bool                 g_FirstFrame = true;    // Flag set for first frame only, some action need to be executed once.
-static ImVector<LinkInfo>   g_Links;                // List of live links. It is dynamic unless you want to create read-only view over nodes.
-static int                  g_NextLinkId = 100;     // Counter to help generate link ids. In real application this will probably based on pointer to user data structure.
-
-const char* Application_GetName()
-{
-	return "Basic Interaction";
-}
-
-void Application_Initialize()
 {
 	ed::Config config;
 	config.SettingsFile = "BasicInteraction.json";
 	g_Context = ed::CreateEditor(&config);
 }
 
-void Application_Finalize()
+void Application_Frame();
+void TmingEngine::BluePrint::Update()
+{
+	bool p_open = true;
+	ImGui::SetNextWindowSize(ImVec2(640, 360), ImGuiCond_FirstUseEver);
+	if (!ImGui::Begin("NodeEditor", &p_open))
+	{
+		ImGui::End();
+		return;
+	}
+	Application_Frame();
+	ImGui::End();
+}
+
+void TmingEngine::BluePrint::End()
 {
 	ed::DestroyEditor(g_Context);
 }
 
-void ImGuiEx_BeginColumn()
+void TmingEngine::BluePrint::Application_Frame()
 {
-	ImGui::BeginGroup();
-}
 
-void ImGuiEx_NextColumn()
-{
-	ImGui::EndGroup();
-	ImGui::SameLine();
-	ImGui::BeginGroup();
-}
-
-void ImGuiEx_EndColumn()
-{
-	ImGui::EndGroup();
-}
-
-void Application_Frame()
-{
 	auto& io = ImGui::GetIO();
 
 	ImGui::Text("FPS: %.2f (%.2gms)", io.Framerate, io.Framerate ? 1000.0f / io.Framerate : 0.0f);
@@ -258,6 +196,32 @@ void Application_Frame()
 	g_FirstFrame = false;
 
 	// ImGui::ShowMetricsWindow();
+
 }
+
+const char* Application_GetName()
+{
+	return "Basic Interaction";
+}
+
+
+void TmingEngine::BluePrint::ImGuiEx_BeginColumn()
+{
+	ImGui::BeginGroup();
+}
+
+void TmingEngine::BluePrint::ImGuiEx_NextColumn()
+{
+	ImGui::EndGroup();
+	ImGui::SameLine();
+	ImGui::BeginGroup();
+}
+
+void TmingEngine::BluePrint::ImGuiEx_EndColumn()
+{
+	ImGui::EndGroup();
+}
+
+
 
 
