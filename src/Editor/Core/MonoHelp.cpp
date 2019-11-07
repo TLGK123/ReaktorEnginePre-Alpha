@@ -44,8 +44,6 @@ extern "C"
 	EXPORT_API const char* DoSomething3(const char* messgae);
 	EXPORT_API void DoSomething4(CsharpFunction handle);
 	EXPORT_API void DoWithClass(Point p);
-	EXPORT_API Point GetClassFromCpp();
-	EXPORT_API void GetClassFromCppRef(Point p);
 }
 
 void DoSomething2(const char* messgae)
@@ -81,13 +79,11 @@ void DoSomething4(CsharpFunction handle)
 
 }
 
-
+MonoDomain* domain;
 int TmingEngine::MonoHelp::Run(std::string path)
 {
 	std::cout << "Hello World! in c++  \n";
 	// 打印当前路径
-
-	MonoDomain* domain;
 
 	//auto s = getPath("DLLProject/bin/Debug/CSharpDLL.dll");
 	//std::string s = "D:/Gitee/CppProject/MonoRun/DLLProject/bin/Debug";
@@ -102,7 +98,6 @@ int TmingEngine::MonoHelp::Run(std::string path)
 		// 获取MonoClass
 		MonoClass* mono_class = mono_class_from_name(image, "TestDll", "Main");
 		// 获取方法
-		//MonoMethodDesc *method_desc = mono_method_desc_new("csharp.BindingTest:Main()", true);
 		MonoMethodDesc* method_desc = mono_method_desc_new("TestDll.Main:SayHello()", true);
 		MonoMethod* method = mono_method_desc_search_in_class(method_desc, mono_class);
 		mono_method_desc_free(method_desc);

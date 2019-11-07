@@ -43,6 +43,7 @@
 #include "Core/Math/Matrix.h"
 #include "Core/Log/Log.h"
 
+#include "MonoHelp.h"
 //#if Debug
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )
 
