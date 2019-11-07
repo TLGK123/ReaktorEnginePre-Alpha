@@ -28,3 +28,6 @@ set(_imgui_node_editor_Sources
 )
 
 add_library_beautiful(imgui_node_editor STATIC ${_imgui_node_editor_Sources})
+
+
+install_header_files (DIRECTORY ./ DESTINATION ${DEST_INCLUDE_DIR}/NodeEditor FILES_MATCHING PATTERN *.hpp *.h USE_FILE_SYMLINK BUILD_TREE_ONLY) 
