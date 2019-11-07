@@ -74,7 +74,7 @@ namespace TmingEngine
 
 		// Register subsystems
 		m_context->RegisterSubsystem(new Timer(m_context));
-		m_context->RegisterSubsystem(new ScreenSystem(m_context))
+		//m_context->RegisterSubsystem(new ScreenSystem(m_context))
 	}
 
 
