@@ -28,7 +28,6 @@ void TmingEngine::BluePrint::Begin()
 	g_Context = ed::CreateEditor(&config);
 }
 
-void Application_Frame();
 void TmingEngine::BluePrint::Update()
 {
 	bool p_open = true;
