@@ -96,5 +96,7 @@ target_link_libraries(TmingEngine TextEditor)
 target_link_libraries(TmingEngine ImNodes)
 target_link_libraries(TmingEngine SDL2main)
 target_link_libraries(TmingEngine SDL2-static)
+target_link_libraries(TmingEngine imgui_canvas)
+target_link_libraries(TmingEngine imgui_node_editor)
 
 

@@ -13,6 +13,7 @@ add_subdirectory(mono)
 add_subdirectory(yaml)
 add_subdirectory(TextEditor)
 add_subdirectory(ImNodes)
+add_subdirectory(NodeEditor)
 
 set (SDL_STATIC TRUE)
 
@@ -38,3 +39,5 @@ SET_PROPERTY(TARGET SDL2main  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET SDL2-static  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET SDL2 PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET assimp PROPERTY FOLDER "ThirdParty")
+SET_PROPERTY(TARGET imgui_canvas PROPERTY FOLDER "ThirdParty")
+SET_PROPERTY(TARGET imgui_node_editor PROPERTY FOLDER "ThirdParty")
