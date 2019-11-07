@@ -33,7 +33,7 @@ int main()
 {
 
 	Engine *engine;
-    Editor *screen;
+    Editor *editor;
 
 	MonoHelp::Start();
     engine = new Engine(&Global<Context>());
@@ -42,20 +42,20 @@ int main()
         return -1;
     };
     
-    screen = new Editor(&Global<Context>());
-    if (!screen->Initialize())
+    editor = new Editor(&Global<Context>());
+    if (!editor->Initialize())
     {
         return -1;
     };
     Debug::Log("hello world");
     
 
-	while (!screen->ScreenShouldClose())
+	while (!editor->ScreenShouldClose())
 	{
         engine->Tick();
-        screen->Update();
+        editor->Update();
 	}
 	MonoHelp::End();
-	screen->ShutDown();
+	editor->ShutDown();
 	engine->Shutdown();
 }
