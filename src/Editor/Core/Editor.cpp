@@ -299,6 +299,7 @@ void Editor::InitEditorWidget(Context* context)
 	RegisteWidget(new Console(context));
 	RegisteWidget(new CodeEditor(context));
 	RegisteWidget(new Preview(context));
+	RegisteWidget(new BluePrint(context));
 	Debug::Log(" Editor 初始化窗口成功  ");
 
 	InitWidgets();

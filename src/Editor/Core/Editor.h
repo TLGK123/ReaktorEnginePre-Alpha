@@ -38,6 +38,7 @@
 #include "Console.h"
 #include "CodeEditor.h"
 #include "Preview.hpp"
+#include "BluePrint.hpp"
 #include "Rendering/Camera.hpp"
 #include "Core/Math/Radian.h"
 #include "Core/Math/Matrix.h"
