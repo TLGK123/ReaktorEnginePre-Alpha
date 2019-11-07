@@ -56,3 +56,7 @@ include/Scheme/include/
 include/TextEditor/
 
 include/ImNodes/
+
+src/Editor/Module/DLLProject/obj/
+
+src/Editor/Module/DLLProject/.vs/
