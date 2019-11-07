@@ -73,9 +73,9 @@ include_directories("../../include/ImGui")
 set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
 link_directories(${libpath})
 
-#add_library_beautiful(TmingEngine STATIC ${headers} ${sources})
+add_library_beautiful(TmingEngine STATIC ${headers} ${sources})
 
-add_executable_beautiful(TmingEngine ${headers} ${sources})
+#add_executable_beautiful(TmingEngine ${headers} ${sources})
 
 if(WIN32)
 find_library (GLFW glfw3.lib ${libpath})
