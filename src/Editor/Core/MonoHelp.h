@@ -53,8 +53,9 @@ namespace TmingEngine
 	class MonoHelp
 	{
 	public:
+	 static	int Start();
 	 static	int Run(std::string path);
-
+	 static	int End();
 
 	};
 

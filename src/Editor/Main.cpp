@@ -35,6 +35,7 @@ int main()
 	Engine *engine;
     ScreenSystem *screen;
 
+	MonoHelp::Start();
     engine = new Engine(&Global<Context>());
     if (!engine->Initialize())
     {
@@ -54,7 +55,7 @@ int main()
         engine->Tick();
         screen->Update();
 	}
-
+	MonoHelp::End();
 	screen->ShutDown();
 	engine->Shutdown();
 }
