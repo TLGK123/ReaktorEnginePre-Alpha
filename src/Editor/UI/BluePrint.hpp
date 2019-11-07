@@ -19,8 +19,8 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#ifndef Game_hpp
-#define Game_hpp
+#ifndef BluePrint_hpp
+#define BluePrint_hpp
 #include <stdio.h>
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
@@ -54,7 +54,7 @@ namespace TmingEngine
         
 		BluePrint(Context *context)
         {
-            m_title = "Game";
+            m_title = "BluePrint";
         }
 
 		ed::EditorContext* g_Context = nullptr;    // Editor context, required to trace a editor state.
