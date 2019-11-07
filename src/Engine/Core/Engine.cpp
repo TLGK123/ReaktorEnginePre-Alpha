@@ -74,15 +74,7 @@ namespace TmingEngine
 
 		// Register subsystems
 		m_context->RegisterSubsystem(new Timer(m_context));
-		//m_context->RegisterSubsystem(new Input(m_context));
-		//m_context->RegisterSubsystem(new Threading(m_context));
-		//m_context->RegisterSubsystem(new ResourceManager(m_context));
-		//m_context->RegisterSubsystem(new Graphics(m_context));
-		//m_context->RegisterSubsystem(new Renderer(m_context));
-		//m_context->RegisterSubsystem(new Audio(m_context));
-		//m_context->RegisterSubsystem(new Physics(m_context));
-		//m_context->RegisterSubsystem(new Scripting(m_context));
-		//m_context->RegisterSubsystem(new Scene(m_context));
+		m_context->RegisterSubsystem(new ScreenSystem(m_context))
 	}
 
 
