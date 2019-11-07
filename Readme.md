@@ -78,3 +78,5 @@
 9. [https://github.com/rokups/ImNodes](https://github.com/rokups/ImNodes) 基于imgui的节点编辑器
 10. [https://github.com/nothings/stb](https://github.com/nothings/stb)  支持各种格式的图片加载器
 11. [https://github.com/jbeder/yaml-cpp](https://github.com/jbeder/yaml-cpp) 场景,预制,配置文件,序列化
+12. [http://www.libsdl.org/](http://www.libsdl.org/) SDL跨平台窗口环境提供库
+13. [https://github.com/thedmd/imgui-node-editor](https://github.com/thedmd/imgui-node-editor) 一个比较完整的,基于imgui的蓝图编辑器
