@@ -58,7 +58,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 using namespace TmingEngine;
 
-class ScreenSystem :public Subsystem
+class Editor :public Subsystem
 {
 public:
 	GLFWwindow * window;
@@ -112,7 +112,7 @@ public:
 	void ShowExampleAppDockSpace(bool* p_open);
 	void ShowDebugWindows(bool* p_open);
 
-	ScreenSystem(Context* context) : Subsystem(context)
+	Editor(Context* context) : Subsystem(context)
 	{
 		context->RegisterSubsystem(this);
 
@@ -129,7 +129,7 @@ public:
 		}
 	}
     
-    ~ScreenSystem()
+    ~Editor()
     {
         for (auto& widget : m_widgets)
         {

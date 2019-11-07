@@ -209,7 +209,7 @@ void AssetTree(string path)
 						|| (t.name.find(".vs") != string::npos)
 						)
 					{
-						auto screen = Global<Context>().GetSubsystem<ScreenSystem>();
+						auto screen = Global<Context>().GetSubsystem<Editor>();
 						auto codeEditor = screen->GetSubWidget<CodeEditor>();
 						auto txt = Global<Context>().GetSubsystem<FileSystem>()->GetFileContent(fpath);
 
@@ -228,7 +228,7 @@ void AssetTree(string path)
 						|| (t.name.find(".TGA") != string::npos)
 						)
 					{
-						auto screen = Global<Context>().GetSubsystem<ScreenSystem>();
+						auto screen = Global<Context>().GetSubsystem<Editor>();
 						auto previewer = screen->GetSubWidget<Preview>();
 						previewer->PreviewTexture(fpath);
 						previewer->Show();

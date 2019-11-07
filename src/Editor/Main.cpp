@@ -24,7 +24,7 @@
 //  Created by lillteblue on 2018/6/16.
 
 #include "Main.h"
-#include "Screen.h"
+#include "Editor.h"
 #include <iostream>
 using namespace std;
 using namespace TmingEngine;
@@ -33,7 +33,7 @@ int main()
 {
 
 	Engine *engine;
-    ScreenSystem *screen;
+    Editor *screen;
 
 	MonoHelp::Start();
     engine = new Engine(&Global<Context>());
@@ -42,7 +42,7 @@ int main()
         return -1;
     };
     
-    screen = new ScreenSystem(&Global<Context>());
+    screen = new Editor(&Global<Context>());
     if (!screen->Initialize())
     {
         return -1;
