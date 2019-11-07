@@ -19,7 +19,7 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include "Screen.h"
+#include "Editor.h"
 #include <iostream>
 #include "Stb_Image/stb_image.h"
 
@@ -110,7 +110,7 @@ glm::vec3 cubePositions[] = {
 //---------------------Edn Data---------
 
 
-bool ScreenSystem::Initialize()
+bool Editor::Initialize()
 {
 	cout << "Hello World" << endl;
 	InitOpenGL();
@@ -119,7 +119,7 @@ bool ScreenSystem::Initialize()
     return true;
 }
 
-void ScreenSystem::InitVertextData()
+void Editor::InitVertextData()
 {
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -159,7 +159,7 @@ void ScreenSystem::InitVertextData()
     
 }
 
-void ScreenSystem::InitTextureData()
+void Editor::InitTextureData()
 {
    //创建一个图片处理对象
     glGenTextures(1, &texture1);
@@ -213,7 +213,7 @@ void ScreenSystem::InitTextureData()
     stbi_image_free(data);
 }
 
-void ScreenSystem::InitShader()
+void Editor::InitShader()
 {
     lightingShader.Init("3.phong.light.vs", "3.phong.light.fs");
     lampShader.Init("1.lamp.vs", "1.lamp.fs");
@@ -227,12 +227,12 @@ void ScreenSystem::InitShader()
     
 }
 
-void ScreenSystem::InitModel()
+void Editor::InitModel()
 {
     ourModel.Init(FileSystem::getPath("resources/objects/character/_2.obj"));
 }
 
-void ScreenSystem::InitOpenGL()
+void Editor::InitOpenGL()
 {
 	// glfw: initialize and configure
 	// ------------------------------
@@ -285,7 +285,7 @@ void ScreenSystem::InitOpenGL()
     std::cout << "顶点属性上限: " << nrAttributes << std::endl;
 }
 
-void ScreenSystem::InitEditorWidget(Context* context)
+void Editor::InitEditorWidget(Context* context)
 {
 	//context->RegisterSubsystem(new Console(context));
 
@@ -304,7 +304,7 @@ void ScreenSystem::InitEditorWidget(Context* context)
 	InitWidgets();
 }
 
-void ScreenSystem::Update()
+void Editor::Update()
 {
 	glfwPollEvents();
 
@@ -322,7 +322,7 @@ void ScreenSystem::Update()
 	glfwSwapBuffers(window);
 }
 
-void ScreenSystem::RenderFrameBuffer()
+void Editor::RenderFrameBuffer()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer); //帧缓冲的 开始
     glEnable(GL_DEPTH_TEST);                        //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
@@ -336,7 +336,7 @@ void ScreenSystem::RenderFrameBuffer()
     glBindFramebuffer(GL_FRAMEBUFFER,0);
 }
 
-void ScreenSystem::InitFrameBufer()
+void Editor::InitFrameBufer()
 {
 	//创建一个帧缓冲对象，并绑定它
 	//unsigned int framebuffer;
@@ -371,7 +371,7 @@ void ScreenSystem::InitFrameBufer()
 }
 
 
-void ScreenSystem::ShutDown()
+void Editor::ShutDown()
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
@@ -383,12 +383,12 @@ void ScreenSystem::ShutDown()
 	glfwTerminate();
 }
 
-bool ScreenSystem::ScreenShouldClose()
+bool Editor::ScreenShouldClose()
 {
 	return glfwWindowShouldClose(window);
 }
 
-void ScreenSystem::InitImgui()
+void Editor::InitImgui()
 {
 	const char* glsl_version = "#version 150";
 	// Setup Dear ImGui context
@@ -435,7 +435,7 @@ void ScreenSystem::InitImgui()
 
 }
 
-void ScreenSystem::RenderSceneObjectForEditorCamera()
+void Editor::RenderSceneObjectForEditorCamera()
 {
 	//Matrix projection = Matrix::Perspective(Radian(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
     //Matrix view = EditorCamera.GetViewMatrix();
@@ -458,7 +458,7 @@ void ScreenSystem::RenderSceneObjectForEditorCamera()
 }
 
 
-void ScreenSystem::Render_SkyBox_ForEditor()
+void Editor::Render_SkyBox_ForEditor()
 {
     //Debug::Log(" 天空盒 update editor");
 
@@ -482,7 +482,7 @@ void ScreenSystem::Render_SkyBox_ForEditor()
 }
 
 
-void ScreenSystem::InitSkyBox()
+void Editor::InitSkyBox()
 {
 	float skyboxVertices[] = {
 		// positions
@@ -593,7 +593,7 @@ void ScreenSystem::InitSkyBox()
 
 bool show_demo_window = true;
 bool show_debug_window = true;
-void ScreenSystem::Render_EditorUI()
+void Editor::Render_EditorUI()
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
@@ -645,7 +645,7 @@ void ScreenSystem::Render_EditorUI()
 }
 
 //没有指定任何的Window就是创建到Debug Windows中
-void ScreenSystem::ShowDebugWindows(bool* p_open)
+void Editor::ShowDebugWindows(bool* p_open)
 {
 	static float f = 0.0f;
 	static int counter = 0;
@@ -700,7 +700,7 @@ void ScreenSystem::ShowDebugWindows(bool* p_open)
 	}
 }
 
-void ScreenSystem::ShowExampleAppDockSpace(bool* p_open)
+void Editor::ShowExampleAppDockSpace(bool* p_open)
 {
 	static bool opt_fullscreen_persistant = true;
 	bool opt_fullscreen = opt_fullscreen_persistant;

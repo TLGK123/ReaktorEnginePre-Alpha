@@ -43,7 +43,7 @@
 #include <cstdlib>
 #include <string>
 
-#include "Screen.h"
+#include "Editor.h"
 
 namespace TmingEngine
 {
