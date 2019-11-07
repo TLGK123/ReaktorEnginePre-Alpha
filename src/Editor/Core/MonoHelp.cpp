@@ -80,6 +80,13 @@ void DoSomething4(CsharpFunction handle)
 }
 
 MonoDomain* domain;
+int TmingEngine::MonoHelp::Start()
+{
+	// 初始化JIT
+	domain = mono_jit_init("CSharpDLL.dll");
+	return 0;
+}
+
 int TmingEngine::MonoHelp::Run(std::string path)
 {
 	std::cout << "Hello World! in c++  \n";
@@ -90,8 +97,7 @@ int TmingEngine::MonoHelp::Run(std::string path)
 	const char* csharp_dll = path.c_str();
 	try
 	{
-		// 初始化JIT
-		domain = mono_jit_init("TestDll");
+
 		// 加载程序集
 		MonoAssembly* assembly = mono_domain_assembly_open(domain, csharp_dll);
 		MonoImage* image = mono_assembly_get_image(assembly);
@@ -106,12 +112,20 @@ int TmingEngine::MonoHelp::Run(std::string path)
 		mono_runtime_invoke(method, nullptr, nullptr, nullptr);
 		// 释放JIT
 
-		mono_jit_cleanup(domain);
+		//mono_domain_unload(domain);
+
+
 	}
 	catch (std::exception * e)
 	{
 		std::cout << e->what();
 	}
 
+	return 0;
+}
+
+int TmingEngine::MonoHelp::End()
+{
+	mono_jit_cleanup(domain);
 	return 0;
 }
