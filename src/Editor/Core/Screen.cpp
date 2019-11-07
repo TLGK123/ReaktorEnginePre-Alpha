@@ -659,7 +659,11 @@ void ScreenSystem::ShowDebugWindows(bool* p_open)
 
 	if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
 		counter++;
+	if (ImGui::Button("run c#"))
+	{
 
+		MonoHelp::Run(FileSystem::getPath("Data/HotFix/CSharpDLL.dll"));
+	}
 	//if (ImGui::Button("ShowLog"))
 	//{
 	//	showLog = true;
