@@ -21,8 +21,6 @@
 
 //
 //  Main.h
-//  Editor
-//
 //  Created by littleblue on 2018/6/16.
 //
 #pragma once
