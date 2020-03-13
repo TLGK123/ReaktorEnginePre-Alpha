@@ -96,7 +96,7 @@ elseif(APPLE)
 find_library (GLFW libglfw3.a ${libpath})
 endif()
 
-#target_link_libraries(TmingEngine lua)
+target_link_libraries(TmingEngine lua)
 target_link_libraries(TmingEngine Box2D)
 target_link_libraries(TmingEngine ${GLFW})
 target_link_libraries(TmingEngine stb)
