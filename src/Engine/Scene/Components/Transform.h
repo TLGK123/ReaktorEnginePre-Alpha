@@ -49,11 +49,11 @@ namespace TmingEngine
 
 		//= POSITION ============================================================
 //        Vector3 GetPosition() { return m_worldTransform.GetTranslation(); }
-        const Vector3& GetPositionLocal() {
-            return m_positionLocal;
-        }
+		const Vector3& GetPositionLocal() {
+			return m_positionLocal;
+		}
 //       void SetPosition(const Vector3& position);
-       void SetPositionLocal(const Vector3& position);
+	   void SetPositionLocal(const Vector3& position);
 		//=======================================================================
 
 		//= ROTATION ============================================================
@@ -83,10 +83,10 @@ namespace TmingEngine
 		//=========================
 
 		//= HIERARCHY ==============================================================
-        bool IsRoot() { return !HasParent(); }
-        bool HasParent() { return m_parent; }
-        void SetParent(Transform* parent);
-        GameObject * GetGameObject() {return m_gameObject; }
+		bool IsRoot() { return !HasParent(); }
+		bool HasParent() { return m_parent; }
+		void SetParent(Transform* parent);
+		GameObject * GetGameObject() {return m_gameObject; }
 //        void BecomeOrphan();
 //        bool HasChildren() { return GetChildrenCount() > 0 ? true : false; }
 //        void AddChild(Transform* child);
@@ -104,8 +104,8 @@ namespace TmingEngine
 		void LookAt(const Vector3& v) { m_lookAt = v; }
 		Matrix& GetWorldTransform() { return m_worldTransform; }
 		Matrix& GetLocalTransform() { return m_localTransform; }
-        std::vector<Transform*> m_children; // the children of this transform
-     
+		std::vector<Transform*> m_children; // the children of this transform
+	 
 	private:
 		// local
 		Vector3 m_positionLocal;
