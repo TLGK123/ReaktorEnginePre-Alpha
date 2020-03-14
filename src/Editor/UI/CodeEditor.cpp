@@ -2,9 +2,6 @@
 #include <TextEditor/TextEditor.h>
 
 
-
-
-
 TmingEngine::CodeEditor::~CodeEditor()
 {
 }
