@@ -1,6 +1,6 @@
 ﻿//The MIT License
 //
-//Copyright(c) 2016 - 2019 littleblue
+//Copyright(c) 2016 - 2020 littleblue
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this softwareand associated documentation files(the "Software"), to deal
