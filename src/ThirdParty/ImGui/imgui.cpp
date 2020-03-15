@@ -3740,7 +3740,11 @@ void ImGui::NewFrame()
         if (g.SettingsDirtyTimer <= 0.0f)
         {
             if (g.IO.IniFilename != NULL)
+            {
+                auto s = g.IO.IniFilename;
+
                 SaveIniSettingsToDisk(g.IO.IniFilename);
+            }
             else
                 g.IO.WantSaveIniSettings = true;  // Let user know they can call SaveIniSettingsToMemory(). user will need to clear io.WantSaveIniSettings themselves.
             g.SettingsDirtyTimer = 0.0f;
@@ -10081,6 +10085,8 @@ void ImGui::SaveIniSettingsToDisk(const char* ini_filename)
     g.SettingsDirtyTimer = 0.0f;
     if (!ini_filename)
         return;
+
+    auto s = g.IO.IniFilename;
 
     size_t ini_data_size = 0;
     const char* ini_data = SaveIniSettingsToMemory(&ini_data_size);
