@@ -47,6 +47,7 @@ namespace TmingEngine
 		void End();
 
 		int ImageId;
+		bool IsSceneviewFoucsed = false;
 		void SetTexture(int Id);	
 	};
 }
