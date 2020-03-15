@@ -431,8 +431,8 @@ void ScreenSystem::InitImgui()
 	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 	//IM_ASSERT(font != NULL);
 
-	//string fontpath = FileSystem::getPath("resources/font/minizhunyuan.ttf");
-	//ImFont* font = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 16.0f, NULL, io.Fonts->GetGlyphRangesChineseFull());
+	string fontpath = FileSystem::getPath("resources/font/SourceHanSansCN-Medium.ttf");
+	ImFont* font = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 20.0f, NULL, io.Fonts->GetGlyphRangesChineseFull());
 
 
 }
