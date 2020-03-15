@@ -17,9 +17,10 @@ file(GLOB sources
 
 include_directories("UI/WidgetBase")    #添加头文件目录
 include_directories("../../include")    #添加头文件目录
+include_directories("../../include/lua/src")    #添加头文件目录
 include_directories("../Engine")        #添加头文件目录
 include_directories("Core")             #添加头文件目录
-include_directories("UI")             #添加头文件目录
+include_directories("UI")				#添加头文件目录
 
 add_executable_beautiful(Editor ${headers} ${sources})
 
