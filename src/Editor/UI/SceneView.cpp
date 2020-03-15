@@ -45,7 +45,7 @@ void TmingEngine::SceneView::Update()
 		ImGui::End();
 		return;
 	}
-
+	IsSceneviewFoucsed = ImGui::IsWindowFocused();
 	ImTextureID my_tex_id = (void *)ImageId;
 	float my_tex_w = 640;
 	float my_tex_h = 360;

@@ -48,12 +48,8 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
-
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-
-
-
 
 using namespace TmingEngine;
 
@@ -110,6 +106,9 @@ public:
     void RenderFrameBuffer();
 	void ShowExampleAppDockSpace(bool* p_open);
 	void ShowDebugWindows(bool* p_open);
+
+	void MouseMove(GLFWwindow* window, double xpos, double ypos);
+	void MouseScroll(GLFWwindow* window, double xoffset, double yoffset);
 
 	ScreenSystem(Context* context) : Subsystem(context)
 	{
