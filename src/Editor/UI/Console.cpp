@@ -52,6 +52,76 @@ namespace TmingEngine
         ImGui::BeginChild("scrolling", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
         if (copy) ImGui::LogToClipboard();
         
+
+        
+        if (ScrollToBottom)
+            ImGui::SetScrollHereY(1.0f);
+        ScrollToBottom = false;
+        
+        
+        ImGui::Separator();
+        // Command-line
+        static char InputBuf[256] = "";
+        static char ResualtBuf[256] = "";
+        ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf));
+        
+        if (ImGui::Button("Command"))
+        {
+            //1.创建Lua状态  
+            lua_State* L = luaL_newstate();
+            if (L == NULL)
+            {
+                return;
+            }
+
+            //2.加载Lua文件  
+            int bRet = luaL_loadfile(L,FileSystem::getPath("Data/EngineScript/hello.lua").c_str());
+            if (bRet)
+            {
+                cout << "load file error" << endl;
+                return;
+            }
+
+            //3.运行Lua文件  
+            bRet = lua_pcall(L, 0, 0, 0);
+            if (bRet)
+            {
+                cout << "pcall error" << endl;
+                return;
+            }
+
+            //4.读取变量  
+            lua_getglobal(L, "str");
+            string str = lua_tostring(L, -1);
+            cout << "str = " << str.c_str() << endl;        //str = I am so cool~  
+
+            //5.读取table  
+            lua_getglobal(L, "tbl");
+            lua_getfield(L, -1, "name");
+            str = lua_tostring(L, -1);
+            cout << "tbl:name = " << str.c_str() << endl; //tbl:name = shun  
+
+            //6.读取函数  
+            lua_getglobal(L, "add");        // 获取函数，压入栈中  
+            lua_pushnumber(L, 10);          // 压入第一个参数  
+            lua_pushnumber(L, 20);          // 压入第二个参数  
+            int iRet = lua_pcall(L, 2, 1, 0);// 调用函数，调用完成以后，会将返回值压入栈中，2表示参数个数，1表示返回结果个数。  
+            if (iRet)                       // 调用出错  
+            {
+                const char* pErrorMsg = lua_tostring(L, -1);
+                cout << pErrorMsg << endl;
+                lua_close(L);
+                return;
+            }
+            if (lua_isnumber(L, -1))        //取值输出  
+            {
+                double fValue = lua_tonumber(L, -1);
+                cout << "Result is " << fValue << endl;
+            }
+
+        }
+        
+
         if (Filter.IsActive())
         {
             const char* buf_begin = Buf.begin();
@@ -68,42 +138,8 @@ namespace TmingEngine
         {
             ImGui::TextUnformatted(Buf.begin());
         }
-        
-        if (ScrollToBottom)
-            ImGui::SetScrollHereY(1.0f);
-        ScrollToBottom = false;
-        
-        
-        ImGui::Separator();
-        // Command-line
-        static char InputBuf[256] = "";
-        static char ResualtBuf[256] = "";
-        ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf));
-        
-        if (ImGui::Button("Command"))
-        {
-            Debug::Log(InputBuf);
-			printf("\n");
-            string s = string(InputBuf);
-            //Scheme_init();
-            //FILE *  file_demo;
-            //file_demo = fopen("demo.txt", "w+");
-            //fputs(s.c_str(), file_demo);
-            //fclose(file_demo);
-            //file_demo = fopen("demo.txt", "r");
-            //FILE *  evalOut =fopen("evalOut.txt", "w+");
-            //file_demo = fopen("stdlib.scm", "r");
-            //fgets(InputBuf, 255, (FILE*)file_demo);
-            //Schem_eval_out(stdin,stdout);
-            //fclose(evalOut);
-            //evalOut =fopen("evalOut.txt", "r");
-            //fgets(ResualtBuf, 255, (FILE*)evalOut);
-            //Buf.append("\n");
-            //Buf.append(ResualtBuf);
-            //fclose(file_demo);
-            //fclose(evalOut);
-        }
-        
+
+
         ImGui::EndChild();
         ImGui::End();
         
