@@ -47,8 +47,8 @@ void TmingEngine::SceneView::Update()
 	}
 	IsSceneviewFoucsed = ImGui::IsWindowFocused();
 	ImTextureID my_tex_id = (void *)ImageId;
-	float my_tex_w = 640;
-	float my_tex_h = 360;
+	float my_tex_w = ImGui::GetWindowSize().x - 20;
+	float my_tex_h = ImGui::GetWindowSize().y - 75;
 
 	ImGui::Text(" Scene  %.0fx%.0f", my_tex_w, my_tex_h);
 	//----------------------------------------------------------------- -1 -1  Image reversal
