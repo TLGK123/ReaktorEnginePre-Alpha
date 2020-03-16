@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.11)
+project (lua)
+file (GLOB heads src/*.h)
+file( GLOB sources src/*.c)
+#add_executable (lua ${heads} ${sources})
+add_library_beautiful(lua STATIC ${heads} ${sources})
+install_header_files (DIRECTORY ./ DESTINATION ${DEST_INCLUDE_DIR}/lua FILES_MATCHING PATTERN *.hpp *.h *.inl USE_FILE_SYMLINK BUILD_TREE_ONLY)
