@@ -200,7 +200,9 @@ void AssetTree(string path)
 				node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 				int tempIndex = 9, node_clicked;
 				ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags, t.name.c_str());
-				if (ImGui::IsItemClicked())
+				
+				int ClickMouse = ImGui::IsItemClicked();			
+				if (ClickMouse)
 				{
 					string fpath = path + "/" + t.name;				
 					Debug::Log(string("Select: ")+ path + "/" + t.name+"\n");
@@ -237,8 +239,15 @@ void AssetTree(string path)
 
 					}
 
-						ImGui::OpenPopup("my_file_popup");
 
+
+						
+
+				}
+
+				if (ImGui::IsItemClicked(1))
+				{
+					ImGui::OpenPopup("my_file_popup");
 				}
 
 				if (ImGui::BeginPopup("my_file_popup"))
