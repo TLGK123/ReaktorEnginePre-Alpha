@@ -31,7 +31,8 @@ namespace TmingEngine {
     
     Context * Selecttion:: activeContext = NULL;
     Transform * Selecttion:: activeTransform = NULL;
-    
+    string Selecttion::ProjectSelected = "";
+
     string Selecttion::GetActiveObjectName()
     {
         if(activeTransform!=NULL)
@@ -43,4 +44,6 @@ namespace TmingEngine {
         }
       
     }
+
+  
 }

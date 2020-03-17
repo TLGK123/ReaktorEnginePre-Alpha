@@ -40,6 +40,7 @@ namespace TmingEngine
         static Context * activeContext;
         static Transform * activeTransform;
         static string GetActiveObjectName();
+        static string ProjectSelected;
         
     };
 }
