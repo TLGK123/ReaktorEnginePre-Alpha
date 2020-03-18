@@ -47,11 +47,17 @@ int main()
     };
     Debug::Log("hello world");
     
+    long frameNum = 0;
 
 	while (!screen->ScreenShouldClose())
 	{
+        frameNum++;
+        //char numtochar[20];
+        //_itoa_s(frameNum, numtochar, 10);
+        //Debug::Log("frame : " + string(numtochar)+ "  ---  start\n");
         engine->Tick();
         screen->Update();
+        //Debug::Log("frame : " + string(numtochar) + "  ---  end\n");
 	}
 
 	screen->ShutDown();
