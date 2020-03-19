@@ -54,6 +54,8 @@ public:
     
     void Init(string const &path)
     {
+		textures_loaded.clear();
+		meshes.clear();
         loadModel(path);
         
     }

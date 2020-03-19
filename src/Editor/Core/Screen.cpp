@@ -230,6 +230,9 @@ void ScreenSystem::InitModel()
 	ourModel.Init(FileSystem::getPath("resources/objects/character/_2.obj"));
 }
 
+
+
+
 void ScreenSystem::InitOpenGL()
 {
 	// glfw: initialize and configure
@@ -300,6 +303,11 @@ void ScreenSystem::InitEditorWidget(Context* context)
 	Debug::Log(" Editor 初始化窗口成功  ");
 
 	InitWidgets();
+}
+
+void ScreenSystem::ChangeModel(string mpath)
+{
+	ourModel.Init(mpath);
 }
 
 void ScreenSystem::Update()
