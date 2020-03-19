@@ -100,6 +100,7 @@ public:
 
 	void InitEditorWidget(Context * context);
 
+	void ChangeModel(string mpath);
 	int GetCurrentFrameTexture();
 	void InitFrameBufer();
     void CreateFrameBuferCa();
