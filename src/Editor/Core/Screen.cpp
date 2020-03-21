@@ -617,9 +617,6 @@ void ScreenSystem::Render_EditorUI()
 		ShowDebugWindows(&show_debug_window);
 	}
 
-
-
-
 	if (show_another_window)
 	{
 		ImGui::Begin("Another Window", &show_another_window);
@@ -636,7 +633,7 @@ void ScreenSystem::Render_EditorUI()
 
 	GetSubWidget<SceneView>()->ImageId = CurrentFrameTextureID;
 	GetSubWidget<Game>()->ImageId = 0;
-	DrawScreen();
+	DrawScreenWidgets();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
