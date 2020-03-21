@@ -74,6 +74,8 @@ file(GLOB_RECURSE sources
 
 "Plantform/Time/*.c??"
 
+"../ThirdParty/Angelscript/sdk/add_on/scriptstdstring/*.c??"
+
 ) 
 
 include_directories("../../include")									#添加头文件目录
@@ -83,6 +85,8 @@ include_directories("../ThirdParty/Box2D/Testbed/Framework")            #添加�
 include_directories("../ThirdParty/Vulkan_1.1.106.0/shaderc")
 include_directories("../ThirdParty/Vulkan_1.1.106.0/vulkan")
 include_directories("../ThirdParty/SPIRV-Cross-2019-03-29")
+include_directories("../ThirdParty/Angelscript/sdk/add_on")
+include_directories("../../include/angelscript")
 
 set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
 link_directories(${libpath})
@@ -107,6 +111,7 @@ target_link_libraries(TmingEngine glm)
 target_link_libraries(TmingEngine assimp)
 target_link_libraries(TmingEngine TextEditor)
 target_link_libraries(TmingEngine ImNodes)
+target_link_libraries(TmingEngine angelscript)
 
 
 

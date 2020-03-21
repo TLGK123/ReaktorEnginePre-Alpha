@@ -269,7 +269,7 @@ void MenuFile()
 	if (ImGui::MenuItem("Open", "Ctrl+O"))
 	{
 		Debug::Log("Open File " + TmingEngine::Selecttion::ProjectSelected);
-		if (TmingEngine::Selecttion::ProjectSelected.find(".obj"))
+		if (TmingEngine::Selecttion::ProjectSelected.find(".obj") != string::npos)
 		{
 			Global<Context>().GetSubsystem<ScreenSystem>()->ChangeModel(TmingEngine::Selecttion::ProjectSelected);
 		}
