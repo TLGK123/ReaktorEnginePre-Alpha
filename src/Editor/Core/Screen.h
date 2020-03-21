@@ -100,6 +100,7 @@ public:
 
 	void InitEditorWidget(Context * context);
 
+	void SetViewPoint(int startX,int startY, int width ,int height);
 	void ChangeModel(string mpath);
 	int GetCurrentFrameTexture();
 	void InitFrameBufer();
