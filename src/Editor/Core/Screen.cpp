@@ -26,11 +26,11 @@
 using namespace std;
 using namespace TmingEngine;
 
-const unsigned int SCR_WIDTH = 1366;
-const unsigned int SCR_HEIGHT = 768;
+ unsigned int SCR_WIDTH = 1366;
+ unsigned int SCR_HEIGHT = 768;
 
 const unsigned int frame_width = 1366;
-const unsigned int frame_heigh = 768;
+const unsigned int frame_height = 768;
 
 Camera EditorCamera(Vector3(0.0f, 0.0f, 5.0f));     //  Editor  Scene  camera
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
@@ -305,13 +305,22 @@ void ScreenSystem::InitEditorWidget(Context* context)
 	InitWidgets();
 }
 
+void ScreenSystem::SetViewPoint(int startX, int startY, int width, int height)
+{
+	glViewport(startX, startY, width, height);
+	SCR_WIDTH = width;
+	SCR_HEIGHT = height;
+}
+
 void ScreenSystem::ChangeModel(string mpath)
 {
 	ourModel.Init(mpath);
 }
 
+
 void ScreenSystem::Update()
 {
+	
 	glfwPollEvents();
 
 	float currentFrame = glfwGetTime();
@@ -322,11 +331,17 @@ void ScreenSystem::Update()
 
 	glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+	glViewport(0, 0, 1366, 768);
+
+
 
 	Render_EditorUI();
 
 	glfwSwapBuffers(window);
 }
+
+
+
 
 void ScreenSystem::RenderFrameBuffer()
 {
@@ -353,9 +368,12 @@ void ScreenSystem::InitFrameBufer()
 	glGenTextures(1, &textureColorbuffer);
 	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_heigh, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+
 	//纹理 附加到当前绑定的帧缓冲对象
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
 
@@ -364,7 +382,7 @@ void ScreenSystem::InitFrameBufer()
 	glGenRenderbuffers(1, &rbo);
 	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
 	//创建一个深度和模板渲染缓冲对象
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, frame_width, frame_heigh);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, frame_width, frame_height);
 	//附加这个渲染缓冲对象：
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
@@ -807,7 +825,7 @@ void ScreenSystem::ShowExampleAppDockSpace(bool* p_open)
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-	glViewport(0, 0, frame_width, frame_heigh);
+	glViewport(0, 0, frame_width, frame_height);
 }
 
 
