@@ -43,9 +43,22 @@ extern "C"
 #include "lualib.h"  
 }
 
+#include <angelscript.h>
+#include <scriptstdstring/scriptstdstring.h>
+#include <scriptbuilder/scriptbuilder.h>
 
 namespace TmingEngine
 {
+
+	void ConfigureEngine(asIScriptEngine* engine);
+	int  CompileScript(asIScriptEngine* engine);
+	void PrintString(string& str);
+	void PrintString_Generic(asIScriptGeneric* gen);
+	void timeGetTime_Generic(asIScriptGeneric* gen);
+	void LineCallback(asIScriptContext* ctx, DWORD* timeOut);
+
+
+
 	class Console : public Widget
 	{
 	public:
@@ -66,7 +79,9 @@ namespace TmingEngine
 		void Clear();
 		void AddLog(const char* fmt, ...);
 		void Draw(const char* title, bool* p_open);
-		void Draw2(const char* title, bool* p_open);
+		//void Draw2(const char* title, bool* p_open);
+		void TestLua();
+		int TestAngleScript();
 	};
 }
 #endif
