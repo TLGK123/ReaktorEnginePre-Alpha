@@ -30,8 +30,7 @@ void TmingEngine::Preview::Begin()
 	p_open = true;
 }
 
-int lastSceneX = -1;
-int latsSceneY = -1;
+
 
 void TmingEngine::Preview::Update()
 {
@@ -48,20 +47,10 @@ void TmingEngine::Preview::Update()
     ImTextureID my_tex_id = (void *)ImageId;
     int my_tex_w = ImGui::GetWindowSize().x - 20;
     int my_tex_h = ImGui::GetWindowSize().y - 50;
-	auto s = ImGui::GetWindowViewport();
-	//if (lastSceneX != my_tex_w || latsSceneY != my_tex_h)
-	{
-		//if (lastSceneX != -1 || latsSceneY != -1)
-		{
-			
-			Global<Context>().GetSubsystem<ScreenSystem>()->SetViewPoint(s->Pos.x,s->Pos.y, s->Size.x, s->Size.y);
-		}
 
-
-	}
 	//----------------------------------------------------------------- -1 -1  Image reversal
 
-	ImGui::Image(my_tex_id, ImVec2(s->Size.x, s->Size.y), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+	ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 	ImGui::End();
 }
 

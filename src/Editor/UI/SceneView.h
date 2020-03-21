@@ -29,6 +29,7 @@
 #include "Scene/Components/Transform.h"
 #include "Core/Log/Log.h"
 #include "Selection.hpp"
+#include "Screen.h"
 
 namespace TmingEngine
 {
