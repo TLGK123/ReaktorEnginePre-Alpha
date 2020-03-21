@@ -29,8 +29,8 @@ using namespace TmingEngine;
  unsigned int SCR_WIDTH = 1366;
  unsigned int SCR_HEIGHT = 768;
 
-const unsigned int frame_width = 1366;
-const unsigned int frame_height = 768;
+ unsigned int frame_width = 1366;
+ unsigned int frame_height = 768;
 
 Camera EditorCamera(Vector3(0.0f, 0.0f, 5.0f));     //  Editor  Scene  camera
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
@@ -310,6 +310,10 @@ void ScreenSystem::SetViewPoint(int startX, int startY, int width, int height)
 	glViewport(startX, startY, width, height);
 	SCR_WIDTH = width;
 	SCR_HEIGHT = height;
+	//frame_width = width;
+	//frame_height = height;
+
+	//InitFrameBufer();
 }
 
 void ScreenSystem::ChangeModel(string mpath)
@@ -825,7 +829,7 @@ void ScreenSystem::ShowExampleAppDockSpace(bool* p_open)
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-	glViewport(0, 0, frame_width, frame_height);
+	//glViewport(0, 0, frame_width, frame_height);
 }
 
 

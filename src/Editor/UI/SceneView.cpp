@@ -36,6 +36,9 @@ void TmingEngine::SceneView::Begin()
     
 }
 
+int lastSceneX = -1;
+int lastSceneY = -1;
+
 void TmingEngine::SceneView::Update()
 {
 	bool p_open = true;
@@ -51,6 +54,19 @@ void TmingEngine::SceneView::Update()
 	float my_tex_h = ImGui::GetWindowSize().y - 75;
 
 	ImGui::Text(" Scene  %.0fx%.0f", my_tex_w, my_tex_h);
+
+	auto s = ImGui::GetWindowViewport();
+	if (lastSceneX != my_tex_w || lastSceneY != my_tex_h)
+	{
+		if (lastSceneX != -1 || lastSceneY != -1)
+		{
+			Global<Context>().GetSubsystem<ScreenSystem>()->SetViewPoint(s->Pos.x, s->Pos.y, s->Size.x, s->Size.y);
+		}
+
+		lastSceneX = my_tex_w;
+		lastSceneY = my_tex_h;
+	}
+
 	//----------------------------------------------------------------- -1 -1  Image reversal
 	ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 	ImGui::End();
