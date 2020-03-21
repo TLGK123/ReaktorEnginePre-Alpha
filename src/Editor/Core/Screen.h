@@ -156,7 +156,7 @@ public:
 		return nullptr;
 	}
 
-	void DrawScreen()
+	void DrawScreenWidgets()
 	{
 		for (auto& widget : m_widgets)
 		{
