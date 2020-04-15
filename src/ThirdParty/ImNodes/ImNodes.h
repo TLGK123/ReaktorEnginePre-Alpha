@@ -24,7 +24,7 @@
 
 
 #include "ImGui/imgui.h"
-#include "ImGUI/imgui_internal.h"
+#include "ImGui/imgui_internal.h"
 
 #include <limits>
 

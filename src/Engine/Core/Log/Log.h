@@ -32,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 namespace TmingEngine
 {
-	static class ENGINE_CLASS Debug : public Subsystem
+	class ENGINE_CLASS Debug : public Subsystem
 	{
 	public:
 		static void Log(const char * message, ...);
