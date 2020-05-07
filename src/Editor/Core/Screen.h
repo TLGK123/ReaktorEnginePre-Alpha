@@ -43,8 +43,8 @@
 #include "Core/Math/Matrix.h"
 #include "Core/Log/Log.h"
 
-//#if Debug
-//#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )
+
+#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -57,21 +57,14 @@ class ScreenSystem :public Subsystem
 {
 public:
 	GLFWwindow * window;
-	unsigned int texture1, texture2;
-	Shader ourShader , skyboxShader;
-    Shader lightingShader;
-    Shader lampShader;
-    Shader OutLineShader;
+	unsigned int texture1, texture2 , texture3;
+	Shader screenShader;
+
 	unsigned int VBO, VAO ;
     
-    unsigned int skyboxVAO, skyboxVBO;
-    unsigned int lightVAO;
-    unsigned int cubemapTexture;
     bool Initialize() override;
 	vector<Widget *> m_widgets;
 
-    Model ourModel;
-//	vector<DemoTest *> m_testDemos;
 
 	bool show_debug_window = false;
 	bool show_demo_window = false;
