@@ -1,5 +1,5 @@
 /*
-Copyright(c) 2016-2019 Panos Karabelas
+//Copyright(c) 2016 - 2020 littleblue
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #pragma once
 #include "Context.h"
-#define ENGINE_VERSION "v0.1 alpha"
+#define ENGINE_VERSION "v0.0.1"
 #define TmengineLib
 #include "../Scene/Scene.hpp"
 

@@ -55,115 +55,24 @@ bool ScreenSystem::Initialize()
 
 void ScreenSystem::InitVertextData()
 {
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
 
-	glGenBuffers(1, &VBO);                  
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-
-	//OpenGL解析内存中的顶点数据格式，以及它该如何将顶点数据链接到顶点着色器的属性上
-	//注意顶点shader中的layout(location = 0) 表示使用的是 0 号属性值，下面就开始设置
-	//如果我们设置为GL_TRUE，所有数据都会被映射到0（对于有符号型signed数据是-1）到1之间。我们把它设置为GL_FALSE。
-
-	//在调用glVertexAttribPointer时，GL_ARRAY_BUFFER 绑定了哪个VBO，这个VBO的格式就被设置了
-
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0); //属性0 顶点，3个float数。总数据大小， 数据起始偏移位置，
-
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1); //属性1 法线，3个float数。总数据大小， 数据起始偏移位置，偏移掉前面的顶点
-
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2); //属性2 uv纹理坐标，2个float数。总数据大小， 数据起始偏移位置，偏移掉前面的顶点
-   //创建一个光源需要的顶点属性
-
-	glGenVertexArrays(1, &lightVAO);
-	glBindVertexArray(lightVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-
-	//？？？思考 正常渲染一个物体步骤 是不是 1 上传它的顶点数据 2 设置它的顶点格式
-	//3 把数据传给顶点shader 4 使用顶点shader去处理顶点 5 opengl画三角形
-	//？？？ 按理来说是这样的，如果顶点的属性很多，有颜色，法显，切线，等等属性，每次都要为物体设置，顶点属性格式，
-	//很麻烦啊。所以 VAO 的作用来了，它就是一个记录顶点配置信息的指针 ， VAO 先生成，再进行VBO 的初始化，
-	//这时候，VBO的属性都记录在VAO了，下次shader要使用数据的时候，直接指定VAO就好了 想要的数据都在
 
 }
 
 void ScreenSystem::InitTextureData()
 {
-	//创建一个图片处理对象
-	glGenTextures(1, &texture1);
-	//设置图片格式
-	glBindTexture(GL_TEXTURE_2D, texture1);
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	// set texture wrapping to GL_REPEAT (default wrapping method)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// load image, create texture and generate mipmaps
-	int width, height, nrChannels;
-
-	stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-	//图片位置，宽，高，颜色通道
-	unsigned char* data = stbi_load(FileSystem::getPath("resources/textures/container2.png").c_str(), &width, &height, &nrChannels, 0);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
-	// texture 2
-	// ---------
-	glGenTextures(1, &texture2);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);    // set texture wrapping to GL_REPEAT (default wrapping method)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// load image, create texture and generate mipmaps
-	data = stbi_load(FileSystem::getPath("resources/textures/container2_specular.png").c_str(), &width, &height, &nrChannels, 0);
-	if (data)
-	{
-		// note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
+	
 }
 
 void ScreenSystem::InitShader()
 {
-	lightingShader.Init("3.phong.light.vs", "3.phong.light.fs");
-	lampShader.Init("1.lamp.vs", "1.lamp.fs");
-	ourShader.Init("6.1.cube.vs", "6.1.cube.fs");
-	OutLineShader.Init("1.model.outline.vs", "1.model.outline.fs");
 
-	lightingShader.use();
-	lightingShader.setVec3("lightPos", lightPos);
-	lightingShader.setInt("material.diffuse", 0);
-	lightingShader.setInt("material.specular", 1);
 
 }
 
 void ScreenSystem::InitModel()
 {
-	//ourModel.Init(FileSystem::getPath("resources/objects/character/_2.obj"));
+	
 }
 
 
@@ -171,8 +80,7 @@ void ScreenSystem::InitModel()
 
 void ScreenSystem::InitOpenGL()
 {
-	// glfw: initialize and configure
-	// ------------------------------
+
 	if (!glfwInit())
 	{
 		IM_ASSERT(false && "glfwInit()  failure");
@@ -246,10 +154,7 @@ void ScreenSystem::SetViewPoint(int startX, int startY, int width, int height)
 	glViewport(startX, startY, width, height);
 	SCR_WIDTH = width;
 	SCR_HEIGHT = height;
-	//frame_width = width;
-	//frame_height = height;
 
-	//InitFrameBufer();
 }
 
 void ScreenSystem::ChangeModel(string mpath)
@@ -290,8 +195,6 @@ void ScreenSystem::RenderFrameBuffer()
 	glClearColor(0, 0, 0, 0);                       //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	RenderSceneObjectForEditorCamera();
-	//Render_SkyBox_ForEditor();
 
 	glDisable(GL_DEPTH_TEST);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -382,20 +285,7 @@ void ScreenSystem::InitImgui()
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
-	// Load Fonts
-	// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
-	// - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
-	// - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
-	// - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
-	// - Read 'misc/fonts/README.txt' for more instructions and details.
-	// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
-	//io.Fonts->AddFontDefault();
-	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
-	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
-	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
-	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
-	//IM_ASSERT(font != NULL);
+
 
 	string fontpath = FileSystem::getPath("resources/font/SourceHanSansCN-Medium.ttf");
 	ImFont* font = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 20.0f, NULL, io.Fonts->GetGlyphRangesChineseFull());
@@ -406,18 +296,7 @@ void ScreenSystem::InitImgui()
 void ScreenSystem::RenderSceneObjectForEditorCamera()
 {
 
-	glm::mat4 projection = glm::perspective(glm::radians(EditorCamera.Fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-	glm::mat4 view = EditorCamera.GetViewMatrixGlm();
-	glm::mat4 model = glm::mat4(1);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-	OutLineShader.use();
-	OutLineShader.setMat4("projection", projection);
-	OutLineShader.setMat4("view", view);
-	OutLineShader.setMat4("model", model);
-	OutLineShader.setFloat("outLine", 0.007f);
-	//ourModel.Draw(OutLineShader);
-	glDisable(GL_CULL_FACE);
+
 
 
 }
@@ -425,139 +304,16 @@ void ScreenSystem::RenderSceneObjectForEditorCamera()
 
 void ScreenSystem::Render_SkyBox_ForEditor()
 {
-	//Debug::Log(" 天空盒 update editor");
 
-	// draw skybox as last
-	glDepthFunc(GL_LEQUAL);
-	skyboxShader.use();
-	//Matrix projection = glm::perspective(glm::radians(EditorCamera.Fov), (float)frame_width / (float)frame_heigh, 0.1f, 100.0f);
-	glm::mat4 projection = glm::perspective(glm::radians(EditorCamera.Fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-
-	//Matrix view = EditorCamera.GetViewMatrix(); // remove translation from the view matrix
-	glm::mat4 view = EditorCamera.GetViewMatrixGlm();
-	skyboxShader.setMat4("view", view);
-	skyboxShader.setMat4("projection", projection);
-	// skybox cube
-	glBindVertexArray(skyboxVAO);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glBindVertexArray(0);
-	glDepthFunc(GL_LESS); // set depth function back to default
 }
 
 
 void ScreenSystem::InitSkyBox()
 {
-	float skyboxVertices[] = {
-		// positions
-		-1.0f,  1.0f, -1.0f,
-		-1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
 
-		-1.0f, -1.0f,  1.0f,
-		-1.0f, -1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
-
-		1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f,  1.0f,
-		1.0f,  1.0f,  1.0f,
-		1.0f,  1.0f,  1.0f,
-		1.0f,  1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-
-		-1.0f, -1.0f,  1.0f,
-		-1.0f,  1.0f,  1.0f,
-		1.0f,  1.0f,  1.0f,
-		1.0f,  1.0f,  1.0f,
-		1.0f, -1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
-
-		-1.0f,  1.0f, -1.0f,
-		1.0f,  1.0f, -1.0f,
-		1.0f,  1.0f,  1.0f,
-		1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f, -1.0f,
-
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f,  1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f,  1.0f,
-		1.0f, -1.0f,  1.0f
-	};
-
-	skyboxShader.Init("6.2.skybox.vs", "6.2.skybox.fs");
-
-	unsigned int skyboxVAO, skyboxVBO;
-	glGenVertexArrays(1, &skyboxVAO);
-	glGenBuffers(1, &skyboxVBO);
-	glBindVertexArray(skyboxVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-
-	//纹理贴图的x顺序是。 左  右 上 下 前 后
-	vector<std::string> faces
-	{
-		FileSystem::getPath("resources/textures/skybox/left.jpg"),
-		FileSystem::getPath("resources/textures/skybox/right.jpg"),
-		FileSystem::getPath("resources/textures/skybox/top.jpg"),
-		FileSystem::getPath("resources/textures/skybox/bottom.jpg"),
-		FileSystem::getPath("resources/textures/skybox/front.jpg"),
-		FileSystem::getPath("resources/textures/skybox/back.jpg")
-	};
-
-	unsigned int textureID;
-	glGenTextures(1, &textureID);                                  //创建立方贴图的纹理
-	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);                 //绑定到纹理目标 GL_TEXTURE_CUBE_MAP
-
-	int width, height, nrChannels;
-	for (unsigned int i = 0; i < faces.size(); i++)                 //有6张贴图，要加载6次
-	{
-		//#define GL_TEXTURE_CUBE_MAP_POSITIVE_X 0x8515
-		//#define GL_TEXTURE_CUBE_MAP_NEGATIVE_X 0x8516
-		//#define GL_TEXTURE_CUBE_MAP_POSITIVE_Y 0x8517
-		//#define GL_TEXTURE_CUBE_MAP_NEGATIVE_Y 0x8518
-		//#define GL_TEXTURE_CUBE_MAP_POSITIVE_Z 0x8519
-		//#define GL_TEXTURE_CUBE_MAP_NEGATIVE_Z 0x851A
-
-		unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
-		if (data)
-		{
-			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-				0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
-			);
-			stbi_image_free(data);
-		}
-		else
-		{
-			std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
-			stbi_image_free(data);
-		}
-	}
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-	cubemapTexture = textureID;
-	Debug::Log("立方贴图 作为天空盒\n");
-
-	//   return textureID;       返回 的是天空盒的图片id
 }
 
-bool show_demo_window = true;
-bool show_debug_window = true;
+
 void ScreenSystem::Render_EditorUI()
 {
 	ImGui_ImplOpenGL3_NewFrame();

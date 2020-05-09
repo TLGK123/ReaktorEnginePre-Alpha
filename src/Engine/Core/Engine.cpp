@@ -1,58 +1,39 @@
-/*
-Copyright(c) 2016-2019 Panos Karabelas
+//The MIT License
+//
+//Copyright(c) 2016 - 2020 littleblue
+//
+//Permission is hereby granted, free of charge, to any person obtaining a copy
+//of this softwareand associated documentation files(the "Software"), to deal
+//in the Software without restriction, including without limitation the rights
+//to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+//copies of the Software, and to permit persons to whom the Software is furnished
+//to do so, subject to the following conditions :
+//
+//The above copyright noticeand this permission notice shall be included in
+//all copies or substantial portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+//FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR
+//COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+//IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+//CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-copies of the Software, and to permit persons to whom the Software is furnished
-to do so, subject to the following conditions :
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-
-//= INCLUDES =================================
 #include "Engine.h"
 #include "Plantform/Time/Timer.h"
 #include<memory>
 #include "GameObject.hpp"
 #include"Log/Log.h"
 #include "../Scene/Scene.hpp"
-//#include "Settings.h"
-//#include "../Logging/Log.h"
-//#include "../Threading/Threading.h"
-//#include "../Resource/ResourceManager.h"
-//#include "../Scripting/Scripting.h"
-//#include "../Graphics/Renderer.h"
-//#include "../Audio/Audio.h"
-//#include "../Core/EngineBackends.h"
-//#include "../Core/EventSystem.h"
-//#include "../Input/DInput/DInput.h"
-//#include "../Physics/Physics.h"
-//#include "../Scene/Scene.h"
-//#include "Stopwatch.h"
-//#include "../Profiling/Profiler.h"
-//===========================================
 
-//= NAMESPACES =====
+
 using namespace std;
-//==================
+
 
 namespace TmingEngine
 {
-	//void* Engine::m_drawHandle = nullptr;
-	//void* Engine::m_windowHandle = nullptr;
-	//void* Engine::m_windowInstance = nullptr;
-	//unsigned long Engine::m_flags = 0;
-	//static unique_ptr<Stopwatch> g_stopwatch;
+
 
 	Engine::Engine(Context* context) : Subsystem(context)
 	{
@@ -215,10 +196,5 @@ namespace TmingEngine
 	   //Log::Release();
 	}
 
-	//void Engine::SetHandles(void* drawHandle, void* windowHandle, void* windowInstance)
-	//{
-	//	m_drawHandle = drawHandle;
-	//	m_windowHandle = windowHandle;
-	//	m_windowInstance = windowInstance;
-	//}
+
 }
