@@ -30,36 +30,23 @@ using namespace TmingEngine;
 
 int main()
 {
-
 	Engine *engine;
-    ScreenSystem *screen;
 
     engine = new Engine(&Global<Context>());
     if (!engine->Initialize())
     {
+        Debug::Log("TmingEngine----------Initialize----faild");
         return -1;
     };
     
-    screen = new ScreenSystem(&Global<Context>());
-    if (!screen->Initialize())
-    {
-        return -1;
-    };
-    Debug::Log("hello world");
+    Debug::Log("TmingEngine----------start");
     
     long frameNum = 0;
 
-	while (!screen->ScreenShouldClose())
+	while (!engine->ShouldClose())
 	{
         frameNum++;
-        //char numtochar[20];
-        //_itoa_s(frameNum, numtochar, 10);
-        //Debug::Log("frame : " + string(numtochar)+ "  ---  start\n");
         engine->Tick();
-        screen->Update();
-        //Debug::Log("frame : " + string(numtochar) + "  ---  end\n");
 	}
-
-	screen->ShutDown();
 	engine->Shutdown();
 }
