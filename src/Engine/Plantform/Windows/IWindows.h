@@ -19,50 +19,27 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+#ifndef IWindows_H
+#define IWindows_H
 
-#include "Engine.h"
-#include "Plantform/Time/Timer.h"
-#include<memory>
-#include "GameObject.hpp"
-#include"Log/Log.h"
-#include "../Scene/Scene.hpp"
-
-
-
-
-using namespace std;
-
+#include "Core/Context.h"
+#include "Core/Subsystem.h"
 
 namespace TmingEngine
 {
 
-	Engine::Engine(Context* context) : Subsystem(context)
+	class ENGINE_CLASS IWindows : public Subsystem
 	{
+	public:
+		IWindows(Context* context);
+		virtual void WinInitialize() = 0;   //´¿Ðéº¯Êý =0 ±íÊ¾
+		virtual void WinRender() = 0;
+		virtual void WinClose() = 0;
 
-	}
-
-	bool Engine::Initialize()
-	{
-		m_context->RegisterSubsystem(this);
-		m_context->RegisterSubsystem(new Screen(m_context))
-
-		return true;
-	}
-
-	void Engine::Update()
-	{
-        currentScene->Update();
-	}
-
-	void Engine::Destory()
-	{
-
-	}
-
-	bool Engine::ShouldClose()
-	{
-		return false;
-	}
-
+	};
 
 }
+
+
+
+#endif

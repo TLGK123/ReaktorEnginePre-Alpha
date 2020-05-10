@@ -12,6 +12,8 @@ file(GLOB_RECURSE headers
 "Core/Math/Matrix.h"
 "Core/Math/Radian.h"
 "Core/Math/Quaternion.h"
+"Plantform/Windows/win/*.h"
+"Plantform/Windows/*.h"
 
 "im.h"
 #"RHI/*.h"
@@ -57,6 +59,9 @@ file(GLOB_RECURSE sources
 "Scene/Components/Transform.cpp"
 "Scene/Components/IComponent.cpp"
 "Scene/*.cpp"
+
+"Plantform/Windows/win/*.cpp"
+"Plantform/Windows/*.cpp"
 
 #"RHI/*.c"
 #"RHI/*.c??"
