@@ -61,6 +61,11 @@ public:
 	}
 };
 
+
+//如果对象要能使用智能指针,那么这个对应一定需要有
+//类模板中的成员函数 upcount downcount  ,所以这样的类必须是继承 RefCount
+//智能指针也就是为了处理野指针,所做的智能垃圾回收处理
+
 template <class T>
 class SmartPtr
 {
@@ -71,7 +76,7 @@ public:
 	{
 		p = p_;
 		if (p != NULL)
-			p->upcount();
+			p->upcount();     //类模板中的成员函数
 	}
 
 	SmartPtr(const SmartPtr<T> & p_)
@@ -84,7 +89,7 @@ public:
 
 	~SmartPtr(void)
 	{
-		if (p) p->downcount();
+		if (p) p->downcount();     //类模板中的成员函数
 	}
 
 	operator T*(void) { return p; }

@@ -28,6 +28,7 @@
 using namespace std;
 using namespace TmingEngine;
 
+
 int main()
 {
 	Engine *engine;
@@ -37,16 +38,19 @@ int main()
     {
         Debug::Log("TmingEngine----------Initialize----faild");
         return -1;
+    }
+    else
+    {
+        Debug::Log("TmingEngine----------Initialize-----");
+        Global<Context>().RegisterSubsystem(new ScreenSystem());
     };
-    
-    Debug::Log("TmingEngine----------start");
-    
-    long frameNum = 0;
 
+    long frameNum = 0;
 	while (!engine->ShouldClose())
 	{
         frameNum++;
-        engine->Tick();
+        engine->Update();
 	}
-	engine->Shutdown();
+
+	engine->Destory();
 }
