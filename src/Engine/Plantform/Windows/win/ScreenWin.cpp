@@ -45,7 +45,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 
-bool ScreenSystem::Initialize()
+bool ScreenWin::Initialize()
 {
 	cout << "Hello World" << endl;
 	InitOpenGL();
@@ -54,36 +54,41 @@ bool ScreenSystem::Initialize()
 	return true;
 }
 
-void ScreenSystem::WinInitialize()
+void ScreenWin::WinInitialize()
 {
+	InitOpenGL();
+	InitImgui();
+	
 }
 
-void ScreenSystem::WinRender()
+void ScreenWin::WinRender()
 {
-}
-
-void ScreenSystem::WinClose()
-{
-}
-
-void ScreenSystem::InitVertextData()
-{
-
+	Update();
 
 }
 
-void ScreenSystem::InitTextureData()
+void ScreenWin::WinClose()
 {
-
 }
 
-void ScreenSystem::InitShader()
+void ScreenWin::InitVertextData()
 {
 
 
 }
 
-void ScreenSystem::InitModel()
+void ScreenWin::InitTextureData()
+{
+
+}
+
+void ScreenWin::InitShader()
+{
+
+
+}
+
+void ScreenWin::InitModel()
 {
 
 }
@@ -91,7 +96,7 @@ void ScreenSystem::InitModel()
 
 
 
-void ScreenSystem::InitOpenGL()
+void ScreenWin::InitOpenGL()
 {
 
 	if (!glfwInit())
@@ -143,7 +148,7 @@ void ScreenSystem::InitOpenGL()
 	std::cout << "顶点属性上限: " << nrAttributes << std::endl;
 }
 
-void ScreenSystem::InitEditorWidget(Context* context)
+void ScreenWin::InitEditorWidget(Context* context)
 {
 	//context->RegisterSubsystem(new Console(context));
 
@@ -162,7 +167,7 @@ void ScreenSystem::InitEditorWidget(Context* context)
 	InitWidgets();
 }
 
-void ScreenSystem::SetViewPoint(int startX, int startY, int width, int height)
+void ScreenWin::SetViewPoint(int startX, int startY, int width, int height)
 {
 	glViewport(startX, startY, width, height);
 	SCR_WIDTH = width;
@@ -170,13 +175,13 @@ void ScreenSystem::SetViewPoint(int startX, int startY, int width, int height)
 
 }
 
-void ScreenSystem::ChangeModel(string mpath)
+void ScreenWin::ChangeModel(string mpath)
 {
 	//ourModel.Init(mpath);
 }
 
 
-void ScreenSystem::Update()
+void ScreenWin::Update()
 {
 
 	glfwPollEvents();
@@ -201,7 +206,7 @@ void ScreenSystem::Update()
 
 
 
-void ScreenSystem::RenderFrameBuffer()
+void ScreenWin::RenderFrameBuffer()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer); //帧缓冲的 开始
 	glEnable(GL_DEPTH_TEST);                        //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
@@ -213,7 +218,7 @@ void ScreenSystem::RenderFrameBuffer()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void ScreenSystem::InitFrameBufer()
+void ScreenWin::InitFrameBufer()
 {
 	//创建一个帧缓冲对象，并绑定它
 	//unsigned int framebuffer;
@@ -251,7 +256,7 @@ void ScreenSystem::InitFrameBufer()
 }
 
 
-void ScreenSystem::ShutDown()
+void ScreenWin::ShutDown()
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
@@ -263,7 +268,7 @@ void ScreenSystem::ShutDown()
 	glfwTerminate();
 }
 
-bool ScreenSystem::ScreenShouldClose()
+bool ScreenWin::ScreenShouldClose()
 {
 	return glfwWindowShouldClose(window);
 }
@@ -271,7 +276,7 @@ bool ScreenSystem::ScreenShouldClose()
 
 string initfile = FileSystem::getPath("Data/Setting/imgui.ini");
 
-void ScreenSystem::InitImgui()
+void ScreenWin::InitImgui()
 {
 	const char* glsl_version = "#version 150";
 	// Setup Dear ImGui context
@@ -306,7 +311,7 @@ void ScreenSystem::InitImgui()
 
 }
 
-void ScreenSystem::RenderSceneObjectForEditorCamera()
+void ScreenWin::RenderSceneObjectForEditorCamera()
 {
 
 
@@ -315,19 +320,19 @@ void ScreenSystem::RenderSceneObjectForEditorCamera()
 }
 
 
-void ScreenSystem::Render_SkyBox_ForEditor()
+void ScreenWin::Render_SkyBox_ForEditor()
 {
 
 }
 
 
-void ScreenSystem::InitSkyBox()
+void ScreenWin::InitSkyBox()
 {
 
 }
 
 
-void ScreenSystem::Render_EditorUI()
+void ScreenWin::Render_EditorUI()
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
@@ -376,7 +381,7 @@ void ScreenSystem::Render_EditorUI()
 }
 
 //没有指定任何的Window就是创建到Debug Windows中
-void ScreenSystem::ShowDebugWindows(bool* p_open)
+void ScreenWin::ShowDebugWindows(bool* p_open)
 {
 	static float f = 0.0f;
 	static int counter = 0;
@@ -427,7 +432,7 @@ void ScreenSystem::ShowDebugWindows(bool* p_open)
 	}
 }
 
-void ScreenSystem::ShowExampleAppDockSpace(bool* p_open)
+void ScreenWin::ShowExampleAppDockSpace(bool* p_open)
 {
 	static bool opt_fullscreen_persistant = true;
 	bool opt_fullscreen = opt_fullscreen_persistant;
@@ -538,12 +543,12 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	Global<Context>().GetSubsystem<ScreenSystem>()->MouseMove(window, xpos, ypos);
+	Global<Context>().GetSubsystem<ScreenWin>()->MouseMove(window, xpos, ypos);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	Global<Context>().GetSubsystem<ScreenSystem>()->MouseScroll(window, xoffset, yoffset);
+	Global<Context>().GetSubsystem<ScreenWin>()->MouseScroll(window, xoffset, yoffset);
 }
 
 
@@ -562,7 +567,7 @@ void processInput(GLFWwindow* window)
 		EditorCamera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
-void ScreenSystem::MouseMove(GLFWwindow* window, double xpos, double ypos)
+void ScreenWin::MouseMove(GLFWwindow* window, double xpos, double ypos)
 {
 	if (firstMouse)
 	{
@@ -589,7 +594,7 @@ void ScreenSystem::MouseMove(GLFWwindow* window, double xpos, double ypos)
 	}
 }
 
-void ScreenSystem::MouseScroll(GLFWwindow* window, double xoffset, double yoffset)
+void ScreenWin::MouseScroll(GLFWwindow* window, double xoffset, double yoffset)
 {
 	ImGuiContext* c = ImGui::GetCurrentContext();
 

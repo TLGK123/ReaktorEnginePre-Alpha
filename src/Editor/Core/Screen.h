@@ -53,7 +53,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 using namespace TmingEngine;
 
-class ScreenSystem :public Subsystem
+class ScreenWin :public Subsystem
 {
 public:
 	GLFWwindow * window;
@@ -105,7 +105,7 @@ public:
 	void MouseMove(GLFWwindow* window, double xpos, double ypos);
 	void MouseScroll(GLFWwindow* window, double xoffset, double yoffset);
 
-	ScreenSystem(Context* context) : Subsystem(context)
+	ScreenWin(Context* context) : Subsystem(context)
 	{
 		context->RegisterSubsystem(this);
 
@@ -122,7 +122,7 @@ public:
 		}
 	}
     
-    ~ScreenSystem()
+    ~ScreenWin()
     {
         for (auto& widget : m_widgets)
         {

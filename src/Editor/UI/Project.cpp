@@ -212,7 +212,7 @@ void AssetTree(string path  , int roundNum)
 						|| (t.name.find(".vs") != string::npos)
 						)
 					{
-						auto screen = Global<Context>().GetSubsystem<ScreenSystem>();
+						auto screen = Global<Context>().GetSubsystem<ScreenWin>();
 						auto codeEditor = screen->GetSubWidget<CodeEditor>();
 						auto txt = Global<Context>().GetSubsystem<FileSystem>()->GetFileContent(fpath);
 
@@ -231,7 +231,7 @@ void AssetTree(string path  , int roundNum)
 						|| (t.name.find(".TGA") != string::npos)
 						)
 					{
-						auto screen = Global<Context>().GetSubsystem<ScreenSystem>();
+						auto screen = Global<Context>().GetSubsystem<ScreenWin>();
 						auto previewer = screen->GetSubWidget<Preview>();
 						previewer->PreviewTexture(fpath);
 						previewer->Show();
@@ -271,7 +271,7 @@ void MenuFile()
 		Debug::Log("Open File " + TmingEngine::Selecttion::ProjectSelected);
 		if (TmingEngine::Selecttion::ProjectSelected.find(".obj") != string::npos)
 		{
-			Global<Context>().GetSubsystem<ScreenSystem>()->ChangeModel(TmingEngine::Selecttion::ProjectSelected);
+			Global<Context>().GetSubsystem<ScreenWin>()->ChangeModel(TmingEngine::Selecttion::ProjectSelected);
 		}
 
 	}
