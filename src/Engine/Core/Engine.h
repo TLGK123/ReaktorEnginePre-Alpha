@@ -48,6 +48,8 @@ namespace TmingEngine
 		Context* GetContext() { return m_context; }
 
         Scene * currentScene;
+
+		IWindows* windows;
 	private:
 
 		Timer* m_timer;

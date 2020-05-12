@@ -26,7 +26,7 @@
 #include "GameObject.hpp"
 #include"Log/Log.h"
 #include "../Scene/Scene.hpp"
-
+#include "Plantform/Windows/win/ScreenWin.h"
 
 
 
@@ -43,15 +43,18 @@ namespace TmingEngine
 
 	bool Engine::Initialize()
 	{
+		windows = new ScreenWin(m_context);
+		windows->Initialize();
+
 		m_context->RegisterSubsystem(this);
-		m_context->RegisterSubsystem(new Screen(m_context))
+		m_context->RegisterSubsystem(windows);
 
 		return true;
 	}
 
 	void Engine::Update()
 	{
-        currentScene->Update();
+		windows->WinRender();
 	}
 
 	void Engine::Destory()

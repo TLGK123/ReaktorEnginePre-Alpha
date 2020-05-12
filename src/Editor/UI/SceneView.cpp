@@ -66,7 +66,7 @@ void TmingEngine::SceneView::Update()
 	//	lastSceneX = my_tex_w;
 	//	lastSceneY = my_tex_h;
 	//}
-	Global<Context>().GetSubsystem<ScreenSystem>()->SetViewPoint(s->Pos.x, s->Pos.y, s->Size.x, s->Size.y);
+	Global<Context>().GetSubsystem<ScreenWin>()->SetViewPoint(s->Pos.x, s->Pos.y, s->Size.x, s->Size.y);
 	//----------------------------------------------------------------- -1 -1  Image reversal
 	ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 	ImGui::End();

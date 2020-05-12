@@ -42,7 +42,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 using namespace TmingEngine;
 
-class ScreenSystem : public Subsystem , public IWindows
+class ScreenWin : public IWindows
 {
 public:
 	GLFWwindow* window;
@@ -99,24 +99,23 @@ public:
 	void MouseMove(GLFWwindow* window, double xpos, double ypos);
 	void MouseScroll(GLFWwindow* window, double xoffset, double yoffset);
 
-	ScreenSystem(Context* context) : Subsystem(context)
+	ScreenWin(Context* context) : IWindows(context)
 	{
-		context->RegisterSubsystem(this);
-
+		
 	}
 
 	void InitWidgets()
 	{
-		for (auto& widget : m_widgets)
-		{
-			if (widget->GetIsWindow())
-			{
-				widget->Begin();
-			}
-		}
+		//for (auto& widget : m_widgets)
+		//{
+		//	if (widget->GetIsWindow())
+		//	{
+		//		widget->Begin();
+		//	}
+		//}
 	}
 
-	~ScreenSystem()
+	~ScreenWin()
 	{
 		//for (auto& widget : m_widgets)
 		//{

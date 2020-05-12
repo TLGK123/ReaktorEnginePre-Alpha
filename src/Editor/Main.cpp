@@ -39,11 +39,7 @@ int main()
         Debug::Log("TmingEngine----------Initialize----faild");
         return -1;
     }
-    else
-    {
-        Debug::Log("TmingEngine----------Initialize-----");
-        Global<Context>().RegisterSubsystem(new ScreenSystem());
-    };
+
 
     long frameNum = 0;
 	while (!engine->ShouldClose())
