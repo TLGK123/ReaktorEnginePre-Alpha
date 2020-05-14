@@ -24,6 +24,7 @@
 
 #include "Core/Context.h"
 #include "Core/Subsystem.h"
+#include <vector>
 
 namespace TmingEngine
 {
@@ -36,6 +37,30 @@ namespace TmingEngine
 		virtual void WinRender() = 0;
 		virtual void WinClose() = 0;
 
+		vector<Widget*> m_widgets;
+		void RegisteWidget(Widget* widget)
+		{
+			m_widgets.push_back(widget);
+		}
+
+		template <class T>
+		T* GetSubWidget()
+		{
+			for (const auto& subwidget : m_widgets)
+			{
+				if (typeid(T) == typeid(*subwidget))
+					return static_cast<T*>(subwidget);
+			}
+			return nullptr;
+		}
+
+		void DrawScreenWidgets()
+		{
+			for (auto& widget : m_widgets)
+			{
+				widget->Update();
+			}
+		}
 	};
 
 }

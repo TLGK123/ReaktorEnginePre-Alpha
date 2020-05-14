@@ -46,6 +46,7 @@
 #include <string>
 
 #include "Core/Log/Log.h"
+#include "Plantform/Windows/IWindows.h"
 
 
 namespace TmingEngine
