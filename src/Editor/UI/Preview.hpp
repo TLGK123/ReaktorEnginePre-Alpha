@@ -28,7 +28,6 @@
 #include "Core/Context.h"
 #include "Widget.h"
 #include "im.h"
-#include "Screen.h"
 
 namespace TmingEngine
 {
