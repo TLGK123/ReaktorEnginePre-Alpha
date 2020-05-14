@@ -45,7 +45,8 @@
 #include <cstdlib>
 #include <string>
 
-#include "Screen.h"
+#include "Core/Log/Log.h"
+
 
 namespace TmingEngine
 {
