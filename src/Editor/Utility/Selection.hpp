@@ -18,54 +18,31 @@
 //COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//  Selection.hpp
+//  Editor
+//
+//  Created by lillteblue on 2019/5/26.
+//
 
-#ifndef IWindows_H
-#define IWindows_H
+#ifndef Selection_hpp
+#define Selection_hpp
 
+#include <stdio.h>
 #include "Core/Context.h"
-#include "Core/Subsystem.h"
-#include <vector>
-using namespace std;
+#include "Scene/Components/Transform.h"
 
 namespace TmingEngine
 {
-	class Widget;
-	class ENGINE_CLASS IWindows : public Subsystem
-	{
-	public:
-		IWindows(Context* context);
-		virtual void WinInitialize() = 0;   //´¿Ðéº¯Êý =0 ±íÊ¾
-		virtual void WinRender() = 0;
-		virtual void WinClose() = 0;
-
-		vector<Widget*> m_widgets;
-		void RegisteWidget(Widget* widget)
-		{
-			m_widgets.push_back(widget);
-		}
-
-		template <class T>
-		T* GetSubWidget()
-		{
-			for (const auto& subwidget : m_widgets)
-			{
-				if (typeid(T) == typeid(*subwidget))
-					return static_cast<T*>(subwidget);
-			}
-			return nullptr;
-		}
-
-		void DrawScreenWidgets()
-		{
-			//for (auto& widget : m_widgets)
-			//{
-			//	widget->Update();
-			//}
-		}
-	};
-
+   static class Selecttion
+    {
+    public:
+        static Context * activeContext;
+        static Transform * activeTransform;
+        static string GetActiveObjectName();
+        static string ProjectSelected;
+        
+    };
 }
 
-
-
-#endif
+#endif /* Selection_hpp */

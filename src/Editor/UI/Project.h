@@ -47,6 +47,9 @@
 
 #include "Core/Log/Log.h"
 #include "Plantform/Windows/IWindows.h"
+#include "CodeEditor.h"
+#include "Selection.hpp"
+#include "Preview.hpp"
 
 
 namespace TmingEngine
