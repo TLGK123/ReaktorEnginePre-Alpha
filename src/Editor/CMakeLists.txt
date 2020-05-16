@@ -4,14 +4,14 @@ file(GLOB headers
 "UI/WidgetBase/*.h??"
 "UI/*.h??"
 "UI/*.h"
-"Core/*.h"
-"Core/*.h??"
+"Utility/*.h"
+"Utility/*.h??"
 
 )
 
 file(GLOB sources 
 "*.cpp"
-"Core/*.cpp"
+"Utility/*.cpp"
 "UI/WidgetBase/*.cpp"
 "UI/*.cpp"
 )
@@ -21,7 +21,7 @@ include_directories("../../include")    #添加头文件目录
 include_directories("../../include/lua/src")    #添加头文件目录
 include_directories("../../include/angelscript")    #添加头文件目录
 include_directories("../Engine")        #添加头文件目录
-include_directories("Core")             #添加头文件目录
+include_directories("Utility")          #添加头文件目录
 include_directories("UI")				#添加头文件目录
 include_directories("../ThirdParty/Angelscript/sdk/add_on")				#添加头文件目录
 
