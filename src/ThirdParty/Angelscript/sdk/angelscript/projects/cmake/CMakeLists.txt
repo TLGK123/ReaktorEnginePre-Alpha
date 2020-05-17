@@ -55,6 +55,8 @@ set(ANGELSCRIPT_HEADERS
     ../../source/as_tokenizer.h
     ../../source/as_typeinfo.h
     ../../source/as_variablescope.h
+
+    ../../../add_on/scriptstdstring/scriptstdstring.h
     
 
 )
@@ -93,6 +95,9 @@ set(ANGELSCRIPT_SOURCE
     ../../source/as_tokenizer.cpp
     ../../source/as_typeinfo.cpp
     ../../source/as_variablescope.cpp
+
+    ../../../add_on/scriptstdstring/scriptstdstring.cpp
+    ../../../add_on/scriptstdstring/scriptstdstring_utils.cpp
     
 )
 
