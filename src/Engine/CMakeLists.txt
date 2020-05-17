@@ -16,29 +16,9 @@ file(GLOB_RECURSE headers
 "Plantform/Windows/*.h"
 
 "im.h"
-#"RHI/*.h"
-#"RHI/*.h??"
 "Scene/*.h??"
 "Rendering/*.h"
 "Rendering/*.h??"
-
-
-
-#"RHI/D3D11/*.h??"
-#"Scene/D3D11/*.h??"
-
-#"RHI/Vulkan/*.h??"
-#"Scene/Vulkan/*.h??"
-
-#"3Part/Vulkan_1.1.106.0/shaderc/*.h??"
-#"3Part/Vulkan_1.1.106.0/vulkan/*.h??"
-#"3Part/SPIRV-Cross-2019-03-29/*.h??"
-
-#"3Part/Vulkan_1.1.106.0/shaderc/*.h"
-#"3Part/Vulkan_1.1.106.0/vulkan/*.h"
-#"3Part/SPIRV-Cross-2019-03-29/*.h"
-
-#"Threading/*.h"
 
 )
 
@@ -79,7 +59,7 @@ file(GLOB_RECURSE sources
 
 "Plantform/Time/*.c??"
 
-"../ThirdParty/Angelscript/sdk/add_on/scriptstdstring/*.c??"
+#"../ThirdParty/Angelscript/sdk/add_on/scriptstdstring/*.c??"
 
 ) 
 
