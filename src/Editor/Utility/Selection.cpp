@@ -18,54 +18,32 @@
 //COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//  Selection.cpp
+//  Editor
+//
+//  Created by lillteblue on 2019/5/26.
+//
 
-#ifndef IWindows_H
-#define IWindows_H
+#include "Selection.hpp"
 
-#include "Core/Context.h"
-#include "Core/Subsystem.h"
-#include <vector>
-using namespace std;
+namespace TmingEngine {
+    
+    Context * Selecttion:: activeContext = NULL;
+    Transform * Selecttion:: activeTransform = NULL;
+    string Selecttion::ProjectSelected = "";
 
-namespace TmingEngine
-{
-	class Widget;
-	class ENGINE_CLASS IWindows : public Subsystem
-	{
-	public:
-		IWindows(Context* context);
-		virtual void WinInitialize() = 0;   //´¿Ðéº¯Êý =0 ±íÊ¾
-		virtual void WinRender() = 0;
-		virtual void WinClose() = 0;
+    string Selecttion::GetActiveObjectName()
+    {
+        if(activeTransform!=NULL)
+        {
+              return activeTransform->GetGameObject()->GetGameObjectName();
+        }else
+        {
+              return "Unselect any Object";
+        }
+      
+    }
 
-		vector<Widget*> m_widgets;
-		void RegisteWidget(Widget* widget)
-		{
-			m_widgets.push_back(widget);
-		}
-
-		template <class T>
-		T* GetSubWidget()
-		{
-			for (const auto& subwidget : m_widgets)
-			{
-				if (typeid(T) == typeid(*subwidget))
-					return static_cast<T*>(subwidget);
-			}
-			return nullptr;
-		}
-
-		void DrawScreenWidgets()
-		{
-			//for (auto& widget : m_widgets)
-			//{
-			//	widget->Update();
-			//}
-		}
-	};
-
+  
 }
-
-
-
-#endif
