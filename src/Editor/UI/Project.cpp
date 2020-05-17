@@ -21,6 +21,7 @@
 
 
 #include "Project.h"
+#include <Core\Engine.h>
 using namespace TmingEngine;
 
 void AssetTree(string path ,int roundNum);
@@ -232,7 +233,7 @@ void AssetTree(string path  , int roundNum)
 						|| (t.name.find(".TGA") != string::npos)
 						)
 					{
-						auto screen = Global<Context>().GetSubsystem<ScreenWin>();
+						auto screen = Global<Context>().GetSubsystem<IWindows>();
 						auto previewer = screen->GetSubWidget<Preview>();
 						previewer->PreviewTexture(fpath);
 						previewer->Show();
@@ -272,7 +273,7 @@ void MenuFile()
 		Debug::Log("Open File " + TmingEngine::Selecttion::ProjectSelected);
 		if (TmingEngine::Selecttion::ProjectSelected.find(".obj") != string::npos)
 		{
-			Global<Context>().GetSubsystem<ScreenWin>()->ChangeModel(TmingEngine::Selecttion::ProjectSelected);
+			//Global<Context>().GetSubsystem<IWindows>()->ChangeModel(TmingEngine::Selecttion::ProjectSelected);
 		}
 
 	}
