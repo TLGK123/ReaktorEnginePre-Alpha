@@ -57,6 +57,7 @@ public:
 	void WinRender() override;
 	void WinClose() override;
 	bool WinShouldClose() override;
+	void SetViewPoint(int startX, int startY, int width, int height) override;
 
 	//vector<Widget*> m_widgets;
 
@@ -86,9 +87,9 @@ public:
 	void InitTextureData();
 
 
-	void InitEditorWidget(Context* context);
 
-	void SetViewPoint(int startX, int startY, int width, int height);
+
+	
 	void ChangeModel(string mpath);
 	int GetCurrentFrameTexture();
 	void InitFrameBufer();

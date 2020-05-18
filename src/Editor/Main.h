@@ -37,4 +37,16 @@
 #include "Core/SmartPtr.h"
 
 
+#include "SceneView.h"
+#include "Project.h"
+#include "Hierachy.h"
+#include "Inspector.hpp"
+#include "Game.hpp"
+#include "Profiler.hpp"
+#include "Project.h"
+#include "Console.h"
+
+
+
+void SetEditorWidget();
 #endif /* Main_h */

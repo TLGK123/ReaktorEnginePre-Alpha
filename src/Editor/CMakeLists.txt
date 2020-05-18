@@ -1,18 +1,14 @@
 file(GLOB headers 
 "*.h"
-"UI/WidgetBase/*.h"
-"UI/WidgetBase/*.h??"
 "UI/*.h??"
 "UI/*.h"
 "Utility/*.h"
 "Utility/*.h??"
-
 )
 
 file(GLOB sources 
 "*.cpp"
 "Utility/*.cpp"
-"UI/WidgetBase/*.cpp"
 "UI/*.cpp"
 )
 

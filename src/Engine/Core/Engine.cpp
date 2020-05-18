@@ -43,8 +43,7 @@ namespace TmingEngine
 
 	bool Engine::Initialize()
 	{
-		windows = new ScreenWin(m_context);
-		windows->Initialize();
+		windows = new ScreenWin(m_context);		
 
 		m_context->RegisterSubsystem(this);
 		m_context->RegisterSubsystem(windows);
