@@ -91,7 +91,7 @@ namespace TmingEngine
         
         auto engine = Global<Context>().GetSubsystem<Engine>();
         auto scene = engine->currentScene;
-        if (ImGui::TreeNode(scene->name.c_str()))
+        if (ImGui::TreeNode("test"))
         {
             showTransform(scene->SceneRoot->transform);
             ImGui::TreePop();

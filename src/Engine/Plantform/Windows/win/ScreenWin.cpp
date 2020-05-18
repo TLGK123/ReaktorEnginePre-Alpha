@@ -50,7 +50,7 @@ bool ScreenWin::Initialize()
 	cout << "Hello World" << endl;
 	InitOpenGL();
 	InitImgui();
-	InitEditorWidget(m_context);
+
 	return true;
 }
 
@@ -58,7 +58,7 @@ void ScreenWin::WinInitialize()
 {
 	InitOpenGL();
 	InitImgui();
-	
+	InitWidgets();
 }
 
 void ScreenWin::WinRender()
@@ -153,24 +153,7 @@ void ScreenWin::InitOpenGL()
 	std::cout << "顶点属性上限: " << nrAttributes << std::endl;
 }
 
-void ScreenWin::InitEditorWidget(Context* context)
-{
-	//context->RegisterSubsystem(new Console(context));
 
-	//RegisteWidget(new SceneView(context));
-	////	RegisteWidget(new DemoMenu(context));
-	//RegisteWidget(new Project(context));
-	//RegisteWidget(new Hierachy(context));
-	//RegisteWidget(new Inspector(context));
-	//RegisteWidget(new Game(context));
-	//RegisteWidget(new Profiler(context));
-	//RegisteWidget(new Console(context));
-	//RegisteWidget(new CodeEditor(context));
-	//RegisteWidget(new Preview(context));
-	Debug::Log(" Editor 初始化窗口成功  ");
-
-	InitWidgets();
-}
 
 void ScreenWin::SetViewPoint(int startX, int startY, int width, int height)
 {
@@ -367,7 +350,7 @@ void ScreenWin::Render_EditorUI()
 
 	//GetSubWidget<SceneView>()->ImageId = CurrentFrameTextureID;
 	//GetSubWidget<Game>()->ImageId = 0;
-	//DrawScreenWidgets();
+	DrawScreenWidgets();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

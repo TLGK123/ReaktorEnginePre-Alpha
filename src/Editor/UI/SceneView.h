@@ -1,4 +1,3 @@
-#pragma once
 //The MIT License
 //
 //Copyright(c) 2016 - 2020 littleblue
@@ -20,32 +19,36 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include<string>
-#include"Core/SmartPtr.h"
-#include "ImGUI/imgui.h"
+
+#pragma once
+#include "Core/SubSystem.h"
+#include "Core/Context.h"
+#include "Plantform/Windows/Widget.h"
+#include "im.h"
+#include "Core/Engine.h"
+#include "Scene/Components/Transform.h"
+#include "Core/Log/Log.h"
+#include "Selection.hpp"
+
 
 namespace TmingEngine
 {
-	class Context;
-
-	class Widget :public RefCount
+	class SceneView :public Widget
 	{
 	public:
-		virtual ~Widget() {}
-		virtual void Initialize(TmingEngine::Context* context);
-		virtual void Begin();
-		virtual void Update();
-		virtual void End();
-		bool GetIsWindow() { return m_isWindow; }
-		void Show() { p_open = true; };
-		void Hide() { p_open = false; };
 
-	protected:
-		TmingEngine::Context* m_context = nullptr;
-		bool p_open = false;
-		bool m_isWindow = true;
-		std::string m_title;
-		int m_windowFlags = 0;
+		SceneView(Context *context)
+		{
+			m_title = "ViewPoint";
+		}
+		~SceneView();
 
+		void Begin();
+		void Update();
+		void End();
+
+		int ImageId;
+		bool IsSceneviewFoucsed = false;
+		void SetTexture(int Id);	
 	};
 }

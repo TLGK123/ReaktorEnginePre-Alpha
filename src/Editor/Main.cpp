@@ -31,14 +31,19 @@ using namespace TmingEngine;
 int main()
 {
 	Engine *engine;
-    std::cout << "111" << std::endl;
+   
     engine = new Engine(&Global<Context>());
+    
     if (!engine->Initialize())
     {
         Debug::Log("TmingEngine----------Initialize----faild");
         return -1;
     }
 
+
+    SetEditorWidget();
+
+    engine->windows->Initialize();
 
     long frameNum = 0;
 	while (!engine->ShouldClose())
@@ -48,4 +53,22 @@ int main()
 	}
 
 	engine->Destory();
+}
+
+void SetEditorWidget()
+{
+    auto context = &Global<Context>();
+    Engine * eg = context->GetSubsystem<Engine>();
+    IWindows * win = eg->windows;
+    win->RegisteWidget(new SceneView(context));
+    //win->RegisteWidget(new DemoMenu(context));
+    win->RegisteWidget(new Project(context));
+    win->RegisteWidget(new Hierachy(context));
+    win->RegisteWidget(new Inspector(context));
+    win->RegisteWidget(new Game(context));
+    win->RegisteWidget(new Profiler(context));
+    win->RegisteWidget(new Console(context));
+    win->RegisteWidget(new CodeEditor(context));
+    win->RegisteWidget(new Preview(context));
+    Debug::Log(" Editor 初始化窗口成功  ");
 }
