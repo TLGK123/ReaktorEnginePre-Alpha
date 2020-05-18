@@ -37,6 +37,7 @@ namespace TmingEngine
 		virtual void WinInitialize() = 0;   //´¿Ðéº¯Êý =0 ±íÊ¾
 		virtual void WinRender() = 0;
 		virtual void WinClose() = 0;
+		virtual bool WinShouldClose() = 0;
 
 		vector<Widget*> m_widgets;
 		void RegisteWidget(Widget* widget)

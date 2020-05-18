@@ -71,6 +71,11 @@ void ScreenWin::WinClose()
 {
 }
 
+bool ScreenWin::WinShouldClose()
+{
+	return  glfwWindowShouldClose(window);
+}
+
 void ScreenWin::InitVertextData()
 {
 

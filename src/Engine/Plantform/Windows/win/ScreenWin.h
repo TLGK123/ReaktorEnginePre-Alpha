@@ -56,6 +56,7 @@ public:
 	void WinInitialize ()  override;
 	void WinRender() override;
 	void WinClose() override;
+	bool WinShouldClose() override;
 
 	//vector<Widget*> m_widgets;
 

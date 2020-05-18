@@ -64,7 +64,7 @@ namespace TmingEngine
 
 	bool Engine::ShouldClose()
 	{
-		return false;
+		return windows->WinShouldClose();
 	}
 
 
