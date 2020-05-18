@@ -31,7 +31,7 @@ using namespace TmingEngine;
 int main()
 {
 	Engine *engine;
-
+    std::cout << "111" << std::endl;
     engine = new Engine(&Global<Context>());
     if (!engine->Initialize())
     {
