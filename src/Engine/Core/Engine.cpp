@@ -44,7 +44,7 @@ namespace TmingEngine
 	bool Engine::Initialize()
 	{
 		windows = new ScreenWin(m_context);
-		//windows->Initialize();
+		windows->Initialize();
 
 		m_context->RegisterSubsystem(this);
 		m_context->RegisterSubsystem(windows);
@@ -54,7 +54,7 @@ namespace TmingEngine
 
 	void Engine::Update()
 	{
-		//windows->WinRender();
+		windows->WinRender();
 	}
 
 	void Engine::Destory()
