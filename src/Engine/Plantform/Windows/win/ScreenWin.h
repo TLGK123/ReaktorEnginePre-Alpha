@@ -33,7 +33,7 @@
 #include "Core/Log/Log.h"
 #include "Plantform/Windows/IWindows.h"
 
-#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
