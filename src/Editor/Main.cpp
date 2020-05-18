@@ -30,22 +30,22 @@ using namespace TmingEngine;
 
 int main()
 {
-	Engine *engine;
+	//Engine *engine;
+    std::cout << "123" << std::endl;
+ //   engine = new Engine(&Global<Context>());
+ //   if (!engine->Initialize())
+ //   {
+ //       Debug::Log("TmingEngine----------Initialize----faild");
+ //       return -1;
+ //   }
 
-    engine = new Engine(&Global<Context>());
-    if (!engine->Initialize())
-    {
-        Debug::Log("TmingEngine----------Initialize----faild");
-        return -1;
-    }
 
+ //   long frameNum = 0;
+	//while (!engine->ShouldClose())
+	//{
+ //       frameNum++;
+ //       engine->Update();
+	//}
 
-    long frameNum = 0;
-	while (!engine->ShouldClose())
-	{
-        frameNum++;
-        engine->Update();
-	}
-
-	engine->Destory();
+	//engine->Destory();
 }
