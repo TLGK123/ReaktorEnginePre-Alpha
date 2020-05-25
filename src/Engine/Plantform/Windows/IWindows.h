@@ -38,6 +38,7 @@ namespace TmingEngine
 	class ENGINE_CLASS IWindows : public Subsystem
 	{
 	public:
+
 		IWindows(Context* context);
 		virtual void WinInitialize() = 0;   //´¿Ðéº¯Êý =0 ±íÊ¾
 		virtual void WinRender() = 0;
@@ -45,6 +46,9 @@ namespace TmingEngine
 		virtual bool WinShouldClose() = 0;
 		virtual void SetViewPoint(int startX, int startY, int width, int height) =0;
 		vector<Widget*> m_widgets;
+
+		void (*InsertEditorWidget)()= nullptr;
+
 		void RegisteWidget(Widget* widget)
 		{
 			m_widgets.push_back(widget);

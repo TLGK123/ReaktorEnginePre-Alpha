@@ -48,7 +48,14 @@ namespace TmingEngine
 		m_context->RegisterSubsystem(this);
 		m_context->RegisterSubsystem(windows);
 
+		
+
 		return true;
+	}
+
+	void Engine::InitializeWin()
+	{
+		windows->WinInitialize();
 	}
 
 	void Engine::Update()
@@ -58,7 +65,7 @@ namespace TmingEngine
 
 	void Engine::Destory()
 	{
-
+		windows->WinClose();
 	}
 
 	bool Engine::ShouldClose()

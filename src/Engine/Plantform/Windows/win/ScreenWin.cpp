@@ -45,17 +45,9 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 
-bool ScreenWin::Initialize()
-{
-	cout << "Hello World" << endl;
-	InitOpenGL();
-	InitImgui();
-
-	return true;
-}
-
 void ScreenWin::WinInitialize()
 {
+	cout << "Hello World" << endl;
 	InitOpenGL();
 	InitImgui();
 	InitWidgets();

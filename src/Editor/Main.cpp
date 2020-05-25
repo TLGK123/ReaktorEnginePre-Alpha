@@ -41,9 +41,9 @@ int main()
     }
 
 
-    SetEditorWidget();
+    //engine->windows->InsertEditorWidget = SetEditorWidget;
+    engine->InitializeWin();
 
-    engine->windows->Initialize();
 
     long frameNum = 0;
 	while (!engine->ShouldClose())
