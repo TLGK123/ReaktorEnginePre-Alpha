@@ -51,7 +51,6 @@ public:
 
 	unsigned int VBO, VAO;
 
-	bool Initialize() override;
 
 	void WinInitialize ()  override;
 	void WinRender() override;
@@ -108,13 +107,18 @@ public:
 
 	void InitWidgets()
 	{
-		//for (auto& widget : m_widgets)
-		//{
-		//	if (widget->GetIsWindow())
-		//	{
-		//		widget->Begin();
-		//	}
-		//}
+		if (InsertEditorWidget!=nullptr)
+		{
+			InsertEditorWidget();
+		}
+
+		for (auto& widget : m_widgets)
+		{
+			if (widget->GetIsWindow())
+			{
+				widget->Begin();
+			}
+		}
 	}
 
 	~ScreenWin()

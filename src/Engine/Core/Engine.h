@@ -34,9 +34,12 @@ namespace TmingEngine
 	class ENGINE_CLASS Engine : public Subsystem
 	{
 	public:
+		
 		Engine(Context* context);
 		
 		bool Initialize() override;
+
+		void InitializeWin();
 
 		void Update();
 
