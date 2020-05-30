@@ -47,7 +47,10 @@ namespace TmingEngine
 
 		bool ShouldClose();
 
+		bool isEditorMode = false;
 
+		void SetEngineModeToEditor(bool mode);
+	
 		Context* GetContext() { return m_context; }
 
         Scene * currentScene;

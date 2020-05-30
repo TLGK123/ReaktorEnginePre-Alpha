@@ -54,6 +54,8 @@ namespace TmingEngine
 			m_widgets.push_back(widget);
 		}
 
+		bool isEditorWindows = false;
+
 		template <class T>
 		T* GetSubWidget()
 		{

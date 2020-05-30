@@ -47,14 +47,13 @@ namespace TmingEngine
 
 		m_context->RegisterSubsystem(this);
 		m_context->RegisterSubsystem(windows);
-
 		
-
 		return true;
 	}
 
 	void Engine::InitializeWin()
 	{
+		windows->isEditorWindows = isEditorMode;
 		windows->WinInitialize();
 	}
 
@@ -72,6 +71,13 @@ namespace TmingEngine
 	{
 		return windows->WinShouldClose();
 	}
+
+	void Engine::SetEngineModeToEditor(bool mode)
+	{
+		isEditorMode = mode;
+	}
+
+
 
 
 }
