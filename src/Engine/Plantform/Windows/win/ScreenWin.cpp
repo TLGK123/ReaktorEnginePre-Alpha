@@ -49,8 +49,11 @@ void ScreenWin::WinInitialize()
 {
 	cout << "Hello World" << endl;
 	InitOpenGL();
-	InitImgui();
-	InitWidgets();
+	if (isEditorWindows)
+	{
+		InitImgui();
+		InitWidgets();
+	}
 }
 
 void ScreenWin::WinRender()
@@ -176,9 +179,10 @@ void ScreenWin::Update()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, 1366, 768);
 
-
-
-	Render_EditorUI();
+	if (isEditorWindows)
+	{
+		Render_EditorUI();
+	}
 
 	glfwSwapBuffers(window);
 }
@@ -238,9 +242,12 @@ void ScreenWin::InitFrameBufer()
 
 void ScreenWin::ShutDown()
 {
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
+	if (isEditorWindows)
+	{
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
+	}
 
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
@@ -562,15 +569,18 @@ void ScreenWin::MouseMove(GLFWwindow* window, double xpos, double ypos)
 	lastX = xpos;
 	lastY = ypos;
 
-	ImGuiIO& io = ImGui::GetIO();
-
-	if (&io != NULL && io.MouseDownDuration[1] >= 0)
+	if (isEditorWindows)
 	{
-		//bool selected = GetSubWidget<SceneView>()->IsSceneviewFoucsed;
-		//if (selected)
-		//{
-		//	EditorCamera.ProcessMouseMovement(xoffset, yoffset);
-		//}
+		ImGuiIO& io = ImGui::GetIO();
+
+		if (&io != NULL && io.MouseDownDuration[1] >= 0)
+		{
+			//bool selected = GetSubWidget<SceneView>()->IsSceneviewFoucsed;
+			//if (selected)
+			//{
+			//	EditorCamera.ProcessMouseMovement(xoffset, yoffset);
+			//}
+		}
 	}
 }
 
