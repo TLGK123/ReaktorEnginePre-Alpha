@@ -40,7 +40,7 @@ int main()
         return -1;
     }
 
-    engine->SetEngineModeToEditor(false);
+    //engine->SetEngineModeToEditor(true);
     //engine->windows->InsertEditorWidget = SetEditorWidget;
     engine->InitializeWin();
 
