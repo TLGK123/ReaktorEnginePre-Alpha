@@ -141,6 +141,7 @@ void ScreenWin::InitOpenGL()
 	InitModel();
 	InitShader();
 	InitSkyBox();
+
 	InitFrameBufer();
 
 	int nrAttributes;
@@ -178,6 +179,11 @@ void ScreenWin::Update()
 	glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, 1366, 768);
+
+	auto context = &Global<Context>();
+	Engine* eg = context->GetSubsystem<Engine>();
+
+
 
 	if (isEditorWindows)
 	{

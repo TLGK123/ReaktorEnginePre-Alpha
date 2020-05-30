@@ -25,6 +25,7 @@
 
 #include "im.h"
 #include "Core/Context.h"
+#include "Core/Engine.h"
 
 
 #include "Rendering/Camera.hpp"
@@ -85,10 +86,6 @@ public:
 	void InitVertextData();
 	void InitTextureData();
 
-
-
-
-	
 	void ChangeModel(string mpath);
 	int GetCurrentFrameTexture();
 	void InitFrameBufer();
