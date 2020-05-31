@@ -40,8 +40,8 @@ int main()
         return -1;
     }
 
-    //engine->SetEngineModeToEditor(true);
-    //engine->windows->InsertEditorWidget = SetEditorWidget;
+    engine->SetEngineModeToEditor(true);
+    engine->windows->InsertEditorWidget = SetEditorWidget;
     engine->InitializeWin();
 
 

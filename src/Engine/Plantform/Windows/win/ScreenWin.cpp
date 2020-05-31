@@ -58,7 +58,27 @@ void ScreenWin::WinInitialize()
 
 void ScreenWin::WinRender()
 {
-	Update();
+	glfwPollEvents();
+
+	float currentFrame = glfwGetTime();
+	deltaTime = currentFrame - lastFrame;
+	lastFrame = currentFrame;
+	processInput(window);
+	RenderFrameBuffer();
+
+	glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glViewport(0, 0, 1366, 768);
+
+	m_context->GetSubsystem<Engine>()->RenderScene();
+	
+
+	if (isEditorWindows)
+	{
+		Render_EditorUI();
+	}
+
+	glfwSwapBuffers(window);
 
 }
 
@@ -163,36 +183,6 @@ void ScreenWin::ChangeModel(string mpath)
 {
 	//ourModel.Init(mpath);
 }
-
-
-void ScreenWin::Update()
-{
-
-	glfwPollEvents();
-
-	float currentFrame = glfwGetTime();
-	deltaTime = currentFrame - lastFrame;
-	lastFrame = currentFrame;
-	processInput(window);
-	RenderFrameBuffer();
-
-	glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glViewport(0, 0, 1366, 768);
-
-	auto context = &Global<Context>();
-	Engine* eg = context->GetSubsystem<Engine>();
-
-
-
-	if (isEditorWindows)
-	{
-		Render_EditorUI();
-	}
-
-	glfwSwapBuffers(window);
-}
-
 
 
 

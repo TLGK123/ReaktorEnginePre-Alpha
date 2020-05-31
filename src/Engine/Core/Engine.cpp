@@ -67,6 +67,14 @@ namespace TmingEngine
 		windows->WinClose();
 	}
 
+	void Engine::RenderScene()
+	{
+		if (currentScene != nullptr)
+		{
+			currentScene->Update();
+		}
+	}
+
 	bool Engine::ShouldClose()
 	{
 		return windows->WinShouldClose();

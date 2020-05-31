@@ -75,7 +75,6 @@ public:
 	unsigned int framebufferCa;
 	unsigned int textureColorbufferCa;
 
-	void Update();
 	void ShutDown();
 
 	bool ScreenShouldClose();
