@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include "../Scene/Components/Transform.h"
 #include "../Core/GameObject.hpp"
+#include "tgaimage/tgaimage.h"
 
 using namespace std;
 namespace TmingEngine {
