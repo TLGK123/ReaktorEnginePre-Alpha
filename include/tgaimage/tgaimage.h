@@ -29,9 +29,9 @@ struct TGAColor {
     }
 
     TGAColor(unsigned char R, unsigned char G, unsigned char B, unsigned char A=255) : bgra(), bytespp(4) {
-        bgra[0] = B;
+        bgra[0] = R;
         bgra[1] = G;
-        bgra[2] = R;
+        bgra[2] = B;
         bgra[3] = A;
     }
 

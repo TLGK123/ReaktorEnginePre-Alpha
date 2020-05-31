@@ -48,7 +48,9 @@ namespace TmingEngine {
 //        go4->transform->SetParent(go2->transform);
 //        ;
     }
-    
+
+
+   
     void Scene::Update()
     {
         RendeObject();
@@ -56,6 +58,6 @@ namespace TmingEngine {
     
     void Scene::RendeObject()
     {
-        
+
     }
 }

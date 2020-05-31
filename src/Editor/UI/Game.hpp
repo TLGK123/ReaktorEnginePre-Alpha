@@ -28,6 +28,7 @@
 #include "Core/Context.h"
 #include "Plantform/Windows/Widget.h"
 #include "im.h"
+#include "tgaimage/tgaimage.h"
 
 namespace TmingEngine
 {
@@ -45,8 +46,10 @@ namespace TmingEngine
         void Update();
         void End();
         
-        int ImageId;
-        
+        unsigned int imageId;
+        void SoftRender();
+        int gameWidth;
+        int gameHeight;
     };
 }
 
