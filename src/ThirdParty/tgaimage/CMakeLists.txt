@@ -1,6 +1,6 @@
 project (tgaimage)
-file (GLOB heads include/*.h)
-file( GLOB sources src/*.cpp)
+file (GLOB heads *.h)
+file( GLOB sources *.cpp)
 include_directories("include")
 
 add_library_beautiful(tgaimage STATIC ${heads} ${sources})
