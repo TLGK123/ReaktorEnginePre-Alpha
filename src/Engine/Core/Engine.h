@@ -45,6 +45,8 @@ namespace TmingEngine
 
 		void Destory();
 
+		void RenderScene();
+
 		bool ShouldClose();
 
 		bool isEditorMode = false;
