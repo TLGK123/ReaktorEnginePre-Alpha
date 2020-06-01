@@ -212,6 +212,8 @@ void AssetTree(string path  , int roundNum)
 						|| (t.name.find(".hlsl") != string::npos)
 						|| (t.name.find(".fs") != string::npos)
 						|| (t.name.find(".vs") != string::npos)
+						|| (t.name.find(".as") != string::npos)
+						|| (t.name.find(".lua") != string::npos)
 						)
 					{
 						auto screen = Global<Context>().GetSubsystem<Engine>()->windows;

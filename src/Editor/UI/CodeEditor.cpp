@@ -81,7 +81,7 @@ void TmingEngine::CodeEditor::Update()
 		return;
 	}
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-	if (!ImGui::Begin("CodeEditor", &p_open))
+	if (!ImGui::Begin("CodeEditor", &p_open, ImGuiWindowFlags_MenuBar))
 	{
 		ImGui::End();
 		return;

@@ -23,12 +23,17 @@
 
 #ifndef Game_hpp
 #define Game_hpp
+
 #include <stdio.h>
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
 #include "Plantform/Windows/Widget.h"
 #include "im.h"
 #include "tgaimage/tgaimage.h"
+#include "angelscript.h"
+#include <scriptstdstring/scriptstdstring.h>
+#include <scriptbuilder/scriptbuilder.h>
+#include "Plantform/FileSystem/FileSystem.h"
 
 namespace TmingEngine
 {
@@ -48,6 +53,7 @@ namespace TmingEngine
         
         unsigned int imageId;
         void SoftRender();
+        int AngleScriptRender();
         int gameWidth;
         int gameHeight;
     };
