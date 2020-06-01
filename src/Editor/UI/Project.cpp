@@ -214,7 +214,7 @@ void AssetTree(string path  , int roundNum)
 						|| (t.name.find(".vs") != string::npos)
 						)
 					{
-						auto screen = Global<Context>().GetSubsystem<IWindows>();
+						auto screen = Global<Context>().GetSubsystem<Engine>()->windows;
 						auto codeEditor = screen->GetSubWidget<CodeEditor>();
 						auto txt = Global<Context>().GetSubsystem<FileSystem>()->GetFileContent(fpath);
 
