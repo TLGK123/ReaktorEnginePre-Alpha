@@ -50,9 +50,9 @@ void TmingEngine::Game::Update()
     ImGui::End();
 }
 
-void fillTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color);
-void fillUpTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color);
-void fillDownTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color);
+void fillTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color); //填充一个普通三角形
+void fillUpTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color); //填充一个底边平行 X 轴 ，顶点在上的三角形
+void fillDownTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color);//填充一个底边平行 X 轴 ，顶点在下的三角形
 
 
 const TGAColor white = TGAColor(255, 255, 255, 255);
@@ -101,7 +101,6 @@ void triangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color) 
 	line(t2, t0, image, color);
 }
 
-
 void fillTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
 {
 	// 从上到下排序
@@ -120,15 +119,24 @@ void fillTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor col
 		std::swap(t1, t2);
 	}
 
-	//直线表达 两点式 
-	ImVec2 t4;
-	t4.y = t1.y;
-	t4.x = (t0.x - t2.x) / (t0.y - t2.y) * ( t4.y - t2.y) + t2.x;
+	if (t1.y == t2.y)
+	{
+		fillUpTriangle(t0, t1, t2, image, color);
+	}
+	else if (t1.y == t0.y)
+	{
+		fillDownTriangle(t2, t1, t0, image, color);
+	}else
+	{
+		//直线表达 两点式 
+		ImVec2 t4;
+		t4.y = t1.y;
+		t4.x = (t0.x - t2.x) / (t0.y - t2.y) * (t4.y - t2.y) + t2.x;
 
-	fillUpTriangle(t0, t1 , t4, image, color);
-	fillDownTriangle(t2, t1, t4, image, color);
+		fillUpTriangle(t0, t1, t4, image, color);
+		fillDownTriangle(t2, t1, t4, image, color);
+	}
 }
-
 
 void fillUpTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
 {
@@ -142,7 +150,6 @@ void fillUpTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor c
 	}
 }
 
-
 void fillDownTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
 {
 	for (int i = 0; i < (t1.y - t0.y); i++)
@@ -154,7 +161,6 @@ void fillDownTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor
 		line(p1, p2, image, color);
 	}
 }
-
 
 void TmingEngine::Game::End()
 {
