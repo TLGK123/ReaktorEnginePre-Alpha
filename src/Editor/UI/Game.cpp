@@ -50,6 +50,10 @@ void TmingEngine::Game::Update()
     ImGui::End();
 }
 
+void fillTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color);
+void fillUpTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color);
+void fillDownTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color);
+
 
 const TGAColor white = TGAColor(255, 255, 255, 255);
 const TGAColor red = TGAColor(255, 0, 0, 255);
@@ -100,8 +104,57 @@ void triangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color) 
 
 void fillTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
 {
+	// 从上到下排序
+	if (t0.y < t1.y)
+	{
+		std::swap(t0,t1);
+	}
 
+	if (t0.y < t2.y)
+	{
+		std::swap(t0 , t2);
+	}
+
+	if (t1.y < t2.y)
+	{
+		std::swap(t1, t2);
+	}
+
+	//直线表达 两点式 
+	ImVec2 t4;
+	t4.y = t1.y;
+	t4.x = (t0.x - t2.x) / (t0.y - t2.y) * ( t4.y - t2.y) + t2.x;
+
+	fillUpTriangle(t0, t1 , t4, image, color);
+	fillDownTriangle(t2, t1, t4, image, color);
 }
+
+
+void fillUpTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
+{
+	for (int i = 0; i < (t0.y - t1.y); i++)
+	{
+		ImVec2 p1, p2;
+		p1.y = p2.y = t1.y + i;
+		p1.x = (t0.x - t1.x) / (t0.y - t1.y) * (p1.y - t1.y) + t1.x;
+		p2.x = (t0.x - t2.x) / (t0.y - t2.y) * (p2.y - t2.y) + t2.x;
+		line(p1,p2,image,color);
+	}
+}
+
+
+void fillDownTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
+{
+	for (int i = 0; i < (t1.y - t0.y); i++)
+	{
+		ImVec2 p1, p2;
+		p1.y = p2.y = t1.y - i;
+		p1.x = (t0.x - t1.x) / (t0.y - t1.y) * (p1.y - t1.y) + t1.x;
+		p2.x = (t0.x - t2.x) / (t0.y - t2.y) * (p2.y - t2.y) + t2.x;
+		line(p1, p2, image, color);
+	}
+}
+
 
 void TmingEngine::Game::End()
 {
@@ -128,13 +181,17 @@ void TmingEngine::Game::SoftRender()
 	TGAImage image(gameWidth, gameHeight, TGAImage::RGB);
 	
 
-	ImVec2 t0[3] = { ImVec2(0, 0),   ImVec2(250, 0),  ImVec2(250, 300) };
+	ImVec2 t0[3] = { ImVec2(0, 0),   ImVec2(350, 100),  ImVec2(250, 300) };
 	ImVec2 t1[3] = { ImVec2(180, 50),  ImVec2(150, 1),   ImVec2(70, 180) };
 	ImVec2 t2[3] = { ImVec2(180, 150), ImVec2(120, 160), ImVec2(130, 180) };
 	triangle(t0[0], t0[1], t0[2], image, red);
-	triangle(t1[0], t1[1], t1[2], image, white);
-	triangle(t2[0], t2[1], t2[2], image, green);
+	fillTriangle(t0[0], t0[1], t0[2], image, red);
 
+	triangle(t1[0], t1[1], t1[2], image, white);
+	fillTriangle(t1[0], t1[1], t1[2], image, white);
+
+	triangle(t2[0], t2[1], t2[2], image, green);
+	fillTriangle(t2[0], t2[1], t2[2], image, green);
 
 	image.flip_horizontally();
 
