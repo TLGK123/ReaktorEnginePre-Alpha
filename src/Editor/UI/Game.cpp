@@ -97,6 +97,12 @@ void triangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color) 
 	line(t2, t0, image, color);
 }
 
+
+void fillTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
+{
+
+}
+
 void TmingEngine::Game::End()
 {
 
@@ -122,7 +128,7 @@ void TmingEngine::Game::SoftRender()
 	TGAImage image(gameWidth, gameHeight, TGAImage::RGB);
 	
 
-	ImVec2 t0[3] = { ImVec2(10, 70),   ImVec2(50, 160),  ImVec2(70, 80) };
+	ImVec2 t0[3] = { ImVec2(0, 0),   ImVec2(250, 0),  ImVec2(250, 300) };
 	ImVec2 t1[3] = { ImVec2(180, 50),  ImVec2(150, 1),   ImVec2(70, 180) };
 	ImVec2 t2[3] = { ImVec2(180, 150), ImVec2(120, 160), ImVec2(130, 180) };
 	triangle(t0[0], t0[1], t0[2], image, red);
