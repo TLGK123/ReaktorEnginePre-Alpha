@@ -19,8 +19,6 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
-
 #ifndef Game_hpp
 #define Game_hpp
 
@@ -37,29 +35,34 @@
 
 namespace TmingEngine
 {
-    class Game :public Widget
-    {
-    public:
-        
-        Game(Context *context)
-        {
-            m_title = "Game";
-        }
-        ~Game();
-        
-        void Begin();
-        void Update();
-        void End();
-        
-        unsigned int imageId;
-        void SoftRender();
-        int AngleScriptRender();
-        int gameWidth;
-        int gameHeight;
-    };
+	class Game :public Widget
+	{
+	public:
+
+		Game(Context* context)
+		{
+			m_title = "Game";
+		}
+		~Game();
+
+		void Begin();
+		void Update();
+		void End();
+
+		unsigned int imageId;
+		void SoftRender();
+		int gameWidth;
+		int gameHeight;
+	};
+
+	const TGAColor white = TGAColor(255, 255, 255, 255);
+	const TGAColor red = TGAColor(255, 0, 0, 255);
+	const TGAColor green = TGAColor(0, 255, 0, 255);
+	const TGAColor blue = TGAColor(0, 0, 255, 255);
+
+	void fillTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color); //填充一个普通三角形
+	void fillUpTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color); //填充一个底边平行 X 轴 ，顶点在上的三角形
+	void fillDownTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color);//填充一个底边平行 X 轴 ，顶点在下的三角形
 }
 
 #endif /* Game_hpp */
-
-
-
