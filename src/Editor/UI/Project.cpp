@@ -235,7 +235,7 @@ void AssetTree(string path  , int roundNum)
 						|| (t.name.find(".TGA") != string::npos)
 						)
 					{
-						auto screen = Global<Context>().GetSubsystem<IWindows>();
+						auto screen = Global<Context>().GetSubsystem<Engine>()->windows;
 						auto previewer = screen->GetSubWidget<Preview>();
 						previewer->PreviewTexture(fpath);
 						previewer->Show();
