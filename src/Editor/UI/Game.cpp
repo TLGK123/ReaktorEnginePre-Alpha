@@ -53,111 +53,6 @@ namespace TmingEngine
 		ImGui::End();
 	}
 
-	void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color) {
-		bool steep = false;
-		if (std::abs(x0 - x1) < std::abs(y0 - y1)) {
-			std::swap(x0, y0);
-			std::swap(x1, y1);
-			steep = true;
-		}
-		if (x0 > x1) {
-			std::swap(x0, x1);
-			std::swap(y0, y1);
-		}
-		int dx = x1 - x0;
-		int dy = y1 - y0;
-		int derror2 = std::abs(dy) * 2;
-		int error2 = 0;
-		int y = y0;
-		for (int x = x0; x <= x1; x++) {
-			if (steep) {
-				image.set(y, x, color);
-			}
-			else {
-				image.set(x, y, color);
-			}
-			error2 += derror2;
-			if (error2 > dx) {
-				y += (y1 > y0 ? 1 : -1);
-				error2 -= dx * 2;
-			}
-		}
-	}
-	void line(ImVec2 x, ImVec2 y, TGAImage& image, TGAColor color)
-	{
-		line(x.x, x.y, y.x, y.y, image, color);
-	}
-
-	void triangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color) {
-		line(t0, t1, image, color);
-		line(t1, t2, image, color);
-		line(t2, t0, image, color);
-	}
-
-	void fillTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
-	{
-		//根据 点的y坐标 从上到下排序
-		if (t0.y < t1.y)
-		{
-			std::swap(t0, t1);
-		}
-
-		if (t0.y < t2.y)
-		{
-			std::swap(t0, t2);
-		}
-
-		if (t1.y < t2.y)
-		{
-			std::swap(t1, t2);
-		}
-
-		if (t1.y == t2.y)
-		{
-			fillUpTriangle(t0, t1, t2, image, color);
-		}
-		else if (t1.y == t0.y)
-		{
-			fillDownTriangle(t2, t1, t0, image, color);
-		}
-		else
-		{
-			//直线表达 两点式
-			ImVec2 t4;
-			t4.y = t1.y;
-			t4.x = (t0.x - t2.x) / (t0.y - t2.y) * (t4.y - t2.y) + t2.x;
-
-			fillUpTriangle(t0, t1, t4, image, color);
-
-			fillDownTriangle(t2, t1, t4, image, color);
-			line(t1, t4, image, white);
-		}
-	}
-
-	void fillUpTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
-	{
-		for (int i = 0; i < (t0.y - t1.y); i += 3)
-		{
-			ImVec2 p1, p2;
-			p1.y = p2.y = t1.y + i;
-			p1.x = (t0.x - t1.x) / (t0.y - t1.y) * (p1.y - t1.y) + t1.x;
-			p2.x = (t0.x - t2.x) / (t0.y - t2.y) * (p2.y - t2.y) + t2.x;
-			line(p1, p2, image, color);
-		}
-	}
-
-	void fillDownTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
-	{
-		for (int i = 0; i < (t1.y - t0.y); i++)
-		{
-			ImVec2 p1, p2;
-			p1.y = p2.y = t1.y - i;
-			p1.x = (t0.x - t1.x) / (t0.y - t1.y) * (p1.y - t1.y) + t1.x;
-			p2.x = (t0.x - t2.x) / (t0.y - t2.y) * (p2.y - t2.y) + t2.x;
-			line(p1, p2, image, color);
-		}
-	}
-
 	void TmingEngine::Game::End()
 	{
 	}
@@ -231,5 +126,156 @@ namespace TmingEngine
 		}
 
 		image.clear();
+	}
+
+	void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color) {
+		bool steep = false;
+		if (std::abs(x0 - x1) < std::abs(y0 - y1)) {
+			std::swap(x0, y0);
+			std::swap(x1, y1);
+			steep = true;
+		}
+		if (x0 > x1) {
+			std::swap(x0, x1);
+			std::swap(y0, y1);
+		}
+		int dx = x1 - x0;
+		int dy = y1 - y0;
+		int derror2 = std::abs(dy) * 2;
+		int error2 = 0;
+		int y = y0;
+		for (int x = x0; x <= x1; x++) {
+			if (steep) {
+				image.set(y, x, color);
+			}
+			else {
+				image.set(x, y, color);
+			}
+			error2 += derror2;
+			if (error2 > dx) {
+				y += (y1 > y0 ? 1 : -1);
+				error2 -= dx * 2;
+			}
+		}
+	}
+
+	void line(ImVec2 x, ImVec2 y, TGAImage& image, TGAColor color)
+	{
+		line(x.x, x.y, y.x, y.y, image, color);
+	}
+
+	void triangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color) {
+		line(t0, t1, image, color);
+		line(t1, t2, image, color);
+		line(t2, t0, image, color);
+	}
+
+	void fillTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
+	{
+		//根据 点的y坐标 从上到下排序
+		if (t0.y < t1.y)
+		{
+			std::swap(t0, t1);
+		}
+
+		if (t0.y < t2.y)
+		{
+			std::swap(t0, t2);
+		}
+
+		if (t1.y < t2.y)
+		{
+			std::swap(t1, t2);
+		}
+
+		if (t1.y == t2.y)
+		{
+			fillUpTriangle(t0, t1, t2, image, color);
+		}
+		else if (t1.y == t0.y)
+		{
+			fillDownTriangle(t2, t1, t0, image, color);
+		}
+		else
+		{
+			//直线表达 两点式
+			ImVec2 t4;
+			t4.y = t1.y;
+			t4.x = (t0.x - t2.x) / (t0.y - t2.y) * (t4.y - t2.y) + t2.x;
+
+			fillUpTriangle(t0, t1, t4, image, color);
+
+			fillDownTriangle(t2, t1, t4, image, color);
+			line(t1, t4, image, white);
+		}
+
+		ImVec2* box = findTriangleBox(t0, t1, t2);
+		auto b1 = box[0];
+		auto b2 = box[1];
+		;
+	}
+
+	void fillUpTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
+	{
+		for (int i = 0; i < (t0.y - t1.y); i += 3)
+		{
+			ImVec2 p1, p2;
+			p1.y = p2.y = t1.y + i;
+			p1.x = (t0.x - t1.x) / (t0.y - t1.y) * (p1.y - t1.y) + t1.x;
+			p2.x = (t0.x - t2.x) / (t0.y - t2.y) * (p2.y - t2.y) + t2.x;
+			line(p1, p2, image, color);
+		}
+	}
+
+	void fillDownTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
+	{
+		for (int i = 0; i < (t1.y - t0.y); i++)
+		{
+			ImVec2 p1, p2;
+			p1.y = p2.y = t1.y - i;
+			p1.x = (t0.x - t1.x) / (t0.y - t1.y) * (p1.y - t1.y) + t1.x;
+			p2.x = (t0.x - t2.x) / (t0.y - t2.y) * (p2.y - t2.y) + t2.x;
+			line(p1, p2, image, color);
+		}
+	}
+
+	ImVec2* findTriangleBox(ImVec2 t0, ImVec2 t1, ImVec2 t2)
+	{
+		ImVec2 minPoint, maxPoint;
+		ImVec2 points[3], box[2];
+		points[0] = t0;
+		points[1] = t1;
+		points[2] = t2;
+
+		minPoint.x = points[0].x;
+		minPoint.y = points[0].y;
+
+		maxPoint.x = points[0].x;
+		maxPoint.y = points[0].y;
+		for (int i = 0; i < 3; i++)
+		{
+			if (minPoint.x > points[i].x)
+			{
+				minPoint.x = points[i].x;
+			}
+			if (minPoint.y > points[i].y)
+			{
+				minPoint.y = points[i].y;
+			}
+
+			if (maxPoint.x < points[i].x)
+			{
+				maxPoint.x = points[i].x;
+			}
+			if (maxPoint.y < points[i].y)
+			{
+				maxPoint.y = points[i].y;
+			}
+		}
+
+		box[0] = minPoint;
+		box[1] = maxPoint;
+
+		return box;
 	}
 }
