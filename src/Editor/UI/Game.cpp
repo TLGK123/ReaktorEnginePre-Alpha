@@ -74,7 +74,7 @@ namespace TmingEngine
 
 		TGAImage image(gameWidth, gameHeight, TGAImage::RGB);
 
-		Vector2 t0[3] = { Vector2(40, 40),   Vector2(350, 100),  Vector2(250, 300) };
+		Vector2 t0[3] = { Vector2(40, 40),   Vector2(250, 300) , Vector2(350, 100)   };
 		Vector2 t1[3] = { Vector2(380, 50),  Vector2(450, 10),   Vector2(370, 180) };
 		Vector2 t2[3] = { Vector2(180, 350), Vector2(120, 260), Vector2(130, 400) };
 
@@ -186,9 +186,9 @@ namespace TmingEngine
 		Vector2 minPoint = boxs[0];
 		Vector2 maxPoint = boxs[1];
 		drawBox(minPoint, maxPoint,image,color);
-		for (int y = minPoint.y ; y <=  maxPoint.y; y+=3)
+		for (int y = minPoint.y ; y <=  maxPoint.y; y+=1)
 		{
-			for (int x = minPoint.x; x <= maxPoint.x; x+=3)
+			for (int x = minPoint.x; x <= maxPoint.x; x+=1)
 			{
 				Vector2 P = Vector2(x,y);
 
@@ -205,9 +205,9 @@ namespace TmingEngine
 				float fbcp = BC.Cross(BP);
 				float fcap = CA.Cross(CP);
 
-				if (fabp >=0 && fbcp >= 0 && fcap >=0)
+				if (fabp <=0 && fbcp <= 0 && fcap <=0)   //一般使用顺时针 点 顺序表示正面
 				{
-					image.set(x, y, color);
+					image.set(x, y, TGAColor(rand() % 255, rand() % 255, rand() % 255, 255));
 				}
 			}
 		}
