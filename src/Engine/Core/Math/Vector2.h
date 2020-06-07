@@ -21,24 +21,40 @@
 
 #include "../EngineDefs.h"
 #include <string>
+#include "im.h"
 namespace TmingEngine
 {
     ENGINE_CLASS class Vector2
     {
      
     public:
-        float x;
-        float y;
+        float x = 0;
+        float y = 0;
         
         Vector2()
         {
             
+        }
+
+        Vector2 operator-(Vector2& v)
+        {
+            return Vector2(x - v.x, y - v.y);
+        }
+
+        Vector2 operator+(Vector2& v)
+        {
+            return Vector2(x + v.x, y + v.y);
         }
         
         Vector2(float x, float y)
         {
             this->x = x;
             this->y = y;
+        }
+
+        operator ImVec2()
+        {
+            return ImVec2(x,y);
         }
         static const Vector2 Zero;
         static const Vector2 One;

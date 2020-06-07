@@ -29,15 +29,15 @@ namespace TmingEngine
 
 	void TmingEngine::Game::Begin()
 	{
-		gameWidth = 1000;
-		gameHeight = 1000;
+		gameWidth = 500;
+		gameHeight = 500;
 		SoftRender();
 	}
 
 	void TmingEngine::Game::Update()
 	{
 		bool p_open = true;
-		ImGui::SetNextWindowSize(ImVec2(640, 360), ImGuiCond_FirstUseEver);
+		ImGui::SetNextWindowSize(Vector2(640, 360), ImGuiCond_FirstUseEver);
 		if (!ImGui::Begin("Game", &p_open))
 		{
 			ImGui::End();
@@ -49,7 +49,7 @@ namespace TmingEngine
 
 		ImGui::Text("%.0fx%.0f", my_tex_w, my_tex_h);
 		//----------------------------------------------------------------- -1 -1  Image reversal
-		ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+		ImGui::Image(my_tex_id, Vector2(my_tex_w, my_tex_h), Vector2(0, 0), Vector2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 		ImGui::End();
 	}
 
@@ -74,9 +74,9 @@ namespace TmingEngine
 
 		TGAImage image(gameWidth, gameHeight, TGAImage::RGB);
 
-		ImVec2 t0[3] = { ImVec2(0, 0),   ImVec2(350, 100),  ImVec2(250, 300) };
-		ImVec2 t1[3] = { ImVec2(180, 50),  ImVec2(150, 1),   ImVec2(70, 180) };
-		ImVec2 t2[3] = { ImVec2(180, 350), ImVec2(120, 260), ImVec2(130, 400) };
+		Vector2 t0[3] = { Vector2(40, 40),   Vector2(350, 100),  Vector2(250, 300) };
+		Vector2 t1[3] = { Vector2(180, 50),  Vector2(150, 1),   Vector2(70, 180) };
+		Vector2 t2[3] = { Vector2(180, 350), Vector2(120, 260), Vector2(130, 400) };
 		triangle(t0[0], t0[1], t0[2], image, red);
 		fillTriangle(t0[0], t0[1], t0[2], image, red);
 
@@ -84,7 +84,7 @@ namespace TmingEngine
 		fillTriangle(t1[0], t1[1], t1[2], image, blue);
 
 		triangle(t2[0], t2[1], t2[2], image, green);
-		fillTriangle(t2[0], t2[1], t2[2], image, green);
+		fillTriangleFromEdge(t2[0], t2[1], t2[2], image, green);
 
 		image.flip_horizontally();
 
@@ -159,18 +159,60 @@ namespace TmingEngine
 		}
 	}
 
-	void line(ImVec2 x, ImVec2 y, TGAImage& image, TGAColor color)
+	void line(Vector2 x, Vector2 y, TGAImage& image, TGAColor color)
 	{
 		line(x.x, x.y, y.x, y.y, image, color);
 	}
 
-	void triangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color) {
+	void triangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color) {
 		line(t0, t1, image, color);
 		line(t1, t2, image, color);
 		line(t2, t0, image, color);
 	}
 
-	void fillTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
+	void drawBox(Vector2 miniP, Vector2 maxP, TGAImage& image, TGAColor color)
+	{
+		line(miniP.x, miniP.y, maxP.x, miniP.y, image, color);
+		line(miniP.x, miniP.y, miniP.x, maxP.y, image, color);
+		line(miniP.x, maxP.y, maxP.x, maxP.y, image, color);
+		line(maxP.x, miniP.y, maxP.x, maxP.y, image, color);
+
+	}
+
+	void fillTriangleFromEdge(Vector2 A, Vector2 B, Vector2 C, TGAImage& image, TGAColor color)
+	{
+		Vector2* boxs = findTriangleBox(A,B,C);
+		Vector2 minPoint = boxs[0];
+		Vector2 maxPoint = boxs[1];
+		drawBox(minPoint, maxPoint,image,color);
+		for (int y = minPoint.y ; y <=  maxPoint.y; y++)
+		{
+			for (int x = minPoint.x; x <= maxPoint.x; x++)
+			{
+				Vector2 P = Vector2(x,y);
+
+				Vector2 ab = B - A; //向量 AB
+				Vector2 ap = P - A; //向量 AP
+
+				Vector2 bc = Vector2(C.x - B.x, C.y - B.y); //向量 BC
+				Vector2 bp = Vector2(P.x - B.x, P.y - B.y); //向量 BP
+
+				Vector2 ca = Vector2(A.x - C.x, A.y - C.y); //向量 CA
+				Vector2 cp = Vector2(P.x - C.x, P.y - C.y); //向量 CP
+
+				float fabp = ab.x * ap.y - ap.x * ab.y;
+				float fbcp = bc.x * bp.y - bp.x * bc.y;
+				float fcap = ca.x * cp.y - cp.x * ca.y;
+
+				if (fabp>=0 && fbcp >= 0 && fcap >=0)
+				{
+					image.set(x, y, color);
+				}
+			}
+		}
+	}
+
+	void fillTriangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color)
 	{
 		//根据 点的y坐标 从上到下排序
 		if (t0.y < t1.y)
@@ -199,7 +241,7 @@ namespace TmingEngine
 		else
 		{
 			//直线表达 两点式
-			ImVec2 t4;
+			Vector2 t4;
 			t4.y = t1.y;
 			t4.x = (t0.x - t2.x) / (t0.y - t2.y) * (t4.y - t2.y) + t2.x;
 
@@ -209,17 +251,19 @@ namespace TmingEngine
 			line(t1, t4, image, white);
 		}
 
-		ImVec2* box = findTriangleBox(t0, t1, t2);
+		Vector2* box = findTriangleBox(t0, t1, t2);
 		auto b1 = box[0];
 		auto b2 = box[1];
+
+		drawBox(b1,b2,image,color);
 		;
 	}
 
-	void fillUpTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
+	void fillUpTriangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color)
 	{
 		for (int i = 0; i < (t0.y - t1.y); i += 3)
 		{
-			ImVec2 p1, p2;
+			Vector2 p1, p2;
 			p1.y = p2.y = t1.y + i;
 			p1.x = (t0.x - t1.x) / (t0.y - t1.y) * (p1.y - t1.y) + t1.x;
 			p2.x = (t0.x - t2.x) / (t0.y - t2.y) * (p2.y - t2.y) + t2.x;
@@ -227,11 +271,11 @@ namespace TmingEngine
 		}
 	}
 
-	void fillDownTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color)
+	void fillDownTriangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color)
 	{
 		for (int i = 0; i < (t1.y - t0.y); i++)
 		{
-			ImVec2 p1, p2;
+			Vector2 p1, p2;
 			p1.y = p2.y = t1.y - i;
 			p1.x = (t0.x - t1.x) / (t0.y - t1.y) * (p1.y - t1.y) + t1.x;
 			p2.x = (t0.x - t2.x) / (t0.y - t2.y) * (p2.y - t2.y) + t2.x;
@@ -239,10 +283,10 @@ namespace TmingEngine
 		}
 	}
 
-	ImVec2* findTriangleBox(ImVec2 t0, ImVec2 t1, ImVec2 t2)
+	Vector2* findTriangleBox(Vector2 t0, Vector2 t1, Vector2 t2)
 	{
-		ImVec2 minPoint, maxPoint;
-		ImVec2 points[3], box[2];
+		Vector2 minPoint, maxPoint;
+		Vector2 points[3], box[2];
 		points[0] = t0;
 		points[1] = t1;
 		points[2] = t2;
@@ -278,4 +322,6 @@ namespace TmingEngine
 
 		return box;
 	}
+
+	
 }

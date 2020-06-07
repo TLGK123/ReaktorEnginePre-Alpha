@@ -32,6 +32,7 @@
 #include <scriptstdstring/scriptstdstring.h>
 #include <scriptbuilder/scriptbuilder.h>
 #include "Plantform/FileSystem/FileSystem.h"
+#include "Core/Math/Vector2.h"
 
 namespace TmingEngine
 {
@@ -60,11 +61,17 @@ namespace TmingEngine
 	const TGAColor green = TGAColor(0, 255, 0, 255);
 	const TGAColor blue = TGAColor(0, 0, 255, 255);
 
-	void fillTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color); //填充一个普通三角形
-	void fillUpTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color); //填充一个底边平行 X 轴 ，顶点在上的三角形
-	void fillDownTriangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color);//填充一个底边平行 X 轴 ，顶点在下的三角形
-	ImVec2* findTriangleBox(ImVec2 t0, ImVec2 t1, ImVec2 t2);
-	void triangle(ImVec2 t0, ImVec2 t1, ImVec2 t2, TGAImage& image, TGAColor color);
+	void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color);
+	void line(Vector2 x, Vector2 y, TGAImage& image, TGAColor color);
+	void fillTriangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color); //填充一个普通三角形
+	void fillUpTriangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color); //填充一个底边平行 X 轴 ，顶点在上的三角形
+	void fillDownTriangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);//填充一个底边平行 X 轴 ，顶点在下的三角形
+	Vector2* findTriangleBox(Vector2 t0, Vector2 t1, Vector2 t2);								//找到一个三角形最小包裹框						
+	void triangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);
+	void drawBox(Vector2 t0, Vector2 t1, TGAImage& image, TGAColor color);
+
+	void fillTriangleFromEdge(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);
+
 }
 
 #endif /* Game_hpp */
