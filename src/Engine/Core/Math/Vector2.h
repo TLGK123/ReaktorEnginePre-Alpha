@@ -24,40 +24,57 @@
 #include "im.h"
 namespace TmingEngine
 {
-    ENGINE_CLASS class Vector2
-    {
-     
-    public:
-        float x = 0;
-        float y = 0;
-        
-        Vector2()
-        {
-            
-        }
+	ENGINE_CLASS class Vector2
+	{
+	public:
+		float x = 0;
+		float y = 0;
 
-        Vector2 operator-(Vector2& v)
-        {
-            return Vector2(x - v.x, y - v.y);
-        }
+		Vector2()
+		{
+		}
 
-        Vector2 operator+(Vector2& v)
-        {
-            return Vector2(x + v.x, y + v.y);
-        }
-        
-        Vector2(float x, float y)
-        {
-            this->x = x;
-            this->y = y;
-        }
+		//我们不希望在这个函数中对用来进行赋值的“原版”做任何修改。函数加上const后缀的作用是表明函数本身不会修改类成员变量。
+		//加上const，对于const的和非const的实参，函数就能接受；如果不加，就只能接受非const的实参。
+		//这样可以避免在函数调用时对实参的一次拷贝，提高了效率。
+		Vector2 operator - (const Vector2& v) const
+		{
+			return Vector2(x - v.x, y - v.y);
+		}
 
-        operator ImVec2()
-        {
-            return ImVec2(x,y);
-        }
-        static const Vector2 Zero;
-        static const Vector2 One;
-        std::string ToString() const;
-    };
+		Vector2 operator + (const Vector2& v) const
+		{
+			return Vector2(x + v.x, y + v.y);
+		}
+
+		Vector2 operator * (const int num) const
+		{
+			return Vector2(x * num, y * num);
+		}
+		
+
+		float Dot(Vector2& v)
+		{
+			return  x * v.x + y * v.y;
+		}
+
+		float Cross(Vector2& v)
+		{
+			return  x * v.y - v.x * y;
+		}
+
+		Vector2(float x, float y)
+		{
+			this->x = x;
+			this->y = y;
+		}
+
+		operator ImVec2()
+		{
+			return ImVec2(x, y);
+		}
+		static const Vector2 Zero;
+		static const Vector2 One;
+		std::string ToString() const;
+	};
 }

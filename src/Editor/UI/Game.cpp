@@ -75,16 +75,17 @@ namespace TmingEngine
 		TGAImage image(gameWidth, gameHeight, TGAImage::RGB);
 
 		Vector2 t0[3] = { Vector2(40, 40),   Vector2(350, 100),  Vector2(250, 300) };
-		Vector2 t1[3] = { Vector2(180, 50),  Vector2(150, 1),   Vector2(70, 180) };
+		Vector2 t1[3] = { Vector2(380, 50),  Vector2(450, 10),   Vector2(370, 180) };
 		Vector2 t2[3] = { Vector2(180, 350), Vector2(120, 260), Vector2(130, 400) };
+
 		triangle(t0[0], t0[1], t0[2], image, red);
-		fillTriangle(t0[0], t0[1], t0[2], image, red);
+		fillTriangleFromEdge(t0[0], t0[1], t0[2], image, red);
 
 		triangle(t1[0], t1[1], t1[2], image, blue);
-		fillTriangle(t1[0], t1[1], t1[2], image, blue);
+		fillTriangleLinerScan(t1[0], t1[1], t1[2], image, blue);
 
 		triangle(t2[0], t2[1], t2[2], image, green);
-		fillTriangleFromEdge(t2[0], t2[1], t2[2], image, green);
+		fillTriangleLinerScan(t2[0], t2[1], t2[2], image, green);
 
 		image.flip_horizontally();
 
@@ -185,26 +186,26 @@ namespace TmingEngine
 		Vector2 minPoint = boxs[0];
 		Vector2 maxPoint = boxs[1];
 		drawBox(minPoint, maxPoint,image,color);
-		for (int y = minPoint.y ; y <=  maxPoint.y; y++)
+		for (int y = minPoint.y ; y <=  maxPoint.y; y+=3)
 		{
-			for (int x = minPoint.x; x <= maxPoint.x; x++)
+			for (int x = minPoint.x; x <= maxPoint.x; x+=3)
 			{
 				Vector2 P = Vector2(x,y);
 
-				Vector2 ab = B - A; //向量 AB
-				Vector2 ap = P - A; //向量 AP
+				Vector2 AB = B - A; //向量 AB
+				Vector2 AP = P - A; //向量 AP
 
-				Vector2 bc = Vector2(C.x - B.x, C.y - B.y); //向量 BC
-				Vector2 bp = Vector2(P.x - B.x, P.y - B.y); //向量 BP
+				Vector2 BC = C - B; //向量 BC
+				Vector2 BP = P - B; //向量 BP
 
-				Vector2 ca = Vector2(A.x - C.x, A.y - C.y); //向量 CA
-				Vector2 cp = Vector2(P.x - C.x, P.y - C.y); //向量 CP
+				Vector2 CA = A - C; //向量 CA
+				Vector2 CP = P - C; //向量 CP
 
-				float fabp = ab.x * ap.y - ap.x * ab.y;
-				float fbcp = bc.x * bp.y - bp.x * bc.y;
-				float fcap = ca.x * cp.y - cp.x * ca.y;
+				float fabp = AB.Cross(AP);
+				float fbcp = BC.Cross(BP);
+				float fcap = CA.Cross(CP);
 
-				if (fabp>=0 && fbcp >= 0 && fcap >=0)
+				if (fabp >=0 && fbcp >= 0 && fcap >=0)
 				{
 					image.set(x, y, color);
 				}
@@ -212,7 +213,7 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color)
+	void fillTriangleLinerScan(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color)
 	{
 		//根据 点的y坐标 从上到下排序
 		if (t0.y < t1.y)
