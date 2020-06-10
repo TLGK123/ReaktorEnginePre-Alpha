@@ -33,6 +33,8 @@
 #include <scriptbuilder/scriptbuilder.h>
 #include "Plantform/FileSystem/FileSystem.h"
 #include "Core/Math/Vector2.h"
+#include "Rendering/Model.hpp"
+
 
 namespace TmingEngine
 {
@@ -54,6 +56,8 @@ namespace TmingEngine
 		void SoftRender();
 		int gameWidth;
 		int gameHeight;
+
+		Model testCharacter;
 	};
 
 	const TGAColor white = TGAColor(255, 255, 255, 255);
