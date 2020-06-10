@@ -31,6 +31,10 @@ namespace TmingEngine
 	{
 		gameWidth = 500;
 		gameHeight = 500;
+		
+
+		testCharacter.Init(FileSystem::getPath("resources/objects/character/_2.obj"));
+
 		SoftRender();
 	}
 
@@ -78,14 +82,42 @@ namespace TmingEngine
 		Vector2 t1[3] = { Vector2(380, 50),  Vector2(450, 10),   Vector2(370, 180) };
 		Vector2 t2[3] = { Vector2(180, 350), Vector2(120, 260), Vector2(130, 400) };
 
-		triangle(t0[0], t0[1], t0[2], image, red);
-		fillTriangleFromEdge(t0[0], t0[1], t0[2], image, red);
+		//triangle(t0[0], t0[1], t0[2], image, red);
+		//fillTriangleFromEdge(t0[0], t0[1], t0[2], image, red);
 
-		triangle(t1[0], t1[1], t1[2], image, blue);
-		fillTriangleLinerScan(t1[0], t1[1], t1[2], image, blue);
+		//triangle(t1[0], t1[1], t1[2], image, blue);
+		//fillTriangleLinerScan(t1[0], t1[1], t1[2], image, blue);
 
-		triangle(t2[0], t2[1], t2[2], image, green);
-		fillTriangleLinerScan(t2[0], t2[1], t2[2], image, green);
+		//triangle(t2[0], t2[1], t2[2], image, green);
+		//fillTriangleLinerScan(t2[0], t2[1], t2[2], image, green);
+
+
+		for (int i = 0; i < testCharacter.meshes[0].indices.size(); i+=3)
+		{
+			int  index1  = testCharacter.meshes[0].indices[i];
+			int  index2 = testCharacter.meshes[0].indices[i+1];
+			int  index3 = testCharacter.meshes[0].indices[i+2];
+			
+			Vector2 v1 = Vector2(testCharacter.meshes[0].vertices[index1].Position.x, testCharacter.meshes[0].vertices[index1].Position.y);
+			Vector2 v2 = Vector2(testCharacter.meshes[0].vertices[index2].Position.x, testCharacter.meshes[0].vertices[index2].Position.y);
+			Vector2 v3 = Vector2(testCharacter.meshes[0].vertices[index3].Position.x, testCharacter.meshes[0].vertices[index3].Position.y);
+			
+			fillTriangleFromEdge(v1 * 200 + Vector2(gameWidth / 2, 0), v2 * 200 + Vector2(gameWidth / 2, 0), v3 * 200 + Vector2(gameWidth / 2, 0), image, red);
+		}
+
+		/*for (int i = 0; i < testCharacter.meshes[1].indices.size(); i += 3)
+		{
+			int  index1 = testCharacter.meshes[1].indices[i];
+			int  index2 = testCharacter.meshes[1].indices[i + 1];
+			int  index3 = testCharacter.meshes[1].indices[i + 2];
+
+			Vector2 v1 = Vector2(testCharacter.meshes[1].vertices[index1].Position.x, testCharacter.meshes[1].vertices[index1].Position.y);
+			Vector2 v2 = Vector2(testCharacter.meshes[1].vertices[index2].Position.x, testCharacter.meshes[1].vertices[index2].Position.y);
+			Vector2 v3 = Vector2(testCharacter.meshes[1].vertices[index3].Position.x, testCharacter.meshes[1].vertices[index3].Position.y);
+
+			triangle(v1 * 100 + Vector2(gameWidth /2, gameWidth /2), v2 * 100 + Vector2(gameWidth / 2, gameWidth / 2), v3 * 100 + Vector2(gameWidth / 2, gameWidth / 2), image, red);
+		}*/
+
 
 		image.flip_horizontally();
 
