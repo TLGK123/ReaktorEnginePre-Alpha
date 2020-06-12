@@ -22,6 +22,9 @@
 #include "../EngineDefs.h"
 #include <string>
 #include "im.h"
+
+using namespace glm;
+
 namespace TmingEngine
 {
 	ENGINE_CLASS class Vector2
@@ -52,12 +55,14 @@ namespace TmingEngine
 			return Vector2(x * num, y * num);
 		}
 		
-
+		//对应的组件值，相乘并相加,通常用于计算向量的夹角
+		// A * B = |A|*|B|*Cos(θ)=(a1*b1 + a2*b2 + ... + an*bn)
 		float Dot(Vector2& v)
 		{
 			return  x * v.x + y * v.y;
 		}
 
+		//斜对角相乘 并相减
 		float Cross(Vector2& v)
 		{
 			return  x * v.y - v.x * y;
@@ -73,6 +78,12 @@ namespace TmingEngine
 		{
 			return ImVec2(x, y);
 		}
+
+		operator vec2()
+		{
+			return vec2(x, y);
+		}
+
 		static const Vector2 Zero;
 		static const Vector2 One;
 		std::string ToString() const;
