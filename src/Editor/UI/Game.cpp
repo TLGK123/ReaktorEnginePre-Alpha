@@ -102,7 +102,7 @@ namespace TmingEngine
 			Vector2 v2 = Vector2(testCharacter.meshes[0].vertices[index2].Position.x, testCharacter.meshes[0].vertices[index2].Position.y);
 			Vector2 v3 = Vector2(testCharacter.meshes[0].vertices[index3].Position.x, testCharacter.meshes[0].vertices[index3].Position.y);
 			
-			fillTriangleLinerScan(v1 * 200 + Vector2(gameWidth / 2, 10), v2 * 200 + Vector2(gameWidth / 2, 10), v3 * 200 + Vector2(gameWidth / 2,10), image, red);
+			fillTriangleFromEdge(v1 * 200 + Vector2(gameWidth / 2, 10), v2 * 200 + Vector2(gameWidth / 2, 10), v3 * 200 + Vector2(gameWidth / 2,10), image, red);
 		}
 
 		/*for (int i = 0; i < testCharacter.meshes[1].indices.size(); i += 3)
@@ -212,12 +212,16 @@ namespace TmingEngine
 
 	}
 
+
 	void fillTriangleFromEdge(Vector2 A, Vector2 B, Vector2 C, TGAImage& image, TGAColor color)
 	{
 		Vector2* boxs = findTriangleBox(A,B,C);
 		Vector2 minPoint = boxs[0];
 		Vector2 maxPoint = boxs[1];
-		drawBox(minPoint, maxPoint,image,color);
+		//drawBox(minPoint, maxPoint,image,color);
+
+
+		TGAColor col = TGAColor(rand()%255, rand() % 255, rand() % 255,255);
 		for (int y = minPoint.y ; y <=  maxPoint.y; y+=1)
 		{
 			for (int x = minPoint.x; x <= maxPoint.x; x+=1)
@@ -239,7 +243,7 @@ namespace TmingEngine
 
 				if (fabp <=0 && fbcp <= 0 && fcap <=0)   //一般使用顺时针 点 顺序表示正面
 				{
-					image.set(x, y, TGAColor(rand() % 255, rand() % 255, rand() % 255, 255));
+					image.set(x, y, col);
 				}
 			}
 		}
