@@ -102,7 +102,7 @@ namespace TmingEngine
 			Vector2 v2 = Vector2(testCharacter.meshes[0].vertices[index2].Position.x, testCharacter.meshes[0].vertices[index2].Position.y);
 			Vector2 v3 = Vector2(testCharacter.meshes[0].vertices[index3].Position.x, testCharacter.meshes[0].vertices[index3].Position.y);
 			
-			fillTriangleFromEdge(v1 * 200 + Vector2(gameWidth / 2, 0), v2 * 200 + Vector2(gameWidth / 2, 0), v3 * 200 + Vector2(gameWidth / 2, 0), image, red);
+			fillTriangleLinerScan(v1 * 200 + Vector2(gameWidth / 2, 10), v2 * 200 + Vector2(gameWidth / 2, 10), v3 * 200 + Vector2(gameWidth / 2,10), image, red);
 		}
 
 		/*for (int i = 0; i < testCharacter.meshes[1].indices.size(); i += 3)
