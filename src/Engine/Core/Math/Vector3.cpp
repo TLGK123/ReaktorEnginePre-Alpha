@@ -28,8 +28,6 @@ using namespace std;
 
 namespace TmingEngine
 {
-	const Vector3 Vector3::Zero(0.0f, 0.0f, 0.0f);
-
 
 	string Vector3::ToString() const
 	{

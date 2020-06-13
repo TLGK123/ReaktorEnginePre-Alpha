@@ -37,9 +37,9 @@ namespace TmingEngine
 {
 	Transform::Transform(Context* context, GameObject* gameObject, Transform* transform) : IComponent(context, gameObject, transform)
 	{
-		m_positionLocal        = Vector3::Zero;
+		m_positionLocal        = Vector3(0,0,0);
 		m_rotationLocal        = Quaternion(0, 0, 0, 1);
-		m_scaleLocal        = Vector3::One;
+		m_scaleLocal        = Vector3(1,1,1);
 	
 	 //  m_worldTransform    = Matrix::Identity;
 	  // m_localTransform    = Matrix::Identity;
