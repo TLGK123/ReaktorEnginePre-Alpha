@@ -33,7 +33,6 @@ namespace TmingEngine
 {
 	ENGINE_CLASS class Matrix
 	{
-
 	public:
 		float m00, m01, m02, m03;
 		float m10, m11, m12, m13;
@@ -42,7 +41,6 @@ namespace TmingEngine
 
 		Matrix()
 		{
-
 		}
 
 		Matrix(float v)
@@ -63,7 +61,6 @@ namespace TmingEngine
 			m20 = v9;  m21 = v10; m22 = v11; m23 = v12;
 			m30 = v13; m31 = v14; m32 = v15; m33 = v16;
 		}
-
 
 		Matrix operator*(const  Matrix& m2) const
 		{
@@ -92,7 +89,6 @@ namespace TmingEngine
 			return mt;
 		}
 
-
 		Matrix operator= (const Matrix& m2) const
 		{
 			Matrix mt;
@@ -120,18 +116,16 @@ namespace TmingEngine
 			return mt;
 		}
 
-
 		Matrix static LookAt(Vector3 cameraPos, Vector3 cameraTarget, Vector3 worldUp)
 		{
 			Matrix mat4 = Matrix(0);
-			Vector3 cameraDirection = Vector3::Normalize(cameraTarget - cameraPos);
-			Vector3 cameraRight = Vector3::Normalize(Vector3::Cross(cameraDirection, worldUp));
-			Vector3 cameraUp = Vector3::Normalize(Vector3::Cross(cameraRight, cameraDirection));
+			Vector3 cameraDirection = (cameraTarget - cameraPos).Normalize();
+			Vector3 cameraRight = cameraDirection.Cross(worldUp).Normalize();
+			Vector3 cameraUp = cameraRight.Cross(cameraDirection).Normalize();
 
 			mat4.m00 = cameraRight.x;   mat4.m01 = cameraUp.x;      mat4.m02 = -cameraDirection.x;
 			mat4.m10 = cameraRight.y;   mat4.m11 = cameraUp.y;        mat4.m12 = -cameraDirection.y;
 			mat4.m20 = cameraRight.z;   mat4.m21 = cameraUp.z;       mat4.m22 = -cameraDirection.z;
-
 
 			mat4.m30 = -Vector3::Dot(cameraRight, cameraPos);
 			mat4.m31 = -Vector3::Dot(cameraUp, cameraPos);
@@ -174,7 +168,6 @@ namespace TmingEngine
 			return mt;
 		}
 
-
 		string ToString() const
 		{
 			char tempBuffer[200];
@@ -183,7 +176,6 @@ namespace TmingEngine
 		}
 
 		static const Matrix Identity;
-
 
 		void ToArray(float arry[16]) const
 		{
@@ -206,7 +198,6 @@ namespace TmingEngine
 			arry[13] = m31;
 			arry[14] = m32;
 			arry[15] = m33;
-
 		}
 	};
 }
