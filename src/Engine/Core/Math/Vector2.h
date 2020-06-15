@@ -39,9 +39,11 @@ namespace TmingEngine
 		{
 		}
 
-		//我们不希望在这个函数中对用来进行赋值的“原版”做任何修改。函数加上const后缀的作用是表明函数本身不会修改类成员变量。
-		//加上const，对于const的和非const的实参，函数就能接受；如果不加，就只能接受非const的实参。
-		//这样可以避免在函数调用时对实参的一次拷贝，提高了效率。
+		//We don't want to modify the class member value ,if a function add "const" at the end,
+		//it mesans that the function will not change the object property
+		//if the parameter add a "const ",it means that the function can pass a const parameter or not,
+		//and the parameter will not be changed in the fucntion.
+
 		Vector2 operator - (const Vector2& v) const
 		{
 			return Vector2(x - v.x, y - v.y);

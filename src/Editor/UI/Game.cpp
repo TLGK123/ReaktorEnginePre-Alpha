@@ -233,14 +233,14 @@ namespace TmingEngine
 			{
 				Vector2 P = Vector2(x,y);
 
-				Vector2 AB = B - A; //向量 AB
-				Vector2 AP = P - A; //向量 AP
+				Vector2 AB = B - A; //Vector AB
+				Vector2 AP = P - A; //Vector AP
 
-				Vector2 BC = C - B; //向量 BC
-				Vector2 BP = P - B; //向量 BP
+				Vector2 BC = C - B; //Vector BC
+				Vector2 BP = P - B; //Vector BP
 
-				Vector2 CA = A - C; //向量 CA
-				Vector2 CP = P - C; //向量 CP
+				Vector2 CA = A - C; //Vector CA
+				Vector2 CP = P - C; //Vector CP
 
 				float fabp = AB.Cross(AP);
 				float fbcp = BC.Cross(BP);
@@ -268,6 +268,13 @@ namespace TmingEngine
 		Vector3 N = ((t1 - t0).Cross(t2 - t0)).Normalize();
 		float intensity = N.Dot(sunlitght.Direction);  
 	
+		if (intensity < 0)
+		{
+			//It means that the light comes from behind the polygon. 
+			// Back-face culling
+			return;
+		}
+
 		TGAColor col = TGAColor(intensity * 255, intensity * 255,  intensity * 255,  255);
 
 		for (int y = minPoint.y; y <= maxPoint.y; y += 1)
@@ -276,14 +283,14 @@ namespace TmingEngine
 			{
 				Vector2 P = Vector2(x, y);
 
-				Vector2 AB = B - A; //向量 AB
-				Vector2 AP = P - A; //向量 AP
+				Vector2 AB = B - A; //Vector AB
+				Vector2 AP = P - A; //Vector AP
 
-				Vector2 BC = C - B; //向量 BC
-				Vector2 BP = P - B; //向量 BP
+				Vector2 BC = C - B; //Vector BC
+				Vector2 BP = P - B; //Vector BP
 
-				Vector2 CA = A - C; //向量 CA
-				Vector2 CP = P - C; //向量 CP
+				Vector2 CA = A - C; //Vector CA
+				Vector2 CP = P - C; //Vector CP
 
 				float fabp = AB.Cross(AP);
 				float fbcp = BC.Cross(BP);
