@@ -119,19 +119,19 @@ namespace TmingEngine
 		Matrix static LookAt(Vector3 cameraPos, Vector3 cameraTarget, Vector3 worldUp)
 		{
 			Matrix mat4 = Matrix(0);
-			Vector3 cameraDirection = (cameraTarget - cameraPos).Normalize();
-			Vector3 cameraRight = cameraDirection.Cross(worldUp).Normalize();
-			Vector3 cameraUp = cameraRight.Cross(cameraDirection).Normalize();
+			//Vector3 cameraDirection = (cameraTarget - cameraPos).Normalize();
+			//Vector3 cameraRight = cameraDirection.Cross(worldUp).Normalize();
+			//Vector3 cameraUp = cameraRight.Cross(cameraDirection).Normalize();
 
-			mat4.m00 = cameraRight.x;   mat4.m01 = cameraUp.x;      mat4.m02 = -cameraDirection.x;
-			mat4.m10 = cameraRight.y;   mat4.m11 = cameraUp.y;        mat4.m12 = -cameraDirection.y;
-			mat4.m20 = cameraRight.z;   mat4.m21 = cameraUp.z;       mat4.m22 = -cameraDirection.z;
+			//mat4.m00 = cameraRight.x;   mat4.m01 = cameraUp.x;      mat4.m02 = -cameraDirection.x;
+			//mat4.m10 = cameraRight.y;   mat4.m11 = cameraUp.y;        mat4.m12 = -cameraDirection.y;
+			//mat4.m20 = cameraRight.z;   mat4.m21 = cameraUp.z;       mat4.m22 = -cameraDirection.z;
 
-			mat4.m30 = -Vector3::Dot(cameraRight, cameraPos);
-			mat4.m31 = -Vector3::Dot(cameraUp, cameraPos);
-			mat4.m32 = Vector3::Dot(cameraDirection, cameraPos);
+			//mat4.m30 = -Vector3::Dot(cameraRight, cameraPos);
+			//mat4.m31 = -Vector3::Dot(cameraUp, cameraPos);
+			//mat4.m32 = Vector3::Dot(cameraDirection, cameraPos);
 
-			mat4.m33 = 1;
+			//mat4.m33 = 1;
 			return mat4;
 		}
 
