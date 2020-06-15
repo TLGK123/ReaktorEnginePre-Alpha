@@ -23,6 +23,7 @@
 #include "../EngineDefs.h"
 #include <string>
 #include <math.h>
+#include "im.h"
 
 namespace TmingEngine {
 	ENGINE_CLASS class Vector3
@@ -43,6 +44,13 @@ namespace TmingEngine {
 			this->z = z;
 		}
 
+		Vector3(glm::vec3 v)
+		{
+			this->x = v.x;
+			this->y = v.y;
+			this->z = v.z;
+		}
+
 		std::string ToString() const;
 
 		bool operator ==(const Vector3& other) const
@@ -50,17 +58,17 @@ namespace TmingEngine {
 			return x == other.x && y == other.y && z == other.z;
 		}
 
-		Vector3 operator +(const Vector3& other)const
+		Vector3 operator +(const Vector3& other) const
 		{
 			return Vector3(x + other.x, y + other.y, z + other.z);
 		}
 
-		Vector3 operator-(const Vector3& other)const
+		Vector3 operator -(const Vector3& other) const
 		{
 			return Vector3(x - other.x, y - other.y, z - other.z);
 		}
 
-		Vector3 Cross(const Vector3& v2)
+		Vector3 Cross(const Vector3& v2) const
 		{
 			float x_ = y * v2.z - v2.y * z;
 			float y_ = v2.x * z - x * v2.z;
@@ -68,12 +76,12 @@ namespace TmingEngine {
 			return Vector3(x_, y_, z_);
 		}
 
-		static float Dot(const Vector3& v1, const Vector3& v2)
+		float Dot(const Vector3& v2)
 		{
-			return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+			return x * v2.x + y * v2.y + z * v2.z;
 		}
 
-		Vector3 Normalize()
+		Vector3 Normalize() const
 		{
 			float len = sqrt(x * x + y * y + z * z);
 			float v1 = abs(x / len);
@@ -83,7 +91,7 @@ namespace TmingEngine {
 			return Vector3(v1, v2, v3);
 		}
 
-		Vector3 operator*(const float other)const
+		Vector3 operator * (const float other)const
 		{
 			return Vector3(x * other, y * other, z * other);
 		}

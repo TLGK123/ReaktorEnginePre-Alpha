@@ -19,3 +19,40 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+#pragma once
+#include "Core/Math/Vector3.h"
+
+namespace TmingEngine
+{
+
+	class Color
+	{
+	public:
+		float r = 0;
+		float g = 0;
+		float b = 0;
+		float a = 255;
+
+		Color()
+		{
+
+		}
+
+		Color(float R ,float G,float B)
+		{
+			r = R;
+			g = G;
+			b = B;
+		}
+
+		Color(float R, float G, float B ,float A)
+		{
+			r = R;
+			g = G;
+			b = B;
+			a = A;
+		}
+
+	};
+
+}

@@ -20,14 +20,25 @@
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #pragma once
-#include "Core/Math/Vector2.h"
+
+#include "Core/Math/Vector3.h"
+#include "Color.hpp"
 
 namespace TmingEngine
 {
 
 	class Light
 	{
-	 
+	public:
+		Vector3 Position;
+		Color Color;
+		Vector3 Direction;
+
+		Light()
+		{
+		
+		}
+
 	};
 
 }

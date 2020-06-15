@@ -15,6 +15,7 @@ either version 4 of the License, or (at your option) any later version.
 #include "Core/GameObject.hpp"
 #include <vector>
 #include "../Core/Math/Matrix.h"
+#include "Core/Math/Vector3.h"
 
 namespace TmingEngine
 {
@@ -57,17 +58,22 @@ public:
     
     
     // Constructor with vectors
-    Camera(Vector3 position = Vector3(0.0f, 0.0f, 0.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
-    {
-        Position = position;
-        WorldUp = up;
-        Yaw = yaw;
-        Pitch = pitch;
-        updateCameraVectors();
-    }
+    //Camera(Vector3 position = Vector3(0.0f, 0.0f, 0.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
+    //{
+    //    Position = position;
+    //    WorldUp = up;
+    //    Yaw = yaw;
+    //    Pitch = pitch;
+    //    updateCameraVectors();
+    //}
     // Constructor with scalar values
-    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
+    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) 
     {
+        
+        Front = Vector3(0.0f, 0.0f, -1.0f);
+        MovementSpeed = SPEED;
+        MouseSensitivity = SENSITIVITY;
+        Fov = ZOOM;
         Position = Vector3(posX, posY, posZ);
         WorldUp = Vector3(upX, upY, upZ);
         Yaw = yaw;
@@ -76,17 +82,17 @@ public:
     }
     
     // Constructor with vectors
-    Camera(Context * context ,GameObject * go, Vector3 position = Vector3(0.0f, 0.0f, 0.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
-    {
-        currentContext = context;
-        gameObject = go;
-        
-        Position = position;
-        WorldUp = up;
-        Yaw = yaw;
-        Pitch = pitch;
-        updateCameraVectors();
-    }
+    //Camera(Context * context ,GameObject * go, Vector3 position = Vector3(0.0f, 0.0f, 0.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
+    //{
+    //    currentContext = context;
+    //    gameObject = go;
+    //    
+    //    Position = position;
+    //    WorldUp = up;
+    //    Yaw = yaw;
+    //    Pitch = pitch;
+    //    updateCameraVectors();
+    //}
     
     // Returns the view matrix calculated using Euler Angles and the LookAt Matrix
      Matrix GetViewMatrix()

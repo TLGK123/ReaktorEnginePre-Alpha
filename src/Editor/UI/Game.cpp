@@ -61,6 +61,7 @@ namespace TmingEngine
 	{
 	}
 
+	Light sunlitght;
 	void TmingEngine::Game::SoftRender()
 	{
 		glGenTextures(1, &imageId);
@@ -91,18 +92,20 @@ namespace TmingEngine
 		//triangle(t2[0], t2[1], t2[2], image, green);
 		//fillTriangleLinerScan(t2[0], t2[1], t2[2], image, green);
 
-
+		sunlitght.Direction = Vector3(0.5, 0.5, 1);
+		sunlitght.Color = Color(0.5, 0.5, 0);
+	
 		for (int i = 0; i < testCharacter.meshes[0].indices.size(); i+=3)
 		{
 			int  index1  = testCharacter.meshes[0].indices[i];
 			int  index2 = testCharacter.meshes[0].indices[i+1];
 			int  index3 = testCharacter.meshes[0].indices[i+2];
 			
-			Vector2 v1 = Vector2(testCharacter.meshes[0].vertices[index1].Position.x, testCharacter.meshes[0].vertices[index1].Position.y);
-			Vector2 v2 = Vector2(testCharacter.meshes[0].vertices[index2].Position.x, testCharacter.meshes[0].vertices[index2].Position.y);
-			Vector2 v3 = Vector2(testCharacter.meshes[0].vertices[index3].Position.x, testCharacter.meshes[0].vertices[index3].Position.y);
+			Vector3 v1 = Vector3(testCharacter.meshes[0].vertices[index1].Position);
+			Vector3 v2 = Vector3(testCharacter.meshes[0].vertices[index2].Position);
+			Vector3 v3 = Vector3(testCharacter.meshes[0].vertices[index3].Position);
 			
-			fillTriangleFromEdge(v1 * 200 + Vector2(gameWidth / 2, 10), v2 * 200 + Vector2(gameWidth / 2, 10), v3 * 200 + Vector2(gameWidth / 2,10), image, red);
+			fillTriangleFromEdge(v1 * 200 + Vector3(gameWidth / 2, 10,0), v2 * 200 + Vector3(gameWidth / 2, 10,0), v3 * 200 + Vector3(gameWidth / 2,10,0), image, red);
 		}
 
 		/*for (int i = 0; i < testCharacter.meshes[1].indices.size(); i += 3)
@@ -221,7 +224,9 @@ namespace TmingEngine
 		//drawBox(minPoint, maxPoint,image,color);
 
 
+
 		TGAColor col = TGAColor(rand()%255, rand() % 255, rand() % 255,255);
+
 		for (int y = minPoint.y ; y <=  maxPoint.y; y+=1)
 		{
 			for (int x = minPoint.x; x <= maxPoint.x; x+=1)
@@ -242,6 +247,49 @@ namespace TmingEngine
 				float fcap = CA.Cross(CP);
 
 				if (fabp <=0 && fbcp <= 0 && fcap <=0)   //一般使用顺时针 点 顺序表示正面
+				{
+					image.set(x, y, col);
+				}
+			}
+		}
+	}
+
+	void fillTriangleFromEdge(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color)
+	{
+		Vector2 A, B, C;
+		A = Vector2(t0.x, t0.y);
+		B = Vector2(t1.x, t1.y);
+		C = Vector2(t2.x, t2.y);
+		Vector2* boxs = findTriangleBox(A, B, C);
+		Vector2 minPoint = boxs[0];
+		Vector2 maxPoint = boxs[1];
+		//drawBox(minPoint, maxPoint,image,color);
+
+		Vector3 N = ((t1 - t0).Cross(t2 - t0)).Normalize();
+		float intensity = N.Dot(sunlitght.Direction);  
+	
+		TGAColor col = TGAColor(intensity * 255, intensity * 255,  intensity * 255,  255);
+
+		for (int y = minPoint.y; y <= maxPoint.y; y += 1)
+		{
+			for (int x = minPoint.x; x <= maxPoint.x; x += 1)
+			{
+				Vector2 P = Vector2(x, y);
+
+				Vector2 AB = B - A; //向量 AB
+				Vector2 AP = P - A; //向量 AP
+
+				Vector2 BC = C - B; //向量 BC
+				Vector2 BP = P - B; //向量 BP
+
+				Vector2 CA = A - C; //向量 CA
+				Vector2 CP = P - C; //向量 CP
+
+				float fabp = AB.Cross(AP);
+				float fbcp = BC.Cross(BP);
+				float fcap = CA.Cross(CP);
+
+				if (fabp <= 0 && fbcp <= 0 && fcap <= 0)   //一般使用顺时针 点 顺序表示正面
 				{
 					image.set(x, y, col);
 				}
@@ -356,6 +404,58 @@ namespace TmingEngine
 
 		box[0] = minPoint;
 		box[1] = maxPoint;
+
+		return box;
+	}
+
+	Vector2* findTriangleBox(Vector3 t0, Vector3 t1, Vector3 t2)
+	{
+		Vector3 minPoint, maxPoint;
+		Vector3 points[3];
+		Vector2  box[2];
+		points[0] = t0;
+		points[1] = t1;
+		points[2] = t2;
+
+		minPoint.x = points[0].x;
+		minPoint.y = points[0].y;
+		minPoint.z = points[0].z;
+
+		maxPoint.x = points[0].x;
+		maxPoint.y = points[0].y;
+		maxPoint.z = points[0].z;
+		for (int i = 0; i < 3; i++)
+		{
+			if (minPoint.x > points[i].x)
+			{
+				minPoint.x = points[i].x;
+			}
+			if (minPoint.y > points[i].y)
+			{
+				minPoint.y = points[i].y;
+			}
+			if (minPoint.z > points[i].z)
+			{
+				minPoint.z = points[i].z;
+			}
+
+
+			if (maxPoint.x < points[i].x)
+			{
+				maxPoint.x = points[i].x;
+			}
+			if (maxPoint.y < points[i].y)
+			{
+				maxPoint.y = points[i].y;
+			}
+			if (maxPoint.z < points[i].z)
+			{
+				maxPoint.z = points[i].z;
+			}
+		}
+
+		box[0] = Vector2( minPoint.x, minPoint.y);
+		box[1] = Vector2(maxPoint.x, maxPoint.y);
 
 		return box;
 	}
