@@ -86,7 +86,7 @@ namespace TmingEngine
 
 	void fillTriangleFromEdge(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color);
 
-	
+	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color, int* zbuffer);
 }
 
 #endif

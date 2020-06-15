@@ -27,12 +27,11 @@ namespace TmingEngine
 	{
 	}
 
+
 	void TmingEngine::Game::Begin()
 	{
 		gameWidth = 500;
 		gameHeight = 500;
-		
-
 		testCharacter.Init(FileSystem::getPath("resources/objects/character/_2.obj"));
 
 		SoftRender();
@@ -104,22 +103,16 @@ namespace TmingEngine
 			Vector3 v1 = Vector3(testCharacter.meshes[0].vertices[index1].Position);
 			Vector3 v2 = Vector3(testCharacter.meshes[0].vertices[index2].Position);
 			Vector3 v3 = Vector3(testCharacter.meshes[0].vertices[index3].Position);
-			
-			fillTriangleFromEdge(v1 * 200 + Vector3(gameWidth / 2, 10,0), v2 * 200 + Vector3(gameWidth / 2, 10,0), v3 * 200 + Vector3(gameWidth / 2,10,0), image, red);
+
+			//change the model coordinate to screen corrdinate
+			v1 = v1 * 200 + Vector3(gameWidth / 2, 0, 0);
+			v2 = v2 * 200 + Vector3(gameWidth / 2, 0, 0);
+			v3 = v3 * 200 + Vector3(gameWidth / 2, 0, 0);
+			int* zbuffer = new int[gameWidth * gameHeight];
+			fillTriangleFromEdgeWitchZbuffer(v1, v2, v3, image, red, zbuffer);
 		}
 
-		/*for (int i = 0; i < testCharacter.meshes[1].indices.size(); i += 3)
-		{
-			int  index1 = testCharacter.meshes[1].indices[i];
-			int  index2 = testCharacter.meshes[1].indices[i + 1];
-			int  index3 = testCharacter.meshes[1].indices[i + 2];
 
-			Vector2 v1 = Vector2(testCharacter.meshes[1].vertices[index1].Position.x, testCharacter.meshes[1].vertices[index1].Position.y);
-			Vector2 v2 = Vector2(testCharacter.meshes[1].vertices[index2].Position.x, testCharacter.meshes[1].vertices[index2].Position.y);
-			Vector2 v3 = Vector2(testCharacter.meshes[1].vertices[index3].Position.x, testCharacter.meshes[1].vertices[index3].Position.y);
-
-			triangle(v1 * 100 + Vector2(gameWidth /2, gameWidth /2), v2 * 100 + Vector2(gameWidth / 2, gameWidth / 2), v3 * 100 + Vector2(gameWidth / 2, gameWidth / 2), image, red);
-		}*/
 
 
 		image.flip_horizontally();
@@ -223,8 +216,6 @@ namespace TmingEngine
 		Vector2 maxPoint = boxs[1];
 		//drawBox(minPoint, maxPoint,image,color);
 
-
-
 		TGAColor col = TGAColor(rand()%255, rand() % 255, rand() % 255,255);
 
 		for (int y = minPoint.y ; y <=  maxPoint.y; y+=1)
@@ -298,6 +289,62 @@ namespace TmingEngine
 
 				if (fabp <= 0 && fbcp <= 0 && fcap <= 0)   //一般使用顺时针 点 顺序表示正面
 				{
+					image.set(x, y, col);
+				}
+			}
+		}
+	}
+
+	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color, int* zbuffer)
+	{
+		Vector2 A, B, C;
+		A = Vector2(t0.x, t0.y);
+		B = Vector2(t1.x, t1.y);
+		C = Vector2(t2.x, t2.y);
+
+		Vector2* boxs = findTriangleBox(t0, t1, t2);
+
+		Vector2 minPoint = boxs[0];
+		Vector2 maxPoint = boxs[1];
+		//drawBox(minPoint, maxPoint,image,color);
+
+		Vector3 N = ((t1 - t0).Cross(t2 - t0)).Normalize();
+		float intensity = N.Dot(sunlitght.Direction);
+
+		if (intensity < 0)
+		{
+			//It means that the light comes from behind the polygon. 
+			// Back-face culling
+			return;
+		}
+
+		TGAColor col = TGAColor(intensity * 255, intensity * 255, intensity * 255, 255);
+
+		for (int y = minPoint.y; y <= maxPoint.y; y += 1)
+		{
+			for (int x = minPoint.x; x <= maxPoint.x; x += 1)
+			{
+				Vector2 P = Vector2(x, y);
+
+				Vector2 AB = B - A; //Vector AB
+				Vector2 AP = P - A; //Vector AP
+
+				Vector2 BC = C - B; //Vector BC
+				Vector2 BP = P - B; //Vector BP
+
+				Vector2 CA = A - C; //Vector CA
+				Vector2 CP = P - C; //Vector CP
+
+				float fabp = AB.Cross(AP);
+				float fbcp = BC.Cross(BP);
+				float fcap = CA.Cross(CP);
+
+				if (fabp <= 0 && fbcp <= 0 && fcap <= 0)   //一般使用顺时针 点 顺序表示正面
+				{
+					if (true)
+					{
+
+					}
 					image.set(x, y, col);
 				}
 			}
@@ -467,5 +514,23 @@ namespace TmingEngine
 		return box;
 	}
 
-	
+	Vector3 barycentric(Vector3 a, Vector3 b, Vector3 c, Vector3 p)
+	{
+		auto v0 = b - a;
+		auto v1 = c - a;
+		auto v2 = p - a;
+
+		float d00 = v0.Dot(v0);
+		float d01 = v0.Dot(v1);
+		float d11 = v1.Dot(v1);
+		float d20 = v2.Dot(v0);
+		float d21 = v2.Dot(v1);
+		float denom = d00 * d11 - d01 * d01;
+
+		float v = (d11 * d20 - d01 * d21) / denom;
+		float w = (d00 * d21 - d01 * d20) / denom;
+		float u = 1.0f - v - w;
+
+		return Vector3(u, v, w);
+	}
 }
