@@ -21,7 +21,9 @@
 
 #include "../EngineDefs.h"
 #include <string>
-#include "im.h"
+
+#include "ImGui/imgui.h"
+#include "glm/glm.hpp"
 
 using namespace glm;
 

@@ -23,9 +23,12 @@
 #include "../EngineDefs.h"
 #include <string>
 #include <math.h>
-#include "im.h"
+#include "glm/glm.hpp"
 
-namespace TmingEngine {
+using namespace glm;
+
+namespace TmingEngine
+{
 	ENGINE_CLASS class Vector3
 	{
 	public:
@@ -35,6 +38,7 @@ namespace TmingEngine {
 
 		Vector3()
 		{
+
 		}
 
 		Vector3(float x, float y, float z)
@@ -44,7 +48,7 @@ namespace TmingEngine {
 			this->z = z;
 		}
 
-		Vector3(glm::vec3 v)
+		Vector3(vec3 v)
 		{
 			this->x = v.x;
 			this->y = v.y;
