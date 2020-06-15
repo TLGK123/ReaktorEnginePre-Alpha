@@ -58,14 +58,14 @@ public:
     
     
     // Constructor with vectors
-    //Camera(Vector3 position = Vector3(0.0f, 0.0f, 0.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
-    //{
-    //    Position = position;
-    //    WorldUp = up;
-    //    Yaw = yaw;
-    //    Pitch = pitch;
-    //    updateCameraVectors();
-    //}
+    Camera(Vector3 position = Vector3(0.0f, 0.0f, 0.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
+    {
+        Position = position;
+        WorldUp = up;
+        Yaw = yaw;
+        Pitch = pitch;
+        updateCameraVectors();
+    }
     // Constructor with scalar values
     Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) 
     {
@@ -82,17 +82,17 @@ public:
     }
     
     // Constructor with vectors
-    //Camera(Context * context ,GameObject * go, Vector3 position = Vector3(0.0f, 0.0f, 0.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
-    //{
-    //    currentContext = context;
-    //    gameObject = go;
-    //    
-    //    Position = position;
-    //    WorldUp = up;
-    //    Yaw = yaw;
-    //    Pitch = pitch;
-    //    updateCameraVectors();
-    //}
+    Camera(Context * context ,GameObject * go, Vector3 position = Vector3(0.0f, 0.0f, 0.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
+    {
+        currentContext = context;
+        gameObject = go;
+        
+        Position = position;
+        WorldUp = up;
+        Yaw = yaw;
+        Pitch = pitch;
+        updateCameraVectors();
+    }
     
     // Returns the view matrix calculated using Euler Angles and the LookAt Matrix
      Matrix GetViewMatrix()
