@@ -90,6 +90,8 @@ namespace TmingEngine
 	Vector3 barycentricCoordinate(Vector3 a, Vector3 b, Vector3 c, Vector3 p);
 
 	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color, int* zbuffer);
+
+	Vector2 Matirx(Vector2 p, float a, float b, float c, float d);
 }
 
 #endif
