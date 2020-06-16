@@ -128,26 +128,36 @@ namespace TmingEngine
 
 		*/
 
-		//-----step 3
+		//-----step 3 projection
 		//  |a b| |x|  =>|ax + by|
 		//	|c d| |y|    |cx + dy|
 		//
-		Vector2 square[4] = { Vector2(60,60),Vector2(60,360), Vector2(360,360),Vector2(360,60)};
+
+		Vector2 square[4] = { Vector2(60,60),Vector2(60,360), Vector2(360,360),Vector2(360,60) };
 		for (int i = 0; i < 4; i++)
 		{
 			line(square[i % 4], square[(i + 1) % 4], image, red);
 		}
+		const double pi = std::acos(-1);
+
 
 		for (int i = 0; i < 4; i++)
 		{
-			square[i] = Matirx(square[i],1,1/3,0,1);
+			Matrix<2, 2> mat({ 1.0f, 1.0f / 3.0f, 0.0f, 1.0f }) ;
+
+			square[i] = Matirx2x2(square[i], 1, 1.0/3, 0, 1);
 		}
 
 		for (int i = 0; i < 4; i++)
-		{			
-			line(square[i % 4],square[(i+1)%4], image,blue);
+		{
+			square[i] = Matirx2x2(square[i], std::cos(pi / 8), -std::sin(pi / 8), std::sin(pi / 8), std::cos(pi / 8));
 		}
-		
+
+		for (int i = 0; i < 4; i++)
+		{
+			line(square[i % 4], square[(i + 1) % 4], image, blue);
+		}
+
 
 		image.flip_horizontally();
 
@@ -191,9 +201,9 @@ namespace TmingEngine
 		image.clear();
 	}
 
-	Vector2 Matirx(Vector2 p ,float a,float b, float c, float d)
-	{
-		return  Vector2(a * p.x + b * p.y, c * p.x + d * p.y);
+	Vector2 Matirx2x2(Vector2 p, float a, float b, float c, float d)
+	{		
+		return Vector2(a * p.x + b * p.y, c * p.x + d * p.y);
 	}
 
 
@@ -350,7 +360,7 @@ namespace TmingEngine
 		{
 			//It means that the light comes from behind the polygon. 
 			// Back-face culling
-		 	return;
+			return;
 		}
 
 		TGAColor col = TGAColor(intensity * 255, intensity * 255, intensity * 255, 255);
@@ -365,13 +375,13 @@ namespace TmingEngine
 
 				if (barycent.x >= 0 && barycent.y >= 0 && barycent.z >= 0)
 				{
-					if (P.x >=0 && P.y >= 0 && P.x <= gameWidth && P.y <= gameHeight)
+					if (P.x >= 0 && P.y >= 0 && P.x <= gameWidth && P.y <= gameHeight)
 					{
 						int cacheDeep = zbuffer[int(x + y * gameWidth)];
-						if (P.z < cacheDeep) 
+						if (P.z < cacheDeep)
 						{
-						image.set(P.x, P.y, col);
-						zbuffer[int(x + y * gameWidth)] = P.z;
+							image.set(P.x, P.y, col);
+							zbuffer[int(x + y * gameWidth)] = P.z;
 						}
 						else
 						{
