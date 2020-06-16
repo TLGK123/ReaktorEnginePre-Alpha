@@ -30,12 +30,15 @@ namespace TmingEngine
 
 	void TmingEngine::Game::Begin()
 	{
-		gameWidth = 500;
-		gameHeight = 500;
+
 		testCharacter.Init(FileSystem::getPath("resources/objects/character/_2.obj"));
 
 		SoftRender();
 	}
+
+	const int gameWidth = 500;
+	const int gameHeight = 500;
+
 
 	void TmingEngine::Game::Update()
 	{
@@ -78,7 +81,7 @@ namespace TmingEngine
 
 		TGAImage image(gameWidth, gameHeight, TGAImage::RGB);
 
-		Vector2 t0[3] = { Vector2(40, 40),   Vector2(250, 300) , Vector2(350, 100)   };
+		Vector2 t0[3] = { Vector2(40, 40),   Vector2(250, 300) , Vector2(350, 100) };
 		Vector2 t1[3] = { Vector2(380, 50),  Vector2(450, 10),   Vector2(370, 180) };
 		Vector2 t2[3] = { Vector2(180, 350), Vector2(120, 260), Vector2(130, 400) };
 
@@ -91,24 +94,31 @@ namespace TmingEngine
 		//triangle(t2[0], t2[1], t2[2], image, green);
 		//fillTriangleLinerScan(t2[0], t2[1], t2[2], image, green);
 
-		sunlitght.Direction = Vector3(0.5, 0.5, 1);
+		sunlitght.Direction = Vector3(0, 0, 1);
 		sunlitght.Color = Color(0.5, 0.5, 0);
-	
-		for (int i = 0; i < testCharacter.meshes[0].indices.size(); i+=3)
+
+		for (int i = 0; i < testCharacter.meshes[0].indices.size(); i += 3)
 		{
-			int  index1  = testCharacter.meshes[0].indices[i];
-			int  index2 = testCharacter.meshes[0].indices[i+1];
-			int  index3 = testCharacter.meshes[0].indices[i+2];
-			
+			int  index1 = testCharacter.meshes[0].indices[i];
+			int  index2 = testCharacter.meshes[0].indices[i + 1];
+			int  index3 = testCharacter.meshes[0].indices[i + 2];
+
 			Vector3 v1 = Vector3(testCharacter.meshes[0].vertices[index1].Position);
 			Vector3 v2 = Vector3(testCharacter.meshes[0].vertices[index2].Position);
 			Vector3 v3 = Vector3(testCharacter.meshes[0].vertices[index3].Position);
 
 			//change the model coordinate to screen corrdinate
-			v1 = v1 * 200 + Vector3(gameWidth / 2, 0, 0);
-			v2 = v2 * 200 + Vector3(gameWidth / 2, 0, 0);
-			v3 = v3 * 200 + Vector3(gameWidth / 2, 0, 0);
-			int* zbuffer = new int[gameWidth * gameHeight];
+			v1 = (v1 * (gameWidth / 3) + Vector3((gameWidth / 2), 0, 0)) ;
+			v2 = (v2 * (gameWidth / 3) + Vector3((gameWidth / 2), 0, 0)) ;
+			v3 = (v3 * (gameWidth / 3) + Vector3((gameWidth / 2), 0, 0)) ;
+			int len = gameWidth * gameHeight;
+			int* zbuffer = new int[len];
+
+			for (int inedx = 0; inedx < len; inedx++)
+			{
+				zbuffer[inedx] = 10000000;
+			}
+
 			fillTriangleFromEdgeWitchZbuffer(v1, v2, v3, image, red, zbuffer);
 		}
 
@@ -211,62 +221,12 @@ namespace TmingEngine
 
 	void fillTriangleFromEdge(Vector2 A, Vector2 B, Vector2 C, TGAImage& image, TGAColor color)
 	{
-		Vector2* boxs = findTriangleBox(A,B,C);
-		Vector2 minPoint = boxs[0];
-		Vector2 maxPoint = boxs[1];
-		//drawBox(minPoint, maxPoint,image,color);
-
-		TGAColor col = TGAColor(rand()%255, rand() % 255, rand() % 255,255);
-
-		for (int y = minPoint.y ; y <=  maxPoint.y; y+=1)
-		{
-			for (int x = minPoint.x; x <= maxPoint.x; x+=1)
-			{
-				Vector2 P = Vector2(x,y);
-
-				Vector2 AB = B - A; //Vector AB
-				Vector2 AP = P - A; //Vector AP
-
-				Vector2 BC = C - B; //Vector BC
-				Vector2 BP = P - B; //Vector BP
-
-				Vector2 CA = A - C; //Vector CA
-				Vector2 CP = P - C; //Vector CP
-
-				float fabp = AB.Cross(AP);
-				float fbcp = BC.Cross(BP);
-				float fcap = CA.Cross(CP);
-
-				if (fabp <=0 && fbcp <= 0 && fcap <=0)   //一般使用顺时针 点 顺序表示正面
-				{
-					image.set(x, y, col);
-				}
-			}
-		}
-	}
-
-	void fillTriangleFromEdge(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color)
-	{
-		Vector2 A, B, C;
-		A = Vector2(t0.x, t0.y);
-		B = Vector2(t1.x, t1.y);
-		C = Vector2(t2.x, t2.y);
 		Vector2* boxs = findTriangleBox(A, B, C);
 		Vector2 minPoint = boxs[0];
 		Vector2 maxPoint = boxs[1];
 		//drawBox(minPoint, maxPoint,image,color);
 
-		Vector3 N = ((t1 - t0).Cross(t2 - t0)).Normalize();
-		float intensity = N.Dot(sunlitght.Direction);  
-	
-		if (intensity < 0)
-		{
-			//It means that the light comes from behind the polygon. 
-			// Back-face culling
-			return;
-		}
-
-		TGAColor col = TGAColor(intensity * 255, intensity * 255,  intensity * 255,  255);
+		TGAColor col = TGAColor(rand() % 255, rand() % 255, rand() % 255, 255);
 
 		for (int y = minPoint.y; y <= maxPoint.y; y += 1)
 		{
@@ -295,15 +255,13 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color, int* zbuffer)
+	void fillTriangleFromEdge(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color)
 	{
 		Vector2 A, B, C;
 		A = Vector2(t0.x, t0.y);
 		B = Vector2(t1.x, t1.y);
 		C = Vector2(t2.x, t2.y);
-
-		Vector2* boxs = findTriangleBox(t0, t1, t2);
-
+		Vector2* boxs = findTriangleBox(A, B, C);
 		Vector2 minPoint = boxs[0];
 		Vector2 maxPoint = boxs[1];
 		//drawBox(minPoint, maxPoint,image,color);
@@ -341,11 +299,55 @@ namespace TmingEngine
 
 				if (fabp <= 0 && fbcp <= 0 && fcap <= 0)   //一般使用顺时针 点 顺序表示正面
 				{
-					if (true)
-					{
-
-					}
 					image.set(x, y, col);
+				}
+			}
+		}
+	}
+
+	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color, int* zbuffer)
+	{
+		Vector2* boxs = findTriangleBox(t0, t1, t2);
+
+		Vector2 minPoint = boxs[0];
+		Vector2 maxPoint = boxs[1];
+		//drawBox(minPoint, maxPoint,image,color);
+
+		Vector3 N = ((t1 - t0).Cross(t2 - t0)).Normalize();
+		float intensity = N.Dot(sunlitght.Direction);
+
+		if (intensity < 0)
+		{
+			//It means that the light comes from behind the polygon. 
+			// Back-face culling
+		 	return;
+		}
+
+		TGAColor col = TGAColor(intensity * 255, intensity * 255, intensity * 255, 255);
+
+		for (int y = minPoint.y; y <= maxPoint.y; y += 1)
+		{
+			for (int x = minPoint.x; x <= maxPoint.x; x += 1)
+			{
+				Vector3 P = Vector3(x, y, 0);
+				Vector3 barycent = barycentricCoordinate(Vector3(t0.x, t0.y, 0), Vector3(t1.x, t1.y, 0), Vector3(t2.x, t2.y, 0), P);
+				P.z = t0.z * barycent.x + t1.z * barycent.y + t2.z * barycent.z;
+
+				if (barycent.x >= 0 && barycent.y >= 0 && barycent.z >= 0)
+				{
+					if (P.x >=0 && P.y >= 0)
+					{
+						int cacheDeep = zbuffer[int(x + y * gameWidth)];
+						if (P.z < cacheDeep) {
+						image.set(P.x, P.y, col);
+							zbuffer[int(x + y * gameWidth)] = P.z;
+						}
+					}
+					else
+					{
+						;
+					}
+
 				}
 			}
 		}
@@ -394,7 +396,7 @@ namespace TmingEngine
 		auto b1 = box[0];
 		auto b2 = box[1];
 
-		drawBox(b1,b2,image,color);
+		drawBox(b1, b2, image, color);
 		;
 	}
 
@@ -508,13 +510,13 @@ namespace TmingEngine
 			}
 		}
 
-		box[0] = Vector2( minPoint.x, minPoint.y);
+		box[0] = Vector2(minPoint.x, minPoint.y);
 		box[1] = Vector2(maxPoint.x, maxPoint.y);
 
 		return box;
 	}
 
-	Vector3 barycentric(Vector3 a, Vector3 b, Vector3 c, Vector3 p)
+	Vector3 barycentricCoordinate(Vector3 a, Vector3 b, Vector3 c, Vector3 p)
 	{
 		auto v0 = b - a;
 		auto v1 = c - a;

@@ -57,8 +57,6 @@ namespace TmingEngine
 
 		unsigned int imageId;
 		void SoftRender();
-		int gameWidth;
-		int gameHeight;
 
 		Model testCharacter;
 
@@ -79,12 +77,17 @@ namespace TmingEngine
 	void fillUpTriangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color); //填充一个底边平行 X 轴 ，顶点在上的三角形
 	void fillDownTriangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);//填充一个底边平行 X 轴 ，顶点在下的三角形
 	Vector2* findTriangleBox(Vector2 t0, Vector2 t1, Vector2 t2);								//找到一个三角形最小包裹框
+	
 	void triangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);
 	void drawBox(Vector2 t0, Vector2 t1, TGAImage& image, TGAColor color);
 
 	void fillTriangleFromEdge(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);
 
 	void fillTriangleFromEdge(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color);
+
+	Vector2* findTriangleBox(Vector3 t0, Vector3 t1, Vector3 t2);
+
+	Vector3 barycentricCoordinate(Vector3 a, Vector3 b, Vector3 c, Vector3 p);
 
 	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color, int* zbuffer);
 }
