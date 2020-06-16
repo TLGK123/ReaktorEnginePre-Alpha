@@ -84,17 +84,21 @@ namespace TmingEngine
 		Vector2 t0[3] = { Vector2(40, 40),   Vector2(250, 300) , Vector2(350, 100) };
 		Vector2 t1[3] = { Vector2(380, 50),  Vector2(450, 10),   Vector2(370, 180) };
 		Vector2 t2[3] = { Vector2(180, 350), Vector2(120, 260), Vector2(130, 400) };
+		///-----step 1
+		/*
+		triangle(t0[0], t0[1], t0[2], image, red);
+		fillTriangleFromEdge(t0[0], t0[1], t0[2], image, red);
 
-		//triangle(t0[0], t0[1], t0[2], image, red);
-		//fillTriangleFromEdge(t0[0], t0[1], t0[2], image, red);
+		triangle(t1[0], t1[1], t1[2], image, blue);
+		fillTriangleLinerScan(t1[0], t1[1], t1[2], image, blue);
 
-		//triangle(t1[0], t1[1], t1[2], image, blue);
-		//fillTriangleLinerScan(t1[0], t1[1], t1[2], image, blue);
+		triangle(t2[0], t2[1], t2[2], image, green);
+		fillTriangleLinerScan(t2[0], t2[1], t2[2], image, green);
+		*/
 
-		//triangle(t2[0], t2[1], t2[2], image, green);
-		//fillTriangleLinerScan(t2[0], t2[1], t2[2], image, green);
-
-		sunlitght.Direction = Vector3(0, 0, 1);
+		//-----step 2
+		/*
+		sunlitght.Direction = Vector3(1, 0, 0.5);
 		sunlitght.Color = Color(0.5, 0.5, 0);
 
 		for (int i = 0; i < testCharacter.meshes[0].indices.size(); i += 3)
@@ -122,8 +126,28 @@ namespace TmingEngine
 			fillTriangleFromEdgeWitchZbuffer(v1, v2, v3, image, red, zbuffer);
 		}
 
+		*/
 
+		//-----step 3
+		//  |a b| |x|  =>|ax + by|
+		//	|c d| |y|    |cx + dy|
+		//
+		Vector2 square[4] = { Vector2(60,60),Vector2(60,360), Vector2(360,360),Vector2(360,60)};
+		for (int i = 0; i < 4; i++)
+		{
+			line(square[i % 4], square[(i + 1) % 4], image, red);
+		}
 
+		for (int i = 0; i < 4; i++)
+		{
+			square[i] = Matirx(square[i],1,1/3,0,1);
+		}
+
+		for (int i = 0; i < 4; i++)
+		{			
+			line(square[i % 4],square[(i+1)%4], image,blue);
+		}
+		
 
 		image.flip_horizontally();
 
@@ -166,6 +190,12 @@ namespace TmingEngine
 
 		image.clear();
 	}
+
+	Vector2 Matirx(Vector2 p ,float a,float b, float c, float d)
+	{
+		return  Vector2(a * p.x + b * p.y, c * p.x + d * p.y);
+	}
+
 
 	void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color) {
 		bool steep = false;
@@ -314,7 +344,7 @@ namespace TmingEngine
 		//drawBox(minPoint, maxPoint,image,color);
 
 		Vector3 N = ((t1 - t0).Cross(t2 - t0)).Normalize();
-		float intensity = N.Dot(sunlitght.Direction);
+		float intensity = N.Dot(sunlitght.Direction.Normalize());
 
 		if (intensity < 0)
 		{
@@ -325,9 +355,9 @@ namespace TmingEngine
 
 		TGAColor col = TGAColor(intensity * 255, intensity * 255, intensity * 255, 255);
 
-		for (int y = minPoint.y; y <= maxPoint.y; y += 1)
+		for (int y = minPoint.y; y <= maxPoint.y; y += 3)
 		{
-			for (int x = minPoint.x; x <= maxPoint.x; x += 1)
+			for (int x = minPoint.x; x <= maxPoint.x; x += 3)
 			{
 				Vector3 P = Vector3(x, y, 0);
 				Vector3 barycent = barycentricCoordinate(Vector3(t0.x, t0.y, 0), Vector3(t1.x, t1.y, 0), Vector3(t2.x, t2.y, 0), P);
@@ -335,12 +365,17 @@ namespace TmingEngine
 
 				if (barycent.x >= 0 && barycent.y >= 0 && barycent.z >= 0)
 				{
-					if (P.x >=0 && P.y >= 0)
+					if (P.x >=0 && P.y >= 0 && P.x <= gameWidth && P.y <= gameHeight)
 					{
 						int cacheDeep = zbuffer[int(x + y * gameWidth)];
-						if (P.z < cacheDeep) {
+						if (P.z < cacheDeep) 
+						{
 						image.set(P.x, P.y, col);
-							zbuffer[int(x + y * gameWidth)] = P.z;
+						zbuffer[int(x + y * gameWidth)] = P.z;
+						}
+						else
+						{
+							;
 						}
 					}
 					else
