@@ -36,6 +36,7 @@
 #include "Plantform/FileSystem/FileSystem.h"
 #include "Core/Math/Vector2.h"
 #include "Core/Math/Vector3.h"
+#include "Core/Math/Matrix.h"
 #include "Rendering/Model.hpp"
 #include "Rendering/Light.hpp"
 
@@ -91,7 +92,7 @@ namespace TmingEngine
 
 	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color, int* zbuffer);
 
-	Vector2 Matirx(Vector2 p, float a, float b, float c, float d);
+	Vector2 Matirx2x2(Vector2 p, float a, float b, float c, float d);
 }
 
 #endif

@@ -16,6 +16,7 @@ either version 4 of the License, or (at your option) any later version.
 #include <vector>
 #include "../Core/Math/Matrix.h"
 #include "Core/Math/Vector3.h"
+#include "Core/Math/Vector2.h"
 
 namespace TmingEngine
 {
@@ -95,12 +96,12 @@ public:
     }
     
     // Returns the view matrix calculated using Euler Angles and the LookAt Matrix
-     Matrix GetViewMatrix()
-    {
-        auto as = Matrix::LookAt(Position, Position + Front, Up);
-        //Debug::Log(as.ToString());
-        return as;
-    }
+    // Matrix GetViewMatrix()
+    //{
+    //    auto as = Matrix::LookAt(Position, Position + Front, Up);
+    //    //Debug::Log(as.ToString());
+    //    return as;
+    //}
     
     glm::mat4 GetViewMatrixGlm()
     {
