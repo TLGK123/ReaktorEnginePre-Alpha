@@ -23,7 +23,6 @@
 #include "../EngineDefs.h"
 #include <string>
 #include "Vector3.h"
-#include "Vector2.h"
 #include <math.h>
 #include "Radian.h"
 #include <string>
@@ -78,9 +77,20 @@ namespace TmingEngine
 			return matrix[i];
 		}
 
-		//Matrix<2,1> operator * (const Vector2 p)const
-		//{
-		//	return Matrix<2, 1> aa ({ matrix[0][0] * p.x + matrix[0][1] * p.y, matrix[1][0] * p.x + matrix[1][1] * p.y });
-		//}
+		template <int m = 4, int n = 4,int a ,int b >
+		Matrix<m,n> operator * (const Matrix<a, b> mat)const
+		{			
+			if (n != b)
+			{
+				std::count << "²»Âú×ã¾ØÕó³Ë·¨¼ÆËã" << std::endl;
+			}
+			for (int i = 0; i < row; i++)
+			{
+				for (int j = 0; j < n; j++)
+				{
+
+				}
+			}
+		}
 	};
 }
