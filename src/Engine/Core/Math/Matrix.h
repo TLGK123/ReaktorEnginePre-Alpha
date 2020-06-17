@@ -22,7 +22,6 @@
 
 #include "../EngineDefs.h"
 #include <string>
-#include "Vector3.h"
 #include <math.h>
 #include "Radian.h"
 #include <string>
