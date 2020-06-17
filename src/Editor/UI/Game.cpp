@@ -144,6 +144,9 @@ namespace TmingEngine
 		for (int i = 0; i < 4; i++)
 		{
 			Matrix<2, 2> mat({ 1.0f, 1.0f / 3.0f, 0.0f, 1.0f }) ;
+			Matrix<2, 2> mat2({ 1.0f, 1.0f / 3.0f, 0.0f, 1.0f });
+
+			auto d = mat * mat2;
 
 			square[i] = Matirx2x2(square[i], 1, 1.0/3, 0, 1);
 		}
