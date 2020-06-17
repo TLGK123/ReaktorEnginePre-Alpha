@@ -143,12 +143,13 @@ namespace TmingEngine
 
 		for (int i = 0; i < 4; i++)
 		{
-			Matrix<2, 2> mat({ 1.0f, 1.0f / 3.0f, 0.0f, 1.0f }) ;
-			Matrix<2, 2> mat2({ 1.0f, 1.0f / 3.0f, 0.0f, 1.0f });
+			Matrix mat1(2,2,{ 1.0f / 3.0f, 0 , 0, 1.0f }) ;
+			Matrix mat2(2, 1, { square[i].x ,square[i].y });
 
-			auto d = mat * mat2;
+			Matrix result = mat1 * mat2;
 
-			square[i] = Matirx2x2(square[i], 1, 1.0/3, 0, 1);
+		
+			square[i] = Vector2(result[0][0], result[0][1]);
 		}
 
 		for (int i = 0; i < 4; i++)
