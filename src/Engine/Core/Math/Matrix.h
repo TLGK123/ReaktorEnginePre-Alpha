@@ -31,13 +31,12 @@
 using namespace std;
 namespace TmingEngine
 {
-	template <int m = 4, int n = 4 >
 	ENGINE_CLASS class Matrix
 	{
 	public:
 		float** matrix;
-		int row = m;
-		int cloumn = n;
+		int row = 0;
+		int cloumn = 0;
 
 		void GetSpace()
 		{
@@ -53,14 +52,12 @@ namespace TmingEngine
 			}
 		}
 
-		Matrix()
+		Matrix(int m, int n, initializer_list<float> il)
 		{
+			row = m;
+			cloumn = n;
 			GetSpace();
-		}
 
-		Matrix(initializer_list<float> il)
-		{
-			GetSpace();
 			int index = 0;
 			for (auto beg = il.begin(); beg != il.end(); ++beg)
 			{
@@ -76,20 +73,24 @@ namespace TmingEngine
 			return matrix[i];
 		}
 
-		template <int m = 4, int n = 4,int a ,int b >
-		Matrix<m,n> operator * (const Matrix<a, b> mat)const
-		{			
-			if (n != b)
-			{
-				std::count << "²»Âú×ã¾ØÕó³Ë·¨¼ÆËã" << std::endl;
-			}
+		Matrix operator * (const Matrix mat)const
+		{
+			Matrix ma(row, mat.cloumn, {});
 			for (int i = 0; i < row; i++)
 			{
-				for (int j = 0; j < n; j++)
+				for (int j = 0; j < mat.cloumn; j++)
 				{
-
+					for (int k = 0; k < cloumn; k++)
+					{
+						auto a = matrix[i][k];
+						auto b = mat.matrix[k][j];
+						ma[i][j] += a * b;
+					}
+					auto c = ma[i][j];
 				}
 			}
+
+			return ma;
 		}
 	};
 }
