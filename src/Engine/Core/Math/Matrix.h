@@ -27,6 +27,7 @@
 #include <string>
 #include <stdio.h>
 #include <initializer_list>
+#include <vector>
 
 using namespace std;
 namespace TmingEngine
@@ -34,48 +35,43 @@ namespace TmingEngine
 	ENGINE_CLASS class Matrix
 	{
 	public:
-		float** matrix;
+		vector<vector<float>> matrix;
 		int row = 0;
 		int cloumn = 0;
-
-		void GetSpace()
-		{
-			matrix = (float**)malloc(row * sizeof(float*));
-			for (int i = 0; i < row; i++)
-				matrix[i] = (float*)malloc(cloumn * sizeof(float));
-			for (int i = 0; i < row; i++)
-			{
-				for (int j = 0; j < cloumn; j++)
-				{
-					matrix[i][j] = 0;
-				}
-			}
-		}
 
 		Matrix(int m, int n, initializer_list<float> il)
 		{
 			row = m;
 			cloumn = n;
-			GetSpace();
-
+			vector<vector<float>> vec(row, vector<float>(cloumn));//初始层数，赋值
 			int index = 0;
+
 			for (auto beg = il.begin(); beg != il.end(); ++beg)
 			{
 				int	i = index / cloumn;
 				int	j = index % cloumn;
 				index++;
-				matrix[i][j] = *beg;
+				vec[i][j] = *beg;
 			}
+			matrix = vec;
 		}
 
-		float*& operator[](int i)
+		Matrix(int m, int n)
+		{
+			row = m;
+			cloumn = n;
+			vector<vector<float>> vec(row, vector<float>(cloumn));//初始层数，赋值
+			matrix = vec;
+		}
+
+		vector<float>& operator[](int i)
 		{
 			return matrix[i];
 		}
 
-		Matrix operator * (const Matrix mat)const
+		Matrix operator * (Matrix mat)const
 		{
-			Matrix ma(row, mat.cloumn, {});
+			Matrix reslut(row, mat.cloumn);
 			for (int i = 0; i < row; i++)
 			{
 				for (int j = 0; j < mat.cloumn; j++)
@@ -83,14 +79,12 @@ namespace TmingEngine
 					for (int k = 0; k < cloumn; k++)
 					{
 						auto a = matrix[i][k];
-						auto b = mat.matrix[k][j];
-						ma[i][j] += a * b;
+						auto b = mat[k][j];
+						reslut[i][j] += a * b;
 					}
-					auto c = ma[i][j];
 				}
 			}
-
-			return ma;
+			return reslut;
 		}
 	};
 }

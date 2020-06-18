@@ -143,18 +143,25 @@ namespace TmingEngine
 
 		for (int i = 0; i < 4; i++)
 		{
-			Matrix mat1(2,2,{ 1.0f / 3.0f, 0 , 0, 1.0f }) ;
-			Matrix mat2(2, 1, { square[i].x ,square[i].y });
+			Matrix mat1(2,2,{ 1.0f / 3.0f, 0 , 0, 1.0f /5}) ;
+			Matrix mat2(2,1, { square[i].x ,square[i].y });
 
 			Matrix result = mat1 * mat2;
 
-		
-			square[i] = Vector2(result[0][0], result[0][1]);
+			square[i] = Vector2(result[0][0], result[1][0]);
 		}
 
 		for (int i = 0; i < 4; i++)
 		{
-			square[i] = Matirx2x2(square[i], std::cos(pi / 8), -std::sin(pi / 8), std::sin(pi / 8), std::cos(pi / 8));
+
+			Matrix mat1(2, 2, {(float) std::cos(pi / 5), (float)-std::sin(pi / 8),(float)std::sin(pi / 8), (float)std::cos(pi / 8) });
+			Matrix mat2(2, 1, { square[i].x ,square[i].y });
+
+			Matrix result = mat1 * mat2;
+
+			square[i] = Vector2(result[0][0], result[1][0]);
+
+			//square[i] = Matirx2x2(square[i], std::cos(pi / 8), -std::sin(pi / 8), std::sin(pi / 8), std::cos(pi / 8));
 		}
 
 		for (int i = 0; i < 4; i++)
