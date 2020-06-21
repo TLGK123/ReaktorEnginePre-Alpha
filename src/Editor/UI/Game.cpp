@@ -27,10 +27,8 @@ namespace TmingEngine
 	{
 	}
 
-
 	void TmingEngine::Game::Begin()
 	{
-
 		testCharacter.Init(FileSystem::getPath("resources/objects/character/_2.obj"));
 
 		SoftRender();
@@ -38,7 +36,6 @@ namespace TmingEngine
 
 	const int gameWidth = 500;
 	const int gameHeight = 500;
-
 
 	void TmingEngine::Game::Update()
 	{
@@ -133,42 +130,64 @@ namespace TmingEngine
 		//	|c d| |y|    |cx + dy|
 		//
 
+		Matrix S(3, 3,
+			{
+				2,0,0,
+				0,1,0,
+				0,0,2
+			});
+
+		Matrix T(3, 3,
+			{
+				1,0,4,
+				0,1,5,
+				0,0,1
+			});
+
+		auto st = S * T;
+		std::cout << st << std::endl;
+		auto ts = T * S;
+		std::cout << ts << std::endl;
+
 		Vector2 square[4] = { Vector2(60,60),Vector2(60,360), Vector2(360,360),Vector2(360,60) };
 		for (int i = 0; i < 4; i++)
 		{
 			line(square[i % 4], square[(i + 1) % 4], image, red);
 		}
-		const double pi = std::acos(-1);
 
+		const double pi = std::acos(-1);
 
 		for (int i = 0; i < 4; i++)
 		{
-			Matrix mat1(2,2,{ 1.0f / 3.0f, 0 , 0, 1.0f /5}) ;
-			Matrix mat2(2,1, { square[i].x ,square[i].y });
+			Matrix mat1(2, 2, 
+				{ 
+					1.0f / 3.0f, 0 ,
+					0, 1.0f / 5 
+				});
+			Matrix mat2(2, 1, { square[i].x ,square[i].y });
 
 			Matrix result = mat1 * mat2;
 
 			square[i] = Vector2(result[0][0], result[1][0]);
 		}
 
+
+		Matrix mat1(2, 2, { (float)std::cos(pi / 5), (float)-std::sin(pi / 8),(float)std::sin(pi / 8), (float)std::cos(pi / 8) });
+	
 		for (int i = 0; i < 4; i++)
 		{
-
-			Matrix mat1(2, 2, {(float) std::cos(pi / 5), (float)-std::sin(pi / 8),(float)std::sin(pi / 8), (float)std::cos(pi / 8) });
 			Matrix mat2(2, 1, { square[i].x ,square[i].y });
-
 			Matrix result = mat1 * mat2;
+			std::cout << result << std::endl;
 
 			square[i] = Vector2(result[0][0], result[1][0]);
-
-			//square[i] = Matirx2x2(square[i], std::cos(pi / 8), -std::sin(pi / 8), std::sin(pi / 8), std::cos(pi / 8));
+			
 		}
 
 		for (int i = 0; i < 4; i++)
 		{
 			line(square[i % 4], square[(i + 1) % 4], image, blue);
 		}
-
 
 		image.flip_horizontally();
 
@@ -213,10 +232,9 @@ namespace TmingEngine
 	}
 
 	Vector2 Matirx2x2(Vector2 p, float a, float b, float c, float d)
-	{		
+	{
 		return Vector2(a * p.x + b * p.y, c * p.x + d * p.y);
 	}
-
 
 	void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color) {
 		bool steep = false;
@@ -266,9 +284,7 @@ namespace TmingEngine
 		line(miniP.x, miniP.y, miniP.x, maxP.y, image, color);
 		line(miniP.x, maxP.y, maxP.x, maxP.y, image, color);
 		line(maxP.x, miniP.y, maxP.x, maxP.y, image, color);
-
 	}
-
 
 	void fillTriangleFromEdge(Vector2 A, Vector2 B, Vector2 C, TGAImage& image, TGAColor color)
 	{
@@ -322,7 +338,7 @@ namespace TmingEngine
 
 		if (intensity < 0)
 		{
-			//It means that the light comes from behind the polygon. 
+			//It means that the light comes from behind the polygon.
 			// Back-face culling
 			return;
 		}
@@ -369,7 +385,7 @@ namespace TmingEngine
 
 		if (intensity < 0)
 		{
-			//It means that the light comes from behind the polygon. 
+			//It means that the light comes from behind the polygon.
 			// Back-face culling
 			return;
 		}
@@ -403,7 +419,6 @@ namespace TmingEngine
 					{
 						;
 					}
-
 				}
 			}
 		}
@@ -550,7 +565,6 @@ namespace TmingEngine
 			{
 				minPoint.z = points[i].z;
 			}
-
 
 			if (maxPoint.x < points[i].x)
 			{
