@@ -130,24 +130,24 @@ namespace TmingEngine
 		//	|c d| |y|    |cx + dy|
 		//
 
-		Matrix S(3, 3,
-			{
-				2,0,0,
-				0,1,0,
-				0,0,2
-			});
+		//Matrix S(3, 3,
+		//	{
+		//		2,0,0,
+		//		0,1,0,
+		//		0,0,2
+		//	});
 
-		Matrix T(3, 3,
-			{
-				1,0,4,
-				0,1,5,
-				0,0,1
-			});
+		//Matrix T(3, 3,
+		//	{
+		//		1,0,4,
+		//		0,1,5,
+		//		0,0,1
+		//	});
 
-		auto st = S * T;
-		std::cout << st << std::endl;
-		auto ts = T * S;
-		std::cout << ts << std::endl;
+		//auto st = S * T;
+		//std::cout << st << std::endl;
+		//auto ts = T * S;
+		//std::cout << ts << std::endl;
 
 		Vector2 square[4] = { Vector2(60,60),Vector2(60,360), Vector2(360,360),Vector2(360,60) };
 		for (int i = 0; i < 4; i++)
@@ -159,30 +159,37 @@ namespace TmingEngine
 
 		for (int i = 0; i < 4; i++)
 		{
-			Matrix mat1(2, 2, 
+			Matrix mat1(3, 3, 
 				{ 
-					1.0f / 3.0f, 0 ,
-					0, 1.0f / 5 
+					1, 0,0,
+					0, 1,0,
+					-0.2,0,1
 				});
-			Matrix mat2(2, 1, { square[i].x ,square[i].y });
-
-			Matrix result = mat1 * mat2;
-
-			square[i] = Vector2(result[0][0], result[1][0]);
-		}
 
 
-		Matrix mat1(2, 2, { (float)std::cos(pi / 5), (float)-std::sin(pi / 8),(float)std::sin(pi / 8), (float)std::cos(pi / 8) });
-	
-		for (int i = 0; i < 4; i++)
-		{
-			Matrix mat2(2, 1, { square[i].x ,square[i].y });
-			Matrix result = mat1 * mat2;
+			Matrix mat2(3, 3, 
+				{
+					1,0,square[i].x,
+					0,1,square[i].y,
+					0,0,1});
+
+
+			Matrix result =   mat1 * mat2;
 			std::cout << result << std::endl;
 
-			square[i] = Vector2(result[0][0], result[1][0]);
-			
+			square[i] = Vector2(result[0][2], result[1][2]);
 		}
+
+
+		//Matrix mat1(2, 2, { (float)std::cos(pi / 5), (float)-std::sin(pi / 8),(float)std::sin(pi / 8), (float)std::cos(pi / 8) });
+	
+		//for (int i = 0; i < 4; i++)
+		//{
+		//	Matrix mat2(2, 1, { square[i].x ,square[i].y });
+		//	Matrix result = mat1 * mat2;
+		//	square[i] = Vector2(result[0][0], result[1][0]);
+		//	
+		//}
 
 		for (int i = 0; i < 4; i++)
 		{
