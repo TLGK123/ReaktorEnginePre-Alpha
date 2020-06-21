@@ -29,6 +29,7 @@
 #include <initializer_list>
 #include <vector>
 #include <sstream>
+#include <iostream>
 
 using namespace std;
 namespace TmingEngine
@@ -73,6 +74,12 @@ namespace TmingEngine
 		Matrix operator * (Matrix mat)const
 		{
 			Matrix reslut(row, mat.cloumn);
+			if (cloumn != mat.row)
+			{
+				std::cout << "不满足矩阵乘法计算格式 " << std::endl;
+				return reslut;
+			}
+
 			for (int i = 0; i < row; i++)
 			{
 				for (int j = 0; j < mat.cloumn; j++)
