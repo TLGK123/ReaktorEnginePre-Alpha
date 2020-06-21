@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <initializer_list>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 namespace TmingEngine
@@ -85,6 +86,87 @@ namespace TmingEngine
 				}
 			}
 			return reslut;
+		}
+
+		Matrix operator + (float num)const
+		{
+			Matrix result(row, cloumn);
+			for (int x = 0; x < row; x++)
+			{
+				for (int y = 0; y < cloumn; y++)
+				{
+					result[x][y] = matrix[x][y] + num;
+				}
+			}
+			return result;
+		}
+
+		Matrix operator - (float num)const
+		{
+			Matrix result(row, cloumn);
+			for (int x = 0; x < row; x++)
+			{
+				for (int y = 0; y < cloumn; y++)
+				{
+					result[x][y] = matrix[x][y] - num;
+				}
+			}
+			return result;
+		}
+
+		Matrix operator + (Matrix mat)const
+		{
+			Matrix result(row, cloumn);
+
+			if (row != mat.row || cloumn != mat.cloumn)
+			{
+				return result;
+			}
+
+			for (int x = 0; x < row; x++)
+			{
+				for (int y = 0; y < cloumn; y++)
+				{
+					result[x][y] = matrix[x][y] + mat[x][y];
+				}
+			}
+			return result;
+		}
+
+		Matrix operator - (Matrix mat)const
+		{
+			Matrix result(row, cloumn);
+
+			if (row != mat.row || cloumn != mat.cloumn)
+			{
+				return result;
+			}
+
+			for (int x = 0; x < row; x++)
+			{
+				for (int y = 0; y < cloumn; y++)
+				{
+					result[x][y] = matrix[x][y] - mat[x][y];
+				}
+			}
+			return result;
+		}
+
+		friend ostream& operator<<(ostream& stream, Matrix c)
+		{
+			std::string s = "";
+			for (int x = 0; x < c.row; x++)
+			{
+				for (int y = 0; y < c.cloumn; y++)
+				{
+					ostringstream oss;
+					oss << c[x][y];
+					s += string(oss.str()) + string(" ");
+				}
+				s += string("\n");
+			}
+			stream << s;
+			return stream;
 		}
 	};
 }
