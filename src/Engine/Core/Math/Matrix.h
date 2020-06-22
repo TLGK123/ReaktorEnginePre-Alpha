@@ -30,6 +30,7 @@
 #include <vector>
 #include <sstream>
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 namespace TmingEngine
@@ -76,7 +77,7 @@ namespace TmingEngine
 			Matrix reslut(row, mat.cloumn);
 			if (cloumn != mat.row)
 			{
-				std::cout << "不满足矩阵乘法计算格式 " << std::endl;
+				std::cout << "不满足矩阵【乘法】计算格式 " << std::endl;
 				return reslut;
 			}
 
@@ -127,6 +128,7 @@ namespace TmingEngine
 
 			if (row != mat.row || cloumn != mat.cloumn)
 			{
+				std::cout << "不满足矩阵【加法】计算格式 " << std::endl;
 				return result;
 			}
 
@@ -146,6 +148,7 @@ namespace TmingEngine
 
 			if (row != mat.row || cloumn != mat.cloumn)
 			{
+				std::cout << "不满足矩阵【减法】计算格式 " << std::endl;
 				return result;
 			}
 
@@ -164,12 +167,14 @@ namespace TmingEngine
 			std::string s = "";
 			for (int x = 0; x < c.row; x++)
 			{
+				s += "|";
 				for (int y = 0; y < c.cloumn; y++)
 				{
 					ostringstream oss;
-					oss << c[x][y];
+					oss << setiosflags(ios::fixed|| ios::internal) << setw(8) << setprecision(2)<< c[x][y];
 					s += string(oss.str()) + string(" ");
 				}
+				s += "|";
 				s += string("\n");
 			}
 			stream << s;

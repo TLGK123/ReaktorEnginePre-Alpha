@@ -24,6 +24,8 @@
 #include <string>
 #include <math.h>
 #include "glm/glm.hpp"
+#include <iostream>
+#include <iomanip>
 
 using namespace glm;
 
@@ -104,5 +106,7 @@ namespace TmingEngine
 		{
 			return Vector3(x * other, y * other, z * other);
 		}
+
+
 	};
 }
