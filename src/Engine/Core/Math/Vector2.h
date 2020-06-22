@@ -21,6 +21,7 @@
 #pragma once
 #include "../EngineDefs.h"
 #include <string>
+#include <iostream>
 
 #include "ImGui/imgui.h"
 #include "glm/glm.hpp"
@@ -90,6 +91,7 @@ namespace TmingEngine
 
 		static const Vector2 Zero;
 		static const Vector2 One;
-		std::string ToString() const;
+	
+
 	};
 }
