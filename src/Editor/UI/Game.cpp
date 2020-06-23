@@ -94,7 +94,7 @@ namespace TmingEngine
 		*/
 
 		//-----step 2
-		/*
+
 		sunlitght.Direction = Vector3(1, 0, 0.5);
 		sunlitght.Color = Color(0.5, 0.5, 0);
 
@@ -108,10 +108,6 @@ namespace TmingEngine
 			Vector3 v2 = Vector3(testCharacter.meshes[0].vertices[index2].Position);
 			Vector3 v3 = Vector3(testCharacter.meshes[0].vertices[index3].Position);
 
-			//change the model coordinate to screen corrdinate
-			v1 = (v1 * (gameWidth / 3) + Vector3((gameWidth / 2), 0, 0)) ;
-			v2 = (v2 * (gameWidth / 3) + Vector3((gameWidth / 2), 0, 0)) ;
-			v3 = (v3 * (gameWidth / 3) + Vector3((gameWidth / 2), 0, 0)) ;
 			int len = gameWidth * gameHeight;
 			int* zbuffer = new int[len];
 
@@ -123,7 +119,7 @@ namespace TmingEngine
 			fillTriangleFromEdgeWitchZbuffer(v1, v2, v3, image, red, zbuffer);
 		}
 
-		*/
+		
 
 		//-----step 3 projection
 		//  |a b| |x|  =>|ax + by|
@@ -143,7 +139,8 @@ namespace TmingEngine
 		//		0,1,5,
 		//		0,0,1
 		//	});
-
+		//std::cout << S << std::endl;
+		//std::cout << T << std::endl;
 		//auto st = S * T;
 		//std::cout << st << std::endl;
 		//auto ts = T * S;
@@ -159,36 +156,35 @@ namespace TmingEngine
 
 		for (int i = 0; i < 4; i++)
 		{
-			Matrix mat1(3, 3, 
-				{ 
+			Matrix mat1(3, 3,
+				{
 					1, 0,0,
 					0, 1,0,
-					-0.24516,0,1
+					0.2,0,1
 				});
 
-
-			Matrix mat2(3, 3, 
+			Matrix mat2(3, 1,
 				{
-					1,0,square[i].x,
-					0,1,square[i].y,
-					0,0,1});
+					square[i].x,
+					square[i].y,
+					1
+				});
 
-
-			Matrix result =   mat1 * mat2;
+			Matrix result = mat1 * mat2;
 			std::cout << result << std::endl;
-
-			square[i] = Vector2(result[0][2], result[1][2]);
+			float x = result[0][0] / result[2][0];
+			float y = result[1][0] / result[2][0];
+			square[i] = Vector2(x, y);
 		}
 
-
 		//Matrix mat1(2, 2, { (float)std::cos(pi / 5), (float)-std::sin(pi / 8),(float)std::sin(pi / 8), (float)std::cos(pi / 8) });
-	
+
 		//for (int i = 0; i < 4; i++)
 		//{
 		//	Matrix mat2(2, 1, { square[i].x ,square[i].y });
 		//	Matrix result = mat1 * mat2;
 		//	square[i] = Vector2(result[0][0], result[1][0]);
-		//	
+		//
 		//}
 
 		for (int i = 0; i < 4; i++)
@@ -236,6 +232,45 @@ namespace TmingEngine
 		}
 
 		image.clear();
+	}
+
+	Matrix LookAt(Vector3 eye, Vector3 center, Vector3 up)
+	{
+		Vector3 R, U, D;
+		D = (eye - center).Normalize();    //从观察的物体到相机的一个方向向量
+		R = (up.Cross(D)).Normalize();
+		U = (D.Cross(R)).Normalize();
+
+		Matrix M(4, 4,
+			{
+			R.x , R.y, R.z, 0,
+			U.x , U.y, U.z, 0,
+			D.x , D.y, D.z, 0,
+			0   , 0  ,  0,  1
+			});
+		Matrix T(4, 4,
+			{
+			0, 0,0, -center.x,
+			0, 0,0, -center.y,
+			0, 0,0, -center.z,
+			0, 0,0, 1,
+			});
+
+		auto result = M * T;
+		return result;
+	}
+
+	Matrix Viewport(int x, int y, int width, int heigh)
+	{
+		int d = 255;
+		Matrix mat(4, 4,
+			{
+				width / 2.0f ,0,0, x + width / 2.0f ,
+				0 ,heigh / 2.0f ,0, y + heigh / 2.0f ,
+				0 ,0 ,d / 2.0f, d / 2.0f ,
+				0 ,0 ,d / 2.0f, 1 ,
+			});
+		return mat;
 	}
 
 	Vector2 Matirx2x2(Vector2 p, float a, float b, float c, float d)
@@ -404,7 +439,7 @@ namespace TmingEngine
 			for (int x = minPoint.x; x <= maxPoint.x; x += 3)
 			{
 				Vector3 P = Vector3(x, y, 0);
-				Vector3 barycent = barycentricCoordinate(Vector3(t0.x, t0.y, 0), Vector3(t1.x, t1.y, 0), Vector3(t2.x, t2.y, 0), P);
+				Vector3 barycent = barycentricCoordinate(t0, t1, t2, P);
 				P.z = t0.z * barycent.x + t1.z * barycent.y + t2.z * barycent.z;
 
 				if (barycent.x >= 0 && barycent.y >= 0 && barycent.z >= 0)
@@ -611,5 +646,19 @@ namespace TmingEngine
 		float u = 1.0f - v - w;
 
 		return Vector3(u, v, w);
+	}
+
+	Vector3 barycentricCoordinateCrossProduct(Vector3 a, Vector3 b, Vector3 c, Vector3 p)
+	{
+		// p = u * a + v * b + w * c;
+		// p = u * a + v * b + (1 - u - v) * c;
+		// p = u * (a - c)+ v * (b - c ) + c;
+		// p - c = u * (a - c)+ v * (b - c );
+		//  u * (a - c)+ v * (b - c ) -(p - c ) = 0
+		//				  |(a - c)  |
+		//  (u , v , 1) * |(b - c)  |  = 0
+		//                |(p - c)  |
+
+		return Vector3();
 	}
 }
