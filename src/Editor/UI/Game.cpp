@@ -98,6 +98,10 @@ namespace TmingEngine
 		sunlitght.Direction = Vector3(1, 0, 0.5);
 		sunlitght.Color = Color(0.5, 0.5, 0);
 
+		Vector3 CameraPos = Vector3(0, 0, 2);
+		Vector3 center(0, 0, 0);	//相机朝向原点
+		Vector3 up(0, 1, 0);		//相机向上
+
 		for (int i = 0; i < testCharacter.meshes[0].indices.size(); i += 3)
 		{
 			int  index1 = testCharacter.meshes[0].indices[i];
@@ -107,6 +111,16 @@ namespace TmingEngine
 			Vector3 v1 = Vector3(testCharacter.meshes[0].vertices[index1].Position);
 			Vector3 v2 = Vector3(testCharacter.meshes[0].vertices[index2].Position);
 			Vector3 v3 = Vector3(testCharacter.meshes[0].vertices[index3].Position);
+
+			Matrix model(4, 4, {
+				1,0,0,0,
+				0,1,0,0,
+				0,0,1,0,
+				0,0,0,1,
+				});
+
+			Matrix view = LookAt(CameraPos, center,up);
+			
 
 			int len = gameWidth * gameHeight;
 			int* zbuffer = new int[len];
@@ -146,36 +160,36 @@ namespace TmingEngine
 		//auto ts = T * S;
 		//std::cout << ts << std::endl;
 
-		Vector2 square[4] = { Vector2(60,60),Vector2(60,360), Vector2(360,360),Vector2(360,60) };
-		for (int i = 0; i < 4; i++)
-		{
-			line(square[i % 4], square[(i + 1) % 4], image, red);
-		}
+		//Vector2 square[4] = { Vector2(60,60),Vector2(60,360), Vector2(360,360),Vector2(360,60) };
+		//for (int i = 0; i < 4; i++)
+		//{
+		//	line(square[i % 4], square[(i + 1) % 4], image, red);
+		//}
 
-		const double pi = std::acos(-1);
+		//const double pi = std::acos(-1);
 
-		for (int i = 0; i < 4; i++)
-		{
-			Matrix mat1(3, 3,
-				{
-					1, 0,0,
-					0, 1,0,
-					0.2,0,1
-				});
+		//for (int i = 0; i < 4; i++)
+		//{
+		//	Matrix mat1(3, 3,
+		//		{
+		//			1, 0,0,
+		//			0, 1,0,
+		//			0.2,0,1
+		//		});
 
-			Matrix mat2(3, 1,
-				{
-					square[i].x,
-					square[i].y,
-					1
-				});
+		//	Matrix mat2(3, 1,
+		//		{
+		//			square[i].x,
+		//			square[i].y,
+		//			1
+		//		});
 
-			Matrix result = mat1 * mat2;
-			std::cout << result << std::endl;
-			float x = result[0][0] / result[2][0];
-			float y = result[1][0] / result[2][0];
-			square[i] = Vector2(x, y);
-		}
+		//	Matrix result = mat1 * mat2;
+		//	std::cout << result << std::endl;
+		//	float x = result[0][0] / result[2][0];
+		//	float y = result[1][0] / result[2][0];
+		//	square[i] = Vector2(x, y);
+		//}
 
 		//Matrix mat1(2, 2, { (float)std::cos(pi / 5), (float)-std::sin(pi / 8),(float)std::sin(pi / 8), (float)std::cos(pi / 8) });
 
@@ -187,10 +201,10 @@ namespace TmingEngine
 		//
 		//}
 
-		for (int i = 0; i < 4; i++)
-		{
-			line(square[i % 4], square[(i + 1) % 4], image, blue);
-		}
+		//for (int i = 0; i < 4; i++)
+		//{
+		//	line(square[i % 4], square[(i + 1) % 4], image, blue);
+		//}
 
 		image.flip_horizontally();
 
@@ -439,7 +453,7 @@ namespace TmingEngine
 			for (int x = minPoint.x; x <= maxPoint.x; x += 3)
 			{
 				Vector3 P = Vector3(x, y, 0);
-				Vector3 barycent = barycentricCoordinate(t0, t1, t2, P);
+				Vector3 barycent = barycentricCoordinateCrossProduct(t0, t1, t2, P);
 				P.z = t0.z * barycent.x + t1.z * barycent.y + t2.z * barycent.z;
 
 				if (barycent.x >= 0 && barycent.y >= 0 && barycent.z >= 0)
@@ -654,11 +668,31 @@ namespace TmingEngine
 		// p = u * a + v * b + (1 - u - v) * c;
 		// p = u * (a - c)+ v * (b - c ) + c;
 		// p - c = u * (a - c)+ v * (b - c );
-		//  u * (a - c)+ v * (b - c ) -(p - c ) = 0
+		//  u * (a - c)+ v * (b - c ) + (c - p ) = 0
 		//				  |(a - c)  |
 		//  (u , v , 1) * |(b - c)  |  = 0
-		//                |(p - c)  |
+		//                |(c - p)  |
+		//======>
+		//				  |(a - c)x  |
+		//  (u , v , 1) * |(b - c)x  |  = 0
+		//                |(c - p)x  |
 
-		return Vector3();
+		//				  |(a - c)y  |
+		//  (u , v , 1) * |(b - c)y  |  = 0
+		//                |(c - p)y  |
+
+		auto v1 = a - c;
+		auto v2 = b - c;
+		auto v3 = c - p;
+		auto u = Vector3(v1.x, v2.x, v3.x).Cross(Vector3(v1.y, v2.y, v3.y));
+		if (std::abs(u.z)>1e-2)
+		{
+			return Vector3(1.0f - (u.x + u.y) / u.z, u.x / u.z, u.y / u.z);
+		}
+		else
+		{
+			return Vector3(-1, 1, 1);
+		
+		}	
 	}
 }
