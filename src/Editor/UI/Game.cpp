@@ -121,7 +121,7 @@ namespace TmingEngine
 
 			Matrix view = LookAt(CameraPos, center,up);
 			
-
+			std::cout << view << std::endl;
 			int len = gameWidth * gameHeight;
 			int* zbuffer = new int[len];
 
