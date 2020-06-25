@@ -60,17 +60,12 @@ namespace TmingEngine
 		void SoftRender();
 
 		Model testCharacter;
-
-		
-		
 	};
-
 
 	const TGAColor white = TGAColor(255, 255, 255, 255);
 	const TGAColor red = TGAColor(255, 0, 0, 255);
 	const TGAColor green = TGAColor(0, 255, 0, 255);
 	const TGAColor blue = TGAColor(0, 0, 255, 255);
-	
 
 	void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color);
 	void line(Vector2 x, Vector2 y, TGAImage& image, TGAColor color);
@@ -78,7 +73,7 @@ namespace TmingEngine
 	void fillUpTriangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color); //填充一个底边平行 X 轴 ，顶点在上的三角形
 	void fillDownTriangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);//填充一个底边平行 X 轴 ，顶点在下的三角形
 	Vector2* findTriangleBox(Vector2 t0, Vector2 t1, Vector2 t2);								//找到一个三角形最小包裹框
-	
+
 	void triangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);
 	void drawBox(Vector2 t0, Vector2 t1, TGAImage& image, TGAColor color);
 
@@ -97,6 +92,16 @@ namespace TmingEngine
 	Vector2 Matirx2x2(Vector2 p, float a, float b, float c, float d);
 
 	Matrix LookAt(Vector3 eye, Vector3 center, Vector3 up);
+
+	Matrix Viewport(int x, int y, int width, int heigh);
+
+	Matrix Perspective(float l, float r, float b, float t, float n, float f);
+
+	Matrix Perspective(float r, float t, float n, float f);
+
+	Matrix Orthographic(float l, float r, float b, float t, float n, float f);
+
+	Matrix Orthographic(float r, float t, float n, float f);
 }
 
 #endif

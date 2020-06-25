@@ -98,9 +98,22 @@ namespace TmingEngine
 		sunlitght.Direction = Vector3(1, 0, 0.5);
 		sunlitght.Color = Color(0.5, 0.5, 0);
 
-		Vector3 CameraPos = Vector3(0, 0, 2);
+		Vector3 CameraPos = Vector3(0, 0.5, 1);
 		Vector3 center(0, 0, 0);	//相机朝向原点
 		Vector3 up(0, 1, 0);		//相机向上
+
+		Matrix model(4, 4, {
+			1,0,0,0,
+			0,1,0,0,
+			0,0,1,0,
+			0,0,0,1,
+			});
+
+		Matrix view = LookAt(CameraPos, center, up);
+
+		Matrix viewPoint = Viewport(0, 0, gameWidth, gameHeight);
+
+		std::cout << view << std::endl;
 
 		for (int i = 0; i < testCharacter.meshes[0].indices.size(); i += 3)
 		{
@@ -112,16 +125,34 @@ namespace TmingEngine
 			Vector3 v2 = Vector3(testCharacter.meshes[0].vertices[index2].Position);
 			Vector3 v3 = Vector3(testCharacter.meshes[0].vertices[index3].Position);
 
-			Matrix model(4, 4, {
-				1,0,0,0,
-				0,1,0,0,
-				0,0,1,0,
-				0,0,0,1,
+			Matrix p1(4, 1,
+				{
+				  v1.x,
+				  v1.y,
+				  v1.z,
+				  1,
 				});
 
-			Matrix view = LookAt(CameraPos, center,up);
-			
-			std::cout << view << std::endl;
+			Matrix p2(4, 1,
+				{
+				  v2.x,
+				  v2.y,
+				  v2.z,
+				  1,
+				});
+
+			Matrix p3(4, 1,
+				{
+				  v3.x,
+				  v3.y,
+				  v3.z,
+				  1,
+				});
+
+			auto point1 = viewPoint * view * model * p1;
+			auto point2 = viewPoint * view * model * p2;
+			auto point3 = viewPoint * view * model * p3;
+
 			int len = gameWidth * gameHeight;
 			int* zbuffer = new int[len];
 
@@ -130,10 +161,14 @@ namespace TmingEngine
 				zbuffer[inedx] = 10000000;
 			}
 
-			fillTriangleFromEdgeWitchZbuffer(v1, v2, v3, image, red, zbuffer);
-		}
+			auto sv1 = Vector3(point1[0][0], point1[1][0], point1[2][0]);
+			auto sv2 = Vector3(point2[0][0], point2[1][0], point2[2][0]);
+			auto sv3 = Vector3(point3[0][0], point3[1][0], point3[2][0]);
 
-		
+			fillTriangleFromEdgeWitchZbuffer(
+				sv1, sv2, sv3,
+				image, red, zbuffer);
+		}
 
 		//-----step 3 projection
 		//  |a b| |x|  =>|ax + by|
@@ -248,6 +283,61 @@ namespace TmingEngine
 		image.clear();
 	}
 
+	// left right bottom ,top ,near ,far
+	Matrix Perspective(float l, float r, float b, float t, float n, float f)
+	{
+		Matrix prespective(4, 4,
+			{
+				2 * n / (r - l) , 0,(r + l) / (r - l),0,
+				0, 2 * n / (t - b) ,(t + b) / (t - b),0,
+				0,0, -(f + n) / (f - n),-2 * f * n / (f - n),
+				0,0,-1,0,
+			});
+		return prespective;
+	}
+
+	//// left == right, bottom == top ,near ,far  simplified  Matrix
+	Matrix Perspective(float r, float t, float n, float f)
+	{
+		//r + l = 0;
+		//r - l = 2r; width
+
+		//t + b =0;
+		//t - b =2t  height
+		Matrix prespective(4, 4,
+			{
+				n / r ,0,0,0,
+				0, n / t,0, 0,
+				0,0, -(f + n) / (f - n),-2 * f * n / (f - n),
+				0,0,-1,0,
+			});
+		return prespective;
+	}
+
+	Matrix Orthographic(float l, float r, float b, float t, float n, float f)
+	{
+		Matrix orthographic(4, 4,
+			{
+				2 / (r - l) , 0, 0, -(r + l) / (r - l),
+				0, 2 / (t - b) , 0, -(t + b) / (t - b),
+				0, 0, -2 / (f - n), -(f + n) / (f - n),
+				0,0,0,1,
+			});
+		return orthographic;
+	}
+
+	Matrix Orthographic(float r, float t, float n, float f)
+	{
+		Matrix orthographic(4, 4,
+			{
+				1 / r , 0, 0, 0,
+				0, 1 / t , 0,0,
+				0, 0, -2 / (f - n), -(f + n) / (f - n),
+				0,0,0,1,
+			});
+		return orthographic;
+	}
+
 	Matrix LookAt(Vector3 eye, Vector3 center, Vector3 up)
 	{
 		Vector3 R, U, D;
@@ -264,10 +354,10 @@ namespace TmingEngine
 			});
 		Matrix T(4, 4,
 			{
-			0, 0,0, -center.x,
-			0, 0,0, -center.y,
-			0, 0,0, -center.z,
-			0, 0,0, 1,
+			1, 0, 0, -eye.x,
+			0, 1, 0, -eye.y,
+			0, 0, 1, -eye.z,
+			0, 0, 0,	1,
 			});
 
 		auto result = M * T;
@@ -685,14 +775,13 @@ namespace TmingEngine
 		auto v2 = b - c;
 		auto v3 = c - p;
 		auto u = Vector3(v1.x, v2.x, v3.x).Cross(Vector3(v1.y, v2.y, v3.y));
-		if (std::abs(u.z)>1e-2)
+		if (std::abs(u.z) > 1e-2)
 		{
 			return Vector3(1.0f - (u.x + u.y) / u.z, u.x / u.z, u.y / u.z);
 		}
 		else
 		{
 			return Vector3(-1, 1, 1);
-		
-		}	
+		}
 	}
 }
