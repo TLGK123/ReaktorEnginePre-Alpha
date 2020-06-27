@@ -96,6 +96,20 @@ namespace TmingEngine
 			return reslut;
 		}
 
+		Matrix operator * (float num)const
+		{
+			Matrix reslut(row, cloumn);
+
+			for (int i = 0; i < row; i++)
+			{
+				for (int j = 0; j < cloumn; j++)
+				{
+					reslut[i][j] = reslut[i][j] * num;
+				}
+			}
+			return reslut;
+		}
+
 		Matrix operator + (float num)const
 		{
 			Matrix result(row, cloumn);
@@ -171,7 +185,7 @@ namespace TmingEngine
 				for (int y = 0; y < c.cloumn; y++)
 				{
 					ostringstream oss;
-					oss << setiosflags(ios::fixed | ios::right) << setw(8) << setprecision(2)<< c[x][y];
+					oss << setiosflags(ios::fixed | ios::right) << setw(8) << setprecision(2) << c[x][y];
 					s += string(oss.str()) + string(" ");
 				}
 				s += "|";

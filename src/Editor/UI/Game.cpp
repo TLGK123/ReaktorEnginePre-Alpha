@@ -98,7 +98,7 @@ namespace TmingEngine
 		sunlitght.Direction = Vector3(1, 0, 0.5);
 		sunlitght.Color = Color(0.5, 0.5, 0);
 
-		Vector3 CameraPos = Vector3(0, 0.5, 1);
+		Vector3 CameraPos = Vector3(0, 0, 3);
 		Vector3 center(0, 0, 0);	//相机朝向原点
 		Vector3 up(0, 1, 0);		//相机向上
 
@@ -112,6 +112,10 @@ namespace TmingEngine
 		Matrix view = LookAt(CameraPos, center, up);
 
 		Matrix viewPoint = Viewport(0, 0, gameWidth, gameHeight);
+
+		Matrix perspective = Perspective(1, 1, 1, 3);
+
+		Matrix orthographic = Orthographic(1.5, 1.5, 0.5, 10);
 
 		std::cout << view << std::endl;
 
@@ -149,9 +153,80 @@ namespace TmingEngine
 				  1,
 				});
 
-			auto point1 = viewPoint * view * model * p1;
-			auto point2 = viewPoint * view * model * p2;
-			auto point3 = viewPoint * view * model * p3;
+			//auto point1 = view * model * p1;
+			//auto point2 = view * model * p2;
+			//auto point3 = view * model * p3;
+
+			//std::cout << "point1 e: " << endl << point1 << endl;
+			//std::cout << "point2 e: " << endl << point2 << endl;
+			//std::cout << "point3 e: " << endl << point3 << endl;
+
+			//auto point1 = viewPoint * perspective * view * model * p1;
+			//auto point2 = viewPoint * perspective * view * model * p2;
+			//auto point3 = viewPoint * perspective * view * model * p3;
+
+			auto projectionPoint1 = orthographic * view * model * p1;
+			auto projectionPoint2 = orthographic * view * model * p2;
+			auto projectionPoint3 = orthographic * view * model * p3;
+			float w1 = projectionPoint1[3][0];
+			float w2 = projectionPoint1[3][0];
+			float w3 = projectionPoint1[3][0];
+			Matrix t1(4, 4,
+				{
+				1 / w1 , 0 , 0 , 0 ,
+				0 , 1 / w1 , 0 , 0 ,
+				0 , 0 , 1 / w1 , 0 ,
+				0 , 0 , 0 , 1 / w1 ,
+				});
+
+			Matrix t2(4, 4,
+				{
+				1 / w2 , 0 , 0 , 0 ,
+				0 , 1 / w2 , 0 , 0 ,
+				0 , 0 , 1 / w2 , 0 ,
+				0 , 0 , 0 , 1 / w2 ,
+				});
+
+			Matrix t3(4, 4,
+				{
+				1 / w3 , 0 , 0 , 0 ,
+				0 , 1 / w3 , 0 , 0 ,
+				0 , 0 , 1 / w3 , 0 ,
+				0 , 0 , 0 , 1 / w3 ,
+				});
+
+			auto point1 = viewPoint * t1 * projectionPoint1;
+			auto point2 = viewPoint * t2 * projectionPoint2;
+			auto point3 = viewPoint * t3 * projectionPoint3;
+
+			std::cout << "point1 p: " << endl << projectionPoint1 << endl;
+			std::cout << "point2 p: " << endl << projectionPoint2 << endl;
+			std::cout << "point3 p: " << endl << projectionPoint3 << endl;
+
+			//if (point1[0][0]< -point1[3][0] || point1[0][0] > point1[3][0] ||
+			//	point1[1][0]< -point1[3][0] || point1[1][0] > point1[3][0] ||
+			//	point1[2][0]< -point1[3][0] || point1[2][0] > point1[3][0] ||
+
+			//	point2[0][0]< -point2[3][0] || point2[0][0] > point2[3][0] ||
+			//	point2[1][0]< -point2[3][0] || point2[1][0] > point2[3][0] ||
+			//	point2[2][0]< -point2[3][0] || point2[2][0] > point2[3][0] ||
+
+			//	point3[0][0]< -point3[3][0] || point3[0][0] > point3[3][0] ||
+			//	point3[1][0]< -point3[3][0] || point3[1][0] > point3[3][0] ||
+			//	point3[2][0]< -point3[3][0] || point3[2][0] > point3[3][0]
+
+			//	)
+			//{
+			//	continue;
+			//}
+
+			//point1 = point1 * (1 / -point1[3][0]);
+			//point2 = point2 * (1 / -point2[3][0]);
+			//point3 = point3 * (1 / -point3[3][0]);
+
+			//std::cout << "point1 c2: " << endl << point1 << endl;
+			//std::cout << "point2 c2: " << endl << point2 << endl;
+			//std::cout << "point3 c2: " << endl << point3 << endl;
 
 			int len = gameWidth * gameHeight;
 			int* zbuffer = new int[len];
@@ -304,14 +379,15 @@ namespace TmingEngine
 
 		//t + b =0;
 		//t - b =2t  height
-		Matrix prespective(4, 4,
+
+		Matrix perspective(4, 4,
 			{
 				n / r ,0,0,0,
 				0, n / t,0, 0,
 				0,0, -(f + n) / (f - n),-2 * f * n / (f - n),
 				0,0,-1,0,
 			});
-		return prespective;
+		return perspective;
 	}
 
 	Matrix Orthographic(float l, float r, float b, float t, float n, float f)
@@ -340,18 +416,19 @@ namespace TmingEngine
 
 	Matrix LookAt(Vector3 eye, Vector3 center, Vector3 up)
 	{
-		Vector3 R, U, D;
+		Vector3 R, U, D;  // x y z
 		D = (eye - center).Normalize();    //从观察的物体到相机的一个方向向量
 		R = (up.Cross(D)).Normalize();
 		U = (D.Cross(R)).Normalize();
 
-		Matrix M(4, 4,
+		Matrix Rotate(4, 4,
 			{
-			R.x , R.y, R.z, 0,
-			U.x , U.y, U.z, 0,
-			D.x , D.y, D.z, 0,
-			0   , 0  ,  0,  1
+			R.x , R.y , R.z , 0,
+			U.x , U.y , U.z , 0,
+			D.x , D.y , D.z , 0,
+			0	, 0   , 0   , 1,
 			});
+
 		Matrix T(4, 4,
 			{
 			1, 0, 0, -eye.x,
@@ -360,7 +437,7 @@ namespace TmingEngine
 			0, 0, 0,	1,
 			});
 
-		auto result = M * T;
+		auto result = Rotate * T;
 		return result;
 	}
 
@@ -538,9 +615,9 @@ namespace TmingEngine
 
 		TGAColor col = TGAColor(intensity * 255, intensity * 255, intensity * 255, 255);
 
-		for (int y = minPoint.y; y <= maxPoint.y; y += 3)
+		for (int y = minPoint.y; y <= maxPoint.y; y += 1)
 		{
-			for (int x = minPoint.x; x <= maxPoint.x; x += 3)
+			for (int x = minPoint.x; x <= maxPoint.x; x += 1)
 			{
 				Vector3 P = Vector3(x, y, 0);
 				Vector3 barycent = barycentricCoordinateCrossProduct(t0, t1, t2, P);
