@@ -61,6 +61,6 @@ namespace TmingEngine
 			return Vector3(point1[0][0], point1[1][0], point1[2][0]);
 
 		};
-		virtual bool Fragment() = 0;
+		bool Fragment() { return false; }
 	};
 }
