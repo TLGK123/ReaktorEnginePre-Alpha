@@ -67,6 +67,28 @@ namespace TmingEngine
 			matrix = vec;
 		}
 
+		Matrix()
+		{
+			row = 4;
+			cloumn = 4;
+			vector<vector<float>> vec(row, vector<float>(cloumn));//³õÊ¼²ãÊý£¬¸³Öµ
+			matrix = vec;
+
+			for (int i = 0; i < row; i++)
+			{
+				for (int j = 0; j < cloumn; j++)
+				{
+					for (int k = 0; k < cloumn; k++)
+					{
+						if (i == j)
+						{
+							matrix[i][j] = 1;
+						}						
+					}
+				}
+			}
+		}
+
 		vector<float>& operator[](int i)
 		{
 			return matrix[i];
