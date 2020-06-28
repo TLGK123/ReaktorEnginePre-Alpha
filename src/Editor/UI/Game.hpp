@@ -39,7 +39,8 @@
 #include "Core/Math/Matrix.h"
 #include "Rendering/Model.hpp"
 #include "Rendering/Light.hpp"
-
+#include "Rendering/GouraudShader.hpp"
+																																																							
 namespace TmingEngine
 {
 	class Game :public Widget

@@ -111,14 +111,18 @@ namespace TmingEngine
 
 		Matrix view = LookAt(CameraPos, center, up);
 
-		Matrix viewPoint = Viewport(0, 0, gameWidth, gameHeight);
-
 		Matrix perspective = Perspective(1, 1, 1, 3);
 
 		Matrix orthographic = Orthographic(1.5, 1.5, 0.5, 10);
 
-		std::cout << view << std::endl;
+		Matrix viewPoint = Viewport(0, 0, gameWidth, gameHeight);
 
+		GouraudShader shader;
+		shader.SetModel(model);
+		shader.SetView(view);
+		shader.SetProjection(perspective);
+		shader.SetViewPoint(viewPoint);
+	
 		for (int i = 0; i < testCharacter.meshes[0].indices.size(); i += 3)
 		{
 			int  index1 = testCharacter.meshes[0].indices[i];
@@ -129,66 +133,6 @@ namespace TmingEngine
 			Vector3 v2 = Vector3(testCharacter.meshes[0].vertices[index2].Position);
 			Vector3 v3 = Vector3(testCharacter.meshes[0].vertices[index3].Position);
 
-			Matrix p1(4, 1,
-				{
-				  v1.x,
-				  v1.y,
-				  v1.z,
-				  1,
-				});
-
-			Matrix p2(4, 1,
-				{
-				  v2.x,
-				  v2.y,
-				  v2.z,
-				  1,
-				});
-
-			Matrix p3(4, 1,
-				{
-				  v3.x,
-				  v3.y,
-				  v3.z,
-				  1,
-				});
-
-			auto projectionPoint1 = perspective * view * model * p1;
-			auto projectionPoint2 = perspective * view * model * p2;
-			auto projectionPoint3 = perspective * view * model * p3;
-			float w1 = projectionPoint1[3][0];
-			float w2 = projectionPoint2[3][0];
-			float w3 = projectionPoint3[3][0];
-			Matrix t1(4, 4,
-				{
-				1 / w1 , 0 , 0 , 0 ,
-				0 , 1 / w1 , 0 , 0 ,
-				0 , 0 , 1 / w1 , 0 ,
-				0 , 0 , 0 , 1 / w1 ,
-				});
-
-			Matrix t2(4, 4,
-				{
-				1 / w2 , 0 , 0 , 0 ,
-				0 , 1 / w2 , 0 , 0 ,
-				0 , 0 , 1 / w2 , 0 ,
-				0 , 0 , 0 , 1 / w2 ,
-				});
-
-			Matrix t3(4, 4,
-				{
-				1 / w3 , 0 , 0 , 0 ,
-				0 , 1 / w3 , 0 , 0 ,
-				0 , 0 , 1 / w3 , 0 ,
-				0 , 0 , 0 , 1 / w3 ,
-				});
-			
-			//Í¸ÊÓ³ý·¨
-
-			auto point1 = viewPoint * t1 * projectionPoint1;
-			auto point2 = viewPoint * t2 * projectionPoint2;
-			auto point3 = viewPoint * t3 * projectionPoint3;
-
 			int len = gameWidth * gameHeight;
 			int* zbuffer = new int[len];
 
@@ -197,9 +141,9 @@ namespace TmingEngine
 				zbuffer[inedx] = 10000000;
 			}
 
-			auto sv1 = Vector3(point1[0][0], point1[1][0], point1[2][0]);
-			auto sv2 = Vector3(point2[0][0], point2[1][0], point2[2][0]);
-			auto sv3 = Vector3(point3[0][0], point3[1][0], point3[2][0]);
+			auto sv1 = shader.Vertex(v1);  
+			auto sv2 = shader.Vertex(v2);
+			auto sv3 = shader.Vertex(v3);
 
 			fillTriangleFromEdgeWitchZbuffer(
 				sv1, sv2, sv3,
