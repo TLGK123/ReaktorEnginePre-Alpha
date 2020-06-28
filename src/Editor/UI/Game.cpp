@@ -61,6 +61,7 @@ namespace TmingEngine
 	}
 
 	Light sunlitght;
+	GouraudShader shader;
 	void TmingEngine::Game::SoftRender()
 	{
 		glGenTextures(1, &imageId);
@@ -98,7 +99,7 @@ namespace TmingEngine
 		sunlitght.Direction = Vector3(1, 0, 0.5);
 		sunlitght.Color = Color(0.5, 0.5, 0);
 
-		Vector3 CameraPos = Vector3(0, 0.5, 2);
+		Vector3 CameraPos = Vector3(0, 0.5, -2);
 		Vector3 center(0, 0, 0);	//相机朝向原点
 		Vector3 up(0, 1, 0);		//相机向上
 
@@ -117,12 +118,11 @@ namespace TmingEngine
 
 		Matrix viewPoint = Viewport(0, 0, gameWidth, gameHeight);
 
-		GouraudShader shader;
 		shader.SetModel(model);
 		shader.SetView(view);
 		shader.SetProjection(perspective);
 		shader.SetViewPoint(viewPoint);
-	
+
 		for (int i = 0; i < testCharacter.meshes[0].indices.size(); i += 3)
 		{
 			int  index1 = testCharacter.meshes[0].indices[i];
@@ -141,7 +141,7 @@ namespace TmingEngine
 				zbuffer[inedx] = 10000000;
 			}
 
-			auto sv1 = shader.Vertex(v1);  
+			auto sv1 = shader.Vertex(v1);
 			auto sv2 = shader.Vertex(v2);
 			auto sv3 = shader.Vertex(v3);
 
@@ -149,77 +149,6 @@ namespace TmingEngine
 				sv1, sv2, sv3,
 				image, red, zbuffer);
 		}
-
-		//-----step 3 projection
-		//  |a b| |x|  =>|ax + by|
-		//	|c d| |y|    |cx + dy|
-		//
-
-		//Matrix S(3, 3,
-		//	{
-		//		2,0,0,
-		//		0,1,0,
-		//		0,0,2
-		//	});
-
-		//Matrix T(3, 3,
-		//	{
-		//		1,0,4,
-		//		0,1,5,
-		//		0,0,1
-		//	});
-		//std::cout << S << std::endl;
-		//std::cout << T << std::endl;
-		//auto st = S * T;
-		//std::cout << st << std::endl;
-		//auto ts = T * S;
-		//std::cout << ts << std::endl;
-
-		//Vector2 square[4] = { Vector2(60,60),Vector2(60,360), Vector2(360,360),Vector2(360,60) };
-		//for (int i = 0; i < 4; i++)
-		//{
-		//	line(square[i % 4], square[(i + 1) % 4], image, red);
-		//}
-
-		//const double pi = std::acos(-1);
-
-		//for (int i = 0; i < 4; i++)
-		//{
-		//	Matrix mat1(3, 3,
-		//		{
-		//			1, 0,0,
-		//			0, 1,0,
-		//			0.2,0,1
-		//		});
-
-		//	Matrix mat2(3, 1,
-		//		{
-		//			square[i].x,
-		//			square[i].y,
-		//			1
-		//		});
-
-		//	Matrix result = mat1 * mat2;
-		//	std::cout << result << std::endl;
-		//	float x = result[0][0] / result[2][0];
-		//	float y = result[1][0] / result[2][0];
-		//	square[i] = Vector2(x, y);
-		//}
-
-		//Matrix mat1(2, 2, { (float)std::cos(pi / 5), (float)-std::sin(pi / 8),(float)std::sin(pi / 8), (float)std::cos(pi / 8) });
-
-		//for (int i = 0; i < 4; i++)
-		//{
-		//	Matrix mat2(2, 1, { square[i].x ,square[i].y });
-		//	Matrix result = mat1 * mat2;
-		//	square[i] = Vector2(result[0][0], result[1][0]);
-		//
-		//}
-
-		//for (int i = 0; i < 4; i++)
-		//{
-		//	line(square[i % 4], square[(i + 1) % 4], image, blue);
-		//}
 
 		image.flip_horizontally();
 
@@ -535,8 +464,12 @@ namespace TmingEngine
 						int cacheDeep = zbuffer[int(x + y * gameWidth)];
 						if (P.z < cacheDeep)
 						{
-							image.set(P.x, P.y, col);
-							zbuffer[int(x + y * gameWidth)] = P.z;
+							bool discard = shader.Fragment(col);
+							if (!discard)
+							{
+								image.set(P.x, P.y, col);
+								zbuffer[int(x + y * gameWidth)] = P.z;
+							}
 						}
 						else
 						{
