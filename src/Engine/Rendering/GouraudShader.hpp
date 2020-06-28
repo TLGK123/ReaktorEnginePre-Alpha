@@ -21,41 +21,46 @@
 
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Matrix.h"
+#include "IShader.hpp"
 
 namespace TmingEngine
 {
-	class IShader
+	class GouraudShader :public IShader
 	{
 	public:
-		IShader() {};
-		~IShader() {};
+		GouraudShader() {};
+		~GouraudShader() {};
 
-		Matrix porjection;
-		Matrix view;
-		Matrix model;
-		Matrix viewPoint;
-
-		void SetProjection(Matrix p)
+		Vector3 Vertex(Vector3 pos) override
 		{
-			porjection = p;
-		}
+			Matrix p1(4, 1,
+				{
+				  pos.x,
+				  pos.y,
+				  pos.z,
+				  1,
+				});
 
-		void SetView(Matrix v)
-		{
-			view = v;
-		}
 
-		void SetModel(Matrix m)
-		{
-			model = m;
-		}
+			auto projectionPoint1 = porjection * view * model * p1;
+			float w1 = projectionPoint1[3][0];
+			Matrix t1(4, 4,
+				{
+				1 / w1 , 0 , 0 , 0 ,
+				0 , 1 / w1 , 0 , 0 ,
+				0 , 0 , 1 / w1 , 0 ,
+				0 , 0 , 0 , 1 / w1 ,
+				});
 
-		void SetViewPoint(Matrix vp)
-		{
-			viewPoint = vp;
-		}
 
-		virtual Vector3 Vertex(Vector3 pos) = 0;
+
+			//Í¸ÊÓ³ý·¨
+
+			auto point1 = viewPoint * t1 * projectionPoint1;
+
+			return Vector3(point1[0][0], point1[1][0], point1[2][0]);
+
+		};
 		virtual bool Fragment() = 0;
 	};
 }

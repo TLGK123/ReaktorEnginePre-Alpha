@@ -98,7 +98,7 @@ namespace TmingEngine
 		sunlitght.Direction = Vector3(1, 0, 0.5);
 		sunlitght.Color = Color(0.5, 0.5, 0);
 
-		Vector3 CameraPos = Vector3(0, 0.5, 3);
+		Vector3 CameraPos = Vector3(0, 0.5, 2);
 		Vector3 center(0, 0, 0);	//相机朝向原点
 		Vector3 up(0, 1, 0);		//相机向上
 
@@ -153,24 +153,12 @@ namespace TmingEngine
 				  1,
 				});
 
-			//auto point1 = view * model * p1;
-			//auto point2 = view * model * p2;
-			//auto point3 = view * model * p3;
-
-			//std::cout << "point1 e: " << endl << point1 << endl;
-			//std::cout << "point2 e: " << endl << point2 << endl;
-			//std::cout << "point3 e: " << endl << point3 << endl;
-
-			//auto point1 = viewPoint * perspective * view * model * p1;
-			//auto point2 = viewPoint * perspective * view * model * p2;
-			//auto point3 = viewPoint * perspective * view * model * p3;
-
-			auto projectionPoint1 = orthographic * view * model * p1;
-			auto projectionPoint2 = orthographic * view * model * p2;
-			auto projectionPoint3 = orthographic * view * model * p3;
+			auto projectionPoint1 = perspective * view * model * p1;
+			auto projectionPoint2 = perspective * view * model * p2;
+			auto projectionPoint3 = perspective * view * model * p3;
 			float w1 = projectionPoint1[3][0];
-			float w2 = projectionPoint1[3][0];
-			float w3 = projectionPoint1[3][0];
+			float w2 = projectionPoint2[3][0];
+			float w3 = projectionPoint3[3][0];
 			Matrix t1(4, 4,
 				{
 				1 / w1 , 0 , 0 , 0 ,
@@ -194,39 +182,12 @@ namespace TmingEngine
 				0 , 0 , 1 / w3 , 0 ,
 				0 , 0 , 0 , 1 / w3 ,
 				});
+			
+			//透视除法
 
 			auto point1 = viewPoint * t1 * projectionPoint1;
 			auto point2 = viewPoint * t2 * projectionPoint2;
 			auto point3 = viewPoint * t3 * projectionPoint3;
-
-			std::cout << "point1 p: " << endl << projectionPoint1 << endl;
-			std::cout << "point2 p: " << endl << projectionPoint2 << endl;
-			std::cout << "point3 p: " << endl << projectionPoint3 << endl;
-
-			//if (point1[0][0]< -point1[3][0] || point1[0][0] > point1[3][0] ||
-			//	point1[1][0]< -point1[3][0] || point1[1][0] > point1[3][0] ||
-			//	point1[2][0]< -point1[3][0] || point1[2][0] > point1[3][0] ||
-
-			//	point2[0][0]< -point2[3][0] || point2[0][0] > point2[3][0] ||
-			//	point2[1][0]< -point2[3][0] || point2[1][0] > point2[3][0] ||
-			//	point2[2][0]< -point2[3][0] || point2[2][0] > point2[3][0] ||
-
-			//	point3[0][0]< -point3[3][0] || point3[0][0] > point3[3][0] ||
-			//	point3[1][0]< -point3[3][0] || point3[1][0] > point3[3][0] ||
-			//	point3[2][0]< -point3[3][0] || point3[2][0] > point3[3][0]
-
-			//	)
-			//{
-			//	continue;
-			//}
-
-			//point1 = point1 * (1 / -point1[3][0]);
-			//point2 = point2 * (1 / -point2[3][0]);
-			//point3 = point3 * (1 / -point3[3][0]);
-
-			//std::cout << "point1 c2: " << endl << point1 << endl;
-			//std::cout << "point2 c2: " << endl << point2 << endl;
-			//std::cout << "point3 c2: " << endl << point3 << endl;
 
 			int len = gameWidth * gameHeight;
 			int* zbuffer = new int[len];
