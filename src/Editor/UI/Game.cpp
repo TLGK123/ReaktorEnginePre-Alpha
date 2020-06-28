@@ -98,7 +98,7 @@ namespace TmingEngine
 		sunlitght.Direction = Vector3(1, 0, 0.5);
 		sunlitght.Color = Color(0.5, 0.5, 0);
 
-		Vector3 CameraPos = Vector3(0, 0, 3);
+		Vector3 CameraPos = Vector3(0, 0.5, 3);
 		Vector3 center(0, 0, 0);	//相机朝向原点
 		Vector3 up(0, 1, 0);		//相机向上
 
