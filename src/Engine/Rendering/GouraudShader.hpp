@@ -41,7 +41,6 @@ namespace TmingEngine
 				  1,
 				});
 
-
 			auto projectionPoint1 = porjection * view * model * p1;
 			float w1 = projectionPoint1[3][0];
 			Matrix t1(4, 4,
@@ -52,15 +51,17 @@ namespace TmingEngine
 				0 , 0 , 0 , 1 / w1 ,
 				});
 
-
-
 			//Í¸ÊÓ³ý·¨
 
 			auto point1 = viewPoint * t1 * projectionPoint1;
 
 			return Vector3(point1[0][0], point1[1][0], point1[2][0]);
-
 		};
-		bool Fragment() { return false; }
+
+		bool Fragment(TGAColor& color)override
+		{
+			color = TGAColor(125,125,125,255);
+			return false;
+		}
 	};
 }

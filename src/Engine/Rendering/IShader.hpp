@@ -21,6 +21,7 @@
 
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Matrix.h"
+#include "tgaimage/tgaimage.h"
 
 namespace TmingEngine
 {
@@ -56,6 +57,6 @@ namespace TmingEngine
 		}
 
 		virtual Vector3 Vertex(Vector3 pos) = 0;
-		virtual bool Fragment() = 0;
+		virtual bool Fragment( TGAColor& color) = 0;
 	};
 }
