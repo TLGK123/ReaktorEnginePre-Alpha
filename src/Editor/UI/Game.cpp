@@ -96,10 +96,10 @@ namespace TmingEngine
 
 		//-----step 2
 
-		sunlitght.Direction = Vector3(1, 0, 0.5);
+		sunlitght.Direction = Vector3(0, 1, -1);
 		sunlitght.Color = Color(0.5, 0.5, 0);
 
-		Vector3 CameraPos = Vector3(0, 0.5, -2);
+		Vector3 CameraPos = Vector3(0, 0.5, 1);
 		Vector3 center(0, 0, 0);	//相机朝向原点
 		Vector3 up(0, 1, 0);		//相机向上
 
@@ -120,7 +120,7 @@ namespace TmingEngine
 
 		shader.SetModel(model);
 		shader.SetView(view);
-		shader.SetProjection(perspective);
+		shader.SetProjection(orthographic);
 		shader.SetViewPoint(viewPoint);
 
 		for (int i = 0; i < testCharacter.meshes[0].indices.size(); i += 3)
@@ -129,9 +129,9 @@ namespace TmingEngine
 			int  index2 = testCharacter.meshes[0].indices[i + 1];
 			int  index3 = testCharacter.meshes[0].indices[i + 2];
 
-			Vector3 v1 = Vector3(testCharacter.meshes[0].vertices[index1].Position);
-			Vector3 v2 = Vector3(testCharacter.meshes[0].vertices[index2].Position);
-			Vector3 v3 = Vector3(testCharacter.meshes[0].vertices[index3].Position);
+			Vertex v1 = (testCharacter.meshes[0].vertices[index1]);
+			Vertex v2 = (testCharacter.meshes[0].vertices[index2]);
+			Vertex v3 = (testCharacter.meshes[0].vertices[index3]);
 
 			int len = gameWidth * gameHeight;
 			int* zbuffer = new int[len];
@@ -141,12 +141,12 @@ namespace TmingEngine
 				zbuffer[inedx] = 10000000;
 			}
 
-			auto sv1 = shader.Vertex(v1);
-			auto sv2 = shader.Vertex(v2);
-			auto sv3 = shader.Vertex(v3);
+			v1.Position = shader.Vertex(v1.Position);
+			v2.Position = shader.Vertex(v2.Position);
+			v3.Position = shader.Vertex(v3.Position);
 
 			fillTriangleFromEdgeWitchZbuffer(
-				sv1, sv2, sv3,
+				v1, v2, v3,
 				image, red, zbuffer);
 		}
 
@@ -473,6 +473,78 @@ namespace TmingEngine
 						}
 						else
 						{
+							int a = 0;
+							;
+						}
+					}
+					else
+					{
+						;
+					}
+				}
+			}
+		}
+	}
+
+	void fillTriangleFromEdgeWitchZbuffer(Vertex v1, Vertex v2, Vertex v3, TGAImage& image, TGAColor color, int* zbuffer)
+	{
+		Vector2* boxs = findTriangleBox(v1.Position, v2.Position, v3.Position);
+
+		Vector2 minPoint = boxs[0];
+		Vector2 maxPoint = boxs[1];
+
+		Matrix normals(3, 3, {
+		v1.Normal.x,v2.Normal.x,v3.Normal.x,
+		v1.Normal.y,v2.Normal.y,v3.Normal.y,
+		v1.Normal.z,v2.Normal.z,v3.Normal.z,
+			});
+
+		for (int y = minPoint.y; y <= maxPoint.y; y += 1)
+		{
+			for (int x = minPoint.x; x <= maxPoint.x; x += 1)
+			{
+				Vector3 P = Vector3(x, y, 0);
+				Vector3 barycent = barycentricCoordinateCrossProduct(v1.Position, v2.Position, v3.Position, P);
+				P.z = v1.Position.z * barycent.x + v2.Position.z * barycent.y + v3.Position.z * barycent.z;
+
+				Matrix barycents(3, 1, {
+					   barycent.x,
+					   barycent.y,
+					   barycent.z,
+					});
+
+				auto interpolatedNormal = normals * barycents;
+				Vector3 pixelNormal = Vector3(interpolatedNormal[0][0], interpolatedNormal[1][0], interpolatedNormal[2][0]).Normalize();
+
+
+				float intensity = pixelNormal.Dot(sunlitght.Direction.Normalize());
+
+				if (intensity < 0)
+				{
+					//It means that the light comes from behind the polygon.
+					// Back-face culling
+					return;
+				}
+
+				TGAColor col = TGAColor(intensity * 255, intensity * 255, intensity * 255, 255);
+
+				if (barycent.x >= 0 && barycent.y >= 0 && barycent.z >= 0)
+				{
+					if (P.x >= 0 && P.y >= 0 && P.x <= gameWidth && P.y <= gameHeight)
+					{
+						int cacheDeep = zbuffer[int(x + y * gameWidth)];
+						if (P.z < cacheDeep)
+						{
+							bool discard = shader.Fragment(col, barycent);
+							if (!discard)
+							{
+								image.set(P.x, P.y, col);
+								zbuffer[int(x + y * gameWidth)] = P.z;
+							}
+						}
+						else
+						{
+							int a = 0;
 							;
 						}
 					}
@@ -698,5 +770,23 @@ namespace TmingEngine
 		{
 			return Vector3(-1, 1, 1);
 		}
+	}
+	Vector3 barycentricCoordinateCrossProduct(Vertex a, Vertex b, Vertex c, Vertex p)
+	{
+		auto v1 = a.Position - c.Position;
+		auto v2 = b.Position - c.Position;
+		auto v3 = c.Position - p.Position;
+
+		auto u = Vector3(v1.x, v2.x, v3.x).Cross(Vector3(v1.y, v2.y, v3.y));
+		if (std::abs(u.z) > 1e-2)
+		{
+			return Vector3(1.0f - (u.x + u.y) / u.z, u.x / u.z, u.y / u.z);
+		}
+		else
+		{
+			return Vector3(-1, 1, 1);
+		}
+
+		return Vector3();
 	}
 }
