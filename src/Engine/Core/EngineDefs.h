@@ -31,28 +31,5 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     #define ENGINE_CLASS
 #endif
 
-namespace TmingEngine
-{
-	template <typename T>
-	void SafeRelease(T& ptr)
-	{
-		if (ptr)
-		{
-			ptr->Release();
-			ptr = nullptr;
-		}
-	}
-
-	template <typename T>
-	void SafeDelete(T& ptr)
-	{
-		if (ptr)
-		{
-			delete ptr;
-			ptr = nullptr;
-		}
-	}
-
-}
 
 #endif

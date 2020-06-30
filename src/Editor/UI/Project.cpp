@@ -1,6 +1,6 @@
 //The MIT License
 //
-//Copyright(c) 2016 - 2019 littleblue
+//Copyright(c) 2016 - 2020 littleblue
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this softwareand associated documentation files(the "Software"), to deal
@@ -19,11 +19,14 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include "Project.h"
 
-void AssetTree(string path);
-void AssetTreeL(string path);
-void AssetTreeR(string path);
+#include "Project.h"
+#include <Core\Engine.h>
+using namespace TmingEngine;
+
+void AssetTree(string path ,int roundNum);
+
+void MenuFile();
 
 TmingEngine::Project::~Project()
 {
@@ -53,7 +56,7 @@ void TmingEngine::Project::Update()
 	{
 	
 		auto current = FileSystem::getPath("");
-		AssetTree(current);
+		AssetTree(current,0);
 		//AssetTreeL(current);
 		//ImGui::NextColumn;
 
@@ -161,10 +164,10 @@ vector<PathObjInfo> getPathFileOrFolderinfo(string path)
 }
 
 
-
 map<string, vector<PathObjInfo>> pathCache;
+int clickRound = -1;
 
-void AssetTree(string path)
+void AssetTree(string path  , int roundNum)
 {
 	auto iter = pathCache.find(path);
 	if (iter != pathCache.end())
@@ -187,7 +190,7 @@ void AssetTree(string path)
 					if (ImGui::TreeNode(t.name.c_str()))
 					{
 						//ImGui::Text("%s", t.name.c_str());
-						AssetTree(s);
+						AssetTree(s, ++roundNum);
 						ImGui::TreePop();
 					}
 				}
@@ -198,18 +201,22 @@ void AssetTree(string path)
 				node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 				int tempIndex = 9, node_clicked;
 				ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags, t.name.c_str());
-				if (ImGui::IsItemClicked())
+				
+				int ClickMouse = ImGui::IsItemClicked();			
+				if (ClickMouse)
 				{
-					string fpath = path + "/" + t.name;				
+					string fpath = path + "/" + t.name;
 					Debug::Log(string("Select: ")+ path + "/" + t.name+"\n");
 
 					if ((t.name.find(".glsl")!= string::npos)
 						|| (t.name.find(".hlsl") != string::npos)
 						|| (t.name.find(".fs") != string::npos)
 						|| (t.name.find(".vs") != string::npos)
+						|| (t.name.find(".as") != string::npos)
+						|| (t.name.find(".lua") != string::npos)
 						)
 					{
-						auto screen = Global<Context>().GetSubsystem<Editor>();
+						auto screen = Global<Context>().GetSubsystem<Engine>()->windows;
 						auto codeEditor = screen->GetSubWidget<CodeEditor>();
 						auto txt = Global<Context>().GetSubsystem<FileSystem>()->GetFileContent(fpath);
 
@@ -228,7 +235,7 @@ void AssetTree(string path)
 						|| (t.name.find(".TGA") != string::npos)
 						)
 					{
-						auto screen = Global<Context>().GetSubsystem<Editor>();
+						auto screen = Global<Context>().GetSubsystem<Engine>()->windows;
 						auto previewer = screen->GetSubWidget<Preview>();
 						previewer->PreviewTexture(fpath);
 						previewer->Show();
@@ -236,140 +243,20 @@ void AssetTree(string path)
 					}
 
 				}
-			}
-		}
-	}
-	else
-	{
-		//        cout<<"cache path can't find "<< path <<endl;
-		auto res = getPathFileOrFolderinfo(path);
-		pathCache.insert(pair<string, vector<PathObjInfo>>(path, res));
-	}
-}
 
-void AssetTreeL(string path)
-{
-	string rightContent = "";
-	auto iter = pathCache.find(path);
-	if (iter != pathCache.end())
-	{
-		//        cout<<"cache path find"<<endl;
-		auto infs = pathCache[path];
-		vector<PathObjInfo>::iterator iter;
-		for (iter = infs.begin(); iter != infs.end(); iter++)
-		{
-			auto t = *iter;
-			if (t.isFolder)
-			{
-				if (t.name == ".." || t.name == ".")
+				if (ImGui::IsItemClicked(1))
 				{
-
-				}
-				else
-				{
-					string current = string(path) + "/" + t.name;
-					if (ImGui::TreeNodeEx(t.name.c_str()))
-					{
-						//ImGui::Text("%s", t.name.c_str());
-						//AssetTree(s);
-						AssetTreeL(current);
-						
-						ImGui::TreePop();
-					}
-					if (ImGui::IsItemClicked())
-					{
-						//AssetTreeR(current);
-						rightContent = current;
-						std::cout<<" ------------- rightContent: "<< rightContent <<std::endl;
-					}
+					Selecttion::ProjectSelected = path + "/" + t.name;
+					ImGui::OpenPopup("my_file_popup");
+					clickRound = roundNum;
 				}
 			}
-			else
-			{
-				//ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-				//node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-				//int tempIndex = 9, node_clicked;
-				//ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags, t.name.c_str());
-				//if (ImGui::IsItemClicked())
-				//{
-				//	string fpath = path + "/" + t.name;
-				//	cout << "选中文件: " << path << "/" + t.name << endl;
-				//	//               fileToEdit = fpath;
-				//	//               string contentText = GetFileContent(fileToEdit);
-				//	//               //ImGui::SetClipboardText(contentText.c_str());
-				//	//               editor.SetText("");
-				//	//               //editor.Paste();
-				//	//               //ImGui::SetClipboardText("");
-				//				   //editor.SetText(contentText);
-				//}
-
-				//ImGui::NextColumn();
-				//ImGui::Text(t.name.c_str());
-				//ImGui::NextColumn();
-			}
-			//AssetTreeR(rightContent);
 		}
-	}
-	else
-	{
-		//        cout<<"cache path can't find "<< path <<endl;
-		auto res = getPathFileOrFolderinfo(path);
-		pathCache.insert(pair<string, vector<PathObjInfo>>(path, res));
-	}
-}
 
-void AssetTreeR(string path)
-{
-	auto iter = pathCache.find(path);
-	if (iter != pathCache.end())
-	{
-		//        cout<<"cache path find"<<endl;
-		auto infs = pathCache[path];
-		vector<PathObjInfo>::iterator iter;
-		for (iter = infs.begin(); iter != infs.end(); iter++)
+		if (ImGui::BeginPopup("my_file_popup") && roundNum == clickRound)
 		{
-			auto t = *iter;
-			if (t.isFolder)
-			{
-				//if (t.name == ".." || t.name == ".")
-				//{
-
-				//}
-				//else
-				//{
-				//	string s = string(path) + "/" + t.name;
-				//	if (ImGui::TreeNode(t.name.c_str()))
-				//	{
-				//		//ImGui::Text("%s", t.name.c_str());
-				//		AssetTree(s);
-				//		ImGui::TreePop();
-				//	}
-				//}
-				ImGui::Text(t.name.c_str());
-			}
-			else
-			{
-				//ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-				//node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-				//int tempIndex = 9, node_clicked;
-				//ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags, t.name.c_str());
-				//if (ImGui::IsItemClicked())
-				//{
-				//	string fpath = path + "/" + t.name;
-				//	cout << "选中文件: " << path << "/" + t.name << endl;
-				//	//               fileToEdit = fpath;
-				//	//               string contentText = GetFileContent(fileToEdit);
-				//	//               //ImGui::SetClipboardText(contentText.c_str());
-				//	//               editor.SetText("");
-				//	//               //editor.Paste();
-				//	//               //ImGui::SetClipboardText("");
-				//				   //editor.SetText(contentText);
-				//}
-
-				
-				ImGui::Text(t.name.c_str());
-			
-			}
+			MenuFile();
+			ImGui::EndPopup();
 		}
 	}
 	else
@@ -379,6 +266,23 @@ void AssetTreeR(string path)
 		pathCache.insert(pair<string, vector<PathObjInfo>>(path, res));
 	}
 }
+
+void MenuFile()
+{
+	ImGui::MenuItem("(dummy menu)", NULL, false, false);
+	if (ImGui::MenuItem("Open", "Ctrl+O"))
+	{
+		Debug::Log("Open File " + TmingEngine::Selecttion::ProjectSelected);
+		if (TmingEngine::Selecttion::ProjectSelected.find(".obj") != string::npos)
+		{
+			//Global<Context>().GetSubsystem<IWindows>()->ChangeModel(TmingEngine::Selecttion::ProjectSelected);
+		}
+
+	}
+
+}
+
+
 
 void TmingEngine::Project::End()
 {

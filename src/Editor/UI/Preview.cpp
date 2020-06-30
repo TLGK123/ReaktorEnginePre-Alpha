@@ -1,6 +1,6 @@
 //The MIT License
 //
-//Copyright(c) 2016 - 2019 littleblue
+//Copyright(c) 2016 - 2020 littleblue
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this softwareand associated documentation files(the "Software"), to deal
@@ -18,7 +18,6 @@
 //COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
 
 #include "Preview.hpp"
 #include "Stb_Image/stb_image.h"
@@ -30,6 +29,8 @@ void TmingEngine::Preview::Begin()
 {
 	p_open = true;
 }
+
+
 
 void TmingEngine::Preview::Update()
 {
@@ -44,11 +45,12 @@ void TmingEngine::Preview::Update()
         return;
     }
     ImTextureID my_tex_id = (void *)ImageId;
-    float my_tex_w = ImGui::GetWindowSize().x-35;
-    float my_tex_h = ImGui::GetWindowSize().y-35;
-    //----------------------------------------------------------------- -1 -1  Image reversal
+    int my_tex_w = ImGui::GetWindowSize().x - 20;
+    int my_tex_h = ImGui::GetWindowSize().y - 50;
 
-	ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));	
+	//----------------------------------------------------------------- -1 -1  Image reversal
+
+	ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 	ImGui::End();
 }
 

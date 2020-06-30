@@ -15,6 +15,8 @@ either version 4 of the License, or (at your option) any later version.
 #include "Core/GameObject.hpp"
 #include <vector>
 #include "../Core/Math/Matrix.h"
+#include "Core/Math/Vector3.h"
+#include "Core/Math/Vector2.h"
 
 namespace TmingEngine
 {
@@ -66,8 +68,13 @@ public:
         updateCameraVectors();
     }
     // Constructor with scalar values
-    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Fov(ZOOM)
+    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) 
     {
+        
+        Front = Vector3(0.0f, 0.0f, -1.0f);
+        MovementSpeed = SPEED;
+        MouseSensitivity = SENSITIVITY;
+        Fov = ZOOM;
         Position = Vector3(posX, posY, posZ);
         WorldUp = Vector3(upX, upY, upZ);
         Yaw = yaw;
@@ -89,12 +96,12 @@ public:
     }
     
     // Returns the view matrix calculated using Euler Angles and the LookAt Matrix
-     Matrix GetViewMatrix()
-    {
-        auto as = Matrix::LookAt(Position, Position + Front, Up);
-        //Debug::Log(as.ToString());
-        return as;
-    }
+    // Matrix GetViewMatrix()
+    //{
+    //    auto as = Matrix::LookAt(Position, Position + Front, Up);
+    //    //Debug::Log(as.ToString());
+    //    return as;
+    //}
     
     glm::mat4 GetViewMatrixGlm()
     {
@@ -108,13 +115,13 @@ public:
     {
         float velocity = MovementSpeed * deltaTime;
         if (direction == FORWARD)
-            Position += Front * velocity;
+            Position = Position + Front * velocity;
         if (direction == BACKWARD)
-            Position -= Front * velocity;
+            Position = Position - Front * velocity;
         if (direction == LEFT)
-            Position -= Right * velocity;
+            Position = Position - Right * velocity;
         if (direction == RIGHT)
-            Position += Right * velocity;
+            Position = Position + Right * velocity;
     }
     
     // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.
@@ -161,10 +168,10 @@ private:
         front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
         front.y = sin(glm::radians(Pitch));
         front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-        Front = Vector3::Normalize(front);
+        Front = front.Normalize();
         // Also re-calculate the Right and Up vector
-        Right = Vector3::Normalize(Vector3::Cross(Front,WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-        Up    = Vector3::Normalize(Vector3::Cross(Right, Front));
+        Right = Front.Cross(WorldUp).Normalize();  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+        Up    = Right.Cross( Front).Normalize();
         
     }
 };

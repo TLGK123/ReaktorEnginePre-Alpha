@@ -103,14 +103,14 @@ namespace TmingEngine
 		static std::vector<std::string> GetSupportedSceneFilesInDirectory(const std::string& directory);
 		//======================================================================================================
 
-		//= SUPPORTED FILE CHECKS =====================================	
+		//= SUPPORTED FILE CHECKS =====================================
 		static bool IsSupportedAudioFile(const std::string& path);
-		static bool IsSupportedImageFile(const std::string& path);	
+		static bool IsSupportedImageFile(const std::string& path);
 		static bool IsSupportedModelFile(const std::string& path);
 		static bool IsSupportedShaderFile(const std::string& path);
 		static bool IsSupportedFontFile(const std::string& path);
 		static bool IsEngineScriptFile(const std::string& path);
-		static bool IsEnginePrefabFile(const std::string& filePath);		
+		static bool IsEnginePrefabFile(const std::string& filePath);
 		static bool IsEngineMaterialFile(const std::string& filePath);
 		static bool IsEngineMeshFile(const std::string& filePath);
 		static bool IsEngineModelFile(const std::string& filePath);
@@ -123,7 +123,7 @@ namespace TmingEngine
 		//= STRING PARSING =============================================================================================================================
 		static std::string GetStringAfterExpression(const std::string& str, const std::string& expression);
 		static std::string GetStringBetweenExpressions(const std::string& str, const std::string& firstExpression, const std::string& secondExpression);
-		static std::string ConvertToUppercase(const std::string& lower);		
+		static std::string ConvertToUppercase(const std::string& lower);
 		static std::string ReplaceExpression(const std::string& str, const std::string& from, const std::string& to);
 		static std::wstring StringToWstring(const std::string& str);
 		static std::string ResolveIncludeDirectives(const std::string& source, const std::string& directory);
