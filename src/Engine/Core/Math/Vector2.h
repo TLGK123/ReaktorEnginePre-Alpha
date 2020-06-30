@@ -18,30 +18,88 @@
 //COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+#pragma once
 #include "../EngineDefs.h"
 #include <string>
+#include <iostream>
+
+#include "ImGui/imgui.h"
+#include "glm/glm.hpp"
+
+using namespace glm;
+
 namespace TmingEngine
 {
-    ENGINE_CLASS class Vector2
-    {
-     
-    public:
-        float x;
-        float y;
-        
-        Vector2()
-        {
-            
-        }
-        
-        Vector2(float x, float y)
-        {
-            this->x = x;
-            this->y = y;
-        }
-        static const Vector2 Zero;
-        static const Vector2 One;
-        std::string ToString() const;
-    };
+	ENGINE_CLASS class Vector2
+	{
+	public:
+		float x = 0;
+		float y = 0;
+
+		Vector2()
+		{
+		}
+
+		//We don't want to modify the class member value ,if a function add "const" at the end,
+		//it mesans that the function will not change the object property
+		//if the parameter add a "const ",it means that the function can pass a const parameter or not,
+		//and the parameter will not be changed in the fucntion.
+
+		Vector2 operator - (const Vector2& v) const
+		{
+			return Vector2(x - v.x, y - v.y);
+		}
+
+		Vector2 operator + (const Vector2& v) const
+		{
+			return Vector2(x + v.x, y + v.y);
+		}
+
+		Vector2 operator * (const int num) const
+		{
+			return Vector2(x * num, y * num);
+		}
+		
+		//对应的组件值，相乘并相加,通常用于计算向量的夹角
+		// A * B = |A|*|B|*Cos(θ)=(a1*b1 + a2*b2 + ... + an*bn)
+		float Dot(Vector2& v)
+		{
+			return  x * v.x + y * v.y;
+		}
+
+		//斜对角相乘 并相减
+		float Cross(Vector2& v)
+		{
+			return  x * v.y - v.x * y;
+		}
+
+		Vector2(float x, float y)
+		{
+			this->x = x;
+			this->y = y;
+		}
+
+		Vector2(vec2 v2)
+		{
+			this->x = v2.x;
+			this->y = v2.y;
+		}
+
+		operator ImVec2()
+		{
+			return ImVec2(x, y);
+		}
+
+		operator vec2()
+		{
+			return vec2(x, y);
+		}
+
+
+
+		static const Vector2 Zero;
+		static const Vector2 One;
+	
+
+	};
 }

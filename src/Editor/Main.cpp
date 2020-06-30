@@ -1,6 +1,6 @@
 //The MIT License
 //
-//Copyright(c) 2016 - 2019 littleblue
+//Copyright(c) 2018 - 2020 littleblue
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this softwareand associated documentation files(the "Software"), to deal
@@ -19,43 +19,56 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-//  Main.c
-//  Editor
+//  Main.cpp
 //  Created by lillteblue on 2018/6/16.
 
 #include "Main.h"
-#include "Editor.h"
 #include <iostream>
 using namespace std;
 using namespace TmingEngine;
 
+
 int main()
 {
-
 	Engine *engine;
-    Editor *editor;
-
-	MonoHelp::Start();
+   
     engine = new Engine(&Global<Context>());
+    
     if (!engine->Initialize())
     {
+        Debug::Log("TmingEngine----------Initialize----faild");
         return -1;
-    };
-    
-    editor = new Editor(&Global<Context>());
-    if (!editor->Initialize())
-    {
-        return -1;
-    };
-    Debug::Log("hello world");
-    
+    }
 
-	while (!editor->ScreenShouldClose())
+    engine->SetEngineModeToEditor(true);
+    engine->windows->InsertEditorWidget = SetEditorWidget;
+    engine->InitializeWin();
+
+
+    long frameNum = 0;
+	while (!engine->ShouldClose())
 	{
-        engine->Tick();
-        editor->Update();
+        frameNum++;
+        engine->Update();
 	}
-	MonoHelp::End();
-	editor->ShutDown();
-	engine->Shutdown();
+
+	engine->Destory();
+}
+
+void SetEditorWidget()
+{
+    auto context = &Global<Context>();
+    Engine * eg = context->GetSubsystem<Engine>();
+    IWindows * win = eg->windows;
+    win->RegisteWidget(new SceneView(context));
+    //win->RegisteWidget(new DemoMenu(context));
+    win->RegisteWidget(new Project(context));
+    win->RegisteWidget(new Hierachy(context));
+    win->RegisteWidget(new Inspector(context));
+    win->RegisteWidget(new Game(context));
+    win->RegisteWidget(new Profiler(context));
+    win->RegisteWidget(new Console(context));
+    win->RegisteWidget(new CodeEditor(context));
+    win->RegisteWidget(new Preview(context));
+    Debug::Log(" Editor 初始化窗口成功  ");
 }

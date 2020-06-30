@@ -1,5 +1,5 @@
 /*
-Copyright(c) 2016-2019 Panos Karabelas
+//Copyright(c) 2016 - 2020 littleblue
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,61 +21,45 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #pragma once
 #include "Context.h"
-#define ENGINE_VERSION "v0.1 alpha"
+#define ENGINE_VERSION "v0.0.1"
 #define TmengineLib
 #include "../Scene/Scene.hpp"
+#include "Plantform/Windows/IWindows.h"
 
 namespace TmingEngine
 {
-	enum Engine_Mode : unsigned long
-	{
-		Engine_Update = 1UL << 0,	// Should the engine update?
-		Engine_Physics = 1UL << 1, // Should physics update?
-		Engine_Render = 1UL << 2,	// Should the engine render?
-		Engine_Game = 1UL << 3,	// Is the engine running in game or editor mode?
-	};
 
 	class Timer;
 
 	class ENGINE_CLASS Engine : public Subsystem
 	{
 	public:
+		
 		Engine(Context* context);
-		~Engine() { Shutdown(); }
-
-		//= SUBSYSTEM =============
+		
 		bool Initialize() override;
-		//=========================
+
+		void InitializeWin();
+
 		void Update();
 
-		void Tick();
+		void Destory();
 
-		void Shutdown();
+		void RenderScene();
 
-		//static unsigned long EngineMode_GetAll() { return m_flags; }
+		bool ShouldClose();
 
-		//static void EngineMode_SetAll(unsigned long flags) { m_flags = flags; }
+		bool isEditorMode = false;
 
-		//static void EngineMode_Enable(Engine_Mode flag) { m_flags |= flag; }
-
-		//static void EngineMode_Disable(Engine_Mode flag) { m_flags &= ~flag; }
-
-		//static void EngineMode_Toggle(Engine_Mode flag) { m_flags = !EngineMode_IsSet(flag) ? m_flags | flag : m_flags & ~flag; }
-
-		//static bool EngineMode_IsSet(Engine_Mode flag) { return m_flags & flag; }
-
-	//	static void SetHandles(void* drawHandle, void* windowHandle, void* windowInstance);
-	//	static void* GetWindowHandle() { return m_windowHandle; }
-	//	static void* GetWindowInstance() { return m_windowInstance; }
-
+		void SetEngineModeToEditor(bool mode);
+	
 		Context* GetContext() { return m_context; }
 
         Scene * currentScene;
+
+		IWindows* windows;
 	private:
-		//static void* m_drawHandle;
-		//static void* m_windowHandle;
-		//static void* m_windowInstance;
-		//static unsigned long m_flags;
+
 		Timer* m_timer;
 	};
 }

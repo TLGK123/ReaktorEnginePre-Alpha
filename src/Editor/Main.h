@@ -1,6 +1,6 @@
 //The MIT License
 //
-//Copyright(c) 2016 - 2019 littleblue
+//Copyright(c) 2016 - 2020 littleblue
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this softwareand associated documentation files(the "Software"), to deal
@@ -21,8 +21,6 @@
 
 //
 //  Main.h
-//  Editor
-//
 //  Created by littleblue on 2018/6/16.
 //
 #pragma once
@@ -39,4 +37,16 @@
 #include "Core/SmartPtr.h"
 
 
+#include "SceneView.h"
+#include "Project.h"
+#include "Hierachy.h"
+#include "Inspector.hpp"
+#include "Game.hpp"
+#include "Profiler.hpp"
+#include "Project.h"
+#include "Console.h"
+
+
+
+void SetEditorWidget();
 #endif /* Main_h */

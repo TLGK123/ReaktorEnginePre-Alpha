@@ -25,13 +25,15 @@ namespace TmingEngine
 {
 	void Debug::Log(const char * message, ...)
 	{
-		printf(message);
+        std::cout << message << std::endl;
+		//printf(message);
 		//Global<Context>().GetSubsystem<Console>()->AddLog(message);
 	}
     
     void Debug::Log(string msg)
     {
-        printf(msg.c_str());
+        std::cout << msg << std::endl;
+       // printf(msg.c_str());
         //Global<Context>().GetSubsystem<Console>()->AddLog(message);
     }
     

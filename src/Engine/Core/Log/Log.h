@@ -28,11 +28,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-//====================
+
 
 namespace TmingEngine
 {
-	static class ENGINE_CLASS Debug : public Subsystem
+	class ENGINE_CLASS Debug : public Subsystem
 	{
 	public:
 		static void Log(const char * message, ...);

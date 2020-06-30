@@ -1,6 +1,6 @@
 //The MIT License
 //
-//Copyright(c) 2016 - 2019 littleblue
+//Copyright(c) 2016 - 2020 littleblue
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this softwareand associated documentation files(the "Software"), to deal
@@ -25,7 +25,7 @@
 
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
-#include "Widget.h"
+#include "Plantform/Windows/Widget.h"
 #include "im.h"
 #include "Core/Log/Log.h"
 
@@ -36,8 +36,29 @@ extern "C"
 }
 
 
+extern "C"
+{
+#include "lua.h"  
+#include "lauxlib.h"  
+#include "lualib.h"  
+}
+
+#include <angelscript.h>
+#include <scriptstdstring/scriptstdstring.h>
+#include <scriptbuilder/scriptbuilder.h>
+
 namespace TmingEngine
 {
+
+	void ConfigureEngine(asIScriptEngine* engine);
+	int  CompileScript(asIScriptEngine* engine);
+	void PrintString(string& str);
+	void PrintString_Generic(asIScriptGeneric* gen);
+	void timeGetTime_Generic(asIScriptGeneric* gen);
+	void LineCallback(asIScriptContext* ctx, DWORD* timeOut);
+
+
+
 	class Console : public Widget
 	{
 	public:
@@ -58,7 +79,9 @@ namespace TmingEngine
 		void Clear();
 		void AddLog(const char* fmt, ...);
 		void Draw(const char* title, bool* p_open);
-		void Draw2(const char* title, bool* p_open);
+		//void Draw2(const char* title, bool* p_open);
+		void TestLua();
+		int TestAngleScript();
 	};
 }
 #endif

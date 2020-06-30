@@ -37,13 +37,13 @@ namespace TmingEngine
 {
 	Transform::Transform(Context* context, GameObject* gameObject, Transform* transform) : IComponent(context, gameObject, transform)
 	{
-        m_positionLocal        = Vector3::Zero;
-        m_rotationLocal        = Quaternion(0, 0, 0, 1);
-        m_scaleLocal        = Vector3::One;
-    
-     //  m_worldTransform    = Matrix::Identity;
-      // m_localTransform    = Matrix::Identity;
-       m_parent            = nullptr;
+		m_positionLocal        = Vector3(0,0,0);
+		m_rotationLocal        = Quaternion(0, 0, 0, 1);
+		m_scaleLocal        = Vector3(1,1,1);
+	
+	 //  m_worldTransform    = Matrix::Identity;
+	  // m_localTransform    = Matrix::Identity;
+	   m_parent            = nullptr;
 	}
 
 	Transform::~Transform()
@@ -115,16 +115,16 @@ namespace TmingEngine
 //        SetPositionLocal(!HasParent() ? position : GetParent()->GetWorldTransform().Inverted() * position);
 //    }
 
-    void Transform::SetPositionLocal(const Vector3& position)
-    {
-        ;
-        if (m_positionLocal == position)
-            return;
+	void Transform::SetPositionLocal(const Vector3& position)
+	{
+		;
+		if (m_positionLocal == position)
+			return;
 
-        m_positionLocal = position;
-        ;
-      //  UpdateTransform();
-    }
+		m_positionLocal = position;
+		;
+	  //  UpdateTransform();
+	}
 	//================================================================================================
 
 	//= ROTATION =====================================================================================
@@ -215,15 +215,15 @@ namespace TmingEngine
 	//================================================================================================
 
 	//= HIERARCHY ====================================================================================
-    
-    void Transform::SetParent(Transform* newParent)
-    {
-        m_parent = newParent;
-        newParent->m_children.push_back(this);
-    }
-    
-    
-    
+	
+	void Transform::SetParent(Transform* newParent)
+	{
+		m_parent = newParent;
+		newParent->m_children.push_back(this);
+	}
+	
+	
+	
 	// Sets a parent for this transform
 //    void Transform::SetParent(Transform* newParent)
 //    {
