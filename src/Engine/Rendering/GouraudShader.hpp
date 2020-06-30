@@ -58,9 +58,15 @@ namespace TmingEngine
 			return Vector3(point1[0][0], point1[1][0], point1[2][0]);
 		};
 
+		bool Fragment(TGAColor& color , Vector3 barycent)override
+		{
+			//color = TGAColor(125,125,125,255);
+			return false;
+		}
+
 		bool Fragment(TGAColor& color)override
 		{
-			color = TGAColor(125,125,125,255);
+			//color = TGAColor(125,125,125,255);
 			return false;
 		}
 	};

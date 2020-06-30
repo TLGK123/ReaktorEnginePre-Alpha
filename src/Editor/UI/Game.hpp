@@ -40,6 +40,7 @@
 #include "Rendering/Model.hpp"
 #include "Rendering/Light.hpp"
 #include "Rendering/GouraudShader.hpp"
+#include "Rendering/Vertex.hpp"
 																																																							
 namespace TmingEngine
 {
@@ -88,7 +89,11 @@ namespace TmingEngine
 
 	Vector3 barycentricCoordinateCrossProduct(Vector3 a, Vector3 b, Vector3 c, Vector3 p);
 
+	Vector3 barycentricCoordinateCrossProduct(Vertex a, Vertex b, Vertex c, Vertex p);
+
 	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color, int* zbuffer);
+
+	void fillTriangleFromEdgeWitchZbuffer(Vertex v1, Vertex v2, Vertex v3, TGAImage& image, TGAColor color, int* zbuffer);
 
 	Vector2 Matirx2x2(Vector2 p, float a, float b, float c, float d);
 

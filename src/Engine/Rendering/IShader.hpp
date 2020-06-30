@@ -57,6 +57,7 @@ namespace TmingEngine
 		}
 
 		virtual Vector3 Vertex(Vector3 pos) = 0;
-		virtual bool Fragment( TGAColor& color) = 0;
+		virtual bool Fragment(TGAColor& color, Vector3 barycent) = 0;
+		virtual bool Fragment(TGAColor& color ) = 0;
 	};
 }

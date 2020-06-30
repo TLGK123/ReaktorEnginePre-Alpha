@@ -79,6 +79,12 @@ namespace TmingEngine
 			this->y = y;
 		}
 
+		Vector2(vec2 v2)
+		{
+			this->x = v2.x;
+			this->y = v2.y;
+		}
+
 		operator ImVec2()
 		{
 			return ImVec2(x, y);
@@ -88,6 +94,8 @@ namespace TmingEngine
 		{
 			return vec2(x, y);
 		}
+
+
 
 		static const Vector2 Zero;
 		static const Vector2 One;
