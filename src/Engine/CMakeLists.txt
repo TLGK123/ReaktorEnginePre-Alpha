@@ -72,6 +72,7 @@ include_directories("../ThirdParty/Vulkan_1.1.106.0/vulkan")
 include_directories("../ThirdParty/SPIRV-Cross-2019-03-29")
 include_directories("../ThirdParty/Angelscript/sdk/add_on")
 include_directories("../../include/angelscript")
+include_directories("../../include/ImGui")
 
 set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
 link_directories(${libpath})

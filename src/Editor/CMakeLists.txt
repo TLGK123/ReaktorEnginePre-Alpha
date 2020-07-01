@@ -34,10 +34,10 @@ target_link_libraries(Editor "-framework IOKit")
 target_link_libraries(Editor "-framework CoreVideo")
 endif(APPLE)
 
-add_custom_command(TARGET Editor POST_BUILD     #拷贝文件夹             
-COMMAND ${CMAKE_COMMAND} -E copy_directory                     
-"${PROJECT_SOURCE_DIR}/Library/shared"                                                     
-$<TARGET_FILE_DIR:Editor>)
+#add_custom_command(TARGET Editor POST_BUILD     #拷贝文件夹             
+#COMMAND ${CMAKE_COMMAND} -E copy_directory                     
+#"${PROJECT_SOURCE_DIR}/Library/shared"                                                     
+#$<TARGET_FILE_DIR:Editor>)
 
 ADD_DEFINITIONS(-DIMGUI_IMPL_OPENGL_LOADER_GLAD)
 
