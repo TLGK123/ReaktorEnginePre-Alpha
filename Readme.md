@@ -3,7 +3,7 @@
 ## Open Source 
 [https://github.com/xiaomingfun/TmingEngine](https://github.com/xiaomingfun/TmingEngine)
 ## UI Library
- >TmingEnggine use a open source UI framework named   dear-imgui。 The advantage of this framework is easy using ，convenient extension ，free limit with using MIT LICENSE 。So we can
+ >TmingEnggine use a open source UI framework named   dear-imgui。 The advantage of this framework is easy using ，convenient extension ，little limit with using MIT LICENSE 。So we can
  easy to develop a game editor by import this framework.
 
 My global is to develop a full-platform Editor (Windows Mac Linux) ,then I need to abstract a windows layer，above this abstract layer to develop the game engine editor。So I use OpenGL  for backend rendering，use  glfw to create a windows , finally use the dear-imgui to build editor widget 。I want to use vulkan to replace the OpenGL in the future。If the abstract windows layer design good enough ，then we can easy to change backend rendering library.
