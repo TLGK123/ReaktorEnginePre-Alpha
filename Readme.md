@@ -1,23 +1,24 @@
-# 游戏引擎编辑器
+# Game Engine Editor
 @[toc]
-## 开源地址
+## Open Source 
 [https://github.com/xiaomingfun/TmingEngine](https://github.com/xiaomingfun/TmingEngine)
-## UI图形库
- >编辑器图形库使用的是开源框架imgui。这个开源的UI框架的特点是方便，容易使用，扩展性很强，使用的MIT的开源协议。所以能够很好的进行二次开发，定制自己引擎的样子。
+## UI Library
+ >TmingEnggine use a open source UI framework named   dear-imgui。 The advantage of this framework is easy using ，convenient extension ，free limit with using MIT LICENSE 。So we can
+ easy to develop a game editor by import this framework.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;因为想要进行跨平台的编辑器的开发设计，所以需要基于一个全平台都能使用的windows窗口抽象层，基于这个抽象层，上使用imgui进行界面设计。所以我选择使用OpenGL + imgui 进行开发，利用OpenGL中对于窗口抽象的库，glfw来创建窗口。再利用imgui绘制窗口。未来可以将OpenGL替换为vulkan 。只要上层的图形抽象做好，就可以进行底层图形库的替换。
+My global is to develop a full-platform Editor (Windows Mac Linux) ,then I need to abstract a windows layer，above this abstract layer to develop the game engine editor。So I use OpenGL  for backend rendering，use  glfw to create a windows , finally use the dear-imgui to build editor widget 。I want to use vulkan to replace the OpenGL in the future。If the abstract windows layer design good enough ，then we can easy to change backend rendering library.
  
- ## 界面功能布局设计
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200702213725647.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25hbl9mZW5nX3l1,size_16,color_FFFFFF,t_70)
+ ## The Editor Layout
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200702232219177.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25hbl9mZW5nX3l1,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20191026231337406.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25hbl9mZW5nX3l1,size_16,color_FFFFFF,t_70)
->虽然自己作为长久的Unity使用者，但是对于引擎编辑器的功能区，的设计并没有非常深入的了解，但是，Unity吸引我从cocos转向它，正是因为它有良好的用户习惯的延续，对于初学者，针对老的教程也能在新版本中有比较容易的过渡，在经历了大版本的更新后，也没有改变大体 布局，这个为学习者提供了良好的过渡。
+>Even though I have used Unity for a long time , but I still don't know why Unity have  to design those widgets .But those layout design is the really reason that I change use the tool from cocos to Unity .Because of the  continuation  of the user habit . As a beginner ，we can also fellow the old version  article to exercise in the the latest editor tool .
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所以对于，Unity编辑器界面的设计，目前阶段就是模仿Unity做的，自己也同样做一个出来。同时也会去关注一些，主流的3D模型软件的界面操作，将更加优秀的布局设计和功能带到自己的引擎中。
+So the design of TmingEngine editor , I just imitate the Unity . I will learn other 3D rendering  tool UI layout , then bring the good design to  my  project.
 
-## 目前阶段侧重点---Shader展示
+## Current Focus on-------Shader
 > 当前处于游戏引擎开发的最初级阶段，力图从各个方面进行完善不太现实。所以当前主要的侧重点在于针对Shader学习，提供一个良好的IDE环境，这个环境界面其实就是游戏引擎的雏形应该要有的功能。
 
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于一个良好的Shader编译，运行，调试开发和纠错环境。需要的基本功能，就是和真正的3D游戏开发极其类似，所以我希望自己能在某个部分有所突破和创新以后，逐步完善游戏引擎的每个功能模块。
+对于一个良好的Shader编译，运行，调试开发和纠错环境。需要的基本功能，就是和真正的3D游戏开发极其类似，所以我希望自己能在某个部分有所突破和创新以后，逐步完善游戏引擎的每个功能模块。
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 ## 内置Shader代码编辑器(第三方库)
