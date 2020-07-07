@@ -79,4 +79,4 @@ namespace TmingEngine
 	};
 }
 
-#endif
+#endif //TmingEngine_Engine_Rending_GouraudShader_hpp_

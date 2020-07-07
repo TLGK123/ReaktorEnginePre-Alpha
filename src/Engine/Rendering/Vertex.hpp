@@ -44,4 +44,4 @@ namespace TmingEngine
 	};
 }
 
-#endif
+#endif //TmingEngine_Engine_Rending_Vertex_hpp_

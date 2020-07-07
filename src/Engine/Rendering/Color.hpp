@@ -59,4 +59,4 @@ namespace TmingEngine
 	};
 }
 
-#endif
+#endif //TmingEngine_Engine_Rending_Color_hpp_
