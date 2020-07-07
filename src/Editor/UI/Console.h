@@ -1,12 +1,12 @@
 /*
-            This file is part of: 
-                TmingEngine
-            https://github.com/xiaomingfun/TmingEngine
+			This file is part of:
+				TmingEngine
+			https://github.com/xiaomingfun/TmingEngine
 
-   Copyright 2016 - 2020 TmingEngine(NoahGameFrame)
+   Copyright 2018 - 2020 TmingEngine
 
    File creator: littleblue
-   
+
    TmingEngine is open-source software and you can redistribute it and/or modify
    it under the terms of the License; besides, anyone who use this file/software must include this copyright announcement.
 
@@ -14,7 +14,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,18 +33,16 @@
 #include "im.h"
 #include "Core/Log/Log.h"
 
-
 extern "C"
 {
-//#include "Scheme/include/scheme.h"
+	//#include "Scheme/include/scheme.h"
 }
 
-
 extern "C"
 {
-#include "lua.h"  
-#include "lauxlib.h"  
-#include "lualib.h"  
+#include "lua.h"
+#include "lauxlib.h"
+#include "lualib.h"
 }
 
 #include <angelscript.h>
@@ -53,15 +51,12 @@ extern "C"
 
 namespace TmingEngine
 {
-
 	void ConfigureEngine(asIScriptEngine* engine);
 	int  CompileScript(asIScriptEngine* engine);
 	void PrintString(string& str);
 	void PrintString_Generic(asIScriptGeneric* gen);
 	void timeGetTime_Generic(asIScriptGeneric* gen);
 	void LineCallback(asIScriptContext* ctx, DWORD* timeOut);
-
-
 
 	class Console : public Widget
 	{
@@ -71,15 +66,15 @@ namespace TmingEngine
 		ImVector<int>       LineOffsets;        // Index to lines offset
 		bool                ScrollToBottom;
 
-		Console(Context *context)
+		Console(Context* context)
 		{
 		}
 		~Console();
 
-        void Begin();
-        void Update();
-        void End();
-        
+		void Begin();
+		void Update();
+		void End();
+
 		void Clear();
 		void AddLog(const char* fmt, ...);
 		void Draw(const char* title, bool* p_open);

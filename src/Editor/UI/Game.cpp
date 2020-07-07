@@ -1,12 +1,12 @@
 /*
-            This file is part of: 
-                TmingEngine
-            https://github.com/xiaomingfun/TmingEngine
+			This file is part of:
+				TmingEngine
+			https://github.com/xiaomingfun/TmingEngine
 
-   Copyright 2016 - 2020 TmingEngine(NoahGameFrame)
+   Copyright 2018 - 2020 TmingEngine
 
    File creator: littleblue
-   
+
    TmingEngine is open-source software and you can redistribute it and/or modify
    it under the terms of the License; besides, anyone who use this file/software must include this copyright announcement.
 
@@ -14,7 +14,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,7 +33,7 @@ namespace TmingEngine
 
 	void TmingEngine::Game::Begin()
 	{
-		testCharacter.Init(FileSystem::getPath("resources/objects/character/_2.obj"));
+		testCharacter.Init(FileSystem::getPath("resources/objects/cyborg/cyborg.obj"));
 
 		SoftRender();
 	}
@@ -103,7 +103,7 @@ namespace TmingEngine
 		sunlitght.Direction = Vector3(0, 1, -1);
 		sunlitght.Color = Color(0.5, 0.5, 0);
 
-		Vector3 CameraPos = Vector3(0, 0.5, 1);
+		Vector3 CameraPos = Vector3(0, 1, 3);
 		Vector3 center(0, 0, 0);	//相机朝向原点
 		Vector3 up(0, 1, 0);		//相机向上
 
@@ -124,7 +124,7 @@ namespace TmingEngine
 
 		shader.SetModel(model);
 		shader.SetView(view);
-		shader.SetProjection(orthographic);
+		shader.SetProjection(perspective);
 		shader.SetViewPoint(viewPoint);
 
 		for (int i = 0; i < testCharacter.meshes[0].indices.size(); i += 3)
@@ -519,7 +519,6 @@ namespace TmingEngine
 
 				auto interpolatedNormal = normals * barycents;
 				Vector3 pixelNormal = Vector3(interpolatedNormal[0][0], interpolatedNormal[1][0], interpolatedNormal[2][0]).Normalize();
-
 
 				float intensity = pixelNormal.Dot(sunlitght.Direction.Normalize());
 

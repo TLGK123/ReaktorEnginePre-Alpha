@@ -1,12 +1,12 @@
 /*
-            This file is part of: 
-                TmingEngine
-            https://github.com/xiaomingfun/TmingEngine
+			This file is part of:
+				TmingEngine
+			https://github.com/xiaomingfun/TmingEngine
 
-   Copyright 2016 - 2020 TmingEngine(NoahGameFrame)
+   Copyright 2018 - 2020 TmingEngine
 
    File creator: littleblue
-   
+
    TmingEngine is open-source software and you can redistribute it and/or modify
    it under the terms of the License; besides, anyone who use this file/software must include this copyright announcement.
 
@@ -14,7 +14,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,8 +22,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
-
 
 #pragma once
 #include "Core/SubSystem.h"
@@ -55,10 +53,8 @@
 #include "Selection.hpp"
 #include "Preview.hpp"
 
-
 namespace TmingEngine
 {
-
 	enum ProjectStyle
 	{
 		OneLoyout,
@@ -69,7 +65,7 @@ namespace TmingEngine
 	{
 	public:
 
-		Project(Context *context)
+		Project(Context* context)
 		{
 			m_title = "Project";
 		}
@@ -79,8 +75,6 @@ namespace TmingEngine
 		void Update();
 		void End();
 		std::string rightContent;
-		std::vector<std::string> FileFilter(const char * dir , std::vector<std::string> filefilters);
-
-		
+		std::vector<std::string> FileFilter(const char* dir, std::vector<std::string> filefilters);
 	};
 }

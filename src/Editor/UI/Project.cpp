@@ -1,12 +1,12 @@
 /*
-            This file is part of: 
-                TmingEngine
-            https://github.com/xiaomingfun/TmingEngine
+			This file is part of:
+				TmingEngine
+			https://github.com/xiaomingfun/TmingEngine
 
-   Copyright 2016 - 2020 TmingEngine(NoahGameFrame)
+   Copyright 2018 - 2020 TmingEngine
 
    File creator: littleblue
-   
+
    TmingEngine is open-source software and you can redistribute it and/or modify
    it under the terms of the License; besides, anyone who use this file/software must include this copyright announcement.
 
@@ -14,7 +14,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,12 +23,11 @@
    limitations under the License.
 */
 
-
 #include "Project.h"
 #include <Core\Engine.h>
 using namespace TmingEngine;
 
-void AssetTree(string path ,int roundNum);
+void AssetTree(string path, int roundNum);
 
 void MenuFile();
 
@@ -36,14 +35,9 @@ TmingEngine::Project::~Project()
 {
 }
 
-
-
 void TmingEngine::Project::Begin()
 {
-
 }
-
-
 
 void TmingEngine::Project::Update()
 {
@@ -58,9 +52,8 @@ void TmingEngine::Project::Update()
 	ImGui::Columns(2, "Assets", true);
 	if (ImGui::TreeNode("Assets"))
 	{
-	
 		auto current = FileSystem::getPath("");
-		AssetTree(current,0);
+		AssetTree(current, 0);
 		//AssetTreeL(current);
 		//ImGui::NextColumn;
 
@@ -76,7 +69,6 @@ void TmingEngine::Project::Update()
 	//ImGui::EndChild();
 	ImGui::SameLine();
 	ImGui::End();
-
 }
 
 struct PathObjInfo
@@ -105,7 +97,6 @@ vector<PathObjInfo> getPathFileOrFolderinfo(string path)
 			string temp = string(dirp->d_name);
 			if (temp == "." || temp == "..")
 			{
-
 			}
 			else
 			{
@@ -122,7 +113,7 @@ vector<PathObjInfo> getPathFileOrFolderinfo(string path)
 	LARGE_INTEGER size;
 	char dirNew[100];
 
-	// 向目录加通配符，用于搜索第一个文件 
+	// 向目录加通配符，用于搜索第一个文件
 	strcpy(dirNew, path.c_str());
 	strcat(dirNew, "\\*.*");
 
@@ -134,12 +125,12 @@ vector<PathObjInfo> getPathFileOrFolderinfo(string path)
 	}
 	do
 	{
-		// 忽略"."和".."两个结果 
+		// 忽略"."和".."两个结果
 		if (strcmp(findData.cFileName, ".") == 0 || strcmp(findData.cFileName, "..") == 0)
 			continue;
 
 		PathObjInfo info;
-		if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)    // 是否是目录 
+		if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)    // 是否是目录
 		{
 			info.name = findData.cFileName;
 			info.isFolder = true;
@@ -161,17 +152,15 @@ vector<PathObjInfo> getPathFileOrFolderinfo(string path)
 	} while (FindNextFile(hFind, &findData));
 	cout << "Done!\n";
 
-
 #endif
 
 	return restInfo;
 }
 
-
 map<string, vector<PathObjInfo>> pathCache;
 int clickRound = -1;
 
-void AssetTree(string path  , int roundNum)
+void AssetTree(string path, int roundNum)
 {
 	auto iter = pathCache.find(path);
 	if (iter != pathCache.end())
@@ -186,7 +175,6 @@ void AssetTree(string path  , int roundNum)
 			{
 				if (t.name == ".." || t.name == ".")
 				{
-
 				}
 				else
 				{
@@ -205,14 +193,14 @@ void AssetTree(string path  , int roundNum)
 				node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 				int tempIndex = 9, node_clicked;
 				ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags, t.name.c_str());
-				
-				int ClickMouse = ImGui::IsItemClicked();			
+
+				int ClickMouse = ImGui::IsItemClicked();
 				if (ClickMouse)
 				{
 					string fpath = path + "/" + t.name;
-					Debug::Log(string("Select: ")+ path + "/" + t.name+"\n");
+					Debug::Log(string("Select: ") + path + "/" + t.name + "\n");
 
-					if ((t.name.find(".glsl")!= string::npos)
+					if ((t.name.find(".glsl") != string::npos)
 						|| (t.name.find(".hlsl") != string::npos)
 						|| (t.name.find(".fs") != string::npos)
 						|| (t.name.find(".vs") != string::npos)
@@ -243,9 +231,7 @@ void AssetTree(string path  , int roundNum)
 						auto previewer = screen->GetSubWidget<Preview>();
 						previewer->PreviewTexture(fpath);
 						previewer->Show();
-
 					}
-
 				}
 
 				if (ImGui::IsItemClicked(1))
@@ -281,18 +267,12 @@ void MenuFile()
 		{
 			//Global<Context>().GetSubsystem<IWindows>()->ChangeModel(TmingEngine::Selecttion::ProjectSelected);
 		}
-
 	}
-
 }
-
-
 
 void TmingEngine::Project::End()
 {
-
 }
-
 
 std::vector<std::string> split(const std::string& s, char delimiter)
 {
@@ -305,7 +285,6 @@ std::vector<std::string> split(const std::string& s, char delimiter)
 	}
 	return tokens;
 }
-
 
 #ifdef __APPLE__
 void listFiles(const char* path, std::vector<std::string>& files, std::vector<string> filters)
@@ -347,7 +326,6 @@ void listFiles(const char* path, std::vector<std::string>& files, std::vector<st
 
 void listFiles(const char* dir, std::vector<std::string>& files, std::vector<string> filters)
 {
-
 	char dirNew[200];
 	strcpy(dirNew, dir);
 	strcat(dirNew, "\\*.*");
@@ -377,7 +355,6 @@ void listFiles(const char* dir, std::vector<std::string>& files, std::vector<str
 			string s = string(dir) + "\\" + string(findData.name);
 			auto ext = split(findData.name, '.');
 
-
 			vector<string>::iterator it, all;
 			string value = "." + *(ext.end() - 1);
 			string alv = ".*";
@@ -402,5 +379,3 @@ std::vector<std::string> TmingEngine::Project::FileFilter(const char* dir, std::
 	listFiles(dir, res, filefilters);
 	return res;
 }
-
-

@@ -1,12 +1,12 @@
 /*
-            This file is part of: 
-                TmingEngine
-            https://github.com/xiaomingfun/TmingEngine
+			This file is part of:
+				TmingEngine
+			https://github.com/xiaomingfun/TmingEngine
 
-   Copyright 2016 - 2020 TmingEngine(NoahGameFrame)
+   Copyright 2018 - 2020 TmingEngine
 
    File creator: littleblue
-   
+
    TmingEngine is open-source software and you can redistribute it and/or modify
    it under the terms of the License; besides, anyone who use this file/software must include this copyright announcement.
 
@@ -14,7 +14,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,23 +34,21 @@ void TmingEngine::Preview::Begin()
 	p_open = true;
 }
 
-
-
 void TmingEngine::Preview::Update()
 {
 	if (!p_open)
 	{
 		return;
 	}
-    ImGui::SetNextWindowSize(ImVec2(640, 360), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Preview", &p_open))
-    {
-        ImGui::End();
-        return;
-    }
-    ImTextureID my_tex_id = (void *)ImageId;
-    int my_tex_w = ImGui::GetWindowSize().x - 20;
-    int my_tex_h = ImGui::GetWindowSize().y - 50;
+	ImGui::SetNextWindowSize(ImVec2(640, 360), ImGuiCond_FirstUseEver);
+	if (!ImGui::Begin("Preview", &p_open))
+	{
+		ImGui::End();
+		return;
+	}
+	ImTextureID my_tex_id = (void*)ImageId;
+	int my_tex_w = ImGui::GetWindowSize().x - 20;
+	int my_tex_h = ImGui::GetWindowSize().y - 50;
 
 	//----------------------------------------------------------------- -1 -1  Image reversal
 
@@ -64,8 +62,8 @@ void TmingEngine::Preview::End()
 
 void TmingEngine::Preview::PreviewTexture(string path)
 {
-	Debug::Log("open path"+ path+"\n");
-	
+	Debug::Log("open path" + path + "\n");
+
 	glGenTextures(1, &texture1);
 
 	glBindTexture(GL_TEXTURE_2D, texture1);
@@ -107,9 +105,7 @@ void TmingEngine::Preview::PreviewTexture(string path)
 		}
 		catch (const std::exception&)
 		{
-
 		}
-
 	}
 	else
 	{

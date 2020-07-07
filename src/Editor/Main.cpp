@@ -1,12 +1,12 @@
 /*
-            This file is part of: 
-                TmingEngine
-            https://github.com/xiaomingfun/TmingEngine
+			This file is part of:
+				TmingEngine
+			https://github.com/xiaomingfun/TmingEngine
 
-   Copyright 2016 - 2020 TmingEngine(NoahGameFrame)
+   Copyright 2018 - 2020 TmingEngine
 
    File creator: littleblue
-   
+
    TmingEngine is open-source software and you can redistribute it and/or modify
    it under the terms of the License; besides, anyone who use this file/software must include this copyright announcement.
 
@@ -14,7 +14,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,29 +28,27 @@
 using namespace std;
 using namespace TmingEngine;
 
-
 int main()
 {
-	Engine *engine;
-   
-    engine = new Engine(&Global<Context>());
-    
-    if (!engine->Initialize())
-    {
-        Debug::Log("TmingEngine----------Initialize----faild");
-        return -1;
-    }
+	Engine* engine;
 
-    engine->SetEngineModeToEditor(true);
-    engine->windows->InsertEditorWidget = SetEditorWidget;
-    engine->InitializeWin();
+	engine = new Engine(&Global<Context>());
 
+	if (!engine->Initialize())
+	{
+		Debug::Log("TmingEngine----------Initialize----faild");
+		return -1;
+	}
 
-    long frameNum = 0;
+	engine->SetEngineModeToEditor(true);
+	engine->windows->InsertEditorWidget = SetEditorWidget;
+	engine->InitializeWin();
+
+	long frameNum = 0;
 	while (!engine->ShouldClose())
 	{
-        frameNum++;
-        engine->Update();
+		frameNum++;
+		engine->Update();
 	}
 
 	engine->Destory();
@@ -58,18 +56,18 @@ int main()
 
 void SetEditorWidget()
 {
-    auto context = &Global<Context>();
-    Engine * eg = context->GetSubsystem<Engine>();
-    IWindows * win = eg->windows;
-    win->RegisteWidget(new SceneView(context));
-    //win->RegisteWidget(new DemoMenu(context));
-    win->RegisteWidget(new Project(context));
-    win->RegisteWidget(new Hierachy(context));
-    win->RegisteWidget(new Inspector(context));
-    win->RegisteWidget(new Game(context));
-    win->RegisteWidget(new Profiler(context));
-    win->RegisteWidget(new Console(context));
-    win->RegisteWidget(new CodeEditor(context));
-    win->RegisteWidget(new Preview(context));
-    Debug::Log(" Editor 初始化窗口成功  ");
+	auto context = &Global<Context>();
+	Engine* eg = context->GetSubsystem<Engine>();
+	IWindows* win = eg->windows;
+	win->RegisteWidget(new SceneView(context));
+	//win->RegisteWidget(new DemoMenu(context));
+	win->RegisteWidget(new Project(context));
+	win->RegisteWidget(new Hierachy(context));
+	win->RegisteWidget(new Inspector(context));
+	win->RegisteWidget(new Game(context));
+	win->RegisteWidget(new Profiler(context));
+	win->RegisteWidget(new Console(context));
+	win->RegisteWidget(new CodeEditor(context));
+	win->RegisteWidget(new Preview(context));
+	Debug::Log(" Editor 初始化窗口成功  ");
 }
