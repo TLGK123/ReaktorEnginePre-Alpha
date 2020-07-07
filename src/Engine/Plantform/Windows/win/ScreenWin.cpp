@@ -44,7 +44,6 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-
 void ScreenWin::WinInitialize()
 {
 	cout << "Hello World" << endl;
@@ -71,7 +70,6 @@ void ScreenWin::WinRender()
 	glViewport(0, 0, 1366, 768);
 
 	m_context->GetSubsystem<Engine>()->RenderScene();
-	
 
 	if (isEditorWindows)
 	{
@@ -79,7 +77,6 @@ void ScreenWin::WinRender()
 	}
 
 	glfwSwapBuffers(window);
-
 }
 
 void ScreenWin::WinClose()
@@ -93,38 +90,27 @@ bool ScreenWin::WinShouldClose()
 
 void ScreenWin::InitVertextData()
 {
-
-
 }
 
 void ScreenWin::InitTextureData()
 {
-
 }
 
 void ScreenWin::InitShader()
 {
-
-
 }
 
 void ScreenWin::InitModel()
 {
-
 }
-
-
-
 
 void ScreenWin::InitOpenGL()
 {
-
 	if (!glfwInit())
 	{
 		IM_ASSERT(false && "glfwInit()  failure");
 		return;
 	}
-
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -169,14 +155,11 @@ void ScreenWin::InitOpenGL()
 	std::cout << "顶点属性上限: " << nrAttributes << std::endl;
 }
 
-
-
 void ScreenWin::SetViewPoint(int startX, int startY, int width, int height)
 {
 	glViewport(startX, startY, width, height);
 	SCR_WIDTH = width;
 	SCR_HEIGHT = height;
-
 }
 
 void ScreenWin::ChangeModel(string mpath)
@@ -184,15 +167,12 @@ void ScreenWin::ChangeModel(string mpath)
 	//ourModel.Init(mpath);
 }
 
-
-
 void ScreenWin::RenderFrameBuffer()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer); //帧缓冲的 开始
 	glEnable(GL_DEPTH_TEST);                        //后续所有渲染操作将渲染到当前绑定的帧缓存的附加缓存中
 	glClearColor(0, 0, 0, 0);                       //由于我们的帧缓冲不是默认的帧缓存，渲染命令对窗口的视频输出不会产生任何影响。
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
 	glDisable(GL_DEPTH_TEST);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -212,8 +192,6 @@ void ScreenWin::InitFrameBufer()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-
 
 	//纹理 附加到当前绑定的帧缓冲对象
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
@@ -235,7 +213,6 @@ void ScreenWin::InitFrameBufer()
 	return;
 }
 
-
 void ScreenWin::ShutDown()
 {
 	if (isEditorWindows)
@@ -255,7 +232,6 @@ bool ScreenWin::ScreenShouldClose()
 {
 	return glfwWindowShouldClose(window);
 }
-
 
 string initfile = FileSystem::getPath("Data/Setting/imgui.ini");
 
@@ -286,34 +262,21 @@ void ScreenWin::InitImgui()
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
-
-
 	string fontpath = FileSystem::getPath("resources/font/SourceHanSansCN-Medium.ttf");
 	ImFont* font = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 20.0f, NULL, io.Fonts->GetGlyphRangesChineseFull());
-
-
 }
 
 void ScreenWin::RenderSceneObjectForEditorCamera()
 {
-
-
-
-
 }
-
 
 void ScreenWin::Render_SkyBox_ForEditor()
 {
-
 }
-
 
 void ScreenWin::InitSkyBox()
 {
-
 }
-
 
 void ScreenWin::Render_EditorUI()
 {
@@ -390,7 +353,6 @@ void ScreenWin::ShowDebugWindows(bool* p_open)
 
 	ImGui::Image((void*)textureColorbuffer, ImVec2(320, 180), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 
-
 	if (ImGui::Button("Delete.."))
 		ImGui::OpenPopup("Delete?");
 
@@ -461,7 +423,6 @@ void ScreenWin::ShowExampleAppDockSpace(bool* p_open)
 	}
 	else
 	{
-
 	}
 
 	if (ImGui::BeginMenuBar())
@@ -480,7 +441,6 @@ void ScreenWin::ShowExampleAppDockSpace(bool* p_open)
 			ImGui::Separator();
 			if (ImGui::MenuItem("Exit ", NULL, false, p_open != NULL))
 			{
-
 			}
 
 			ImGui::EndMenu();
@@ -522,8 +482,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	//glViewport(0, 0, frame_width, frame_height);
 }
 
-
-
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	Global<Context>().GetSubsystem<ScreenWin>()->MouseMove(window, xpos, ypos);
@@ -534,20 +492,19 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	Global<Context>().GetSubsystem<ScreenWin>()->MouseScroll(window, xoffset, yoffset);
 }
 
-
 void processInput(GLFWwindow* window)
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
+	//if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	//	glfwSetWindowShouldClose(window, true);
 
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		EditorCamera.ProcessKeyboard(FORWARD, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		EditorCamera.ProcessKeyboard(BACKWARD, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		EditorCamera.ProcessKeyboard(LEFT, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		EditorCamera.ProcessKeyboard(RIGHT, deltaTime);
+	//if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	//	EditorCamera.ProcessKeyboard(FORWARD, deltaTime);
+	//if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	//	EditorCamera.ProcessKeyboard(BACKWARD, deltaTime);
+	//if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	//	EditorCamera.ProcessKeyboard(LEFT, deltaTime);
+	//if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	//	EditorCamera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
 void ScreenWin::MouseMove(GLFWwindow* window, double xpos, double ypos)
