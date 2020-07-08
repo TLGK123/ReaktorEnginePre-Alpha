@@ -24,9 +24,10 @@
 */
 
 #include "Main.h"
+
 #include <iostream>
+
 using namespace std;
-using namespace TmingEngine;
 
 int main()
 {

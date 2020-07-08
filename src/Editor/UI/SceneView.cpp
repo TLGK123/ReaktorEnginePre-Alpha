@@ -79,4 +79,4 @@ namespace TmingEngine
 	{
 		ImageId = Id;
 	}
-}
+} // namespace TmingEngine

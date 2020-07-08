@@ -19,149 +19,140 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#ifndef Screen_h
-
-#define Screen_h
+#ifndef TmingEngine_Engine_Plantform_Windows_win_ScreenWin_h
+#define TmingEngine_Engine_Plantform_Windows_win_ScreenWin_h
 
 #include "im.h"
+#include "Stb_Image/stb_image.h"
 #include "Core/Context.h"
 #include "Core/Engine.h"
-
-
-#include "Rendering/Camera.hpp"
 #include "Core/Math/Radian.h"
 #include "Core/Math/Matrix.h"
 #include "Core/Log/Log.h"
+#include "Rendering/Camera.hpp"
 #include "Plantform/Windows/IWindows.h"
 
-
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow* window);
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-
-using namespace TmingEngine;
-
-class ScreenWin : public IWindows
+namespace TmingEngine
 {
-public:
-	GLFWwindow* window;
-	unsigned int texture1, texture2, texture3;
-	Shader screenShader;
+	void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+	void processInput(GLFWwindow* window);
+	void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
-	unsigned int VBO, VAO;
-
-
-	void WinInitialize ()  override;
-	void WinRender() override;
-	void WinClose() override;
-	bool WinShouldClose() override;
-	void SetViewPoint(int startX, int startY, int width, int height) override;
-
-	//vector<Widget*> m_widgets;
-
-
-	bool show_debug_window = false;
-	bool show_demo_window = false;
-	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-	int CurrentFrameTextureID = 0;
-	int CurrentFrameTextureIDCa = 0;
-
-	unsigned int framebuffer;
-	unsigned int textureColorbuffer;
-
-	unsigned int framebufferCa;
-	unsigned int textureColorbufferCa;
-
-	void ShutDown();
-
-	bool ScreenShouldClose();
-
-	void InitOpenGL();
-	void InitShader();
-	void InitModel();
-	void InitVertextData();
-	void InitTextureData();
-
-	void ChangeModel(string mpath);
-	int GetCurrentFrameTexture();
-	void InitFrameBufer();
-	void CreateFrameBuferCa();
-	void RenderFrameBuffer();
-	void ShowExampleAppDockSpace(bool* p_open);
-	void ShowDebugWindows(bool* p_open);
-
-	void MouseMove(GLFWwindow* window, double xpos, double ypos);
-	void MouseScroll(GLFWwindow* window, double xoffset, double yoffset);
-
-	ScreenWin(Context* context) : IWindows(context)
+	class ScreenWin : public IWindows
 	{
-		
-	}
+	public:
+		GLFWwindow* window;
+		unsigned int texture1, texture2, texture3;
+		Shader screenShader;
 
-	void InitWidgets()
-	{
-		if (InsertEditorWidget!=nullptr)
+		unsigned int VBO, VAO;
+
+		void WinInitialize()  override;
+		void WinRender() override;
+		void WinClose() override;
+		bool WinShouldClose() override;
+		void SetViewPoint(int startX, int startY, int width, int height) override;
+
+		//vector<Widget*> m_widgets;
+
+		bool show_debug_window = false;
+		bool show_demo_window = false;
+		bool show_another_window = false;
+		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+		int CurrentFrameTextureID = 0;
+		int CurrentFrameTextureIDCa = 0;
+
+		unsigned int framebuffer;
+		unsigned int textureColorbuffer;
+
+		unsigned int framebufferCa;
+		unsigned int textureColorbufferCa;
+
+		void ShutDown();
+
+		bool ScreenShouldClose();
+
+		void InitOpenGL();
+		void InitShader();
+		void InitModel();
+		void InitVertextData();
+		void InitTextureData();
+
+		void ChangeModel(string mpath);
+		int GetCurrentFrameTexture();
+		void InitFrameBufer();
+		void CreateFrameBuferCa();
+		void RenderFrameBuffer();
+		void ShowExampleAppDockSpace(bool* p_open);
+		void ShowDebugWindows(bool* p_open);
+
+		void MouseMove(GLFWwindow* window, double xpos, double ypos);
+		void MouseScroll(GLFWwindow* window, double xoffset, double yoffset);
+
+		ScreenWin(Context* context) : IWindows(context)
 		{
-			InsertEditorWidget();
 		}
 
-		for (auto& widget : m_widgets)
+		void InitWidgets()
 		{
-			if (widget->GetIsWindow())
+			if (InsertEditorWidget != nullptr)
 			{
-				widget->Begin();
+				InsertEditorWidget();
+			}
+
+			for (auto& widget : m_widgets)
+			{
+				if (widget->GetIsWindow())
+				{
+					widget->Begin();
+				}
 			}
 		}
-	}
 
-	~ScreenWin()
-	{
-		//for (auto& widget : m_widgets)
+		~ScreenWin()
+		{
+			//for (auto& widget : m_widgets)
+			//{
+			//	if (widget->GetIsWindow())
+			//	{
+			//		widget->End();
+			//	}
+			//}
+		}
+
+		//void RegisteWidget(Widget* widget)
 		//{
-		//	if (widget->GetIsWindow())
+		//	m_widgets.push_back(widget);
+		//}
+
+		//template <class T>
+		//T* GetSubWidget()
+		//{
+		//	for (const auto& subwidget : m_widgets)
 		//	{
-		//		widget->End();
+		//		if (typeid(T) == typeid(*subwidget))
+		//			return static_cast<T*>(subwidget);
+		//	}
+		//	return nullptr;
+		//}
+
+		//void DrawScreenWidgets()
+		//{
+		//	for (auto& widget : m_widgets)
+		//	{
+		//		widget->Update();
 		//	}
 		//}
 
-	}
-
-	//void RegisteWidget(Widget* widget)
-	//{
-	//	m_widgets.push_back(widget);
-	//}
-
-	//template <class T>
-	//T* GetSubWidget()
-	//{
-	//	for (const auto& subwidget : m_widgets)
-	//	{
-	//		if (typeid(T) == typeid(*subwidget))
-	//			return static_cast<T*>(subwidget);
-	//	}
-	//	return nullptr;
-	//}
-
-	//void DrawScreenWidgets()
-	//{
-	//	for (auto& widget : m_widgets)
-	//	{
-	//		widget->Update();
-	//	}
-	//}
-
-
-private:
-	void InitImgui();
-	void RenderSceneObjectForEditorCamera();
-	void Render_SceneObjectForGameCamera();
-	void InitSkyBox();
-	void Render_SkyBox_ForGame();
-	void Render_SkyBox_ForEditor();
-	void Render_EditorUI();
-};
-
-#endif // 
+	private:
+		void InitImgui();
+		void RenderSceneObjectForEditorCamera();
+		void Render_SceneObjectForGameCamera();
+		void InitSkyBox();
+		void Render_SkyBox_ForGame();
+		void Render_SkyBox_ForEditor();
+		void Render_EditorUI();
+	};
+}
+#endif // TmingEngine_Engine_Plantform_Windows_win_ScreenWin_h

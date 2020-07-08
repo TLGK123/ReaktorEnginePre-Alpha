@@ -23,17 +23,9 @@
    limitations under the License.
 */
 
-#pragma once
-#include "Core/SubSystem.h"
-#include "Core/Context.h"
-#include "Plantform/Windows/Widget.h"
-#include "im.h"
+#ifndef TmingEngine_Editor_UI_Project_h
+#define TmingEngine_Editor_UI_Project_h
 
-#include <iostream>
-#include <vector>
-#include <map>
-#include <string>
-#include<sstream>
 #ifdef __APPLE__
 #include <sys/uio.h>
 #include <dirent.h>
@@ -42,13 +34,24 @@
 #else
 #include <io.h>
 #endif
+
 #include <stdlib.h>
+
+#include <iostream>
+#include <sstream>
 #include <fstream>
+#include <vector>
+#include <map>
 #include <cstdlib>
 #include <string>
 
+#include <Core/Engine.h>
+#include "Core/SubSystem.h"
+#include "Core/Context.h"
 #include "Core/Log/Log.h"
 #include "Plantform/Windows/IWindows.h"
+#include "Plantform/Windows/Widget.h"
+#include "im.h"
 #include "CodeEditor.h"
 #include "Selection.hpp"
 #include "Preview.hpp"
@@ -77,4 +80,6 @@ namespace TmingEngine
 		std::string rightContent;
 		std::vector<std::string> FileFilter(const char* dir, std::vector<std::string> filefilters);
 	};
-}
+}// namespace TmingEngine
+
+#endif //TmingEngine_Editor_UI_Project_h

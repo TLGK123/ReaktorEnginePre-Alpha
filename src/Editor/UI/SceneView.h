@@ -23,7 +23,9 @@
    limitations under the License.
 */
 
-#pragma once
+#ifndef TmingEngine_Editor_UI_SceneView_h
+#define TmingEngine_Editor_UI_SceneView_h
+
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
 #include "Plantform/Windows/Widget.h"
@@ -53,4 +55,6 @@ namespace TmingEngine
 		bool IsSceneviewFoucsed = false;
 		void SetTexture(int Id);
 	};
-}
+} // namespace TmingEngine
+
+#endif //TmingEngine_Editor_UI_SceneView_h

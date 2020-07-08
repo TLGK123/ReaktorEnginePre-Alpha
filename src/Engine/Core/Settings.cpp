@@ -28,7 +28,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 //= NAMESPACES ================
 using namespace std;
-using namespace TmingEngine;
 //=============================
 
 namespace SettingsIO
@@ -69,20 +68,20 @@ namespace TmingEngine
 
 	void Settings::Initialize()
 	{
-//        if (FileSystem::FileExists(SettingsIO::file_name))
-//        {
-//            Load();
-//        }
-//        else
-//        {
-//            Save();
-//        }
-//
-//        LOGF_INFO("Resolution: %dx%d",        static_cast<int>(m_window_size.x), static_cast<int>(m_window_size.y));
-//        LOGF_INFO("Shadow resolution: %d",    m_shadow_map_resolution);
-//        LOGF_INFO("Anisotropy: %d",            m_anisotropy);
-//        LOGF_INFO("Max fps: %f",            m_fps_limit);
-//        LOGF_INFO("Max threads: %d",        m_max_thread_count);
+		//        if (FileSystem::FileExists(SettingsIO::file_name))
+		//        {
+		//            Load();
+		//        }
+		//        else
+		//        {
+		//            Save();
+		//        }
+		//
+		//        LOGF_INFO("Resolution: %dx%d",        static_cast<int>(m_window_size.x), static_cast<int>(m_window_size.y));
+		//        LOGF_INFO("Shadow resolution: %d",    m_shadow_map_resolution);
+		//        LOGF_INFO("Anisotropy: %d",            m_anisotropy);
+		//        LOGF_INFO("Max fps: %f",            m_fps_limit);
+		//        LOGF_INFO("Max threads: %d",        m_max_thread_count);
 	}
 
 	void Settings::SetFpsLimit(float fps)
@@ -98,7 +97,7 @@ namespace TmingEngine
 
 		m_fps_limit = fps;
 		m_fps_policy = fps < 0 ? Fps_FixedMonitor : fps == 0 ? Fps_Unlocked : Fps_Fixed;
-	//	LOGF_INFO("FPS limit set to %f", fps);
+		//	LOGF_INFO("FPS limit set to %f", fps);
 	}
 
 	void Settings::Save() const
@@ -143,7 +142,7 @@ namespace TmingEngine
 		if (m_fps_limit == 0.0f)
 		{
 			m_fps_policy = Fps_Unlocked;
-	//		m_fps_limit = FLT_MAX;
+			//		m_fps_limit = FLT_MAX;
 		}
 		else if (m_fps_limit > 0.0f)
 		{

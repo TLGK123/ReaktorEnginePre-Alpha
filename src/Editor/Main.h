@@ -23,14 +23,12 @@
    limitations under the License.
 */
 
-#pragma once
-
-#ifndef Main_h
-#define Main_h
-
-#include "Stb_Image/stb_image.h"
+#ifndef TmingEngine_Editor_Main_h
+#define TmingEngine_Editor_Main_h
 
 #include <stdio.h>
+#include "Stb_Image/stb_image.h"
+
 #include "Core/Engine.h"
 #include "Core/EngineDefs.h"
 #include "Core/Log/Log.h"
@@ -46,4 +44,5 @@
 #include "Console.h"
 
 void SetEditorWidget();
-#endif /* Main_h */
+
+#endif //TmingEngine_Editor_Main_h
