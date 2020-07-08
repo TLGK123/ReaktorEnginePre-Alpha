@@ -22,7 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "FileSystem.h"
 #include <regex>
 #include <fstream>
-#include <sstream> 
+#include <sstream>
 using namespace std;
 
 namespace TmingEngine
@@ -143,7 +143,7 @@ namespace TmingEngine
 		};
 
 		// Supported script formats
-		m_supportedScriptFormats = 
+		m_supportedScriptFormats =
 		{
 			".as"
 		};
@@ -163,77 +163,77 @@ namespace TmingEngine
 			".bdf",
 			".pfr"
 		};
-        return true;
+		return true;
 	}
 
 	bool FileSystem::CreateDirectory_(const string& path)
 	{
-//		try
-//        {
-//            return create_directories(path);
-//        }
-//        catch (filesystem_error& e)
-//        {
-//            LOGF_ERROR("FileSystem::CreateDirectory: %s, %s", e.what(), path.c_str());
-            return true;
-//        }
+		//		try
+		//        {
+		//            return create_directories(path);
+		//        }
+		//        catch (filesystem_error& e)
+		//        {
+		//            LOGF_ERROR("FileSystem::CreateDirectory: %s, %s", e.what(), path.c_str());
+		return true;
+		//        }
 	}
 
 	bool FileSystem::DeleteDirectory(const string& directory)
 	{
-//        try
-//        {
-//            return remove_all(directory);
-//        }
-//        catch (filesystem_error& e)
-//        {
-//            LOGF_ERROR("FileSystem::DeleteDirectory: %s, %s", e.what(), directory.c_str());
-           return true;
-//        }
+		//        try
+		//        {
+		//            return remove_all(directory);
+		//        }
+		//        catch (filesystem_error& e)
+		//        {
+		//            LOGF_ERROR("FileSystem::DeleteDirectory: %s, %s", e.what(), directory.c_str());
+		return true;
+		//        }
 	}
 
 	bool FileSystem::DirectoryExists(const string& directory)
 	{
-//        try
-//        {
-//            return exists(directory);
-//        }
-//        catch (filesystem_error& e)
-//        {
-//            LOGF_ERROR("FileSystem::DirectoryExists: %s, %s", e.what(), directory.c_str());
-            return true;
-//        }
+		//        try
+		//        {
+		//            return exists(directory);
+		//        }
+		//        catch (filesystem_error& e)
+		//        {
+		//            LOGF_ERROR("FileSystem::DirectoryExists: %s, %s", e.what(), directory.c_str());
+		return true;
+		//        }
 	}
 
 	bool FileSystem::IsDirectory(const string& directory)
 	{
-//        try
-//        {
-//            return is_directory(directory);
-//        }
-//        catch (filesystem_error& e)
-//        {
-//            LOGF_ERROR("FileSystem::IsDirectory: %s, %s", e.what(), directory.c_str());
-            return false;
-//        }
+		//        try
+		//        {
+		//            return is_directory(directory);
+		//        }
+		//        catch (filesystem_error& e)
+		//        {
+		//            LOGF_ERROR("FileSystem::IsDirectory: %s, %s", e.what(), directory.c_str());
+		return false;
+		//        }
 	}
 
 	void FileSystem::OpenDirectoryWindow(const std::string& directory)
 	{
-//        ShellExecute(nullptr, nullptr, StringToWstring(directory).c_str(), nullptr, nullptr, SW_SHOW);
+		//        ShellExecute(nullptr, nullptr, StringToWstring(directory).c_str(), nullptr, nullptr, SW_SHOW);
 	}
 
 	bool FileSystem::FileExists(const string& file_path)
 	{
-//        try
-//        {
-//            return exists(file_path);
-//        }
-//        catch (filesystem_error& e)
-//        {
-//            LOGF_ERROR("FileSystem::FileExists: %s, %s", e.what(), file_path.c_str());
-            return true;
-//        }
+		//        try
+		//        {
+		//            return exists(file_path);
+		//        }
+		//        catch (filesystem_error& e)
+		//        {
+		//            LOGF_ERROR("FileSystem::FileExists: %s, %s", e.what(), file_path.c_str());
+		return true;
+		//        }
 	}
 
 	bool FileSystem::DeleteFile_(const string& file_path)
@@ -249,45 +249,45 @@ namespace TmingEngine
 //        catch (filesystem_error& e)
 //        {
 //            LOGF_ERROR("FileSystem::DeleteFile: %s, %s", e.what(), file_path.c_str());
-            return true;
-//        }
+		return true;
+		//        }
 	}
 
 	bool FileSystem::CopyFileFromTo(const string& source, const string& destination)
 	{
-//        if (source == destination)
-//            return true;
-//
-//        // In case the destination path doesn't exist, create it
-//        if (!DirectoryExists(GetDirectoryFromFilePath(destination)))
-//        {
-//            CreateDirectory_(GetDirectoryFromFilePath(destination));
-//        }
-//
-//        try
-//        {
-//            return copy_file(source, destination, copy_options::overwrite_existing);
-//        }
-//        catch (filesystem_error& e)
-//        {
-//            LOG_ERROR("FileSystem: Could not copy \"" + source + "\". " + string(e.what()));
-            return true;
-//        }
+		//        if (source == destination)
+		//            return true;
+		//
+		//        // In case the destination path doesn't exist, create it
+		//        if (!DirectoryExists(GetDirectoryFromFilePath(destination)))
+		//        {
+		//            CreateDirectory_(GetDirectoryFromFilePath(destination));
+		//        }
+		//
+		//        try
+		//        {
+		//            return copy_file(source, destination, copy_options::overwrite_existing);
+		//        }
+		//        catch (filesystem_error& e)
+		//        {
+		//            LOG_ERROR("FileSystem: Could not copy \"" + source + "\". " + string(e.what()));
+		return true;
+		//        }
 	}
 
 	string FileSystem::GetFileNameFromFilePath(const string& path)
 	{
-		auto lastindex	= path.find_last_of("\\/");
-		auto fileName	= path.substr(lastindex + 1, path.length());
+		auto lastindex = path.find_last_of("\\/");
+		auto fileName = path.substr(lastindex + 1, path.length());
 
 		return fileName;
 	}
 
 	string FileSystem::GetFileNameNoExtensionFromFilePath(const string& filepath)
 	{
-		auto fileName		= GetFileNameFromFilePath(filepath);
-		auto lastindex		= fileName.find_last_of('.');
-		auto fileNameNoExt	= fileName.substr(0, lastindex);
+		auto fileName = GetFileNameFromFilePath(filepath);
+		auto lastindex = fileName.find_last_of('.');
+		auto fileNameNoExt = fileName.substr(0, lastindex);
 
 		return fileNameNoExt;
 	}
@@ -302,8 +302,8 @@ namespace TmingEngine
 
 	string FileSystem::GetFilePathWithoutExtension(const string& filePath)
 	{
-		auto directory		= GetDirectoryFromFilePath(filePath);
-		auto fileNameNoExt	= GetFileNameNoExtensionFromFilePath(filePath);
+		auto directory = GetDirectoryFromFilePath(filePath);
+		auto fileNameNoExt = GetFileNameNoExtensionFromFilePath(filePath);
 
 		return directory + fileNameNoExt;
 	}
@@ -326,14 +326,14 @@ namespace TmingEngine
 	vector<string> FileSystem::GetDirectoriesInDirectory(const string& directory)
 	{
 		vector<string> subDirs;
-//        directory_iterator end_itr; // default construction yields past-the-end
-//        for (directory_iterator itr(directory); itr != end_itr; ++itr)
-//        {
-//            if (!is_directory(itr->status()))
-//                continue;
-//
-//            subDirs.emplace_back(itr->path().generic_string());
-//		}
+		//        directory_iterator end_itr; // default construction yields past-the-end
+		//        for (directory_iterator itr(directory); itr != end_itr; ++itr)
+		//        {
+		//            if (!is_directory(itr->status()))
+		//                continue;
+		//
+		//            subDirs.emplace_back(itr->path().generic_string());
+		//		}
 
 		return subDirs;
 	}
@@ -341,24 +341,24 @@ namespace TmingEngine
 	vector<string> FileSystem::GetFilesInDirectory(const string& directory)
 	{
 		vector<string> filePaths;
-//        directory_iterator end_itr; // default construction yields past-the-end
-//        for (directory_iterator itr(directory); itr != end_itr; ++itr)
-//        {
-//            if (!is_regular_file(itr->status()))
-//                continue;
-//
-//            filePaths.emplace_back(itr->path().generic_string());
-//        }
+		//        directory_iterator end_itr; // default construction yields past-the-end
+		//        for (directory_iterator itr(directory); itr != end_itr; ++itr)
+		//        {
+		//            if (!is_regular_file(itr->status()))
+		//                continue;
+		//
+		//            filePaths.emplace_back(itr->path().generic_string());
+		//        }
 
 		return filePaths;
 	}
 
 	vector<string> FileSystem::GetSupportedFilesInDirectory(const string& directory)
 	{
-		vector<string> filesInDirectory		= GetFilesInDirectory(directory);
-		vector<string> imagesInDirectory	= GetSupportedImageFilesFromPaths(filesInDirectory); // get all the images
-		vector<string> scriptsInDirectory	= GetSupportedScriptFilesFromPaths(filesInDirectory); // get all the scripts
-		vector<string> modelsInDirectory	= GetSupportedModelFilesFromPaths(filesInDirectory); // get all the models
+		vector<string> filesInDirectory = GetFilesInDirectory(directory);
+		vector<string> imagesInDirectory = GetSupportedImageFilesFromPaths(filesInDirectory); // get all the images
+		vector<string> scriptsInDirectory = GetSupportedScriptFilesFromPaths(filesInDirectory); // get all the scripts
+		vector<string> modelsInDirectory = GetSupportedModelFilesFromPaths(filesInDirectory); // get all the models
 		vector<string> supportedFiles;
 
 		// get supported images
@@ -483,7 +483,7 @@ namespace TmingEngine
 			if (fileExt == format || fileExt == ConvertToUppercase(format))
 				return true;
 		}
-		
+
 		if (GetExtensionFromFilePath(path) == EXTENSION_TEXTURE)
 			return true;
 
@@ -588,60 +588,60 @@ namespace TmingEngine
 
 	// Returns a file path which is relative to the engine's executable
 	string FileSystem::GetRelativeFilePath(const string& absoluteFilePath)
-	{		
-//        // create absolute paths
-//        path p = absolute(absoluteFilePath);
-//        path r = absolute(GetWorkingDirectory());
-//
-//        // if root paths are different, return absolute path
-//        if( p.root_path() != r.root_path())
-//            return p.generic_string();
-//
-//        // initialize relative path
-//        path result;
-//
-//        // find out where the two paths diverge
-//        path::const_iterator itr_path = p.begin();
-//        path::const_iterator itr_relative_to = r.begin();
-//        while( *itr_path == *itr_relative_to && itr_path != p.end() && itr_relative_to != r.end() )
-//        {
-//            ++itr_path;
-//            ++itr_relative_to;
-//        }
-//
-//        // add "../" for each remaining token in relative_to
-//        if( itr_relative_to != r.end() )
-//        {
-//            ++itr_relative_to;
-//            while( itr_relative_to != r.end() )
-//            {
-//                result /= "..";
-//                ++itr_relative_to;
-//            }
-//        }
-//
-//        // add remaining path
-//        while( itr_path != p.end() )
-//        {
-//            result /= *itr_path;
-//            ++itr_path;
-//        }
-//
-//        return result.generic_string();
-        return "";
-    }
+	{
+		//        // create absolute paths
+		//        path p = absolute(absoluteFilePath);
+		//        path r = absolute(GetWorkingDirectory());
+		//
+		//        // if root paths are different, return absolute path
+		//        if( p.root_path() != r.root_path())
+		//            return p.generic_string();
+		//
+		//        // initialize relative path
+		//        path result;
+		//
+		//        // find out where the two paths diverge
+		//        path::const_iterator itr_path = p.begin();
+		//        path::const_iterator itr_relative_to = r.begin();
+		//        while( *itr_path == *itr_relative_to && itr_path != p.end() && itr_relative_to != r.end() )
+		//        {
+		//            ++itr_path;
+		//            ++itr_relative_to;
+		//        }
+		//
+		//        // add "../" for each remaining token in relative_to
+		//        if( itr_relative_to != r.end() )
+		//        {
+		//            ++itr_relative_to;
+		//            while( itr_relative_to != r.end() )
+		//            {
+		//                result /= "..";
+		//                ++itr_relative_to;
+		//            }
+		//        }
+		//
+		//        // add remaining path
+		//        while( itr_path != p.end() )
+		//        {
+		//            result /= *itr_path;
+		//            ++itr_path;
+		//        }
+		//
+		//        return result.generic_string();
+		return "";
+	}
 
 	// Returns a file path which is where the engine's executable is located
 	string FileSystem::GetWorkingDirectory()
 	{
 		//return current_path().generic_string() + "/";
-        return "";
+		return "";
 	}
 
 	string FileSystem::GetParentDirectory(const string& directory)
 	{
-		auto found	= directory.find_last_of("/\\");
-		auto result	= directory;
+		auto found = directory.find_last_of("/\\");
+		auto result = directory;
 
 		// If no slash was found, return provided string
 		if (found == string::npos)
@@ -661,8 +661,8 @@ namespace TmingEngine
 	string FileSystem::GetStringAfterExpression(const string& str, const string& expression)
 	{
 		// ("The quick brown fox", "brown") -> "brown fox"
-		auto position	= str.find(expression);
-		auto remaining	= position != string::npos ? str.substr(position + expression.length()) : str;
+		auto position = str.find(expression);
+		auto remaining = position != string::npos ? str.substr(position + expression.length()) : str;
 
 		return remaining;
 	}
@@ -674,14 +674,14 @@ namespace TmingEngine
 		regex base_regex(firstExpression + "(.*)" + secondExpression);
 
 		smatch base_match;
-		if (regex_search(str, base_match, base_regex)) 
+		if (regex_search(str, base_match, base_regex))
 		{
 			// The first sub_match is the whole string; the next
 			// sub_match is the first parenthesized expression.
-			if (base_match.size() == 2) 
+			if (base_match.size() == 2)
 			{
 				return base_match[1].str();
-			}			
+			}
 		}
 
 		return str;
@@ -695,7 +695,7 @@ namespace TmingEngine
 		{
 			upper += std::toupper(character, loc);
 		}
-	
+
 		return upper;
 	}
 
@@ -706,14 +706,14 @@ namespace TmingEngine
 
 	wstring FileSystem::StringToWstring(const string& str)
 	{
-//        const auto slength =     static_cast<int>(str.length()) + 1;
-//        const auto len        = MultiByteToWideChar(CP_ACP, 0, str.c_str(), slength, nullptr, 0);
-//        const auto buf        = new wchar_t[len];
-//        MultiByteToWideChar(CP_ACP, 0, str.c_str(), slength, buf, len);
-//        std::wstring result(buf);
-//        delete[] buf;
-//		  return result;
-        return NULL;
+		//        const auto slength =     static_cast<int>(str.length()) + 1;
+		//        const auto len        = MultiByteToWideChar(CP_ACP, 0, str.c_str(), slength, nullptr, 0);
+		//        const auto buf        = new wchar_t[len];
+		//        MultiByteToWideChar(CP_ACP, 0, str.c_str(), slength, buf, len);
+		//        std::wstring result(buf);
+		//        delete[] buf;
+		//		  return result;
+		return NULL;
 	}
 
 	string FileSystem::ResolveIncludeDirectives(const string& source, const string& directory)
@@ -753,32 +753,32 @@ namespace TmingEngine
 		{
 			result = ResolveIncludeDirectives(result, directory);
 		}
-	
+
 		// At this point, everything should be resolved
 		return result;
 	}
 
-	std::string FileSystem::getPath(std::string assetpath)
+	string FileSystem::getPath(std::string assetpath)
 	{
-	char buffer[MAX_PATH];
-	getcwd(buffer, MAX_PATH);
-	std::string path = buffer;
-	std::string name = "TmingEngine";
-	int cutIndex = path.find(name);
+		char buffer[MAX_PATH];
+		getcwd(buffer, MAX_PATH);
+		std::string path = buffer;
+		std::string name = "TmingEngine";
+		int cutIndex = path.find(name);
 
-	std::string  temp = path.substr(0, cutIndex + name.length());
-	if (assetpath.length()>0) 
-	{ 
-		path = temp + "/" + assetpath; 
-	} 
-	else 
-	{ 
-		path = temp; 
-	}
-	
-    string s = "AssetPath: " + path+"\n";
-    //Debug::Log(s.c_str());
-	return path;
+		std::string  temp = path.substr(0, cutIndex + name.length());
+		if (assetpath.length() > 0)
+		{
+			path = temp + "/" + assetpath;
+		}
+		else
+		{
+			path = temp;
+		}
+
+		string s = "AssetPath: " + path + "\n";
+		//Debug::Log(s.c_str());
+		return path;
 	}
 
 	void FileSystem::SaveFile(string path, string content)
@@ -801,6 +801,4 @@ namespace TmingEngine
 		fin.close();
 		return content;
 	}
-
-	
 }
