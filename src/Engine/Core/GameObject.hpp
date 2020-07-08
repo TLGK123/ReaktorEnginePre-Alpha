@@ -26,21 +26,11 @@
 #ifndef TmingEngine_Engine_Core_GameObject_hpp_
 #define TmingEngine_Engine_Core_GameObject_hpp_
 
-/*
-
-dir2/foo2.h (优先位置, 详情如下)
-C 系统文件
-C++ 系统文件
-其他库的 .h 文件
-本项目内 .h 文件
-
-*/
-
-#include "GameObject.hpp"
 #include <stdio.h>
 #include <string>
 
-#include "EngineDefs.h"
+#include "Core/EngineDefs.h"
+#include "Core/Context.h"
 #include "Scene/Components/Transform.h"
 #include "Scene/Components/IComponent.h"
 

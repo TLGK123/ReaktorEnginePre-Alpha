@@ -1,28 +1,36 @@
-//The MIT License
-//
-//Copyright(c) 2018 - 2019 littleblue
-//
-//Permission is hereby granted, free of charge, to any person obtaining a copy
-//of this softwareand associated documentation files(the "Software"), to deal
-//in the Software without restriction, including without limitation the rights
-//to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-//copies of the Software, and to permit persons to whom the Software is furnished
-//to do so, subject to the following conditions :
-//
-//The above copyright noticeand this permission notice shall be included in
-//all copies or substantial portions of the Software.
-//
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-//FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR
-//COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-//IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-//CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#pragma once
-#include "../EngineDefs.h"
+/*
+			This file is part of:
+				TmingEngine
+			https://github.com/xiaomingfun/TmingEngine
+
+   Copyright 2018 - 2020 TmingEngine
+
+   File creator: littleblue
+
+   TmingEngine is open-source software and you can redistribute it and/or modify
+   it under the terms of the License; besides, anyone who use this file/software must include this copyright announcement.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+	   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
+#ifndef TmingEngine_Engine_Math_Vector2_h_
+#define TmingEngine_Engine_Math_Vector2_h_
+
+#include <stdio.h>
 #include <string>
 #include <iostream>
 
+#include "Core/EngineDefs.h"
 #include "ImGui/imgui.h"
 #include "glm/glm.hpp"
 
@@ -59,7 +67,7 @@ namespace TmingEngine
 		{
 			return Vector2(x * num, y * num);
 		}
-		
+
 		//对应的组件值，相乘并相加,通常用于计算向量的夹角
 		// A * B = |A|*|B|*Cos(θ)=(a1*b1 + a2*b2 + ... + an*bn)
 		float Dot(Vector2& v)
@@ -95,11 +103,9 @@ namespace TmingEngine
 			return vec2(x, y);
 		}
 
-
-
 		static const Vector2 Zero;
 		static const Vector2 One;
-	
-
 	};
 }
+
+#endif //TmingEngine_Engine_Math_Vector2_h_

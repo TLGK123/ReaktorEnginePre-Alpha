@@ -1,29 +1,32 @@
-//The MIT License
-//
-//Copyright(c) 2016 - 2020 littleblue
-//
-//Permission is hereby granted, free of charge, to any person obtaining a copy
-//of this softwareand associated documentation files(the "Software"), to deal
-//in the Software without restriction, including without limitation the rights
-//to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-//copies of the Software, and to permit persons to whom the Software is furnished
-//to do so, subject to the following conditions :
-//
-//The above copyright noticeand this permission notice shall be included in
-//all copies or substantial portions of the Software.
-//
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-//FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR
-//COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-//IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-//CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
+/*
+			This file is part of:
+				TmingEngine
+			https://github.com/xiaomingfun/TmingEngine
 
-#pragma once
-#include <iostream>
+   Copyright 2018 - 2020 TmingEngine
+
+   File creator: littleblue
+
+   TmingEngine is open-source software and you can redistribute it and/or modify
+   it under the terms of the License; besides, anyone who use this file/software must include this copyright announcement.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+	   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
 #ifndef SmartPtr_H
 #define SmartPtr_H
+
+#include <iostream>
 
 template <typename T>
 class GlobalStatic {
@@ -56,11 +59,10 @@ public:
 	{
 		if (--crefs != 0)
 			return;
-		
-			delete this;		
+
+		delete this;
 	}
 };
-
 
 //如果对象要能使用智能指针,那么这个对应一定需要有
 //类模板中的成员函数 upcount downcount  ,所以这样的类必须是继承 RefCount
@@ -70,7 +72,7 @@ template <class T>
 class SmartPtr
 {
 private:
-	T * p;
+	T* p;
 public:
 	SmartPtr(T* p_)
 	{
@@ -79,7 +81,7 @@ public:
 			p->upcount();     //类模板中的成员函数
 	}
 
-	SmartPtr(const SmartPtr<T> & p_)
+	SmartPtr(const SmartPtr<T>& p_)
 	{
 		p = NULL;
 		operator=(p_.p);
@@ -92,13 +94,13 @@ public:
 		if (p) p->downcount();     //类模板中的成员函数
 	}
 
-	operator T*(void) { return p; }
+	operator T* (void) { return p; }
 	T& operator*(void) { return *p; }
 	T* operator->(void) { return p; }
 
-	SmartPtr& operator=(SmartPtr<T> &p_)
+	SmartPtr& operator=(SmartPtr<T>& p_)
 	{
-		return operator=((T *)p_);
+		return operator=((T*)p_);
 	}
 
 	SmartPtr& operator=(T* p_)
@@ -115,5 +117,4 @@ public:
 	}
 };
 
-
-#endif
+#endif //SmartPtr_H
