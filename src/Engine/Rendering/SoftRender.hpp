@@ -30,6 +30,7 @@
 #include "Plantform/FileSystem/FileSystem.h"
 #include "Rendering/Model.hpp"
 #include "Rendering/Primitive.hpp"
+#include "Rendering/GouraudShader.hpp"
 
 namespace TmingEngine
 {
@@ -39,7 +40,10 @@ namespace TmingEngine
 		SoftRender() {};
 		~SoftRender() {};
 
+		//---------- Simulate  VRAM    Data
 		vector<Primitive> primitiveDatas;
+
+		//---------- Simulate  VRAM    Data
 
 		//if we use opegl, we need to load data that like mesh , texture and
 		//so on to the VRAM (Vedio Random Access Memory)
@@ -61,11 +65,25 @@ namespace TmingEngine
 			}
 		}
 
+		// spicify the Texture , vertex shader ,fragment shader for each Primitive
 		void SetRenderStatus()
 		{
+			for (int i = 0; i < primitiveDatas.size(); i++)
+			{
+				primitiveDatas[i].shader = new GouraudShader();
+			}
 		}
 
 		void DrawCall()
+		{
+			GenerateFrames();
+		}
+
+		// generate one frame mean that we will make one picture ,
+		// if we change the picture at the main therad update ,
+		// we will get a consecutive game scene
+		//
+		void GenerateFrames()
 		{
 		}
 	};

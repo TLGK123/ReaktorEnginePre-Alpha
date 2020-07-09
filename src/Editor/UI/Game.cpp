@@ -31,10 +31,13 @@ namespace TmingEngine
 	{
 	}
 
+	Light sunlitght;
+	IShader* shader;
+
 	void TmingEngine::Game::Begin()
 	{
 		testCharacter.Init(FileSystem::getPath("resources/objects/cyborg/cyborg.obj"));
-
+		shader = new GouraudShader();
 		SoftRender();
 	}
 
@@ -64,8 +67,6 @@ namespace TmingEngine
 	{
 	}
 
-	Light sunlitght;
-	GouraudShader shader;
 	void TmingEngine::Game::SoftRender()
 	{
 		glGenTextures(1, &imageId);
@@ -122,10 +123,10 @@ namespace TmingEngine
 
 		Matrix viewPoint = Viewport(0, 0, gameWidth, gameHeight);
 
-		shader.SetModel(model);
-		shader.SetView(view);
-		shader.SetProjection(perspective);
-		shader.SetViewPoint(viewPoint);
+		shader->SetModel(model);
+		shader->SetView(view);
+		shader->SetProjection(perspective);
+		shader->SetViewPoint(viewPoint);
 
 		for (int i = 0; i < testCharacter.meshes[0].indices.size(); i += 3)
 		{
@@ -145,9 +146,9 @@ namespace TmingEngine
 				zbuffer[inedx] = 10000000;
 			}
 
-			v1.Position = shader.Vertex(v1.Position);
-			v2.Position = shader.Vertex(v2.Position);
-			v3.Position = shader.Vertex(v3.Position);
+			v1.Position = shader->Vertex(v1.Position);
+			v2.Position = shader->Vertex(v2.Position);
+			v3.Position = shader->Vertex(v3.Position);
 
 			fillTriangleFromEdgeWitchZbuffer(
 				v1, v2, v3,
@@ -468,7 +469,7 @@ namespace TmingEngine
 						int cacheDeep = zbuffer[int(x + y * gameWidth)];
 						if (P.z < cacheDeep)
 						{
-							bool discard = shader.Fragment(col);
+							bool discard = shader->Fragment(col);
 							if (!discard)
 							{
 								image.set(P.x, P.y, col);
@@ -538,7 +539,7 @@ namespace TmingEngine
 						int cacheDeep = zbuffer[int(x + y * gameWidth)];
 						if (P.z < cacheDeep)
 						{
-							bool discard = shader.Fragment(col, barycent);
+							bool discard = shader->Fragment(col, barycent);
 							if (!discard)
 							{
 								image.set(P.x, P.y, col);

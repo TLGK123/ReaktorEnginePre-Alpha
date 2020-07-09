@@ -29,6 +29,7 @@
 #include "Core/EngineDefs.h"
 #include "Rendering/Model.hpp"
 #include "Plantform/FileSystem/FileSystem.h"
+#include "Rendering/IShader.hpp"
 
 namespace TmingEngine
 {
@@ -44,6 +45,7 @@ namespace TmingEngine
 	public:
 		PrimitiveType  primitiveType;
 		vector<Vertex> poins;
+		IShader* shader;
 
 		Primitive()
 		{
