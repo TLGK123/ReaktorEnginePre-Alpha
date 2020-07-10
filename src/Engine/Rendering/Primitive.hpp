@@ -56,6 +56,14 @@ namespace TmingEngine
 			primitiveType = pt;
 			poins = manyPoints;
 		}
+
+		void VertexShader()
+		{
+			for (int i = 0; i < poins.size(); i++)
+			{
+				poins[i].Position = shader->Vertex(poins[i].Position);
+			}
+		}
 	};
 } //namespace TmingEngine
 

@@ -47,7 +47,7 @@ namespace TmingEngine
 			ImGui::End();
 			return;
 		}
-		ImTextureID my_tex_id = (void*)SoftRender::frameID;
+		ImTextureID my_tex_id = (void*)softRender.frameID;
 		float my_tex_w = softRender.frameWidth;
 		float my_tex_h = softRender.frameHeight;
 

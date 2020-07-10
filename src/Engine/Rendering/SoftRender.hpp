@@ -43,10 +43,10 @@ namespace TmingEngine
 		SoftRender() {};
 		~SoftRender() {};
 
-		static unsigned int frameID;
+		unsigned int frameID;
 
-		static int frameWidth;
-		static int frameHeight;
+		int frameWidth = 500;
+		int frameHeight = 500;
 		Light sunlitght;
 
 		//---------- Simulate  VRAM    Data
@@ -58,7 +58,7 @@ namespace TmingEngine
 		//so on to the VRAM (Vedio Random Access Memory)
 		void LoadAssetToMemory()
 		{
-			Model character(FileSystem::getPath("resources/objects/rock/rock.obj"));
+			Model character(FileSystem::getPath("resources/objects/character/_2.obj"));
 			for (int i = 0; i < character.meshes[0].indices.size(); i += 3)
 			{
 				int  index1 = character.meshes[0].indices[i];
@@ -113,24 +113,11 @@ namespace TmingEngine
 			Vector2 t0[3] = { Vector2(40, 40),   Vector2(250, 300) , Vector2(350, 100) };
 			Vector2 t1[3] = { Vector2(380, 50),  Vector2(450, 10),   Vector2(370, 180) };
 			Vector2 t2[3] = { Vector2(180, 350), Vector2(120, 260), Vector2(130, 400) };
-			///-----step 1
-			/*
-			triangle(t0[0], t0[1], t0[2], image, red);
-			fillTriangleFromEdge(t0[0], t0[1], t0[2], image, red);
-
-			triangle(t1[0], t1[1], t1[2], image, blue);
-			fillTriangleLinerScan(t1[0], t1[1], t1[2], image, blue);
-
-			triangle(t2[0], t2[1], t2[2], image, green);
-			fillTriangleLinerScan(t2[0], t2[1], t2[2], image, green);
-			*/
-
-			//-----step 2
 
 			sunlitght.Direction = Vector3(0, 1, -1);
 			sunlitght.Color = Color(0.5, 0.5, 0);
 
-			Vector3 CameraPos = Vector3(0, 1, 3);
+			Vector3 CameraPos = Vector3(0, 0.5, 3);
 			Vector3 center(0, 0, 0);	//相机朝向原点
 			Vector3 up(0, 1, 0);		//相机向上
 
@@ -149,11 +136,6 @@ namespace TmingEngine
 
 			Matrix viewPoint = Viewport(0, 0, frameWidth, frameHeight);
 
-			shader->SetModel(model);
-			shader->SetView(view);
-			shader->SetProjection(perspective);
-			shader->SetViewPoint(viewPoint);
-
 			int len = frameWidth * frameHeight;
 			int* zbuffer = new int[len];
 
@@ -164,12 +146,19 @@ namespace TmingEngine
 
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
+				primitiveDatas[i].shader->SetModel(model);
+				primitiveDatas[i].shader->SetView(view);
+				primitiveDatas[i].shader->SetProjection(orthographic);
+				primitiveDatas[i].shader->SetViewPoint(viewPoint);
+
+				primitiveDatas[i].VertexShader();
+
 				fillTriangleFromEdgeWitchZbuffer(
-					primitiveDatas[i].poins[0].Position,
-					primitiveDatas[i].poins[1].Position,
-					primitiveDatas[i].poins[2].Position,
+					primitiveDatas[i].poins[0],
+					primitiveDatas[i].poins[1],
+					primitiveDatas[i].poins[2],
 					frameWidth, frameHeight,
-					image, red, zbuffer);
+					image, red, zbuffer, sunlitght, primitiveDatas[i].shader);
 			}
 
 			image.flip_horizontally();

@@ -216,7 +216,7 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangleFromEdge(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color)
+	void fillTriangleFromEdge(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color, Light sunlitght)
 	{
 		Vector2 A, B, C;
 		A = Vector2(t0.x, t0.y);
@@ -266,7 +266,7 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer)
+	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, Light sunlitght, IShader* shader)
 	{
 		Vector2* boxs = findTriangleBox(t0, t1, t2);
 
@@ -323,7 +323,7 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangleFromEdgeWitchZbuffer(Vertex v1, Vertex v2, Vertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer)
+	void fillTriangleFromEdgeWitchZbuffer(Vertex v1, Vertex v2, Vertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, Light sunlitght, IShader* shader)
 	{
 		Vector2* boxs = findTriangleBox(v1.Position, v2.Position, v3.Position);
 
