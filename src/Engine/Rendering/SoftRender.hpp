@@ -33,6 +33,7 @@
 #include "Rendering/GouraudShader.hpp"
 #include "Rendering/Color.hpp"
 #include "Rendering/Light.hpp"
+#include "Rendering/SoftGL.hpp"
 
 namespace TmingEngine
 {
@@ -42,9 +43,10 @@ namespace TmingEngine
 		SoftRender() {};
 		~SoftRender() {};
 
-		unsigned int frameID;
-		int frameWidth;
-		int frameHeigh;
+		static unsigned int frameID;
+
+		static int frameWidth;
+		static int frameHeight;
 		Light sunlitght;
 
 		//---------- Simulate  VRAM    Data
@@ -86,6 +88,7 @@ namespace TmingEngine
 			GenerateFrames();
 		}
 
+	private:
 		// generate one frame mean that we will make one picture ,
 		// if we change the picture at the main therad update ,
 		// we will get a consecutive game scene
@@ -105,7 +108,7 @@ namespace TmingEngine
 			//// load image, create texture and generate mipmaps
 			int width, height, nrChannels;
 
-			TGAImage image(frameWidth, frameHeigh, TGAImage::RGB);
+			TGAImage image(frameWidth, frameHeight, TGAImage::RGB);
 
 			Vector2 t0[3] = { Vector2(40, 40),   Vector2(250, 300) , Vector2(350, 100) };
 			Vector2 t1[3] = { Vector2(380, 50),  Vector2(450, 10),   Vector2(370, 180) };
@@ -144,37 +147,28 @@ namespace TmingEngine
 
 			Matrix orthographic = Orthographic(1.5, 1.5, 0.5, 10);
 
-			Matrix viewPoint = Viewport(0, 0, gameWidth, gameHeight);
+			Matrix viewPoint = Viewport(0, 0, frameWidth, frameHeight);
 
 			shader->SetModel(model);
 			shader->SetView(view);
 			shader->SetProjection(perspective);
 			shader->SetViewPoint(viewPoint);
 
-			for (int i = 0; i < testCharacter.meshes[0].indices.size(); i += 3)
+			int len = frameWidth * frameHeight;
+			int* zbuffer = new int[len];
+
+			for (int inedx = 0; inedx < len; inedx++)
 			{
-				int  index1 = testCharacter.meshes[0].indices[i];
-				int  index2 = testCharacter.meshes[0].indices[i + 1];
-				int  index3 = testCharacter.meshes[0].indices[i + 2];
+				zbuffer[inedx] = 10000000;
+			}
 
-				Vertex v1 = (testCharacter.meshes[0].vertices[index1]);
-				Vertex v2 = (testCharacter.meshes[0].vertices[index2]);
-				Vertex v3 = (testCharacter.meshes[0].vertices[index3]);
-
-				int len = gameWidth * gameHeight;
-				int* zbuffer = new int[len];
-
-				for (int inedx = 0; inedx < len; inedx++)
-				{
-					zbuffer[inedx] = 10000000;
-				}
-
-				v1.Position = shader->Vertex(v1.Position);
-				v2.Position = shader->Vertex(v2.Position);
-				v3.Position = shader->Vertex(v3.Position);
-
+			for (int i = 0; i < primitiveDatas.size(); i++)
+			{
 				fillTriangleFromEdgeWitchZbuffer(
-					v1, v2, v3,
+					primitiveDatas[i].poins[0].Position,
+					primitiveDatas[i].poins[1].Position,
+					primitiveDatas[i].poins[2].Position,
+					frameWidth, frameHeight,
 					image, red, zbuffer);
 			}
 
