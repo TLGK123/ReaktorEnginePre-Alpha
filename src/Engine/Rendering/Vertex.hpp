@@ -28,6 +28,7 @@
 
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Vector2.h"
+#include "Rendering/Color.hpp"
 
 namespace TmingEngine
 {
@@ -41,6 +42,8 @@ namespace TmingEngine
 		Vector3 Tangent;
 
 		Vector3 Bitangent;
+
+		Color Color;
 	};
 }
 

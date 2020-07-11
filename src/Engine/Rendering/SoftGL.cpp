@@ -330,52 +330,54 @@ namespace TmingEngine
 		Vector2 minPoint = boxs[0];
 		Vector2 maxPoint = boxs[1];
 
-		Matrix normals(3, 3, {
-		v1.Normal.x,v2.Normal.x,v3.Normal.x,
-		v1.Normal.y,v2.Normal.y,v3.Normal.y,
-		v1.Normal.z,v2.Normal.z,v3.Normal.z,
-			});
+		//Matrix normals(3, 3, {
+		//v1.Normal.x,v2.Normal.x,v3.Normal.x,
+		//v1.Normal.y,v2.Normal.y,v3.Normal.y,
+		//v1.Normal.z,v2.Normal.z,v3.Normal.z,
+		//	});
 
 		for (int y = minPoint.y; y <= maxPoint.y; y += 1)
 		{
 			for (int x = minPoint.x; x <= maxPoint.x; x += 1)
 			{
-				Vector3 P = Vector3(x, y, 0);
-				Vector3 barycent = barycentricCoordinateCrossProduct(v1.Position, v2.Position, v3.Position, P);
-				P.z = v1.Position.z * barycent.x + v2.Position.z * barycent.y + v3.Position.z * barycent.z;
+				Vertex P;
+				P.Position = Vector3(x, y, 0);
+				Vector3 barycent = barycentricCoordinateCrossProduct(v1, v2, v3, P);
+				P.Position.z = v1.Position.z * barycent.x + v2.Position.z * barycent.y + v3.Position.z * barycent.z;
+				P.TexCoords = v1.TexCoords * barycent.x + v2.TexCoords * barycent.y + v3.TexCoords * barycent.z;
 
-				Matrix barycents(3, 1, {
-					   barycent.x,
-					   barycent.y,
-					   barycent.z,
-					});
+				//Matrix barycents(3, 1, {
+				//	   barycent.x,
+				//	   barycent.y,
+				//	   barycent.z,
+				//	});
 
-				auto interpolatedNormal = normals * barycents;
-				Vector3 pixelNormal = Vector3(interpolatedNormal[0][0], interpolatedNormal[1][0], interpolatedNormal[2][0]).Normalize();
+				//auto interpolatedNormal = normals * barycents;
+				//Vector3 pixelNormal = Vector3(interpolatedNormal[0][0], interpolatedNormal[1][0], interpolatedNormal[2][0]).Normalize();
 
-				float intensity = pixelNormal.Dot(sunlitght.Direction.Normalize());
+				//float intensity = pixelNormal.Dot(sunlitght.Direction.Normalize());
 
-				if (intensity < 0)
-				{
-					//It means that the light comes from behind the polygon.
-					// Back-face culling
-					return;
-				}
+				//if (intensity < 0)
+				//{
+				//	//It means that the light comes from behind the polygon.
+				//	// Back-face culling
+				//	return;
+				//}
 
-				TGAColor col = TGAColor(intensity * 255, intensity * 255, intensity * 255, 255);
+				TGAColor col = TGAColor(255, 255, 255, 255);
 
 				if (barycent.x >= 0 && barycent.y >= 0 && barycent.z >= 0)
 				{
-					if (P.x >= 0 && P.y >= 0 && P.x <= frameWidth && P.y <= frameHeight)
+					if (P.Position.x >= 0 && P.Position.y >= 0 && P.Position.x <= frameWidth && P.Position.y <= frameHeight)
 					{
 						int cacheDeep = zbuffer[int(x + y * frameWidth)];
-						if (P.z < cacheDeep)
+						if (P.Position.z < cacheDeep)
 						{
 							bool discard = shader->Fragment(col, barycent);
 							if (!discard)
 							{
-								image.set(P.x, P.y, col);
-								zbuffer[int(x + y * frameWidth)] = P.z;
+								image.set(P.Position.x, P.Position.y, col);
+								zbuffer[int(x + y * frameWidth)] = P.Position.z;
 							}
 						}
 						else

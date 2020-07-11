@@ -33,6 +33,8 @@ namespace TmingEngine
 
 	void TmingEngine::Game::Begin()
 	{
+		Debug::Log("------Start------Application Stage---------------------------------\n");
+
 		softRender.LoadAssetToMemory();
 		softRender.SetRenderStatus();
 		softRender.DrawCall();

@@ -43,7 +43,7 @@ namespace TmingEngine
 		SoftRender() {};
 		~SoftRender() {};
 
-		unsigned int frameID;
+		unsigned int frameID = 0;
 
 		int frameWidth = 500;
 		int frameHeight = 500;
@@ -58,7 +58,7 @@ namespace TmingEngine
 		//so on to the VRAM (Vedio Random Access Memory)
 		void LoadAssetToMemory()
 		{
-			Model character(FileSystem::getPath("resources/objects/character/_2.obj"));
+			Model character(FileSystem::getPath("resources/objects/cyborg/cyborg.obj"));
 			for (int i = 0; i < character.meshes[0].indices.size(); i += 3)
 			{
 				int  index1 = character.meshes[0].indices[i];
@@ -77,14 +77,18 @@ namespace TmingEngine
 		// spicify the Texture , vertex shader ,fragment shader for each Primitive
 		void SetRenderStatus()
 		{
+			sunlitght.Direction = Vector3(0, 1, -1);
+			sunlitght.Color = Color(0.5, 0.5, 0);
+			IShader* shader = new GouraudShader();
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
-				primitiveDatas[i].shader = new GouraudShader();
+				primitiveDatas[i].shader = shader;
 			}
 		}
 
 		void DrawCall()
 		{
+			Debug::Log("------Start------Geometry Stage------------------------------------\n");
 			GenerateFrames();
 		}
 
@@ -106,20 +110,9 @@ namespace TmingEngine
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			//// load image, create texture and generate mipmaps
-			int width, height, nrChannels;
+			int nrChannels;
 
 			TGAImage image(frameWidth, frameHeight, TGAImage::RGB);
-
-			Vector2 t0[3] = { Vector2(40, 40),   Vector2(250, 300) , Vector2(350, 100) };
-			Vector2 t1[3] = { Vector2(380, 50),  Vector2(450, 10),   Vector2(370, 180) };
-			Vector2 t2[3] = { Vector2(180, 350), Vector2(120, 260), Vector2(130, 400) };
-
-			sunlitght.Direction = Vector3(0, 1, -1);
-			sunlitght.Color = Color(0.5, 0.5, 0);
-
-			Vector3 CameraPos = Vector3(0, 0.5, 3);
-			Vector3 center(0, 0, 0);	//相机朝向原点
-			Vector3 up(0, 1, 0);		//相机向上
 
 			Matrix model(4, 4, {
 				1,0,0,0,
@@ -128,11 +121,15 @@ namespace TmingEngine
 				0,0,0,1,
 				});
 
+			Vector3 CameraPos = Vector3(0, 1, 3);
+			Vector3 center = Vector3(0, 0, 0);	//相机朝向原点
+			Vector3 up = Vector3(0, 1, 0);		//相机向上
+
 			Matrix view = LookAt(CameraPos, center, up);
 
 			Matrix perspective = Perspective(1, 1, 1, 3);
 
-			Matrix orthographic = Orthographic(1.5, 1.5, 0.5, 10);
+			Matrix orthographic = Orthographic(2, 2, 0.5, 10);
 
 			Matrix viewPoint = Viewport(0, 0, frameWidth, frameHeight);
 
@@ -151,8 +148,15 @@ namespace TmingEngine
 				primitiveDatas[i].shader->SetProjection(orthographic);
 				primitiveDatas[i].shader->SetViewPoint(viewPoint);
 
-				primitiveDatas[i].VertexShader();
+				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
+				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+			}
 
+			Debug::Log("------Start------Rasterizer Stage------------------------------------\n");
+
+			for (int i = 0; i < primitiveDatas.size(); i++)
+			{
 				fillTriangleFromEdgeWitchZbuffer(
 					primitiveDatas[i].poins[0],
 					primitiveDatas[i].poins[1],
@@ -164,8 +168,6 @@ namespace TmingEngine
 			image.flip_horizontally();
 
 			unsigned char* data = image.buffer();
-			width = image.get_width();
-			height = image.get_height();
 			nrChannels = image.get_bytespp();
 
 			if (data)
@@ -174,15 +176,15 @@ namespace TmingEngine
 				{
 					if (nrChannels == 4)
 					{
-						glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+						glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frameWidth, frameHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 					}
 					else if (nrChannels == 3)
 					{
-						glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+						glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frameWidth, frameHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 					}
 					else if (nrChannels == 1)
 					{
-						glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, data);
+						glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, frameWidth, frameHeight, 0, GL_RED, GL_UNSIGNED_BYTE, data);
 					}
 					else
 					{

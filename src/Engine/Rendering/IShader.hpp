@@ -29,6 +29,8 @@
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Matrix.h"
 #include "tgaimage/tgaimage.h"
+#include "Rendering/Vertex.hpp"
+#include "Rendering/Texture.hpp"
 
 namespace TmingEngine
 {
@@ -42,6 +44,8 @@ namespace TmingEngine
 		Matrix view;
 		Matrix model;
 		Matrix viewPoint;
+
+		Texture Texture0, Texture1, Texture2, Texture3;
 
 		void SetProjection(Matrix p)
 		{
@@ -66,6 +70,7 @@ namespace TmingEngine
 		virtual Vector3 Vertex(Vector3 pos) = 0;
 		virtual bool Fragment(TGAColor& color, Vector3 barycent) = 0;
 		virtual bool Fragment(TGAColor& color) = 0;
+		virtual bool Fragment(TmingEngine::Vertex& vertex) = 0;
 	};
 }
 

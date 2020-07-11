@@ -64,6 +64,15 @@ namespace TmingEngine
 				poins[i].Position = shader->Vertex(poins[i].Position);
 			}
 		}
+
+		//
+		void TessellationShader()
+		{
+		}
+
+		void GeometryShader()
+		{
+		}
 	};
 } //namespace TmingEngine
 

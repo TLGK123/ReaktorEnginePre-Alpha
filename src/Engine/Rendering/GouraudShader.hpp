@@ -40,29 +40,21 @@ namespace TmingEngine
 
 		Vector3 Vertex(Vector3 pos) override
 		{
-			Matrix p1(4, 1,
-				{
-				  pos.x,
-				  pos.y,
-				  pos.z,
-				  1,
-				});
-
-			auto projectionPoint1 = porjection * view * model * p1;
-			float w1 = projectionPoint1[3][0];
+			auto projectionPoint = porjection * view * model * pos;
+			float w = projectionPoint[3][0];
 			Matrix t1(4, 4,
 				{
-				1 / w1 , 0 , 0 , 0 ,
-				0 , 1 / w1 , 0 , 0 ,
-				0 , 0 , 1 / w1 , 0 ,
-				0 , 0 , 0 , 1 / w1 ,
+				1 / w , 0 , 0 , 0 ,
+				0 , 1 / w , 0 , 0 ,
+				0 , 0 , 1 / w , 0 ,
+				0 , 0 , 0 , 1 / w ,
 				});
 
 			//Í¸ÊÓ³ý·¨
 
-			auto point1 = viewPoint * t1 * projectionPoint1;
+			auto ndcPoint = viewPoint * t1 * projectionPoint;
 
-			return Vector3(point1[0][0], point1[1][0], point1[2][0]);
+			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
 		};
 
 		bool Fragment(TGAColor& color, Vector3 barycent)override
@@ -72,6 +64,12 @@ namespace TmingEngine
 		}
 
 		bool Fragment(TGAColor& color)override
+		{
+			//color = TGAColor(125,125,125,255);
+			return false;
+		}
+
+		bool Fragment(TmingEngine::Vertex& vertex)override
 		{
 			//color = TGAColor(125,125,125,255);
 			return false;

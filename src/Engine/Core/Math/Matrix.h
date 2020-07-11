@@ -37,6 +37,7 @@
 #include <iomanip>
 
 #include "Core/Math/Radian.h"
+#include "Core/Math/Vector3.h"
 #include "Core/EngineDefs.h"
 
 using namespace std;
@@ -134,6 +135,39 @@ namespace TmingEngine
 				for (int j = 0; j < cloumn; j++)
 				{
 					reslut[i][j] = reslut[i][j] * num;
+				}
+			}
+			return reslut;
+		}
+
+		Matrix operator * (Vector3 point)const
+		{
+			Matrix reslut(4, 1);
+
+			if (cloumn != 4)
+			{
+				std::cout << "不满足矩阵【乘法】计算格式 " << std::endl;
+				return reslut;
+			}
+
+			Matrix p1(4, 1,
+				{
+				  point.x,
+				  point.y,
+				  point.z,
+				  1,
+				});
+
+			for (int i = 0; i < row; i++)
+			{
+				for (int j = 0; j < p1.cloumn; j++)
+				{
+					for (int k = 0; k < cloumn; k++)
+					{
+						auto a = matrix[i][k];
+						auto b = p1[k][j];
+						reslut[i][j] += a * b;
+					}
 				}
 			}
 			return reslut;
