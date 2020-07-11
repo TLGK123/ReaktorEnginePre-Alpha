@@ -63,7 +63,7 @@ namespace TmingEngine
 			return Vector2(x + v.x, y + v.y);
 		}
 
-		Vector2 operator * (const int num) const
+		Vector2 operator * (const float num) const
 		{
 			return Vector2(x * num, y * num);
 		}

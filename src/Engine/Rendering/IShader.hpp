@@ -45,7 +45,7 @@ namespace TmingEngine
 		Matrix model;
 		Matrix viewPoint;
 
-		Texture Texture0, Texture1, Texture2, Texture3;
+		vector<Texture> textures;
 
 		void SetProjection(Matrix p)
 		{
@@ -70,7 +70,7 @@ namespace TmingEngine
 		virtual Vector3 Vertex(Vector3 pos) = 0;
 		virtual bool Fragment(TGAColor& color, Vector3 barycent) = 0;
 		virtual bool Fragment(TGAColor& color) = 0;
-		virtual bool Fragment(TmingEngine::Vertex& vertex) = 0;
+		virtual bool Fragment(TGAColor& color, TmingEngine::Vertex& vertex) = 0;
 	};
 }
 

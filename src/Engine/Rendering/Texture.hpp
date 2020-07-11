@@ -12,13 +12,19 @@ either version 4 of the License, or (at your option) any later version.
 #ifndef Texture_h
 #define Texture_h
 #include<string>
+#include "tgaimage/tgaimage.h"
 using namespace std;
 struct Texture {
-    unsigned int id;
-    string type;
-    string path;
+	unsigned int id;
+	string type;
+	string path;
+	int width;
+	int height;
+	TGAImage image;
 };
 
-unsigned int TextureFromFile(const char *path, const string &directory, bool gamma = false);
+unsigned int LoadOpenGLTextureFromFile(const char* path, const string& directory, bool gamma = false);
+
+TGAImage LoadTGAImageFromFile(const char* path, const string& directory, bool gamma = false);
 
 #endif /* Texture_h */

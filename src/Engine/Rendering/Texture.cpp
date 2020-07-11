@@ -9,7 +9,7 @@ either version 4 of the License, or (at your option) any later version.
 #define STB_LIB_IMPLEMENTATION
 #include "Stb_Image/stb_image.h"
 
-unsigned int TextureFromFile(const char *path, const string &directory, bool gamma)
+unsigned int LoadOpenGLTextureFromFile(const char* path, const string& directory, bool gamma)
 {
 	string filename = string(path);
 	filename = directory + '/' + filename;
@@ -18,7 +18,7 @@ unsigned int TextureFromFile(const char *path, const string &directory, bool gam
 	glGenTextures(1, &textureID);
 
 	int width, height, nrComponents;
-	unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+	unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
 	if (data)
 	{
 		GLenum format;
@@ -47,4 +47,29 @@ unsigned int TextureFromFile(const char *path, const string &directory, bool gam
 	}
 
 	return textureID;
+}
+
+TGAImage LoadTGAImageFromFile(const char* path, const string& directory, bool gamma)
+{
+	TGAImage image;
+	string filename = string(path);
+	filename = directory + '/' + filename;
+	int width, height, channel;
+	unsigned char* data = stbi_load(filename.c_str(), &width, &height, &channel, 0);
+	if (data)
+	{
+		image.data = data;
+		image.width = width;
+		image.height = height;
+		image.bytespp = channel;
+	}
+	else
+	{
+		std::cout << "Texture failed to load at path: " << path << std::endl;
+		stbi_image_free(data);
+	}
+	string wf = filename + ".tga";
+	//image.write_tga_file(wf.c_str());
+
+	return image;
 }

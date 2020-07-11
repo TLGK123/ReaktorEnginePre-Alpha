@@ -69,9 +69,11 @@ namespace TmingEngine
 			return false;
 		}
 
-		bool Fragment(TmingEngine::Vertex& vertex)override
+		bool Fragment(TGAColor& color, TmingEngine::Vertex& vertex)override
 		{
-			//color = TGAColor(125,125,125,255);
+			color = textures[0].image.get
+			(vertex.TexCoords.x * textures[0].image.get_width(),
+				vertex.TexCoords.y * textures[0].image.get_height());
 			return false;
 		}
 	};

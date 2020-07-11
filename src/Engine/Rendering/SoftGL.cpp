@@ -146,7 +146,7 @@ namespace TmingEngine
 		int derror2 = std::abs(dy) * 2;
 		int error2 = 0;
 		int y = y0;
-		for (int x = x0; x <= x1; x++) {
+		for (int x = x0; x <= x1; x += 1) {
 			if (steep) {
 				image.set(y, x, color);
 			}
@@ -170,6 +170,12 @@ namespace TmingEngine
 		line(t0, t1, image, color);
 		line(t1, t2, image, color);
 		line(t2, t0, image, color);
+	}
+
+	void triangle(Vertex t0, Vertex t1, Vertex t2, TGAImage& image, TGAColor color) {
+		line(Vector2(t0.Position.x, t0.Position.y), Vector2(t2.Position.x, t2.Position.y), image, color);
+		line(Vector2(t1.Position.x, t1.Position.y), Vector2(t2.Position.x, t2.Position.y), image, color);
+		line(Vector2(t2.Position.x, t2.Position.y), Vector2(t0.Position.x, t0.Position.y), image, color);
 	}
 
 	void drawBox(Vector2 miniP, Vector2 maxP, TGAImage& image, TGAColor color)
@@ -344,7 +350,13 @@ namespace TmingEngine
 				P.Position = Vector3(x, y, 0);
 				Vector3 barycent = barycentricCoordinateCrossProduct(v1, v2, v3, P);
 				P.Position.z = v1.Position.z * barycent.x + v2.Position.z * barycent.y + v3.Position.z * barycent.z;
-				P.TexCoords = v1.TexCoords * barycent.x + v2.TexCoords * barycent.y + v3.TexCoords * barycent.z;
+
+				//auto x1 = v1.TexCoords * barycent.x;
+				//auto x2 = v2.TexCoords * barycent.y;
+				//auto x3 = v3.TexCoords * barycent.z;
+				//auto x4 = x1 + x2 + x3;
+
+				P.TexCoords = (v1.TexCoords * barycent.x) + (v2.TexCoords * barycent.y) + (v3.TexCoords * barycent.z);
 
 				//Matrix barycents(3, 1, {
 				//	   barycent.x,
@@ -373,7 +385,7 @@ namespace TmingEngine
 						int cacheDeep = zbuffer[int(x + y * frameWidth)];
 						if (P.Position.z < cacheDeep)
 						{
-							bool discard = shader->Fragment(col, barycent);
+							bool discard = shader->Fragment(col, P);
 							if (!discard)
 							{
 								image.set(P.Position.x, P.Position.y, col);

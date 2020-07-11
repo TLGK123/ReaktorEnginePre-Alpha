@@ -43,8 +43,8 @@ namespace TmingEngine
 	ENGINE_CLASS class Primitive
 	{
 	public:
-		PrimitiveType  primitiveType;
-		vector<Vertex> poins;
+		PrimitiveType	primitiveType;
+		vector<Vertex>	poins;
 		IShader* shader;
 
 		Primitive()

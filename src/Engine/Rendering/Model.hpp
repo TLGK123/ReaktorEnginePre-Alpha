@@ -5,12 +5,10 @@ either version 4 of the License, or (at your option) any later version.
 //See https ://learnopengl.com/About for more information.
 */
 
-
-
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <glad/glad.h> 
+#include <glad/glad.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -41,24 +39,22 @@ public:
 
 	/*  Functions   */
 	// constructor, expects a filepath to a 3D model.
-    
-    Model(): gammaCorrection(false)
-    {
-        
-    }
-    
-	Model(string const &path, bool gamma = false) : gammaCorrection(gamma)
+
+	Model() : gammaCorrection(false)
 	{
-        Init(path);
 	}
-    
-    void Init(string const &path)
-    {
+
+	Model(string const& path, bool gamma = false) : gammaCorrection(gamma)
+	{
+		Init(path);
+	}
+
+	void Init(string const& path)
+	{
 		textures_loaded.clear();
 		meshes.clear();
-        loadModel(path);
-        
-    }
+		loadModel(path);
+	}
 
 	// draws the model, and thus all its meshes
 	void Draw(Shader shader)
@@ -70,7 +66,7 @@ public:
 private:
 	/*  Functions   */
 	// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
-	void loadModel(string const &path)
+	void loadModel(string const& path)
 	{
 		// read file via ASSIMP
 		Assimp::Importer importer;  //aiProcess_FlipUVs |
@@ -89,12 +85,12 @@ private:
 	}
 
 	// processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
-	void processNode(aiNode *node, const aiScene *scene)
+	void processNode(aiNode* node, const aiScene* scene)
 	{
 		// process each mesh located at the current node
 		for (unsigned int i = 0; i < node->mNumMeshes; i++)
 		{
-			// the node object only contains indices to index the actual objects in the scene. 
+			// the node object only contains indices to index the actual objects in the scene.
 			// the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 			meshes.push_back(processMesh(mesh, scene));
@@ -104,10 +100,9 @@ private:
 		{
 			processNode(node->mChildren[i], scene);
 		}
-
 	}
 
-	Mesh processMesh(aiMesh *mesh, const aiScene *scene)
+	Mesh processMesh(aiMesh* mesh, const aiScene* scene)
 	{
 		// data to fill
 		vector<Vertex> vertices;
@@ -133,7 +128,7 @@ private:
 			if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
 			{
 				glm::vec2 vec;
-				// a vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't 
+				// a vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't
 				// use models where a vertex can have multiple texture coordinates so we always take the first set (0).
 				vec.x = mesh->mTextureCoords[0][i].x;
 				vec.y = mesh->mTextureCoords[0][i].y;
@@ -164,7 +159,7 @@ private:
 		// process materials
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 		// we assume a convention for sampler names in the shaders. Each diffuse texture should be named
-		// as 'texture_diffuseN' where N is a sequential number ranging from 1 to MAX_SAMPLER_NUMBER. 
+		// as 'texture_diffuseN' where N is a sequential number ranging from 1 to MAX_SAMPLER_NUMBER.
 		// Same applies to other texture as the following list summarizes:
 		// diffuse: texture_diffuseN
 		// specular: texture_specularN
@@ -189,7 +184,7 @@ private:
 
 	// checks all material textures of a given type and loads the textures if they're not loaded yet.
 	// the required info is returned as a Texture struct.
-	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName)
+	vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
 	{
 		vector<Texture> textures;
 		for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
@@ -210,9 +205,10 @@ private:
 			if (!skip)
 			{   // if texture hasn't been loaded already, load it
 				Texture texture;
-				texture.id = TextureFromFile(str.C_Str(), this->directory);
+				texture.id = LoadOpenGLTextureFromFile(str.C_Str(), this->directory);
 				texture.type = typeName;
-				texture.path = str.C_Str();
+				texture.path = directory + '/' + str.C_Str();
+				texture.image = LoadTGAImageFromFile(str.C_Str(), this->directory);
 				textures.push_back(texture);
 				textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
 			}

@@ -45,10 +45,10 @@ namespace TmingEngine
 
 		unsigned int frameID = 0;
 
-		int frameWidth = 500;
-		int frameHeight = 500;
+		int frameWidth = 800;
+		int frameHeight = 800;
 		Light sunlitght;
-
+		Model character;
 		//---------- Simulate  VRAM    Data
 		vector<Primitive> primitiveDatas;
 
@@ -58,7 +58,7 @@ namespace TmingEngine
 		//so on to the VRAM (Vedio Random Access Memory)
 		void LoadAssetToMemory()
 		{
-			Model character(FileSystem::getPath("resources/objects/cyborg/cyborg.obj"));
+			character.Init(FileSystem::getPath("resources/objects/cyborg/cyborg.obj"));
 			for (int i = 0; i < character.meshes[0].indices.size(); i += 3)
 			{
 				int  index1 = character.meshes[0].indices[i];
@@ -70,6 +70,7 @@ namespace TmingEngine
 				Vertex v3 = (character.meshes[0].vertices[index3]);
 
 				Primitive primitive(PrimitiveType::TRIANGLES, vector<Vertex>({ v1,v2,v3 }));
+
 				primitiveDatas.push_back(primitive);
 			}
 		}
@@ -80,6 +81,7 @@ namespace TmingEngine
 			sunlitght.Direction = Vector3(0, 1, -1);
 			sunlitght.Color = Color(0.5, 0.5, 0);
 			IShader* shader = new GouraudShader();
+			shader->textures = character.textures_loaded;
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = shader;
@@ -163,6 +165,10 @@ namespace TmingEngine
 					primitiveDatas[i].poins[2],
 					frameWidth, frameHeight,
 					image, red, zbuffer, sunlitght, primitiveDatas[i].shader);
+
+				//triangle(primitiveDatas[i].poins[0],
+				//	primitiveDatas[i].poins[1],
+				//	primitiveDatas[i].poins[2], image, white);
 			}
 
 			image.flip_horizontally();

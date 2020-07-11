@@ -35,7 +35,7 @@
 
 namespace TmingEngine
 {
-	const TGAColor white = TGAColor(255, 255, 255, 255);
+	const TGAColor white = TGAColor(255, 255, 255, 125);
 	const TGAColor red = TGAColor(255, 0, 0, 255);
 	const TGAColor green = TGAColor(0, 255, 0, 255);
 	const TGAColor blue = TGAColor(0, 0, 255, 255);
@@ -73,6 +73,8 @@ namespace TmingEngine
 	void line(Vector2 x, Vector2 y, TGAImage& image, TGAColor color);
 
 	void triangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);
+
+	void triangle(Vertex t0, Vertex t1, Vertex t2, TGAImage& image, TGAColor color);
 
 	void drawBox(Vector2 miniP, Vector2 maxP, TGAImage& image, TGAColor color);
 
