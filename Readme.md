@@ -11,8 +11,8 @@
 My goal is to develop a full-platform Editor (Windows Mac Linux) ,then I need to abstract a windows layer，above this abstract layer to develop the game engine editor。So I use OpenGL  for backend rendering，use  glfw to create a windows , finally use the dear-imgui to build editor layout widget 。I want to use vulkan to replace the OpenGL in the future。If the abstract windows layer design good enough ，then we can easy to change backend rendering library.
  
  ## The Editor Layout
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200702232219177.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25hbl9mZW5nX3l1,size_16,color_FFFFFF,t_70)
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20191026231337406.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25hbl9mZW5nX3l1,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200712175513449.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25hbl9mZW5nX3l1,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200712175527528.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25hbl9mZW5nX3l1,size_16,color_FFFFFF,t_70)
 >Even though I have used Unity for a long time , but I still don't know why Unity have  to design those widgets .But those layout design is the really reason that I change use the tool from cocos to Unity. Because of the  continuation  of the user habit , as a beginner ，we can also fellow the old version  tutorial to exercise in the the latest editor tool .
 
 So the design of TmingEngine editor , I just imitate the Unity . I will learn other 3D rendering  tool UI layout , then bring the good design to  my  project.
