@@ -71,9 +71,10 @@ namespace TmingEngine
 
 		bool Fragment(TGAColor& color, TmingEngine::Vertex& vertex)override
 		{
-			color = textures[0].image.get
-			(vertex.TexCoords.x * textures[0].image.get_width(),
-				vertex.TexCoords.y * textures[0].image.get_height());
+			int u = vertex.TexCoords.x * textures[0].image.get_width();
+			int v = vertex.TexCoords.y * textures[0].image.get_height();
+			color = textures[0].image.get(u, v);
+
 			return false;
 		}
 	};

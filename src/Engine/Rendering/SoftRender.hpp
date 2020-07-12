@@ -73,6 +73,33 @@ namespace TmingEngine
 
 				primitiveDatas.push_back(primitive);
 			}
+
+			//Vertex v1, v2, v3;
+			//v1.Position = Vector3(0, 0, 0);
+			//v1.TexCoords = Vector2(0, 0);
+
+			//v2.Position = Vector3(0, 1, 0);
+			//v2.TexCoords = Vector2(0, 1);
+
+			//v3.Position = Vector3(1, 0, 0);
+			//v3.TexCoords = Vector2(1, 0);
+
+			//Primitive primitive(PrimitiveType::TRIANGLES, vector<Vertex>({ v1,v2,v3 }));
+
+			//Vertex v11, v12, v13;
+			//v11.Position = Vector3(-1, -1, 0);
+			//v11.TexCoords = Vector2(0, 0);
+
+			//v12.Position = Vector3(-1, 1, 0);
+			//v12.TexCoords = Vector2(0, 1);
+
+			//v13.Position = Vector3(1, -1, 0);
+			//v13.TexCoords = Vector2(1, 0);
+
+			//Primitive primitive2(PrimitiveType::TRIANGLES, vector<Vertex>({ v11,v12,v13 }));
+
+			////primitiveDatas.push_back(primitive);
+			//primitiveDatas.push_back(primitive2);
 		}
 
 		// spicify the Texture , vertex shader ,fragment shader for each Primitive
@@ -81,7 +108,14 @@ namespace TmingEngine
 			sunlitght.Direction = Vector3(0, 1, -1);
 			sunlitght.Color = Color(0.5, 0.5, 0);
 			IShader* shader = new GouraudShader();
-			shader->textures = character.textures_loaded;
+			//shader->textures = character.textures_loaded;
+
+			vector<Texture> mainTexture;
+			Texture mainTex;
+			mainTex.image = LoadTGAImageFromFile(string("cyborg_diffuse.tga").c_str(), FileSystem::getPath("resources/objects/cyborg"));
+			mainTexture.push_back(mainTex);
+
+			shader->textures = mainTexture;
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = shader;
@@ -134,6 +168,8 @@ namespace TmingEngine
 			Matrix orthographic = Orthographic(2, 2, 0.5, 10);
 
 			Matrix viewPoint = Viewport(0, 0, frameWidth, frameHeight);
+
+			//std::cout << view << std::endl;
 
 			int len = frameWidth * frameHeight;
 			int* zbuffer = new int[len];

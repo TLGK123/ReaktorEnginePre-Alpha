@@ -69,7 +69,10 @@ TGAImage LoadTGAImageFromFile(const char* path, const string& directory, bool ga
 	//	stbi_image_free(data);
 	//}
 	image.read_tga_file(filename.c_str());
-	string wf = filename + ".tga";
+	//image.flip_horizontally();
+	image.flip_vertically();
+
+	//string wf = filename + ".tga";
 	//image.write_tga_file(wf.c_str());
 
 	return image;

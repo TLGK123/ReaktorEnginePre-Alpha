@@ -28,14 +28,16 @@
 
 #include <stdio.h>
 #include <string>
+#include <sstream>
 #include <iostream>
+#include <iomanip>
 
 #include "Core/EngineDefs.h"
 #include "ImGui/imgui.h"
 #include "glm/glm.hpp"
 
 using namespace glm;
-
+using namespace std;
 namespace TmingEngine
 {
 	ENGINE_CLASS class Vector2
@@ -66,6 +68,17 @@ namespace TmingEngine
 		Vector2 operator * (const float num) const
 		{
 			return Vector2(x * num, y * num);
+		}
+
+		friend ostream& operator<<(ostream& stream, const Vector2 c)
+		{
+			ostringstream oss;
+			oss << setiosflags(ios::fixed | ios::right) << setw(8) << setprecision(2) << "(" << c.x << " , " << c.y << ")" << endl;
+
+			std::string s = "";
+			s = string(oss.str());
+			stream << s;
+			return stream;
 		}
 
 		//对应的组件值，相乘并相加,通常用于计算向量的夹角

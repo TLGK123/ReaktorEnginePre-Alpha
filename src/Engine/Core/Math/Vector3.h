@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string>
+#include <sstream>
 #include <iostream>
 #include <iomanip>
 
@@ -36,6 +37,7 @@
 #include "glm/glm.hpp"
 
 using namespace glm;
+using namespace std;
 
 namespace TmingEngine
 {
@@ -63,8 +65,6 @@ namespace TmingEngine
 			this->y = v.y;
 			this->z = v.z;
 		}
-
-		std::string ToString() const;
 
 		bool operator ==(const Vector3& other) const
 		{
@@ -112,6 +112,17 @@ namespace TmingEngine
 		Vector3 operator * (const float other)const
 		{
 			return Vector3(x * other, y * other, z * other);
+		}
+
+		friend ostream& operator<<(ostream& stream, const Vector3 c)
+		{
+			ostringstream oss;
+			oss << setiosflags(ios::fixed | ios::right) << setw(8) << setprecision(2) << "(" << c.x << " , " << c.y << " , " << c.z << ")" << endl;
+
+			std::string s = "";
+			s = string(oss.str());
+			stream << s;
+			return stream;
 		}
 	};
 }

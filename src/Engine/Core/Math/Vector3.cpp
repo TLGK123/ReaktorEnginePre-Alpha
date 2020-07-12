@@ -29,10 +29,4 @@ using namespace std;
 
 namespace TmingEngine
 {
-	string Vector3::ToString() const
-	{
-		char tempBuffer[200];
-		sprintf(tempBuffer, "X:%f, Y:%f, Z:%f", x, y, z);
-		return string(tempBuffer);
-	}
 }

@@ -385,6 +385,9 @@ namespace TmingEngine
 						int cacheDeep = zbuffer[int(x + y * frameWidth)];
 						if (P.Position.z < cacheDeep)
 						{
+							Vector2 s = P.TexCoords;
+
+							//std::cout << s << std::endl;
 							bool discard = shader->Fragment(col, P);
 							if (!discard)
 							{
@@ -614,7 +617,7 @@ namespace TmingEngine
 		auto u = Vector3(v1.x, v2.x, v3.x).Cross(Vector3(v1.y, v2.y, v3.y));
 		if (std::abs(u.z) > 1e-2)
 		{
-			return Vector3(1.0f - (u.x + u.y) / u.z, u.x / u.z, u.y / u.z);
+			return Vector3(u.x / u.z, u.y / u.z, 1.0f - (u.x + u.y) / u.z);
 		}
 		else
 		{
@@ -631,7 +634,7 @@ namespace TmingEngine
 		auto u = Vector3(v1.x, v2.x, v3.x).Cross(Vector3(v1.y, v2.y, v3.y));
 		if (std::abs(u.z) > 1e-2)
 		{
-			return Vector3(1.0f - (u.x + u.y) / u.z, u.x / u.z, u.y / u.z);
+			return Vector3(u.x / u.z, u.y / u.z, 1.0f - (u.x + u.y) / u.z);
 		}
 		else
 		{
