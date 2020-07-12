@@ -350,12 +350,6 @@ namespace TmingEngine
 				P.Position = Vector3(x, y, 0);
 				Vector3 barycent = barycentricCoordinateCrossProduct(v1, v2, v3, P);
 				P.Position.z = v1.Position.z * barycent.x + v2.Position.z * barycent.y + v3.Position.z * barycent.z;
-
-				//auto x1 = v1.TexCoords * barycent.x;
-				//auto x2 = v2.TexCoords * barycent.y;
-				//auto x3 = v3.TexCoords * barycent.z;
-				//auto x4 = x1 + x2 + x3;
-
 				P.TexCoords = (v1.TexCoords * barycent.x) + (v2.TexCoords * barycent.y) + (v3.TexCoords * barycent.z);
 
 				//Matrix barycents(3, 1, {

@@ -148,7 +148,7 @@ namespace TmingEngine
 			//// load image, create texture and generate mipmaps
 			int nrChannels;
 
-			TGAImage image(frameWidth, frameHeight, TGAImage::RGB);
+			TGAImage image(frameWidth, frameHeight, TGAImage::RGBA);
 
 			Matrix model(4, 4, {
 				1,0,0,0,
@@ -179,6 +179,8 @@ namespace TmingEngine
 				zbuffer[inedx] = 10000000;
 			}
 
+			Debug::Log("------Start------Rasterizer Stage------------------------------------\n");
+
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader->SetModel(model);
@@ -189,26 +191,23 @@ namespace TmingEngine
 				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
 				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
 				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
-			}
 
-			Debug::Log("------Start------Rasterizer Stage------------------------------------\n");
-
-			for (int i = 0; i < primitiveDatas.size(); i++)
-			{
-				fillTriangleFromEdgeWitchZbuffer(
-					primitiveDatas[i].poins[0],
-					primitiveDatas[i].poins[1],
-					primitiveDatas[i].poins[2],
-					frameWidth, frameHeight,
-					image, red, zbuffer, sunlitght, primitiveDatas[i].shader);
-
-				//triangle(primitiveDatas[i].poins[0],
+				//fillTriangleFromEdgeWitchZbuffer(
+				//	primitiveDatas[i].poins[0],
 				//	primitiveDatas[i].poins[1],
-				//	primitiveDatas[i].poins[2], image, white);
+				//	primitiveDatas[i].poins[2],
+				//	frameWidth, frameHeight,
+				//	image, red, zbuffer, sunlitght, primitiveDatas[i].shader);
+
+				triangle(primitiveDatas[i].poins[0],
+					primitiveDatas[i].poins[1],
+					primitiveDatas[i].poins[2], image, red);
 			}
 
 			image.flip_horizontally();
+			//image.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/1.tga").c_str());
 
+			image.flip_RGBA();
 			unsigned char* data = image.buffer();
 			nrChannels = image.get_bytespp();
 
