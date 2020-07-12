@@ -148,7 +148,7 @@ namespace TmingEngine
 			//// load image, create texture and generate mipmaps
 			int nrChannels;
 
-			TGAImage image(frameWidth, frameHeight, TGAImage::RGBA);
+			TGAImage image(frameWidth, frameHeight, TGAImage::RGB);
 
 			Matrix model(4, 4, {
 				1,0,0,0,
@@ -192,16 +192,16 @@ namespace TmingEngine
 				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
 				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
 
-				//fillTriangleFromEdgeWitchZbuffer(
-				//	primitiveDatas[i].poins[0],
-				//	primitiveDatas[i].poins[1],
-				//	primitiveDatas[i].poins[2],
-				//	frameWidth, frameHeight,
-				//	image, red, zbuffer, sunlitght, primitiveDatas[i].shader);
-
-				triangle(primitiveDatas[i].poins[0],
+				fillTriangleFromEdgeWitchZbuffer(
+					primitiveDatas[i].poins[0],
 					primitiveDatas[i].poins[1],
-					primitiveDatas[i].poins[2], image, red);
+					primitiveDatas[i].poins[2],
+					frameWidth, frameHeight,
+					image, red, zbuffer, sunlitght, primitiveDatas[i].shader);
+
+				//triangle(primitiveDatas[i].poins[0],
+				//	primitiveDatas[i].poins[1],
+				//	primitiveDatas[i].poins[2], image, red);
 			}
 
 			image.flip_horizontally();
