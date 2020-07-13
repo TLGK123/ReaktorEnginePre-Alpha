@@ -199,7 +199,7 @@ namespace TmingEngine
 					frameWidth, frameHeight,
 					image, red, zbuffer, sunlitght, primitiveDatas[i].shader);
 
-				//triangle(primitiveDatas[i].poins[0],
+				//	triangle(primitiveDatas[i].poins[0],
 				//	primitiveDatas[i].poins[1],
 				//	primitiveDatas[i].poins[2], image, red);
 			}
@@ -207,8 +207,8 @@ namespace TmingEngine
 			image.flip_horizontally();
 			//image.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/1.tga").c_str());
 
-			image.flip_RGBA();
-			unsigned char* data = image.buffer();
+			image.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
+			unsigned char* data = image.buffer(); // directly set the opengl texture data with tag imgae data
 			nrChannels = image.get_bytespp();
 
 			if (data)
