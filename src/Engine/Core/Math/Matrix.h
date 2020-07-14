@@ -257,6 +257,17 @@ namespace TmingEngine
 			stream << s;
 			return stream;
 		}
+
+		operator Vector3()
+		{
+			if (row < 3)
+			{
+				std::cout << "不满足自动矩阵 转 Vector3 格式 " << std::endl;
+				return Vector3();
+			}
+
+			return Vector3(matrix[0][cloumn - 1], matrix[1][cloumn - 1], matrix[2][cloumn - 1]);
+		}
 	};
 }
 

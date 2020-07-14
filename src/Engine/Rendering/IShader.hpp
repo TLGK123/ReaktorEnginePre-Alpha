@@ -47,6 +47,8 @@ namespace TmingEngine
 
 		vector<Texture> textures;
 
+		Light light;
+
 		void SetProjection(Matrix p)
 		{
 			porjection = p;
@@ -68,6 +70,7 @@ namespace TmingEngine
 		}
 
 		virtual Vector3 Vertex(Vector3 pos) = 0;
+		virtual Vector3 Vertex(TmingEngine::Vertex& vertex) = 0;
 		virtual bool Fragment(TGAColor& color, Vector3 barycent) = 0;
 		virtual bool Fragment(TGAColor& color) = 0;
 		virtual bool Fragment(TGAColor& color, TmingEngine::Vertex& vertex) = 0;

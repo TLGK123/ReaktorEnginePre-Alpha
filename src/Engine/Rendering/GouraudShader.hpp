@@ -38,6 +38,8 @@ namespace TmingEngine
 		GouraudShader() {};
 		~GouraudShader() {};
 
+		Matrix TBN;
+
 		Vector3 Vertex(Vector3 pos) override
 		{
 			auto projectionPoint = porjection * view * model * pos;
@@ -57,9 +59,37 @@ namespace TmingEngine
 			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
 		};
 
+		Vector3 Vertex(TmingEngine::Vertex& vertex) override
+		{
+			auto projectionPoint = porjection * view * model * vertex.Position;
+			float w = projectionPoint[3][0];
+			Matrix t1(4, 4,
+				{
+				1 / w , 0 , 0 , 0 ,
+				0 , 1 / w , 0 , 0 ,
+				0 , 0 , 1 / w , 0 ,
+				0 , 0 , 0 , 1 / w ,
+				});
+
+			//Í¸ÊÓ³ý·¨
+
+			auto ndcPoint = viewPoint * t1 * projectionPoint;
+
+			//TBN matrix is to transform texture codination to object codination
+			//we need a  inverse it . we can use   transpose to get the same matrix
+			TBN = Matrix(3, 3, {
+				vertex.Tangent.x ,		vertex.Tangent.y,		vertex.Tangent.z,
+				vertex.Bitangent.x ,	vertex.Bitangent.y,		vertex.Bitangent.z,
+				vertex.Normal.x ,		vertex.Normal.y,		vertex.Normal.y,
+				});
+
+			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
+		};
+
 		bool Fragment(TGAColor& color, Vector3 barycent)override
 		{
 			//color = TGAColor(125,125,125,255);
+
 			return false;
 		}
 
@@ -75,11 +105,16 @@ namespace TmingEngine
 			int v = vertex.TexCoords.y * textures[0].image.get_height();
 			color = textures[0].image.get(u, v);
 
+			Vector3 lightDir = TBN * Matrix(3, 1, { light.Direction.x,  light.Direction.y, light.Direction.z }); ;
+
 			//obtain the normal from normal map in range [0 , 1]
 			TGAColor colorNormal = textures[1].image.get(u, v);
 			//change the normal from range [0 , 1] to  [-1 , 1]
 			colorNormal = colorNormal * 2 - 1;
 			Vector3 tangentNormal = Vector3(colorNormal.bgra[2], colorNormal.bgra[1], colorNormal.bgra[0]);
+
+			float intensity = lightDir.Dot(tangentNormal);
+			color = color * intensity;
 
 			return false;
 		}

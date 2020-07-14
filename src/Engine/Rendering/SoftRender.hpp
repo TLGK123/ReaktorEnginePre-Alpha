@@ -110,15 +110,21 @@ namespace TmingEngine
 			IShader* shader = new GouraudShader();
 			//shader->textures = character.textures_loaded;
 
-			vector<Texture> mainTexture;
-			Texture mainTex;
-			mainTex.image = LoadTGAImageFromFile(string("cyborg_diffuse.tga").c_str(), FileSystem::getPath("resources/objects/cyborg"));
-			mainTexture.push_back(mainTex);
+			shader->light = sunlitght;
 
-			shader->textures = mainTexture;
+			vector<Texture> modelTextures;
+			Texture mainTex, normalMap;
+			mainTex.image = LoadTGAImageFromFile(string("cyborg_diffuse.tga").c_str(), FileSystem::getPath("resources/objects/cyborg"));
+			normalMap.image = LoadTGAImageFromFile(string("cyborg_normal.tga").c_str(), FileSystem::getPath("resources/objects/cyborg"));
+
+			modelTextures.push_back(mainTex);
+			modelTextures.push_back(normalMap);
+
+			shader->textures = modelTextures;
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = shader;
+				primitiveDatas[i].CaculateTBN();
 			}
 		}
 
@@ -157,7 +163,7 @@ namespace TmingEngine
 				0,0,0,1,
 				});
 
-			Vector3 CameraPos = Vector3(0, 1, 3);
+			Vector3 CameraPos = Vector3(0, 5, 3);
 			Vector3 center = Vector3(0, 0, 0);	//相机朝向原点
 			Vector3 up = Vector3(0, 1, 0);		//相机向上
 

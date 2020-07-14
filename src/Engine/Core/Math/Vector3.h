@@ -102,9 +102,9 @@ namespace TmingEngine
 		Vector3 Normalize() const
 		{
 			float len = sqrt(x * x + y * y + z * z);
-			float v1 = abs(x / len);
-			float v2 = abs(y / len);
-			float v3 = abs(z / len);
+			float v1 = (x / len);
+			float v2 = (y / len);
+			float v3 = (z / len);
 
 			return Vector3(v1, v2, v3);
 		}
