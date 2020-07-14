@@ -75,6 +75,12 @@ namespace TmingEngine
 			int v = vertex.TexCoords.y * textures[0].image.get_height();
 			color = textures[0].image.get(u, v);
 
+			//obtain the normal from normal map in range [0 , 1]
+			TGAColor colorNormal = textures[1].image.get(u, v);
+			//change the normal from range [0 , 1] to  [-1 , 1]
+			colorNormal = colorNormal * 2 - 1;
+			Vector3 tangentNormal = Vector3(colorNormal.bgra[2], colorNormal.bgra[1], colorNormal.bgra[0]);
+
 			return false;
 		}
 	};
