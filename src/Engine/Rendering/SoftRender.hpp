@@ -105,7 +105,7 @@ namespace TmingEngine
 		// spicify the Texture , vertex shader ,fragment shader for each Primitive
 		void SetRenderStatus()
 		{
-			sunlitght.Direction = Vector3(0, 1, -1);
+			sunlitght.Direction = Vector3(0, 0, -1);
 			sunlitght.Color = Color(0.5, 0.5, 0);
 			IShader* shader = new GouraudShader();
 			//shader->textures = character.textures_loaded;
@@ -172,7 +172,7 @@ namespace TmingEngine
 
 			Matrix perspective = Perspective(1, 1, 1, 3);
 
-			Matrix orthographic = Orthographic(1.5, 1.5, 0.5, 10);
+			Matrix orthographic = Orthographic(2, 2, 0.5, 10);
 
 			Matrix viewPoint = Viewport(0, 0, frameWidth, frameHeight);
 
