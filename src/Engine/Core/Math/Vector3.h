@@ -86,6 +86,16 @@ namespace TmingEngine
 			return Vector3(x - other.x, y - other.y, z - other.z);
 		}
 
+		Vector3 operator -(float other) const
+		{
+			return Vector3(x - other, y - other, z - other);
+		}
+
+		Vector3 operator +(float other) const
+		{
+			return Vector3(x + other, y + other, z + other);
+		}
+
 		Vector3 Cross(const Vector3& v2) const
 		{
 			float x_ = y * v2.z - v2.y * z;

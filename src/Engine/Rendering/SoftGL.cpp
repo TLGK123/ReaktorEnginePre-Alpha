@@ -336,12 +336,6 @@ namespace TmingEngine
 		Vector2 minPoint = boxs[0];
 		Vector2 maxPoint = boxs[1];
 
-		//Matrix normals(3, 3, {
-		//v1.Normal.x,v2.Normal.x,v3.Normal.x,
-		//v1.Normal.y,v2.Normal.y,v3.Normal.y,
-		//v1.Normal.z,v2.Normal.z,v3.Normal.z,
-		//	});
-
 		for (int y = minPoint.y; y <= maxPoint.y; y += 1)
 		{
 			for (int x = minPoint.x; x <= maxPoint.x; x += 1)
@@ -351,6 +345,8 @@ namespace TmingEngine
 				Vector3 barycent = barycentricCoordinateCrossProduct(v1, v2, v3, P);
 				P.Position.z = v1.Position.z * barycent.x + v2.Position.z * barycent.y + v3.Position.z * barycent.z;
 				P.TexCoords = (v1.TexCoords * barycent.x) + (v2.TexCoords * barycent.y) + (v3.TexCoords * barycent.z);
+				P.Normal.z = v1.Normal.z * barycent.x + v2.Normal.z * barycent.y + v3.Normal.z * barycent.z;
+				P.Tangent.z = v1.Tangent.z * barycent.x + v2.Tangent.z * barycent.y + v3.Tangent.z * barycent.z;
 
 				//Matrix barycents(3, 1, {
 				//	   barycent.x,

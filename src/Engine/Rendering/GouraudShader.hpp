@@ -75,14 +75,6 @@ namespace TmingEngine
 
 			auto ndcPoint = viewPoint * t1 * projectionPoint;
 
-			//TBN matrix is to transform texture codination to object codination
-			//we need a  inverse it . we can use   transpose to get the same matrix
-			TBN = Matrix(3, 3, {
-				vertex.Tangent.x ,		vertex.Tangent.y,		vertex.Tangent.z,
-				vertex.Bitangent.x ,	vertex.Bitangent.y,		vertex.Bitangent.z,
-				vertex.Normal.x ,		vertex.Normal.y,		vertex.Normal.y,
-				});
-
 			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
 		};
 
@@ -105,18 +97,42 @@ namespace TmingEngine
 			int v = vertex.TexCoords.y * textures[0].image.get_height();
 			color = textures[0].image.get(u, v);
 
-			Vector3 lightDir = TBN * Matrix(3, 1, { light.Direction.x,  light.Direction.y, light.Direction.z }); ;
+			Vector3 Normal = CalcBumpedNormal(vertex);
 
-			//obtain the normal from normal map in range [0 , 1]
+			float intensity = light.Direction.Dot(Normal);
+			if (intensity > 0)
+			{
+				color = color * intensity;
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+		Vector3 CalcBumpedNormal(TmingEngine::Vertex p)
+		{
+			Vector3 Normal = p.Normal.Normalize();
+			Vector3 Tangent = p.Tangent.Normalize();
+			Tangent = (Normal.Cross(Tangent - Tangent.Dot(Normal))).Normalize();
+			Vector3 Bitangent = Tangent.Cross(Normal);
+
+			int u = p.TexCoords.x * textures[0].image.get_width();
+			int v = p.TexCoords.y * textures[0].image.get_height();
 			TGAColor colorNormal = textures[1].image.get(u, v);
-			//change the normal from range [0 , 1] to  [-1 , 1]
-			colorNormal = colorNormal * 2 - 1;
-			Vector3 tangentNormal = Vector3(colorNormal.bgra[2], colorNormal.bgra[1], colorNormal.bgra[0]);
+			Vector3 BumpMapNormal = Vector3(colorNormal[2] / 255.0f, colorNormal[1] / 255.0f, colorNormal[0] / 255.0f);
+			BumpMapNormal = BumpMapNormal.Normalize();
+			BumpMapNormal = BumpMapNormal * 2 - Vector3(1, 1, 1);
 
-			float intensity = lightDir.Dot(tangentNormal);
-			color = color * intensity;
-
-			return false;
+			Vector3 NewNormal;
+			Matrix TBN = Matrix(3, 3, {
+				Tangent.x ,Tangent.y,Tangent.z,
+				Bitangent.x ,Bitangent.y,Bitangent.z,
+				Normal.x,Normal.y,Normal.z });
+			NewNormal = TBN * Matrix(3, 1, { BumpMapNormal.x,BumpMapNormal.y,BumpMapNormal.z });
+			NewNormal = NewNormal.Normalize();
+			return NewNormal;
 		}
 	};
 }

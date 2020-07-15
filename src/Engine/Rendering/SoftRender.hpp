@@ -156,22 +156,23 @@ namespace TmingEngine
 
 			TGAImage image(frameWidth, frameHeight, TGAImage::RGB);
 
+			//around the Y axis rotate 180
 			Matrix model(4, 4, {
-				1,0,0,0,
+				cos(180.0f / 360 * 2 * Pi),0,sin(180.0f / 360 * 2 * Pi),0,
 				0,1,0,0,
-				0,0,1,0,
+				-sin(180.0f / 360 * 2 * Pi),0,cos(180.0f / 360 * 2 * Pi),0,
 				0,0,0,1,
 				});
 
-			Vector3 CameraPos = Vector3(0, 5, 3);
-			Vector3 center = Vector3(0, 0, 0);	//相机朝向原点
+			Vector3 CameraPos = Vector3(0, 2, 3);
+			Vector3 center = Vector3(0, 2, 0);	//相机朝向原点
 			Vector3 up = Vector3(0, 1, 0);		//相机向上
 
 			Matrix view = LookAt(CameraPos, center, up);
 
 			Matrix perspective = Perspective(1, 1, 1, 3);
 
-			Matrix orthographic = Orthographic(2, 2, 0.5, 10);
+			Matrix orthographic = Orthographic(1.5, 1.5, 0.5, 10);
 
 			Matrix viewPoint = Viewport(0, 0, frameWidth, frameHeight);
 
