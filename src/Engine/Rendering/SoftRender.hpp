@@ -125,7 +125,7 @@ namespace TmingEngine
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = shader;
-				primitiveDatas[i].CaculateTBN();
+				//primitiveDatas[i].CaculateTBN();
 			}
 		}
 

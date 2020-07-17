@@ -74,9 +74,8 @@ namespace TmingEngine
 
 			//Í¸ÊÓ³ý·¨
 
-			auto ndcPoint = viewPoint * t1 * projectionPoint;
-
-			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
+			auto screenPoint = viewPoint * t1 * projectionPoint;
+			return screenPoint;
 		};
 
 		bool Fragment(TGAColor& color, Vector3 barycent)override
@@ -94,31 +93,8 @@ namespace TmingEngine
 
 		bool Fragment(TGAColor& color, TmingEngine::Vertex& vertex)override
 		{
-			Debug::Log<TmingEngine::Vertex>(vertex);
-		}
-
-		Vector3 CalcBumpedNormal(TmingEngine::Vertex p)
-		{
-			Vector3 Normal = p.Normal.Normalize();
-			Vector3 Tangent = p.Tangent.Normalize();
-			Tangent = (Normal.Cross(Tangent - Tangent.Dot(Normal))).Normalize();
-			Vector3 Bitangent = Tangent.Cross(Normal);
-
-			int u = p.TexCoords.x * textures[0].image.get_width();
-			int v = p.TexCoords.y * textures[0].image.get_height();
-			TGAColor colorNormal = textures[1].image.get(u, v);
-			Vector3 BumpMapNormal = Vector3(colorNormal[2] / 255.0f, colorNormal[1] / 255.0f, colorNormal[0] / 255.0f);
-			BumpMapNormal = BumpMapNormal.Normalize();
-			BumpMapNormal = BumpMapNormal * 2 - Vector3(1, 1, 1);
-
-			Vector3 NewNormal;
-			Matrix TBN = Matrix(3, 3, {
-				Tangent.x ,Tangent.y,Tangent.z,
-				Bitangent.x ,Bitangent.y,Bitangent.z,
-				Normal.x,Normal.y,Normal.z });
-			NewNormal = TBN * Matrix(3, 1, { BumpMapNormal.x,BumpMapNormal.y,BumpMapNormal.z });
-			NewNormal = NewNormal.Normalize();
-			return NewNormal;
+			color = TGAColor(vertex.Position.z, vertex.Position.z, vertex.Position.z);
+			return false;
 		}
 	};
 }

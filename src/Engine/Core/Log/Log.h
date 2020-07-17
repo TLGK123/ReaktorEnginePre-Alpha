@@ -44,11 +44,6 @@ namespace TmingEngine
 		static void Log(std::string msg);
 		static void Log(glm::mat4 msg);
 
-		template <typename T>
-		static void Log(T msg)
-		{
-			std::cout << msg << std::endl;
-		}
 	private:
 	};
 } // TmingEngine
