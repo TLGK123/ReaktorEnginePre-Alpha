@@ -31,6 +31,7 @@
 #include "Rendering/Model.hpp"
 #include "Rendering/Primitive.hpp"
 #include "Rendering/GouraudShader.hpp"
+#include "Rendering/DepthShader.hpp"
 #include "Rendering/Color.hpp"
 #include "Rendering/Light.hpp"
 #include "Rendering/SoftGL.hpp"
@@ -107,7 +108,7 @@ namespace TmingEngine
 		{
 			sunlitght.Direction = Vector3(0, 0, -1);
 			sunlitght.Color = Color(0.5, 0.5, 0);
-			IShader* shader = new GouraudShader();
+			IShader* shader = new DepthShader();
 			//shader->textures = character.textures_loaded;
 
 			shader->light = sunlitght;
@@ -158,9 +159,9 @@ namespace TmingEngine
 
 			//around the Y axis rotate 180
 			Matrix model(4, 4, {
-				cos(180.0f / 360 * 2 * Pi),0,sin(180.0f / 360 * 2 * Pi),0,
+				cos(150.0f / 360 * 2 * Pi),0,sin(150.0f / 360 * 2 * Pi),0,
 				0,1,0,0,
-				-sin(180.0f / 360 * 2 * Pi),0,cos(180.0f / 360 * 2 * Pi),0,
+				-sin(150.0f / 360 * 2 * Pi),0,cos(150.0f / 360 * 2 * Pi),0,
 				0,0,0,1,
 				});
 

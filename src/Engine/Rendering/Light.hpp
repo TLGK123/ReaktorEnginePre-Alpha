@@ -41,6 +41,17 @@ namespace TmingEngine
 		Light()
 		{
 		}
+
+		friend ostream& operator<<(ostream& stream, const Light c)
+		{
+			ostringstream oss;
+			oss << setiosflags(ios::fixed | ios::right) << setw(8) << setprecision(2) << "Position£º " << c.Position << ")" << endl;
+
+			std::string s = "";
+			s = string(oss.str());
+			stream << s;
+			return stream;
+		}
 	};
 }
 
