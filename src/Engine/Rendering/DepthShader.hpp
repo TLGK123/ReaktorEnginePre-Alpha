@@ -73,8 +73,11 @@ namespace TmingEngine
 				});
 
 			//Í¸ÊÓ³ý·¨
+			//std::cout << projectionPoint << std::endl;
 
 			auto screenPoint = viewPoint * t1 * projectionPoint;
+
+			vertex.Position = screenPoint;
 			return screenPoint;
 		};
 
@@ -93,7 +96,8 @@ namespace TmingEngine
 
 		bool Fragment(TGAColor& color, TmingEngine::Vertex& vertex)override
 		{
-			color = TGAColor(vertex.Position.z, vertex.Position.z, vertex.Position.z);
+			float f = 255 - vertex.Position.z;
+			color = TGAColor(f, f, f);
 			return false;
 		}
 	};

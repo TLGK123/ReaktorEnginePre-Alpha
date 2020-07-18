@@ -41,6 +41,14 @@ namespace TmingEngine
 		R = (up.Cross(D)).Normalize();
 		U = (D.Cross(R)).Normalize();
 
+		// A * B = C
+		// A-----a point dinfined in the new coordination space (camera space)
+		// B-----a new base axis define in the A coordination
+		// c-----the same point  aspect in the source coordination(world space)
+		// now we know the A (world space point position) ,the
+		// so B = A-1 * C   , A -1  = A transpose , a is a identity matrix
+		// but we must let the origin ponit is the same
+
 		Matrix Rotate(4, 4,
 			{
 			R.x , R.y , R.z , 0,
@@ -345,29 +353,10 @@ namespace TmingEngine
 				Vector3 barycent = barycentricCoordinateCrossProduct(v1, v2, v3, P);
 				P.Position.z = v1.Position.z * barycent.x + v2.Position.z * barycent.y + v3.Position.z * barycent.z;
 				P.TexCoords = (v1.TexCoords * barycent.x) + (v2.TexCoords * barycent.y) + (v3.TexCoords * barycent.z);
-				P.Normal.z = v1.Normal.z * barycent.x + v2.Normal.z * barycent.y + v3.Normal.z * barycent.z;
-				P.Tangent.z = v1.Tangent.z * barycent.x + v2.Tangent.z * barycent.y + v3.Tangent.z * barycent.z;
-
-				//Matrix barycents(3, 1, {
-				//	   barycent.x,
-				//	   barycent.y,
-				//	   barycent.z,
-				//	});
-
-				//auto interpolatedNormal = normals * barycents;
-				//Vector3 pixelNormal = Vector3(interpolatedNormal[0][0], interpolatedNormal[1][0], interpolatedNormal[2][0]).Normalize();
-
-				//float intensity = pixelNormal.Dot(sunlitght.Direction.Normalize());
-
-				//if (intensity < 0)
-				//{
-				//	//It means that the light comes from behind the polygon.
-				//	// Back-face culling
-				//	return;
-				//}
+				P.Normal = (v1.Normal * barycent.x) + (v2.Normal * barycent.y) + (v3.Normal * barycent.z);
+				P.Tangent = v1.Tangent * barycent.x + v2.Tangent * barycent.y + v3.Tangent * barycent.z;
 
 				TGAColor col = TGAColor(255, 255, 255, 255);
-
 				if (barycent.x >= 0 && barycent.y >= 0 && barycent.z >= 0)
 				{
 					if (P.Position.x >= 0 && P.Position.y >= 0 && P.Position.x <= frameWidth && P.Position.y <= frameHeight)

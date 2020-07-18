@@ -106,9 +106,9 @@ namespace TmingEngine
 		// spicify the Texture , vertex shader ,fragment shader for each Primitive
 		void SetRenderStatus()
 		{
-			sunlitght.Direction = Vector3(0, 0, -1);
+			sunlitght.Direction = Vector3(0, 0, -3);
 			sunlitght.Color = Color(0.5, 0.5, 0);
-			IShader* shader = new DepthShader();
+			IShader* shader = new GouraudShader();
 			//shader->textures = character.textures_loaded;
 
 			shader->light = sunlitght;
@@ -125,7 +125,6 @@ namespace TmingEngine
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = shader;
-				//primitiveDatas[i].CaculateTBN();
 			}
 		}
 
@@ -159,13 +158,13 @@ namespace TmingEngine
 
 			//around the Y axis rotate 180
 			Matrix model(4, 4, {
-				cos(150.0f / 360 * 2 * Pi),0,sin(150.0f / 360 * 2 * Pi),0,
+				cos(180.0f / 360 * 2 * Pi),0,sin(180.0f / 360 * 2 * Pi),0,
 				0,1,0,0,
-				-sin(150.0f / 360 * 2 * Pi),0,cos(150.0f / 360 * 2 * Pi),0,
+				-sin(180.0f / 360 * 2 * Pi),0,cos(180.0f / 360 * 2 * Pi),0,
 				0,0,0,1,
 				});
 
-			Vector3 CameraPos = Vector3(0, 2, 3);
+			Vector3 CameraPos = Vector3(0, 2, 1);
 			Vector3 center = Vector3(0, 2, 0);	//相机朝向原点
 			Vector3 up = Vector3(0, 1, 0);		//相机向上
 
@@ -173,7 +172,7 @@ namespace TmingEngine
 
 			Matrix perspective = Perspective(1, 1, 1, 3);
 
-			Matrix orthographic = Orthographic(2, 2, 0.5, 10);
+			Matrix orthographic = Orthographic(2, 2, 0, 5);
 
 			Matrix viewPoint = Viewport(0, 0, frameWidth, frameHeight);
 
@@ -213,7 +212,7 @@ namespace TmingEngine
 			}
 
 			image.flip_horizontally();
-			//image.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/1.tga").c_str());
+			image.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/1.tga").c_str());
 
 			image.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
 			unsigned char* data = image.buffer(); // directly set the opengl texture data with tag imgae data

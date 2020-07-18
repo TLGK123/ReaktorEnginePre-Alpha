@@ -74,6 +74,9 @@ namespace TmingEngine
 			//Í¸ÊÓ³ý·¨
 
 			auto ndcPoint = viewPoint * t1 * projectionPoint;
+			vertex.Position = ndcPoint;
+			vertex.Normal = porjection * view * model * vertex.Normal;
+			vertex.Tangent = porjection * view * model * vertex.Tangent;
 
 			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
 		};
@@ -99,7 +102,7 @@ namespace TmingEngine
 
 			Vector3 Normal = CalcBumpedNormal(vertex);
 
-			float intensity = light.Direction.Dot(Normal);
+			float intensity = light.Direction.Normalize().Dot(Normal);
 			if (intensity > 0)
 			{
 				color = color * intensity;
@@ -115,11 +118,11 @@ namespace TmingEngine
 		{
 			Vector3 Normal = p.Normal.Normalize();
 			Vector3 Tangent = p.Tangent.Normalize();
-			Tangent = (Normal.Cross(Tangent - Tangent.Dot(Normal))).Normalize();
+			//Tangent = (Normal.Cross(Tangent - Tangent.Dot(Normal))).Normalize();
 			Vector3 Bitangent = Tangent.Cross(Normal);
 
-			int u = p.TexCoords.x * textures[0].image.get_width();
-			int v = p.TexCoords.y * textures[0].image.get_height();
+			int u = p.TexCoords.x * textures[1].image.get_width();
+			int v = p.TexCoords.y * textures[1].image.get_height();
 			TGAColor colorNormal = textures[1].image.get(u, v);
 			Vector3 BumpMapNormal = Vector3(colorNormal[2] / 255.0f, colorNormal[1] / 255.0f, colorNormal[0] / 255.0f);
 			BumpMapNormal = BumpMapNormal.Normalize();
@@ -127,9 +130,9 @@ namespace TmingEngine
 
 			Vector3 NewNormal;
 			Matrix TBN = Matrix(3, 3, {
-				Tangent.x ,Tangent.y,Tangent.z,
-				Bitangent.x ,Bitangent.y,Bitangent.z,
-				Normal.x,Normal.y,Normal.z });
+				Tangent.x ,  Bitangent.x , Normal.x ,
+				Tangent.y ,  Bitangent.y,  Normal.y ,
+				Tangent.z ,  Bitangent.z , Normal.z });
 			NewNormal = TBN * Matrix(3, 1, { BumpMapNormal.x,BumpMapNormal.y,BumpMapNormal.z });
 			NewNormal = NewNormal.Normalize();
 			return NewNormal;

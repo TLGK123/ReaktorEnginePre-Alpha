@@ -90,7 +90,7 @@ namespace TmingEngine
 		{
 			for (int i = 0; i < poins.size(); i++)
 			{
-				poins[i].Position = shader->Vertex(poins[i]);
+				shader->Vertex(poins[i]);
 			}
 		}
 
