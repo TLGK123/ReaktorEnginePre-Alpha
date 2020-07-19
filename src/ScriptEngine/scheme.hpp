@@ -33,12 +33,11 @@ using namespace std;
 
 namespace TmingEngine
 {
-	enum CellType
+	enum class CellType
 	{
 		Atom, // 原子为标识符形式的符号或数字的字面值   如果是原子，或者空表 返回t ，否则就返回 f
 		Quote, // 引用，用来表示数据 ，避免被求值
 		Operater, // 算术操作符
-		FucntionCall, // 函数调用
 		Lambda, // 匿名函数
 		Number, // 整数
 		Bool,  // 布尔
