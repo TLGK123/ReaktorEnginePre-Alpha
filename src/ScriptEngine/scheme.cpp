@@ -76,11 +76,26 @@ namespace TmingEngine
 	}
 
 	void Pair::InitPair(string x)
-
 	{
 		Data = x;
 		car = this;
 		cdr = nullptr;
+
+		if (x == "0")
+		{
+			Type = CellType::Number;
+			return;
+		}
+		else
+		{
+			int a = atoi(x.c_str());
+			if (a != 0)
+			{
+				Type = CellType::Number;
+				return;
+			}
+		}
+
 		vector<std::string>::iterator iter;
 		for (iter = Syntaxs.begin(); iter != Syntaxs.end(); iter++)
 		{

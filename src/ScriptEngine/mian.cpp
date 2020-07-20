@@ -26,11 +26,35 @@
 
 #include "scheme.hpp"
 #include <iostream>
+#include <fstream>
+
 using namespace TmingEngine;
 using namespace std;
 
 int main()
 {
+	fstream file;
+	char script[25];
+	file.open("E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//打开文件，供读
+	if (!file)
+	{
+		cerr << "Open File Fail." << endl;
+		exit(1);
+	}
+	string code = "";
+	Pair* c = new Pair();
+	Pair* head = c;
+	while (!file.eof())
+	{
+		file >> script;
+		code = string(script);
+		if (code != "(" && code != ")" && code != "")
+		{
+			c->cdr = new Pair(code);
+			c = c->cdr;
+		}
+	}
+
 	Pair* env = new Pair();
 
 	//s-表达式嵌套
@@ -40,7 +64,7 @@ int main()
 	(+ 8 3)
 	*/
 
-	int d = *env->eval(exp, env);
+	int d = *env->eval(head->cdr, env);
 
 	//变量存储在环境中
 
