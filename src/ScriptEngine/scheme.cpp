@@ -38,35 +38,35 @@ namespace TmingEngine
 		string d = exp->Data;
 		if (d == "+")
 		{
-			nextCell = exp->cdr;
+			nextCell = exp;
 			v1 = *eval(nextCell->car, env);
 			v2 = *eval(nextCell->cdr, env);
 			return new Pair(v1 + v2);
 		}
 		else if (d == "-")
 		{
-			nextCell = exp->cdr;
+			nextCell = exp;
 			v1 = *eval(nextCell->car, env);
 			v2 = *eval(nextCell->cdr, env);
 			return new Pair(v1 - v2);
 		}
 		else if (d == "*")
 		{
-			nextCell = exp->cdr;
+			nextCell = exp;
 			v1 = *eval(nextCell->car, env);
 			v2 = *eval(nextCell->cdr, env);
 			return new  Pair(v1 * v2);
 		}
 		else if (d == "/")
 		{
-			nextCell = exp->cdr;
+			nextCell = exp;
 			v1 = *eval(nextCell->car, env);
 			v2 = *eval(nextCell->cdr, env);
 			return new Pair(v1 / v2);
 		}
 		else if (d == "==")
 		{
-			nextCell = exp->cdr;
+			nextCell = exp;
 			v1 = *eval(nextCell->car, env);
 			v2 = *eval(nextCell->cdr, env);
 			return  new Pair(v1 == v2);
@@ -78,7 +78,7 @@ namespace TmingEngine
 	void Pair::InitPair(string x)
 	{
 		Data = x;
-		car = this;
+		car = nullptr;
 		cdr = nullptr;
 
 		if (x == "0")
@@ -165,7 +165,7 @@ namespace TmingEngine
 		case CellType::Lambda:
 			return CaculateLambda(exp, env);
 
-		case CellType::Closure:
+		case CellType::FunctionCall:
 			return CaculateFucntionCall(exp, env);
 
 		default:
@@ -186,14 +186,22 @@ namespace TmingEngine
 			return new Pair();
 		}
 
-		if (*(temp->car) != *(p1))
+		if (temp->car != nullptr)
 		{
-			Pair* _next = _env->cdr;
-			if (_next != nullptr)
+			if (*(temp->car) != *(p1))
 			{
-				if (_next->Type != CellType::Nil)
+				Pair* _next = _env->cdr;
+				if (_next != nullptr)
 				{
-					return LookUp(p1, _next);
+					if (_next->Type != CellType::Nil)
+					{
+						return LookUp(p1, _next);
+					}
+					else
+					{
+						//Debug.Log("未定义变量: " + p1);
+						return new Pair();
+					}
 				}
 				else
 				{
@@ -203,13 +211,12 @@ namespace TmingEngine
 			}
 			else
 			{
-				//Debug.Log("未定义变量: " + p1);
-				return new Pair();
+				return temp->cdr;
 			}
 		}
-		else
+		else if (temp->cdr != nullptr)
 		{
-			return temp->cdr;
+			return LookUp(p1, temp->cdr);
 		}
 	}
 
@@ -230,8 +237,8 @@ namespace TmingEngine
 		{
 			if (exp->Data == "let")
 			{
-				env = ExtendEnv(exp->cdr->car, env); //  需要绑定的变量
-				return eval(exp->cdr->cdr, env);
+				env = ExtendEnv(exp->car, env); //  需要绑定的变量
+				return eval(exp->cdr, env);
 			}
 			else if (exp->Data == "if")
 			{
@@ -268,15 +275,15 @@ namespace TmingEngine
 
 	Pair* Pair::CaculateFucntionCall(Pair* exp, Pair* env)
 	{
-		if (exp->Type == CellType::Closure)
+		if (exp->Type == CellType::FunctionCall)
 		{
-			auto v1 = eval(exp->car->car, env); // 计算出函数闭包
+			auto v1 = eval(exp->car, env); // 计算出函数闭包
 			auto v2 = eval(exp->cdr, env); // 计算出参数的值
 			auto that_env = v1->cdr; // 提取函数定义时的环境
-			auto funcp = v1->car->cdr->car; // 提取函数定义时，参数变量名
+			auto funcp = v1->car->car; // 提取函数定义时，参数变量名
 			auto nv = new Pair(funcp, v2);
 			that_env = ExtendEnv(nv, that_env); // 把参数扩展到当时定义的环境中去
-			auto func = v1->car->cdr->cdr; //函数体
+			auto func = v1->car->cdr; //函数体
 			auto v3 = eval(func, that_env);
 			return v3;
 		}

@@ -33,43 +33,47 @@ using namespace std;
 
 int main()
 {
-	fstream file;
-	char script[25];
-	file.open("E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//打开文件，供读
-	if (!file)
-	{
-		cerr << "Open File Fail." << endl;
-		exit(1);
-	}
-	string code = "";
-	Pair* c = new Pair();
-	Pair* head = c;
-	while (!file.eof())
-	{
-		file >> script;
-		code = string(script);
-		if (code != "(" && code != ")" && code != "")
-		{
-			c->cdr = new Pair(code);
-			c = c->cdr;
-		}
-	}
-
+	int size = sizeof(Pair);
+	//fstream file;
+	//char script[25];
+	//file.open("E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//打开文件，供读
+	//if (!file)
+	//{
+	//	cerr << "Open File Fail." << endl;
+	//	exit(1);
+	//}
+	//string code = "";
+	//Pair* c = new Pair();
+	//Pair* head = c;
+	//while (!file.eof())
+	//{
+	//	file >> script;
+	//	code = string(script);
+	//	if (code != "(" && code != ")" && code != "")
+	//	{
+	//		c->cdr = new Pair(code);
+	//		c = c->cdr;
+	//	}
+	//}
+	//head->Print();
 	Pair* env = new Pair();
 
 	//s-表达式嵌套
 	Pair* exp = new Pair("+");
-	exp->cdr = new Pair(new Pair(8), new Pair(3));
+	exp->car = new Pair("8");
+	exp->cdr = new Pair("4");
+
 	/* scheme
 	(+ 8 3)
 	*/
+	//exp->Print();
 
-	int d = *env->eval(head->cdr, env);
+	int d = *env->eval(exp, env);
 
 	//变量存储在环境中
 
-	Pair* x = new Pair(new Pair("x"), new Pair(1));
-	env = env->ExtendEnv(x, env);
+	Pair* var = new Pair("x", "4");
+	env = env->ExtendEnv(var, env);
 	Pair* x1 = new Pair("x");
 	Pair* v = env->eval(x1, env);
 
@@ -79,11 +83,15 @@ int main()
 
 	//局部变量求值
 	Pair* let = new Pair("let");
-	let->cdr = new Pair(new Pair(new Pair("w"), new Pair(66))
-		, new Pair(new Pair("*"),
-			new Pair(new Pair("w"), new Pair(2))));
+	let->car = new Pair("w", "66");
+	let->cdr = new Pair("*");
+	let->cdr->car = new Pair("2");
+	let->cdr->cdr = new Pair("w");
 
-	Pair* ll = env->eval(let, env);
+	//let->Print();
+	;
+
+	Pair* rest = env->eval(let, env);
 
 	/* scheme
 		(let ((w 66))
@@ -92,22 +100,24 @@ int main()
 
 	//把函数定义和当时的环境打包在一起，就是闭包
 	Pair* function = new Pair("lambda");
-	Pair* f = new Pair("*");
-	f->cdr = new Pair(new Pair("x"), new Pair(7));
-	function->cdr = new Pair(new Pair("x"), f);
+	function->car = new Pair("x");
+	function->cdr = new Pair("*");
+	function->cdr->car = new Pair("x");
+	function->cdr->cdr = new Pair("7");
 
 	Pair* func = env->eval(function, env);
 
+	//func->Print();
 	/* scheme
 		(lambda (x)(* x 7))
 	*/
 
 	//函数调用
 
-	Pair* funCall = new Pair(func, new Pair(3));
+	Pair* funCall = new Pair(func, "8");
 
 	Pair* result = env->eval(funCall, env);
-
+	funCall->Print();
 	/* scheme
 		((lambda (x)(* x 7))3)
 	*/

@@ -28,6 +28,7 @@
 
 #include<vector>
 #include<string>
+#include<iostream>
 
 using namespace std;
 
@@ -46,6 +47,7 @@ namespace TmingEngine
 		pair, // 序对
 		Symbol, // 符号
 		Closure, // 闭包
+		FunctionCall,//函数调用
 	};
 
 	class Pair
@@ -60,17 +62,8 @@ namespace TmingEngine
 		Pair()
 		{
 			Type = CellType::Nil;
-			car = this;
+			car = nullptr;
 			cdr = nullptr;
-		}
-
-		Pair(Pair* _car, Pair* _cdr)
-		{
-			car = _car;
-			Data = _car->Data;
-			Type = _car->Type;
-
-			cdr = _cdr;
 		}
 
 		operator bool()
@@ -88,14 +81,14 @@ namespace TmingEngine
 		{
 			Data = x ? "#t" : "#f";
 			Type = CellType::Atom;
-			car = this;
+			car = nullptr;
 			cdr = nullptr;
 		}
 
 		Pair(int x)
 		{
 			Data = std::to_string(x);
-			car = this;
+			car = nullptr;
 			cdr = nullptr;
 			Type = CellType::Number;
 		}
@@ -111,6 +104,60 @@ namespace TmingEngine
 		{
 			string data = string(x);
 			InitPair(data);
+		}
+
+		Pair(const char* x, Pair* y)
+		{
+			string data = string(x);
+			InitPair(data);
+			cdr = y;
+		}
+
+		Pair(const char* x, const char* y)
+		{
+			car = new Pair(x);
+			cdr = new Pair(y);
+			Type = CellType::pair;
+
+			if (car->Type == CellType::Closure && cdr->Type == CellType::Number)
+			{
+				Type = CellType::FunctionCall;
+			}
+			else
+			{
+				Type = CellType::pair;
+			}
+		}
+
+		Pair(Pair* _car, Pair* _cdr)
+		{
+			car = _car;
+			cdr = _cdr;
+			Type = CellType::pair;
+
+			if (car->Type == CellType::Closure && cdr->Type == CellType::Number)
+			{
+				Type = CellType::FunctionCall;
+			}
+			else
+			{
+				Type = CellType::pair;
+			}
+		}
+
+		Pair(Pair* _car, const char* _cdr)
+		{
+			car = _car;
+			cdr = new Pair(_cdr);
+
+			if (car->Type == CellType::Closure && cdr->Type == CellType::Number)
+			{
+				Type = CellType::FunctionCall;
+			}
+			else
+			{
+				Type = CellType::pair;
+			}
 		}
 
 		Pair(string x)
@@ -196,6 +243,39 @@ namespace TmingEngine
 				}
 
 				env->cdr = var;
+			}
+		}
+
+		void Print()
+		{
+			Print(this);
+		}
+
+		void Print(Pair* p)
+		{
+			if (p->Type != CellType::Number && p->Type != CellType::Symbol)
+			{
+				std::cout << "( ";
+			}
+
+			std::cout << p->Data << " ";
+
+			if (p->car != nullptr)
+			{
+				p->Print(p->car);
+			}
+
+			if (p->cdr != nullptr)
+			{
+				if (p->cdr != p)
+				{
+					p->Print(p->cdr);
+				}
+			}
+
+			if (p->Type != CellType::Number && p->Type != CellType::Symbol)
+			{
+				std::cout << " ) ";
 			}
 		}
 	};
