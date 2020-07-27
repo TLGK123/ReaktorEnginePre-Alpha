@@ -44,7 +44,7 @@ int main()
 	int size = sizeof(Pair);
 	fstream file;
 	char script[25];
-	
+
 	file.open("D:\\Github\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//打开文件，供读
 	if (!file)
 	{
@@ -60,7 +60,7 @@ int main()
 		code = string(script);
 		if (code != "(" && code != ")" && code != "")
 		{
-			c->InitPair(code);			
+			c->InitPair(code);
 		}
 	}
 	head->Print();
@@ -134,4 +134,28 @@ int main()
 
 	int  s = *result;
 	;
+}
+
+void separateWords()
+{
+}
+
+void readOneWorld()
+{
+}
+
+void pushWordToSatck()
+{
+}
+
+void isOnePairEnd()
+{
+}
+
+void popWordsFromSatck()
+{
+}
+
+void caculateOnePair()
+{
 }

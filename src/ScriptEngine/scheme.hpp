@@ -37,7 +37,7 @@ namespace TmingEngine
 {
 	enum class CellType
 	{
-		Atom, // 原子为标识符形式的符号或数字的字面值   如果是原子，或者空表 返回t ，否则就返回 f
+		Atom, // 原子为标识符形式的符号 Symbol或数字 Number 的字面值   如果是原子，或者空表 返回t ，否则就返回 f
 		Quote, // 引用，用来表示数据 ，避免被求值
 		Operater, // 算术操作符
 		Lambda, // 匿名函数
@@ -199,6 +199,22 @@ namespace TmingEngine
 			return new Pair(p1, p2);
 		}
 
+		Pair* Quote(const char* x)
+		{
+			Data = string(x);
+			Type = CellType::Quote;
+		}
+
+		Pair* Atom(Pair* x)
+		{
+			if (x->Type == CellType::Symbol ||
+				x->Type == CellType::Number ||
+				x->Type == CellType::Nil)
+			{
+				Data = x->Data;
+			}
+		}
+
 		Pair* ExtendEnv(Pair* p1, Pair* _env)
 		{
 			return Cons(p1, _env);
@@ -207,6 +223,8 @@ namespace TmingEngine
 		Pair* LookUp(Pair* p1, Pair* _env);
 
 		Pair* CaculateSymbol(Pair* exp, Pair* _env);
+
+		Pair* CaculateQuote(Pair* exp);
 
 		Pair* CaculateSyntax(Pair* exp, Pair* env);
 
@@ -279,7 +297,6 @@ namespace TmingEngine
 				std::cout << " ) ";
 			}
 		}
-
 	};
 }
 

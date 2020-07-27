@@ -148,7 +148,7 @@ namespace TmingEngine
 			return exp;
 
 		case CellType::Quote:
-			return exp;
+			return CaculateQuote(exp);
 
 		case CellType::Operater:
 			return CaculateOperate(exp, env);
@@ -229,6 +229,14 @@ namespace TmingEngine
 		}
 
 		return LookUp(exp, _env);
+	}
+
+	Pair* Pair::CaculateQuote(Pair* exp)
+	{
+		auto p = new Pair();
+		p->Data = exp->Data;
+		p->Type = CellType::Symbol;
+		return p;
 	}
 
 	Pair* Pair::CaculateSyntax(Pair* exp, Pair* env)
