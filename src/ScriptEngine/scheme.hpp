@@ -29,6 +29,7 @@
 #include<vector>
 #include<string>
 #include<iostream>
+#include<stack>
 
 using namespace std;
 
@@ -278,6 +279,7 @@ namespace TmingEngine
 				std::cout << " ) ";
 			}
 		}
+
 	};
 }
 

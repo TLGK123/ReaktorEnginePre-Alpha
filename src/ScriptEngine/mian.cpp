@@ -27,36 +27,46 @@
 #include "scheme.hpp"
 #include <iostream>
 #include <fstream>
+#include <stack>
 
 using namespace TmingEngine;
 using namespace std;
 
+void separateWords();
+void readOneWorld();
+void pushWordToSatck();
+void isOnePairEnd();
+void popWordsFromSatck();
+void caculateOnePair();
+
 int main()
 {
 	int size = sizeof(Pair);
-	//fstream file;
-	//char script[25];
-	//file.open("E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//打开文件，供读
-	//if (!file)
-	//{
-	//	cerr << "Open File Fail." << endl;
-	//	exit(1);
-	//}
-	//string code = "";
-	//Pair* c = new Pair();
-	//Pair* head = c;
-	//while (!file.eof())
-	//{
-	//	file >> script;
-	//	code = string(script);
-	//	if (code != "(" && code != ")" && code != "")
-	//	{
-	//		c->cdr = new Pair(code);
-	//		c = c->cdr;
-	//	}
-	//}
-	//head->Print();
+	fstream file;
+	char script[25];
+	
+	file.open("D:\\Github\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//打开文件，供读
+	if (!file)
+	{
+		cerr << "Open File Fail." << endl;
+		exit(1);
+	}
+	string code = "";
+	Pair* c = new Pair();
+	Pair* head = c;
+	while (!file.eof())
+	{
+		file >> script;
+		code = string(script);
+		if (code != "(" && code != ")" && code != "")
+		{
+			c->InitPair(code);			
+		}
+	}
+	head->Print();
+
 	Pair* env = new Pair();
+	int sc = *env->eval(head, env);
 
 	//s-表达式嵌套
 	Pair* exp = new Pair("+");
