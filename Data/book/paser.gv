@@ -1,0 +1,8 @@
+digraph test1{
+readScript-> separateWords
+readString ->separateWords
+separateWords -> readOneWorld -> pushWordToSatck -> isOnePairEnd
+isOnePairEnd -> popWordsFromSatck  [taillabel = "Yes"]  
+popWordsFromSatck -> caculateOnePair -> pushWordToSatck
+isOnePairEnd -> readOneWorld  [taillabel = "No"]
+}
