@@ -112,14 +112,14 @@ namespace TmingEngine
 
 	void Console::TestLua()
 	{
-		//1.´´½¨Lua×´Ì¬
+		//1.ï¿½ï¿½ï¿½ï¿½Lua×´Ì¬
 		lua_State* L = luaL_newstate();
 		if (L == NULL)
 		{
 			return;
 		}
 
-		//2.¼ÓÔØLuaÎÄ¼þ
+		//2.ï¿½ï¿½ï¿½ï¿½Luaï¿½Ä¼ï¿½
 		int bRet = luaL_loadfile(L, FileSystem::getPath("Data/EngineScript/hello.lua").c_str());
 		if (bRet)
 		{
@@ -127,7 +127,7 @@ namespace TmingEngine
 			return;
 		}
 
-		//3.ÔËÐÐLuaÎÄ¼þ
+		//3.ï¿½ï¿½ï¿½ï¿½Luaï¿½Ä¼ï¿½
 		bRet = lua_pcall(L, 0, 0, 0);
 		if (bRet)
 		{
@@ -135,30 +135,30 @@ namespace TmingEngine
 			return;
 		}
 
-		//4.¶ÁÈ¡±äÁ¿
+		//4.ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
 		lua_getglobal(L, "str");
 		string str = lua_tostring(L, -1);
 		cout << "str = " << str.c_str() << endl;        //str = I am so cool~
 
-		//5.¶ÁÈ¡table
+		//5.ï¿½ï¿½È¡table
 		lua_getglobal(L, "tbl");
 		lua_getfield(L, -1, "name");
 		str = lua_tostring(L, -1);
 		cout << "tbl:name = " << str.c_str() << endl; //tbl:name = shun
 
-		//6.¶ÁÈ¡º¯Êý
-		lua_getglobal(L, "add");        // »ñÈ¡º¯Êý£¬Ñ¹ÈëÕ»ÖÐ
-		lua_pushnumber(L, 10);          // Ñ¹ÈëµÚÒ»¸ö²ÎÊý
-		lua_pushnumber(L, 20);          // Ñ¹ÈëµÚ¶þ¸ö²ÎÊý
-		int iRet = lua_pcall(L, 2, 1, 0);// µ÷ÓÃº¯Êý£¬µ÷ÓÃÍê³ÉÒÔºó£¬»á½«·µ»ØÖµÑ¹ÈëÕ»ÖÐ£¬2±íÊ¾²ÎÊý¸öÊý£¬1±íÊ¾·µ»Ø½á¹û¸öÊý¡£
-		if (iRet)                       // µ÷ÓÃ³ö´í
+		//6.ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
+		lua_getglobal(L, "add");        // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½Õ»ï¿½ï¿½
+		lua_pushnumber(L, 10);          // Ñ¹ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		lua_pushnumber(L, 20);          // Ñ¹ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		int iRet = lua_pcall(L, 2, 1, 0);// ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôºó£¬»á½«ï¿½ï¿½ï¿½ï¿½ÖµÑ¹ï¿½ï¿½Õ»ï¿½Ð£ï¿½2ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ø½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		if (iRet)                       // ï¿½ï¿½ï¿½Ã³ï¿½ï¿½ï¿½
 		{
 			const char* pErrorMsg = lua_tostring(L, -1);
 			cout << pErrorMsg << endl;
 			lua_close(L);
 			return;
 		}
-		if (lua_isnumber(L, -1))        //È¡ÖµÊä³ö
+		if (lua_isnumber(L, -1))        //È¡Öµï¿½ï¿½ï¿½
 		{
 			double fValue = lua_tonumber(L, -1);
 			cout << "Result is " << fValue << endl;
@@ -222,7 +222,7 @@ namespace TmingEngine
 		// that will abort the script after a certain time. Before executing the
 		// script the timeOut variable will be set to the time when the script must
 		// stop executing.
-		DWORD timeOut;
+		unsigned long timeOut;
 		r = ctx->SetLineCallback(asFUNCTION(LineCallback), &timeOut, asCALL_CDECL);
 		if (r < 0)
 		{
@@ -406,7 +406,7 @@ namespace TmingEngine
 		return 0;
 	}
 
-	void LineCallback(asIScriptContext* ctx, DWORD* timeOut)
+	void LineCallback(asIScriptContext* ctx, unsigned long* timeOut)
 	{
 		// If the time out is reached we abort the script
 

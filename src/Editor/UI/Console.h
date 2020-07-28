@@ -56,7 +56,7 @@ namespace TmingEngine
 	void PrintString(string& str);
 	void PrintString_Generic(asIScriptGeneric* gen);
 	void timeGetTime_Generic(asIScriptGeneric* gen);
-	void LineCallback(asIScriptContext* ctx, DWORD* timeOut);
+	void LineCallback(asIScriptContext* ctx, unsigned long * timeOut);
 
 	class Console : public Widget
 	{

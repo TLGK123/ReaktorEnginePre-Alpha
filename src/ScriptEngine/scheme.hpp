@@ -232,7 +232,7 @@ namespace TmingEngine
 
 		Pair* CaculateLambda(Pair* exp, Pair* env);
 
-		Pair* Pair::CaculateFucntionCall(Pair* exp, Pair* env);
+		Pair* CaculateFucntionCall(Pair* exp, Pair* env);
 
 		Pair* GetValueInEnv(Pair* var, Pair* env)
 		{
