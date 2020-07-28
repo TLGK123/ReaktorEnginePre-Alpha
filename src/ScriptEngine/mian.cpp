@@ -28,45 +28,27 @@
 #include <iostream>
 #include <fstream>
 #include <stack>
+#include <queue>
+#include <vector>
 
 using namespace TmingEngine;
 using namespace std;
 
-void separateWords();
-void readOneWorld();
-void pushWordToSatck();
-void isOnePairEnd();
-void popWordsFromSatck();
+stack<string> codeStack;
+//queue<string> codeQueue;
+
+void separateWords(string path);
+void readOneWord(string code);
+void pushWordToStack(string word);
+bool isOnePairEnd(string word);
+void popWordFromStack();
 void caculateOnePair();
 
 int main()
 {
 	int size = sizeof(Pair);
-	fstream file;
-	char script[25];
-
-	file.open("D:\\Github\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//打开文件，供读
-	if (!file)
-	{
-		cerr << "Open File Fail." << endl;
-		exit(1);
-	}
-	string code = "";
-	Pair* c = new Pair();
-	Pair* head = c;
-	while (!file.eof())
-	{
-		file >> script;
-		code = string(script);
-		if (code != "(" && code != ")" && code != "")
-		{
-			c->InitPair(code);
-		}
-	}
-	head->Print();
-
+	separateWords("");
 	Pair* env = new Pair();
-	int sc = *env->eval(head, env);
 
 	//s-表达式嵌套
 	Pair* exp = new Pair("+");
@@ -136,24 +118,88 @@ int main()
 	;
 }
 
-void separateWords()
+void separateWords(string path)
 {
+	fstream file;
+	char script[64];
+
+	file.open("D:\\Github\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//打开文件，供读
+	if (!file)
+	{
+		cerr << "Open File Fail." << endl;
+		exit(1);
+	}
+	string code = "";
+
+	while (!file.eof())
+	{
+		file >> script;
+		code = string(script);
+		readOneWord(code);
+	}
+	//head->Print();
+	int i = 1;
+	//int sc = *env->eval(head, env);
 }
 
-void readOneWorld()
+void readOneWord(string code)
 {
+	if (code[0] == '(')
+	{
+		pushWordToStack("(");
+		code = code.substr(1, code.size() - 1);
+		pushWordToStack(code);
+	}
+	else if (code[code.size() - 1] == ')')
+	{	
+		code = code.substr(0, code.size() - 1);	
+		pushWordToStack(code);
+		pushWordToStack(")");
+	}
+	else
+	{
+		pushWordToStack(code);
+	}	
 }
 
-void pushWordToSatck()
+void pushWordToStack(string word)
 {
+	codeStack.push(word);
+	//codeQueue.push(word);
+	if (isOnePairEnd(word))
+	{
+		popWordFromStack();
+	}
+	else
+	{
+
+	}
 }
 
-void isOnePairEnd()
+bool isOnePairEnd(string word)
 {
+	return word == ")";
 }
 
-void popWordsFromSatck()
+void popWordFromStack()
 {
+	string stackData = ""; 
+	while (stackData!="("&& codeStack.size()>0)
+	{
+		stackData = codeStack.top();
+		codeStack.pop();
+		std::cout << " Stack:===> " << stackData << std::endl;
+	}
+
+	//string queueData = "";
+	//while (queueData != ")" && codeQueue.size() > 0)
+	//{
+
+	//	queueData = codeQueue.front();
+	//	codeQueue.pop();
+	//	std::cout << " Queue:===> " << queueData << std::endl;
+	//}
+
 }
 
 void caculateOnePair()
