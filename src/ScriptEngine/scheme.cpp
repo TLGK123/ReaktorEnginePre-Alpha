@@ -26,7 +26,7 @@
 #include "scheme.hpp"
 namespace TmingEngine
 {
-	extern  vector<string> Syntaxs = { "car", "cdr", "cons", "atom", "quote", "cond", "let", "lambda", "'", "if" };
+	extern  vector<string> Syntaxs = { "car", "cdr", "cons", "atom", "quote", "cond", "let", "lambda", "'", "if","define" };
 	extern  vector<string> Operates = { "+", "-", "*", "/", "%", "=" };
 	extern  vector<string> BoolSymbol = { "#f", "#t" };
 
@@ -39,37 +39,83 @@ namespace TmingEngine
 		if (d == "+")
 		{
 			nextCell = exp;
-			v1 = *eval(nextCell->car, env);
-			v2 = *eval(nextCell->cdr, env);
-			return new Pair(v1 + v2);
+			auto ev1 = eval(nextCell->car, env);
+			auto ev2 = eval(nextCell->cdr, env);
+			if (ev1->Type == CellType::Number && ev2->Type == CellType::Number)
+			{
+				v1 = *ev1;
+				v2 = *ev2;
+				return new Pair(v1 + v2);
+			}
+			else
+			{
+				return exp;
+			}
+			
 		}
 		else if (d == "-")
 		{
 			nextCell = exp;
-			v1 = *eval(nextCell->car, env);
-			v2 = *eval(nextCell->cdr, env);
-			return new Pair(v1 - v2);
+			auto ev1 = eval(nextCell->car, env);
+			auto ev2 = eval(nextCell->cdr, env);
+			if (ev1->Type == CellType::Number && ev2->Type == CellType::Number)
+			{
+				v1 = *ev1;
+				v2 = *ev2;
+				return new Pair(v1 - v2);
+			}
+			else
+			{
+				return exp;
+			}
 		}
 		else if (d == "*")
 		{
 			nextCell = exp;
-			v1 = *eval(nextCell->car, env);
-			v2 = *eval(nextCell->cdr, env);
-			return new  Pair(v1 * v2);
+			auto ev1 = eval(nextCell->car, env);
+			auto ev2 = eval(nextCell->cdr, env);
+			if (ev1->Type == CellType::Number && ev2->Type == CellType::Number)
+			{
+				v1 = *ev1;
+				v2 = *ev2;
+				return new Pair(v1 * v2);
+			}
+			else
+			{
+				return exp;
+			}
 		}
 		else if (d == "/")
 		{
 			nextCell = exp;
-			v1 = *eval(nextCell->car, env);
-			v2 = *eval(nextCell->cdr, env);
-			return new Pair(v1 / v2);
+			auto ev1 = eval(nextCell->car, env);
+			auto ev2 = eval(nextCell->cdr, env);
+			if (ev1->Type == CellType::Number && ev2->Type == CellType::Number)
+			{
+				v1 = *ev1;
+				v2 = *ev2;
+				return new Pair(v1 / v2);
+			}
+			else
+			{
+				return exp;
+			}
 		}
 		else if (d == "==")
 		{
 			nextCell = exp;
-			v1 = *eval(nextCell->car, env);
-			v2 = *eval(nextCell->cdr, env);
-			return  new Pair(v1 == v2);
+			auto ev1 = eval(nextCell->car, env);
+			auto ev2 = eval(nextCell->cdr, env);
+			if (ev1->Type == CellType::Number && ev2->Type == CellType::Number)
+			{
+				v1 = *ev1;
+				v2 = *ev2;
+				return new Pair(v1 == v2);
+			}
+			else
+			{
+				return exp;
+			}
 		}
 
 		return new Pair();
@@ -80,7 +126,13 @@ namespace TmingEngine
 		Data = x;
 		car = nullptr;
 		cdr = nullptr;
+		AutoSetType();
+	
+	}
 
+	void Pair::AutoSetType()
+	{
+		string x = Data;
 		if (x == "0")
 		{
 			Type = CellType::Number;
@@ -139,7 +191,7 @@ namespace TmingEngine
 
 		Type = CellType::Symbol;
 	}
-
+	 
 	Pair* Pair::eval(Pair* exp, Pair* env)
 	{
 		switch (exp->Type)
@@ -225,7 +277,7 @@ namespace TmingEngine
 		if (_env == nullptr || _env->Type == CellType::Nil)
 		{
 			//Debug.Log("未定义变量: " + exp);
-			return new Pair();
+			return exp;
 		}
 
 		return LookUp(exp, _env);
@@ -259,6 +311,14 @@ namespace TmingEngine
 				{
 					return nullptr;
 				}
+			}
+			else if (exp->Data == "define")
+			{
+				auto c1 = eval(exp->car, env);
+				auto c2 = eval(exp->cdr, env);
+				Pair* var = new Pair(c1, c2);
+				env = env->ExtendEnv(var, env);
+				return env;
 			}
 			else
 			{

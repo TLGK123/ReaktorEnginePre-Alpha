@@ -101,6 +101,8 @@ namespace TmingEngine
 
 		void InitPair(string x);
 
+		void AutoSetType();
+
 		Pair(const char* x)
 		{
 			string data = string(x);

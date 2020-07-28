@@ -35,21 +35,24 @@ using namespace TmingEngine;
 using namespace std;
 
 stack<string> codeStack;
+stack<Pair*> pairStack;
 //queue<string> codeQueue;
 
-void separateWords(string path);
-void readOneWord(string code);
-void pushWordToStack(string word);
-bool isOnePairEnd(string word);
-void popWordFromStack();
-void caculateOnePair();
+void SeparateWords(string path);
+void ReadOneWord(string code);
+void PushWordToStack(string word);
+bool IsOnePairEnd(string word);
+void PopWordFromStack();
+void CaculateOnePair(Pair* p);
+
 
 int main()
 {
 	int size = sizeof(Pair);
-	separateWords("");
 	Pair* env = new Pair();
-
+	SeparateWords("");
+	Pair x1 = "CameraX";
+	Pair* v = env->eval(&x1, env);
 	//s-表达式嵌套
 	Pair* exp = new Pair("+");
 	exp->car = new Pair("8");
@@ -66,8 +69,7 @@ int main()
 
 	Pair* var = new Pair("x", "4");
 	env = env->ExtendEnv(var, env);
-	Pair* x1 = new Pair("x");
-	Pair* v = env->eval(x1, env);
+
 
 	/* scheme
 	(define x 3)
@@ -80,7 +82,7 @@ int main()
 	let->cdr->car = new Pair("2");
 	let->cdr->cdr = new Pair("w");
 
-	//let->Print();
+	let->Print();
 	;
 
 	Pair* rest = env->eval(let, env);
@@ -101,7 +103,7 @@ int main()
 
 	//func->Print();
 	/* scheme
-		(lambda (x)(* x 7))
+		(lambda (x) (* x 7))
 	*/
 
 	//函数调用
@@ -118,7 +120,7 @@ int main()
 	;
 }
 
-void separateWords(string path)
+void SeparateWords(string path)
 {
 	fstream file;
 	char script[64];
@@ -135,40 +137,39 @@ void separateWords(string path)
 	{
 		file >> script;
 		code = string(script);
-		readOneWord(code);
+		ReadOneWord(code);
 	}
-	//head->Print();
+
 	int i = 1;
-	//int sc = *env->eval(head, env);
 }
 
-void readOneWord(string code)
+void ReadOneWord(string code)
 {
 	if (code[0] == '(')
 	{
-		pushWordToStack("(");
+		PushWordToStack("(");
 		code = code.substr(1, code.size() - 1);
-		pushWordToStack(code);
+		ReadOneWord(code);
 	}
 	else if (code[code.size() - 1] == ')')
-	{	
-		code = code.substr(0, code.size() - 1);	
-		pushWordToStack(code);
-		pushWordToStack(")");
+	{
+		code = code.substr(0, code.size() - 1);
+		ReadOneWord(code);
+		PushWordToStack(")");
 	}
 	else
 	{
-		pushWordToStack(code);
-	}	
+		PushWordToStack(code);
+	}
 }
 
-void pushWordToStack(string word)
+void PushWordToStack(string word)
 {
 	codeStack.push(word);
-	//codeQueue.push(word);
-	if (isOnePairEnd(word))
+
+	if (IsOnePairEnd(word))
 	{
-		popWordFromStack();
+		PopWordFromStack();
 	}
 	else
 	{
@@ -176,32 +177,46 @@ void pushWordToStack(string word)
 	}
 }
 
-bool isOnePairEnd(string word)
+bool IsOnePairEnd(string word)
 {
 	return word == ")";
 }
 
-void popWordFromStack()
+void PopWordFromStack()
 {
-	string stackData = ""; 
-	while (stackData!="("&& codeStack.size()>0)
+	string stackData = "";
+	Pair* p = new Pair();
+	p->Type = CellType::pair;
+	Pair* head = p;
+	int point = 1;
+	while (stackData != "(" && codeStack.size() > 0)
 	{
 		stackData = codeStack.top();
 		codeStack.pop();
+		if (stackData != "(" && stackData != ")")
+		{
+			if (point == 1)
+			{
+				p->cdr = new Pair(stackData);
+			}
+			else if (point == 2)
+			{
+				p->car = new Pair(stackData);
+			}
+			else if (point == 3)
+			{
+				p->Data = stackData;
+				p->AutoSetType();
+			}
+			point++;
+		}
 		std::cout << " Stack:===> " << stackData << std::endl;
 	}
 
-	//string queueData = "";
-	//while (queueData != ")" && codeQueue.size() > 0)
-	//{
-
-	//	queueData = codeQueue.front();
-	//	codeQueue.pop();
-	//	std::cout << " Queue:===> " << queueData << std::endl;
-	//}
-
+	CaculateOnePair(p);
 }
 
-void caculateOnePair()
+void CaculateOnePair(Pair* p)
 {
+	
 }
