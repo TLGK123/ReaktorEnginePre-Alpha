@@ -35,7 +35,7 @@ using namespace TmingEngine;
 using namespace std;
 
 Pair* env = new Pair();
-stack<string> codeStack;
+stack<Pair*> codeStack;
 stack<Pair*> pairStack;
 //queue<string> codeQueue;
 
@@ -49,10 +49,10 @@ void CaculateOnePair(Pair* p);
 int main()
 {
 	int size = sizeof(Pair);
-	
+
 	SeparateWords();
 	Pair x1 = "CameraX";
-	Pair* v = env->eval(&x1, env);
+
 	//s-表达式嵌套
 	Pair* exp = new Pair("+");
 	exp->car = new Pair("8");
@@ -66,11 +66,12 @@ int main()
 	int d = *env->eval(exp, env);
 
 	//变量存储在环境中
-
+	env->Print();
 	Pair* var = new Pair("x", "4");
-	env = env->ExtendEnv(var, env);
-
-
+	env = env->ExtendEnv(var);
+	env->Print();
+	auto d1 = env->eval(new Pair("x"));
+	auto d2 = env->eval(&x1, env);
 	/* scheme
 	(define x 3)
 	*/
@@ -125,7 +126,7 @@ void SeparateWords()
 	fstream file;
 	char script[64];
 
-	file.open("D:\\Github\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//打开文件，供读
+	file.open("E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//打开文件，供读
 	if (!file)
 	{
 		cerr << "Open File Fail." << endl;
@@ -165,7 +166,7 @@ void ReadOneWord(string code)
 
 void PushWordToStack(string word)
 {
-	codeStack.push(word);
+	codeStack.push(new Pair(word));
 
 	if (IsOnePairEnd(word))
 	{
@@ -173,7 +174,6 @@ void PushWordToStack(string word)
 	}
 	else
 	{
-
 	}
 }
 
@@ -184,37 +184,37 @@ bool IsOnePairEnd(string word)
 
 void PopWordFromStack()
 {
-	string stackData = "";
+	Pair* stackData = new Pair();
 	Pair* p = new Pair();
 	p->Type = CellType::pair;
 	Pair* head = p;
 	int point = 1;
-	vector<string> codes;
-	while (stackData != "(" && codeStack.size() > 0)
-	{		
+	vector<Pair*> codes;
+	while (stackData->Data != "(" && codeStack.size() > 0)
+	{
 		stackData = codeStack.top();
 		codeStack.pop();
-		if (stackData != "(" && stackData != ")")
+		if (stackData->Data != "(" && stackData->Data != ")")
 		{
 			codes.push_back(stackData);
 		}
-		std::cout << " Stack:===> " << stackData << std::endl;
+		std::cout << " Stack:===> " << stackData->Data << std::endl;
 	}
 
 	if (codes.size() == 1)
 	{
-		p->SetData(codes[0]);
+		p->SetData(codes[0]->Data);
 	}
 	else if (codes.size() == 2)
 	{
-		p->car = new Pair(codes[1]);
-		p->cdr = new Pair(codes[0]);
+		p->car = codes[1];
+		p->cdr = codes[0];
 	}
 	else if (codes.size() == 3)
 	{
-		p->cdr = new Pair(codes[0]);
-		p->car = new Pair(codes[1]);
-		p->SetData(codes[2]);
+		p->cdr = codes[0];
+		p->car = codes[1];
+		p->SetData(codes[2]->Data);
 	}
 
 	CaculateOnePair(p);
@@ -241,16 +241,22 @@ void CaculateOnePair(Pair* p)
 			p1->car = p2;
 			p1->cdr = p3;
 
-			p1->Print();
-
-			result = env->eval(p1, env);			
+			result = env->eval(p1, env);
 		}
 		else if (pairStack.size() == 1)
 		{
 			result = env->eval(p, env);
 		}
-		
+		else if (pairStack.size() == 2)
+		{
+			p1 = pairStack.top();
+			pairStack.pop();
+			p2 = pairStack.top();
+			pairStack.pop();
+			p3 = new Pair(p2, p1);
+			result = env->eval(p3, env);
+		}
+		result->Print();
 		int u = 0;
 	}
-
 }

@@ -1,1 +1,2 @@
-(define x 3)
+(define CameraX 3)
+(define CameraY 6)

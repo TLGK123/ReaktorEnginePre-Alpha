@@ -51,7 +51,6 @@ namespace TmingEngine
 			{
 				return exp;
 			}
-			
 		}
 		else if (d == "-")
 		{
@@ -127,7 +126,6 @@ namespace TmingEngine
 		car = nullptr;
 		cdr = nullptr;
 		AutoSetType();
-	
 	}
 
 	void Pair::AutoSetType()
@@ -191,7 +189,11 @@ namespace TmingEngine
 
 		Type = CellType::Symbol;
 	}
- 
+	Pair* Pair::eval(Pair* exp)
+	{
+		return	eval(exp, this);
+	}
+
 	Pair* Pair::eval(Pair* exp, Pair* env)
 	{
 		switch (exp->Type)

@@ -103,6 +103,8 @@ namespace TmingEngine
 
 		void AutoSetType();
 
+		Pair* eval(Pair* exp);
+
 		void SetData(const char* x)
 		{
 			Data = string(x);
@@ -234,6 +236,12 @@ namespace TmingEngine
 			return Cons(p1, _env);
 		}
 
+		Pair* ExtendEnv(Pair* p1)
+		{
+			Pair* newEnv = Cons(p1, this);
+			return newEnv;
+		}
+
 		Pair* LookUp(Pair* p1, Pair* _env);
 
 		Pair* CaculateSymbol(Pair* exp, Pair* _env);
@@ -282,6 +290,7 @@ namespace TmingEngine
 		void Print()
 		{
 			Print(this);
+			std::cout << std::endl;
 		}
 
 		void Print(Pair* p)
