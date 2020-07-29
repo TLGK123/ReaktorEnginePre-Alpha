@@ -34,23 +34,23 @@
 using namespace TmingEngine;
 using namespace std;
 
+Pair* env = new Pair();
 stack<string> codeStack;
 stack<Pair*> pairStack;
 //queue<string> codeQueue;
 
-void SeparateWords(string path);
+void SeparateWords();
 void ReadOneWord(string code);
 void PushWordToStack(string word);
 bool IsOnePairEnd(string word);
 void PopWordFromStack();
 void CaculateOnePair(Pair* p);
 
-
 int main()
 {
 	int size = sizeof(Pair);
-	Pair* env = new Pair();
-	SeparateWords("");
+	
+	SeparateWords();
 	Pair x1 = "CameraX";
 	Pair* v = env->eval(&x1, env);
 	//s-±í´ïÊ½Ç¶Ì×
@@ -120,7 +120,7 @@ int main()
 	;
 }
 
-void SeparateWords(string path)
+void SeparateWords()
 {
 	fstream file;
 	char script[64];
@@ -189,28 +189,32 @@ void PopWordFromStack()
 	p->Type = CellType::pair;
 	Pair* head = p;
 	int point = 1;
+	vector<string> codes;
 	while (stackData != "(" && codeStack.size() > 0)
-	{
+	{		
 		stackData = codeStack.top();
 		codeStack.pop();
 		if (stackData != "(" && stackData != ")")
 		{
-			if (point == 1)
-			{
-				p->cdr = new Pair(stackData);
-			}
-			else if (point == 2)
-			{
-				p->car = new Pair(stackData);
-			}
-			else if (point == 3)
-			{
-				p->Data = stackData;
-				p->AutoSetType();
-			}
-			point++;
+			codes.push_back(stackData);
 		}
 		std::cout << " Stack:===> " << stackData << std::endl;
+	}
+
+	if (codes.size() == 1)
+	{
+		p->SetData(codes[0]);
+	}
+	else if (codes.size() == 2)
+	{
+		p->car = new Pair(codes[1]);
+		p->cdr = new Pair(codes[0]);
+	}
+	else if (codes.size() == 3)
+	{
+		p->cdr = new Pair(codes[0]);
+		p->car = new Pair(codes[1]);
+		p->SetData(codes[2]);
 	}
 
 	CaculateOnePair(p);
@@ -218,5 +222,35 @@ void PopWordFromStack()
 
 void CaculateOnePair(Pair* p)
 {
-	
+	pairStack.push(p);
+
+	std::cout << "code size: " << codeStack.size() << std::endl;
+	if (codeStack.size() == 0)
+	{
+		Pair* p1, * p2, * p3;
+		Pair* result;
+		if (pairStack.size() == 3)
+		{
+			p1 = pairStack.top();
+			pairStack.pop();
+			p3 = pairStack.top();
+			pairStack.pop();
+			p2 = pairStack.top();
+			pairStack.pop();
+
+			p1->car = p2;
+			p1->cdr = p3;
+
+			p1->Print();
+
+			result = env->eval(p1, env);			
+		}
+		else if (pairStack.size() == 1)
+		{
+			result = env->eval(p, env);
+		}
+		
+		int u = 0;
+	}
+
 }

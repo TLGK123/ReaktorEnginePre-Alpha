@@ -191,7 +191,7 @@ namespace TmingEngine
 
 		Type = CellType::Symbol;
 	}
-	 
+ 
 	Pair* Pair::eval(Pair* exp, Pair* env)
 	{
 		switch (exp->Type)

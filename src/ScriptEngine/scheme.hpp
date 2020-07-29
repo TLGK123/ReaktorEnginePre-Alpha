@@ -103,6 +103,18 @@ namespace TmingEngine
 
 		void AutoSetType();
 
+		void SetData(const char* x)
+		{
+			Data = string(x);
+			AutoSetType();
+		}
+
+		void SetData(string x)
+		{
+			Data = x;
+			AutoSetType();
+		}
+
 		Pair(const char* x)
 		{
 			string data = string(x);
