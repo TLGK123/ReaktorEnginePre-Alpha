@@ -29,7 +29,7 @@ namespace TmingEngine
 	extern  vector<string> Syntaxs = { "car", "cdr", "cons", "atom", "quote", "cond", "let", "lambda", "'", "if","define" };
 	extern  vector<string> Operates = { "+", "-", "*", "/", "%", "=" };
 	extern  vector<string> BoolSymbol = { "#f", "#t" };
-
+	
 	Pair* Pair::CaculateOperate(Pair* exp, Pair* env)
 	{
 		Pair* nextCell;
@@ -189,6 +189,7 @@ namespace TmingEngine
 
 		Type = CellType::Symbol;
 	}
+
 	Pair* Pair::eval(Pair* exp)
 	{
 		return	eval(exp, this);
@@ -319,8 +320,8 @@ namespace TmingEngine
 				auto c1 = eval(exp->car, env);
 				auto c2 = eval(exp->cdr, env);
 				Pair* var = new Pair(c1, c2);
-				env = env->ExtendEnv(var, env);
-				return env;
+				auto newEnv = env->ExtendEnv(var, env);				
+				return newEnv;
 			}
 			else
 			{
