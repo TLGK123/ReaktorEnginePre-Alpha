@@ -228,7 +228,7 @@ void CaculateOnePair(Pair* p)
 	if (codeStack.size() == 0)
 	{
 		Pair* p1, * p2, * p3;
-		Pair* result;
+		Pair* result = nullptr;
 		if (pairStack.size() == 3)
 		{
 			p1 = pairStack.top();
@@ -245,7 +245,10 @@ void CaculateOnePair(Pair* p)
 		}
 		else if (pairStack.size() == 1)
 		{
-			result = env->eval(p, env);
+			p1 = pairStack.top();
+			pairStack.pop();
+
+			result = env->eval(p1, env);
 		}
 		else if (pairStack.size() == 2)
 		{
@@ -256,6 +259,7 @@ void CaculateOnePair(Pair* p)
 			p3 = new Pair(p2, p1);
 			result = env->eval(p3, env);
 		}
+
 		result->Print();
 		int u = 0;
 	}
