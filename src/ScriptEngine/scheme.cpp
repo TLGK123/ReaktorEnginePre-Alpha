@@ -318,8 +318,8 @@ namespace TmingEngine
 			{
 				auto c1 = eval(exp->car, env);
 				auto c2 = eval(exp->cdr, env);
-				Pair* var = new Pair(c1, c2);
-				env = env->ExtendEnv(var, env);
+				auto var = new Pair(c1, c2);
+				env->ExtendEnv(var);
 				return env;
 			}
 			else

@@ -68,7 +68,7 @@ int main()
 	//变量存储在环境中
 	env->Print();
 	Pair* var = new Pair("x", "4");
-	env = env->ExtendEnv(var);
+	env->ExtendEnv(var);
 	env->Print();
 	auto d1 = env->eval(new Pair("x"));
 	auto d2 = env->eval(&x1, env);

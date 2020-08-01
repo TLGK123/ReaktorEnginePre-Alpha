@@ -86,6 +86,14 @@ namespace TmingEngine
 			cdr = nullptr;
 		}
 
+		Pair(Pair* x)
+		{
+			Data = x->Data;
+			Type = x->Type;
+			car = x->car;
+			cdr = x->cdr;
+		}
+
 		Pair(int x)
 		{
 			Data = std::to_string(x);
@@ -236,10 +244,12 @@ namespace TmingEngine
 			return Cons(p1, _env);
 		}
 
-		Pair* ExtendEnv(Pair* p1)
+		void ExtendEnv(Pair* p1)
 		{
-			Pair* newEnv = Cons(p1, this);
-			return newEnv;
+			Pair* oldEnv = new Pair(this);
+			car = p1;
+			Type = CellType::pair;
+			cdr = oldEnv;
 		}
 
 		Pair* LookUp(Pair* p1, Pair* _env);
