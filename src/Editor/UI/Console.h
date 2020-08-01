@@ -23,15 +23,16 @@
    limitations under the License.
 */
 
-#pragma once
 #ifndef console_h
 #define console_h
 
+#include "Plantform/Windows/Widget.h"
+#include "Core/Log/Log.h"
+#include "Core/Engine.h"
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
-#include "Plantform/Windows/Widget.h"
+#include "Game.hpp"
 #include "im.h"
-#include "Core/Log/Log.h"
 
 extern "C"
 {
@@ -49,6 +50,8 @@ extern "C"
 #include <scriptstdstring/scriptstdstring.h>
 #include <scriptbuilder/scriptbuilder.h>
 
+#include "ScriptEngine/scheme.hpp"
+
 namespace TmingEngine
 {
 	void ConfigureEngine(asIScriptEngine* engine);
@@ -56,7 +59,7 @@ namespace TmingEngine
 	void PrintString(string& str);
 	void PrintString_Generic(asIScriptGeneric* gen);
 	void timeGetTime_Generic(asIScriptGeneric* gen);
-	void LineCallback(asIScriptContext* ctx, unsigned long * timeOut);
+	void LineCallback(asIScriptContext* ctx, unsigned long* timeOut);
 
 	class Console : public Widget
 	{
@@ -81,6 +84,7 @@ namespace TmingEngine
 		//void Draw2(const char* title, bool* p_open);
 		void TestLua();
 		int TestAngleScript();
+		void TestScheme();
 	};
 }
 #endif

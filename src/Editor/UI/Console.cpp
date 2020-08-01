@@ -65,7 +65,7 @@ namespace TmingEngine
 
 		if (ImGui::Button("Command"))
 		{
-			TestAngleScript();
+			TestScheme();
 		}
 
 		if (Filter.IsActive())
@@ -302,6 +302,21 @@ namespace TmingEngine
 		engine->ShutDownAndRelease();
 
 		return 0;
+	}
+
+	void Console::TestScheme()
+	{
+		auto context = &Global<Context>();
+		Engine* eg = context->GetSubsystem<Engine>();
+		IWindows* win = eg->windows;
+		auto ga = win->GetSubWidget<Game>();
+
+		SoftRender softRender;
+		softRender.LoadAssetToMemory();
+		softRender.SetRenderStatus();
+		softRender.DrawCall();
+
+		Debug::Log(" Draw a model ");
 	}
 
 	void ConfigureEngine(asIScriptEngine* engine)
