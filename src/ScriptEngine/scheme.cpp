@@ -29,7 +29,7 @@ namespace TmingEngine
 	extern  vector<string> Syntaxs = { "car", "cdr", "cons", "atom", "quote", "cond", "let", "lambda", "'", "if","define" };
 	extern  vector<string> Operates = { "+", "-", "*", "/", "%", "=" };
 	extern  vector<string> BoolSymbol = { "#f", "#t" };
-	
+
 	Pair* Pair::CaculateOperate(Pair* exp, Pair* env)
 	{
 		Pair* nextCell;
@@ -237,7 +237,6 @@ namespace TmingEngine
 
 		if (temp == nullptr || temp->Type == CellType::Nil)
 		{
-			//Debug::Log("δ�������: " + p1);
 			return new Pair();
 		}
 
@@ -254,13 +253,11 @@ namespace TmingEngine
 					}
 					else
 					{
-						//Debug.Log("δ�������: " + p1);
 						return new Pair();
 					}
 				}
 				else
 				{
-					//Debug.Log("δ�������: " + p1);
 					return new Pair();
 				}
 			}
@@ -279,7 +276,6 @@ namespace TmingEngine
 	{
 		if (_env == nullptr || _env->Type == CellType::Nil)
 		{
-			//Debug.Log("δ�������: " + exp);
 			return exp;
 		}
 
@@ -300,7 +296,7 @@ namespace TmingEngine
 		{
 			if (exp->Data == "let")
 			{
-				env = ExtendEnv(exp->car, env); //  ��Ҫ�󶨵ı���
+				env = ExtendEnv(exp->car, env); //
 				return eval(exp->cdr, env);
 			}
 			else if (exp->Data == "if")

@@ -34,7 +34,7 @@
 using namespace TmingEngine;
 using namespace std;
 
-Pair* GlobalEnv;
+Pair* env;
 stack<Pair*> codeStack;
 stack<Pair*> pairStack;
 
@@ -47,14 +47,13 @@ void CaculateOnePair(Pair* p);
 
 int main()
 {
-	GlobalEnv = new Pair();
+	env = new Pair();
 	int size = sizeof(Pair);
 
 	SeparateWords();
 
 	Pair x1 = "CameraX";
 
-	//s-����ʽǶ��
 	Pair* exp = new Pair("+");
 	exp->car = new Pair("8");
 	exp->cdr = new Pair("4");
@@ -64,10 +63,9 @@ int main()
 	*/
 	//exp->Print();
 
-	int d = *GlobalEnv->eval(exp, GlobalEnv);
+	int d = *env->eval(exp, env);
 
-	//�����洢�ڻ�����
-	GlobalEnv->Print();
+	env->Print();
 	Pair* var = new Pair("x", "4");
 	env->ExtendEnv(var);
 	env->Print();
@@ -77,7 +75,6 @@ int main()
 	(define x 3)
 	*/
 
-	//�ֲ�������ֵ
 	Pair* let = new Pair("let");
 	let->car = new Pair("w", "66");
 	let->cdr = new Pair("*");
@@ -87,32 +84,29 @@ int main()
 	let->Print();
 	;
 
-	Pair* rest = GlobalEnv->eval(let, GlobalEnv);
+	Pair* rest = env->eval(let, env);
 
 	/* scheme
 		(let ((w 66))
 				(* (w 2)))
 	*/
 
-	//�Ѻ�������͵�ʱ�Ļ��������һ�𣬾��Ǳհ�
 	Pair* function = new Pair("lambda");
 	function->car = new Pair("x");
 	function->cdr = new Pair("*");
 	function->cdr->car = new Pair("x");
 	function->cdr->cdr = new Pair("7");
 
-	Pair* func = GlobalEnv->eval(function, GlobalEnv);
+	Pair* func = env->eval(function, env);
 
 	//func->Print();
 	/* scheme
 		(lambda (x) (* x 7))
 	*/
 
-	//��������
-
 	Pair* funCall = new Pair(func, "8");
 
-	Pair* result = GlobalEnv->eval(funCall, GlobalEnv);
+	Pair* result = env->eval(funCall, env);
 	funCall->Print();
 	/* scheme
 		((lambda (x)(* x 7))3)
@@ -127,7 +121,7 @@ void SeparateWords()
 	fstream file;
 	char script[64];
 
-	file.open("E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//���ļ�������
+	file.open("E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);
 	if (!file)
 	{
 		cerr << "Open File Fail." << endl;
@@ -242,14 +236,14 @@ void CaculateOnePair(Pair* p)
 			p1->car = p2;
 			p1->cdr = p3;
 
-			result = GlobalEnv->eval(p1, GlobalEnv);
+			result = env->eval(p1, env);
 		}
 		else if (pairStack.size() == 1)
 		{
 			p1 = pairStack.top();
 			pairStack.pop();
 
-			result = GlobalEnv->eval(p1, GlobalEnv);
+			result = env->eval(p1, env);
 		}
 		else if (pairStack.size() == 2)
 		{
@@ -258,7 +252,7 @@ void CaculateOnePair(Pair* p)
 			p2 = pairStack.top();
 			pairStack.pop();
 			p3 = new Pair(p2, p1);
-			result = GlobalEnv->eval(p3, GlobalEnv);
+			result = env->eval(p3, env);
 		}
 
 		result->Print();
