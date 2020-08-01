@@ -361,8 +361,8 @@ namespace TmingEngine
 				{
 					if (P.Position.x >= 0 && P.Position.y >= 0 && P.Position.x <= frameWidth && P.Position.y <= frameHeight)
 					{
-						int cacheDeep = zbuffer[int(x + y * frameWidth)];
-						if (P.Position.z < cacheDeep)
+						int cacheDepth = zbuffer[int(x + y * frameWidth)];
+						if (P.Position.z < cacheDepth)
 						{
 							Vector2 s = P.TexCoords;
 

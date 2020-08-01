@@ -34,10 +34,9 @@
 using namespace TmingEngine;
 using namespace std;
 
-Pair* env = new Pair();
+Pair* GlobalEnv;
 stack<Pair*> codeStack;
 stack<Pair*> pairStack;
-//queue<string> codeQueue;
 
 void SeparateWords();
 void ReadOneWord(string code);
@@ -48,12 +47,14 @@ void CaculateOnePair(Pair* p);
 
 int main()
 {
+	GlobalEnv = new Pair();
 	int size = sizeof(Pair);
 
 	SeparateWords();
+
 	Pair x1 = "CameraX";
 
-	//s-±í´ïÊ½Ç¶Ì×
+	//s-ï¿½ï¿½ï¿½ï¿½Ê½Ç¶ï¿½ï¿½
 	Pair* exp = new Pair("+");
 	exp->car = new Pair("8");
 	exp->cdr = new Pair("4");
@@ -63,10 +64,10 @@ int main()
 	*/
 	//exp->Print();
 
-	int d = *env->eval(exp, env);
+	int d = *GlobalEnv->eval(exp, GlobalEnv);
 
-	//±äÁ¿´æ´¢ÔÚ»·¾³ÖÐ
-	env->Print();
+	//ï¿½ï¿½ï¿½ï¿½ï¿½æ´¢ï¿½Ú»ï¿½ï¿½ï¿½ï¿½ï¿½
+	GlobalEnv->Print();
 	Pair* var = new Pair("x", "4");
 	env->ExtendEnv(var);
 	env->Print();
@@ -76,7 +77,7 @@ int main()
 	(define x 3)
 	*/
 
-	//¾Ö²¿±äÁ¿ÇóÖµ
+	//ï¿½Ö²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 	Pair* let = new Pair("let");
 	let->car = new Pair("w", "66");
 	let->cdr = new Pair("*");
@@ -86,32 +87,32 @@ int main()
 	let->Print();
 	;
 
-	Pair* rest = env->eval(let, env);
+	Pair* rest = GlobalEnv->eval(let, GlobalEnv);
 
 	/* scheme
 		(let ((w 66))
 				(* (w 2)))
 	*/
 
-	//°Ñº¯Êý¶¨ÒåºÍµ±Ê±µÄ»·¾³´ò°üÔÚÒ»Æð£¬¾ÍÊÇ±Õ°ü
+	//ï¿½Ñºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½Ê±ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ð£¬¾ï¿½ï¿½Ç±Õ°ï¿½
 	Pair* function = new Pair("lambda");
 	function->car = new Pair("x");
 	function->cdr = new Pair("*");
 	function->cdr->car = new Pair("x");
 	function->cdr->cdr = new Pair("7");
 
-	Pair* func = env->eval(function, env);
+	Pair* func = GlobalEnv->eval(function, GlobalEnv);
 
 	//func->Print();
 	/* scheme
 		(lambda (x) (* x 7))
 	*/
 
-	//º¯Êýµ÷ÓÃ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	Pair* funCall = new Pair(func, "8");
 
-	Pair* result = env->eval(funCall, env);
+	Pair* result = GlobalEnv->eval(funCall, GlobalEnv);
 	funCall->Print();
 	/* scheme
 		((lambda (x)(* x 7))3)
@@ -126,7 +127,7 @@ void SeparateWords()
 	fstream file;
 	char script[64];
 
-	file.open("E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//´ò¿ªÎÄ¼þ£¬¹©¶Á
+	file.open("E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);//ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (!file)
 	{
 		cerr << "Open File Fail." << endl;
@@ -241,14 +242,14 @@ void CaculateOnePair(Pair* p)
 			p1->car = p2;
 			p1->cdr = p3;
 
-			result = env->eval(p1, env);
+			result = GlobalEnv->eval(p1, GlobalEnv);
 		}
 		else if (pairStack.size() == 1)
 		{
 			p1 = pairStack.top();
 			pairStack.pop();
 
-			result = env->eval(p1, env);
+			result = GlobalEnv->eval(p1, GlobalEnv);
 		}
 		else if (pairStack.size() == 2)
 		{
@@ -257,7 +258,7 @@ void CaculateOnePair(Pair* p)
 			p2 = pairStack.top();
 			pairStack.pop();
 			p3 = new Pair(p2, p1);
-			result = env->eval(p3, env);
+			result = GlobalEnv->eval(p3, GlobalEnv);
 		}
 
 		result->Print();

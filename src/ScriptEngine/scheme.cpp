@@ -29,7 +29,7 @@ namespace TmingEngine
 	extern  vector<string> Syntaxs = { "car", "cdr", "cons", "atom", "quote", "cond", "let", "lambda", "'", "if","define" };
 	extern  vector<string> Operates = { "+", "-", "*", "/", "%", "=" };
 	extern  vector<string> BoolSymbol = { "#f", "#t" };
-
+	
 	Pair* Pair::CaculateOperate(Pair* exp, Pair* env)
 	{
 		Pair* nextCell;
@@ -189,6 +189,7 @@ namespace TmingEngine
 
 		Type = CellType::Symbol;
 	}
+
 	Pair* Pair::eval(Pair* exp)
 	{
 		return	eval(exp, this);
@@ -236,7 +237,7 @@ namespace TmingEngine
 
 		if (temp == nullptr || temp->Type == CellType::Nil)
 		{
-			//Debug::Log("Î´¶¨Òå±äÁ¿: " + p1);
+			//Debug::Log("Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " + p1);
 			return new Pair();
 		}
 
@@ -253,13 +254,13 @@ namespace TmingEngine
 					}
 					else
 					{
-						//Debug.Log("Î´¶¨Òå±äÁ¿: " + p1);
+						//Debug.Log("Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " + p1);
 						return new Pair();
 					}
 				}
 				else
 				{
-					//Debug.Log("Î´¶¨Òå±äÁ¿: " + p1);
+					//Debug.Log("Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " + p1);
 					return new Pair();
 				}
 			}
@@ -278,7 +279,7 @@ namespace TmingEngine
 	{
 		if (_env == nullptr || _env->Type == CellType::Nil)
 		{
-			//Debug.Log("Î´¶¨Òå±äÁ¿: " + exp);
+			//Debug.Log("Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " + exp);
 			return exp;
 		}
 
@@ -299,7 +300,7 @@ namespace TmingEngine
 		{
 			if (exp->Data == "let")
 			{
-				env = ExtendEnv(exp->car, env); //  ÐèÒª°ó¶¨µÄ±äÁ¿
+				env = ExtendEnv(exp->car, env); //  ï¿½ï¿½Òªï¿½ó¶¨µÄ±ï¿½ï¿½ï¿½
 				return eval(exp->cdr, env);
 			}
 			else if (exp->Data == "if")
@@ -347,13 +348,13 @@ namespace TmingEngine
 	{
 		if (exp->Type == CellType::FunctionCall)
 		{
-			auto v1 = eval(exp->car, env); // ¼ÆËã³öº¯Êý±Õ°ü
-			auto v2 = eval(exp->cdr, env); // ¼ÆËã³ö²ÎÊýµÄÖµ
-			auto that_env = v1->cdr; // ÌáÈ¡º¯Êý¶¨ÒåÊ±µÄ»·¾³
-			auto funcp = v1->car->car; // ÌáÈ¡º¯Êý¶¨ÒåÊ±£¬²ÎÊý±äÁ¿Ãû
+			auto v1 = eval(exp->car, env); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ°ï¿½
+			auto v2 = eval(exp->cdr, env); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+			auto that_env = v1->cdr; // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä»ï¿½ï¿½ï¿½
+			auto funcp = v1->car->car; // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			auto nv = new Pair(funcp, v2);
-			that_env = ExtendEnv(nv, that_env); // °Ñ²ÎÊýÀ©Õ¹µ½µ±Ê±¶¨ÒåµÄ»·¾³ÖÐÈ¥
-			auto func = v1->car->cdr; //º¯ÊýÌå
+			that_env = ExtendEnv(nv, that_env); // ï¿½Ñ²ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½È¥
+			auto func = v1->car->cdr; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			auto v3 = eval(func, that_env);
 			return v3;
 		}
