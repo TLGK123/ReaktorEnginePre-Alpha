@@ -112,14 +112,14 @@ namespace TmingEngine
 
 	void Console::TestLua()
 	{
-		//1.����Lua״̬
+		//1.
 		lua_State* L = luaL_newstate();
 		if (L == NULL)
 		{
 			return;
 		}
 
-		//2.����Lua�ļ�
+		//2.
 		int bRet = luaL_loadfile(L, FileSystem::getPath("Data/EngineScript/hello.lua").c_str());
 		if (bRet)
 		{
@@ -127,7 +127,7 @@ namespace TmingEngine
 			return;
 		}
 
-		//3.����Lua�ļ�
+		//3.
 		bRet = lua_pcall(L, 0, 0, 0);
 		if (bRet)
 		{
@@ -135,30 +135,30 @@ namespace TmingEngine
 			return;
 		}
 
-		//4.��ȡ����
+		//4.
 		lua_getglobal(L, "str");
 		string str = lua_tostring(L, -1);
 		cout << "str = " << str.c_str() << endl;        //str = I am so cool~
 
-		//5.��ȡtable
+		//5.
 		lua_getglobal(L, "tbl");
 		lua_getfield(L, -1, "name");
 		str = lua_tostring(L, -1);
 		cout << "tbl:name = " << str.c_str() << endl; //tbl:name = shun
 
-		//6.��ȡ����
-		lua_getglobal(L, "add");        // ��ȡ������ѹ��ջ��
-		lua_pushnumber(L, 10);          // ѹ���һ������
-		lua_pushnumber(L, 20);          // ѹ��ڶ�������
-		int iRet = lua_pcall(L, 2, 1, 0);// ���ú�������������Ժ󣬻Ὣ����ֵѹ��ջ�У�2��ʾ����������1��ʾ���ؽ��������
-		if (iRet)                       // ���ó���
+		//6.
+		lua_getglobal(L, "add");        //
+		lua_pushnumber(L, 10);          //
+		lua_pushnumber(L, 20);          //
+		int iRet = lua_pcall(L, 2, 1, 0);//
+		if (iRet)                       //
 		{
 			const char* pErrorMsg = lua_tostring(L, -1);
 			cout << pErrorMsg << endl;
 			lua_close(L);
 			return;
 		}
-		if (lua_isnumber(L, -1))        //ȡֵ���
+		if (lua_isnumber(L, -1))        //
 		{
 			double fValue = lua_tonumber(L, -1);
 			cout << "Result is " << fValue << endl;
@@ -306,17 +306,21 @@ namespace TmingEngine
 
 	void Console::TestScheme()
 	{
-		auto context = &Global<Context>();
-		Engine* eg = context->GetSubsystem<Engine>();
-		IWindows* win = eg->windows;
-		auto ga = win->GetSubWidget<Game>();
+		//auto context = &Global<Context>();
+		//Engine* eg = context->GetSubsystem<Engine>();
+		//IWindows* win = eg->windows;
+		//auto ga = win->GetSubWidget<Game>();
 
-		SoftRender softRender;
-		softRender.LoadAssetToMemory();
-		softRender.SetRenderStatus();
-		softRender.DrawCall();
+		//SoftRender softRender;
+		//softRender.LoadAssetToMemory();
+		//softRender.SetRenderStatus();
+		//softRender.DrawCall();
 
-		Debug::Log(" Draw a model ");
+		Pair* env = new Pair();
+		LoadScheme(env, "E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm");
+		float x;
+		x = *env->eval(new Pair("CameraX"));
+		std::cout << " Draw a model CameraX :" << x << std::endl;
 	}
 
 	void ConfigureEngine(asIScriptEngine* engine)

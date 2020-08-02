@@ -26,31 +26,16 @@
 
 #include "scheme.hpp"
 #include <iostream>
-#include <fstream>
-#include <stack>
-#include <queue>
+
 #include <vector>
 
 using namespace TmingEngine;
 using namespace std;
 
-Pair* env;
-stack<Pair*> codeStack;
-stack<Pair*> pairStack;
-
-void SeparateWords();
-void ReadOneWord(string code);
-void PushWordToStack(string word);
-bool IsOnePairEnd(string word);
-void PopWordFromStack();
-void CaculateOnePair(Pair* p);
-
-int main()
+int mainT()
 {
-	env = new Pair();
-	int size = sizeof(Pair);
-
-	SeparateWords();
+	Pair* env = new Pair();
+	LoadScheme(env, "E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm");
 
 	Pair x1 = "CameraX";
 
@@ -113,149 +98,6 @@ int main()
 	*/
 
 	int  s = *result;
+	return 0;
 	;
-}
-
-void SeparateWords()
-{
-	fstream file;
-	char script[64];
-
-	file.open("E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm", ios::in);
-	if (!file)
-	{
-		cerr << "Open File Fail." << endl;
-		exit(1);
-	}
-	string code = "";
-
-	while (!file.eof())
-	{
-		file >> script;
-		code = string(script);
-		ReadOneWord(code);
-	}
-
-	int i = 1;
-}
-
-void ReadOneWord(string code)
-{
-	if (code[0] == '(')
-	{
-		PushWordToStack("(");
-		code = code.substr(1, code.size() - 1);
-		ReadOneWord(code);
-	}
-	else if (code[code.size() - 1] == ')')
-	{
-		code = code.substr(0, code.size() - 1);
-		ReadOneWord(code);
-		PushWordToStack(")");
-	}
-	else
-	{
-		PushWordToStack(code);
-	}
-}
-
-void PushWordToStack(string word)
-{
-	codeStack.push(new Pair(word));
-
-	if (IsOnePairEnd(word))
-	{
-		PopWordFromStack();
-	}
-	else
-	{
-	}
-}
-
-bool IsOnePairEnd(string word)
-{
-	return word == ")";
-}
-
-void PopWordFromStack()
-{
-	Pair* stackData = new Pair();
-	Pair* p = new Pair();
-	p->Type = CellType::pair;
-	Pair* head = p;
-	int point = 1;
-	vector<Pair*> codes;
-	while (stackData->Data != "(" && codeStack.size() > 0)
-	{
-		stackData = codeStack.top();
-		codeStack.pop();
-		if (stackData->Data != "(" && stackData->Data != ")")
-		{
-			codes.push_back(stackData);
-		}
-		std::cout << " Stack:===> " << stackData->Data << std::endl;
-	}
-
-	if (codes.size() == 1)
-	{
-		p->SetData(codes[0]->Data);
-	}
-	else if (codes.size() == 2)
-	{
-		p->car = codes[1];
-		p->cdr = codes[0];
-	}
-	else if (codes.size() == 3)
-	{
-		p->cdr = codes[0];
-		p->car = codes[1];
-		p->SetData(codes[2]->Data);
-	}
-
-	CaculateOnePair(p);
-}
-
-void CaculateOnePair(Pair* p)
-{
-	pairStack.push(p);
-
-	std::cout << "code size: " << codeStack.size() << std::endl;
-	if (codeStack.size() == 0)
-	{
-		Pair* p1, * p2, * p3;
-		Pair* result = nullptr;
-		if (pairStack.size() == 3)
-		{
-			p1 = pairStack.top();
-			pairStack.pop();
-			p3 = pairStack.top();
-			pairStack.pop();
-			p2 = pairStack.top();
-			pairStack.pop();
-
-			p1->car = p2;
-			p1->cdr = p3;
-
-			result = env->eval(p1, env);
-		}
-		else if (pairStack.size() == 1)
-		{
-			p1 = pairStack.top();
-			pairStack.pop();
-
-			result = env->eval(p1, env);
-		}
-		else if (pairStack.size() == 2)
-		{
-			p1 = pairStack.top();
-			pairStack.pop();
-			p2 = pairStack.top();
-			pairStack.pop();
-			p3 = new Pair(p2, p1);
-			result = env->eval(p3, env);
-		}
-
-		result->Print();
-		int u = 0;
-	}
 }

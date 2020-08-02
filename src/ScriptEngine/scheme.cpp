@@ -30,6 +30,15 @@ namespace TmingEngine
 	extern  vector<string> Operates = { "+", "-", "*", "/", "%", "=" };
 	extern  vector<string> BoolSymbol = { "#f", "#t" };
 
+	void ReadOneWord(Pair* env, string code);
+	void PushWordToStack(Pair* env, string word);
+	bool IsOnePairEnd(string word);
+	void PopWordFromStack(Pair* env);
+	void CaculateOnePair(Pair* env, Pair* p);
+
+	stack<Pair*> codeStack;
+	stack<Pair*> pairStack;
+
 	Pair* Pair::CaculateOperate(Pair* exp, Pair* env)
 	{
 		Pair* nextCell;
@@ -313,7 +322,7 @@ namespace TmingEngine
 			}
 			else if (exp->Data == "define")
 			{
-				auto c1 = eval(exp->car, env);
+				auto c1 = exp->car;//eval(exp->car, env);
 				auto c2 = eval(exp->cdr, env);
 				auto var = new Pair(c1, c2);
 				env->ExtendEnv(var);
@@ -344,17 +353,158 @@ namespace TmingEngine
 	{
 		if (exp->Type == CellType::FunctionCall)
 		{
-			auto v1 = eval(exp->car, env); // ����������հ�
-			auto v2 = eval(exp->cdr, env); // �����������ֵ
-			auto that_env = v1->cdr; // ��ȡ��������ʱ�Ļ���
-			auto funcp = v1->car->car; // ��ȡ��������ʱ������������
-			auto nv = new Pair(funcp, v2);
-			that_env = ExtendEnv(nv, that_env); // �Ѳ�����չ����ʱ����Ļ�����ȥ
-			auto func = v1->car->cdr; //������
-			auto v3 = eval(func, that_env);
+			auto v1 = eval(exp->car, env);		//
+			auto v2 = eval(exp->cdr, env);		//
+			auto that_env = v1->cdr;			//
+			auto funcp = v1->car->car;			//
+			auto nv = new Pair(funcp, v2);		//
+			that_env = ExtendEnv(nv, that_env); //
+			auto func = v1->car->cdr;			//
+			auto v3 = eval(func, that_env);		//
 			return v3;
 		}
 
 		return nullptr;
+	}
+
+	void LoadScheme(Pair* env, string path)
+	{
+		fstream file;
+		char script[64];
+
+		file.open(path, ios::in);
+		if (!file)
+		{
+			cerr << "Open File Fail." << endl;
+			exit(1);
+		}
+		string code = "";
+
+		while (!file.eof())
+		{
+			file >> script;
+			code = string(script);
+			ReadOneWord(env, code);
+		}
+	}
+
+	void ReadOneWord(Pair* env, string code)
+	{
+		if (code[0] == '(')
+		{
+			PushWordToStack(env, "(");
+			code = code.substr(1, code.size() - 1);
+			ReadOneWord(env, code);
+		}
+		else if (code[code.size() - 1] == ')')
+		{
+			code = code.substr(0, code.size() - 1);
+			ReadOneWord(env, code);
+			PushWordToStack(env, ")");
+		}
+		else
+		{
+			PushWordToStack(env, code);
+		}
+	}
+
+	void PushWordToStack(Pair* env, string word)
+	{
+		codeStack.push(new Pair(word));
+
+		if (IsOnePairEnd(word))
+		{
+			PopWordFromStack(env);
+		}
+		else
+		{
+		}
+	}
+
+	bool IsOnePairEnd(string word)
+	{
+		return word == ")";
+	}
+
+	void PopWordFromStack(Pair* env)
+	{
+		Pair* stackData = new Pair();
+		Pair* p = new Pair();
+		p->Type = CellType::pair;
+		Pair* head = p;
+		int point = 1;
+		vector<Pair*> codes;
+		while (stackData->Data != "(" && codeStack.size() > 0)
+		{
+			stackData = codeStack.top();
+			codeStack.pop();
+			if (stackData->Data != "(" && stackData->Data != ")")
+			{
+				codes.push_back(stackData);
+			}
+			//std::cout << " Stack:===> " << stackData->Data << std::endl;
+		}
+
+		if (codes.size() == 1)
+		{
+			p->SetData(codes[0]->Data);
+		}
+		else if (codes.size() == 2)
+		{
+			p->car = codes[1];
+			p->cdr = codes[0];
+		}
+		else if (codes.size() == 3)
+		{
+			p->cdr = codes[0];
+			p->car = codes[1];
+			p->SetData(codes[2]->Data);
+		}
+
+		CaculateOnePair(env, p);
+	}
+
+	void CaculateOnePair(Pair* env, Pair* p)
+	{
+		pairStack.push(p);
+
+		//std::cout << "code size: " << codeStack.size() << std::endl;
+		if (codeStack.size() == 0)
+		{
+			Pair* p1, * p2, * p3;
+			Pair* result = nullptr;
+			if (pairStack.size() == 3)
+			{
+				p1 = pairStack.top();
+				pairStack.pop();
+				p3 = pairStack.top();
+				pairStack.pop();
+				p2 = pairStack.top();
+				pairStack.pop();
+
+				p1->car = p2;
+				p1->cdr = p3;
+
+				result = env->eval(p1);
+			}
+			else if (pairStack.size() == 1)
+			{
+				p1 = pairStack.top();
+				pairStack.pop();
+
+				result = env->eval(p1);
+			}
+			else if (pairStack.size() == 2)
+			{
+				p1 = pairStack.top();
+				pairStack.pop();
+				p2 = pairStack.top();
+				pairStack.pop();
+				p3 = new Pair(p2, p1);
+				result = env->eval(p3, env);
+			}
+
+			int u = 0;
+		}
 	}
 }

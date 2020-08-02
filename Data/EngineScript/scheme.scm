@@ -1,2 +1,2 @@
-(define CameraX 3)
+(define CameraX 22.78)
 (define CameraY 6)

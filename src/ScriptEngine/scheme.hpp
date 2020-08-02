@@ -26,10 +26,12 @@
 #ifndef TmingEngine_ScriptEnginee_scheme_h
 #define TmingEngine_ScriptEnginee_scheme_h
 
-#include<vector>
-#include<string>
-#include<iostream>
-#include<stack>
+#include <vector>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <stack>
+#include <queue>
 
 using namespace std;
 
@@ -75,6 +77,12 @@ namespace TmingEngine
 		operator int()
 		{
 			int val = std::stoi(Data, nullptr, 0);
+			return val;
+		}
+
+		operator float()
+		{
+			float val = std::stof(Data, nullptr);
 			return val;
 		}
 
@@ -309,8 +317,14 @@ namespace TmingEngine
 			{
 				std::cout << "( ";
 			}
-
-			std::cout << p->Data << " ";
+			if (p->Type == CellType::Nil)
+			{
+				std::cout << "nil" << "";
+			}
+			else
+			{
+				std::cout << p->Data << " ";
+			}
 
 			if (p->car != nullptr)
 			{
@@ -332,6 +346,7 @@ namespace TmingEngine
 		}
 	};
 
+	void LoadScheme(Pair* env, string path);
 }
 
 #endif
