@@ -279,6 +279,7 @@ namespace TmingEngine
 		{
 			return LookUp(p1, temp->cdr);
 		}
+		return new Pair();
 	}
 
 	Pair* Pair::CaculateSymbol(Pair* exp, Pair* _env)
