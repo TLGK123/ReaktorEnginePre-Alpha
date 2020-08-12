@@ -306,21 +306,31 @@ namespace TmingEngine
 
 	void Console::TestScheme()
 	{
-		//auto context = &Global<Context>();
-		//Engine* eg = context->GetSubsystem<Engine>();
-		//IWindows* win = eg->windows;
-		//auto ga = win->GetSubWidget<Game>();
+		auto context = &Global<Context>();
+		Engine* eg = context->GetSubsystem<Engine>();
+		IWindows* win = eg->windows;
+		auto ga = win->GetSubWidget<Game>();
 
-		//SoftRender softRender;
-		//softRender.LoadAssetToMemory();
-		//softRender.SetRenderStatus();
-		//softRender.DrawCall();
+		SoftRender softRender;
+		softRender.LoadAssetToMemory();
 
 		Pair* env = new Pair();
-		LoadScheme(env, "E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm");
-		float x;
+		string  script = FileSystem::getPath("Data/EngineScript/scheme.scm");
+		LoadScheme(env, script);
+		float x ,y, z;
 		x = *env->eval(new Pair("CameraX"));
-		std::cout << " Draw a model CameraX :" << x << std::endl;
+		y = *env->eval(new Pair("CameraY"));
+		z = *env->eval(new Pair("CameraZ"));
+		Vector3 d = Vector3(x,y,z);
+		std::cout << " Draw a model Direction :" << d << std::endl;
+
+	
+		softRender.SetRenderStatus();
+		softRender.center = d;
+
+		softRender.DrawCall();
+
+
 	}
 
 	void ConfigureEngine(asIScriptEngine* engine)

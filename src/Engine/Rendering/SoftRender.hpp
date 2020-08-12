@@ -50,6 +50,10 @@ namespace TmingEngine
 		int frameHeight = 800;
 		Light sunlitght;
 		Model character;
+		Vector3 CameraPos = Vector3(0, 2, 1);
+		Vector3 center = Vector3(0, 2, 0);	//相机朝向原点
+		Vector3 up = Vector3(0, 1, 0);		//相机向上
+
 		//---------- Simulate  VRAM    Data
 		vector<Primitive> primitiveDatas;
 
@@ -108,6 +112,7 @@ namespace TmingEngine
 		{
 			sunlitght.Direction = Vector3(0, 0, -3);
 			sunlitght.Color = Color(0.5, 0.5, 0);
+
 			IShader* shader = new GouraudShader();
 			//shader->textures = character.textures_loaded;
 
@@ -164,9 +169,7 @@ namespace TmingEngine
 				0,0,0,1,
 				});
 
-			Vector3 CameraPos = Vector3(0, 2, 1);
-			Vector3 center = Vector3(0, 2, 0);	//相机朝向原点
-			Vector3 up = Vector3(0, 1, 0);		//相机向上
+
 
 			Matrix view = LookAt(CameraPos, center, up);
 
@@ -212,7 +215,7 @@ namespace TmingEngine
 			}
 
 			image.flip_horizontally();
-			image.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/1.tga").c_str());
+			//image.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/1.tga").c_str());
 
 			image.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
 			unsigned char* data = image.buffer(); // directly set the opengl texture data with tag imgae data
