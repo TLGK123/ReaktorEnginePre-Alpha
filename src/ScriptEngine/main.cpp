@@ -32,7 +32,7 @@
 using namespace TmingEngine;
 using namespace std;
 
-int mainT()
+int main()
 {
 	Pair* env = new Pair();
 	LoadScheme(env, "E:\\WorkSpace\\Giteet\\TmingEngine\\Data\\EngineScript\\scheme.scm");
