@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+
 project(Box2D)
 
 set(BOX2D_Collision_SRCS
