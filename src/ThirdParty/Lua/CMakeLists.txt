@@ -1,4 +1,3 @@
-cmake_minimum_required(VERSION 3.11)
 project (lua)
 file (GLOB heads src/*.h)
 file( GLOB sources src/*.c)

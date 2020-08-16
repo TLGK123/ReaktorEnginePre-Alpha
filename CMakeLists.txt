@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.1)
+cmake_minimum_required (VERSION 3.10)
 project (Editor)                    #创建Editor 项目
 project (TmingEngine)               #创建引擎核心逻辑库
 
