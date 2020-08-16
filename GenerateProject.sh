@@ -3,4 +3,5 @@ if [ ! -d "build" ]; then
 fi
 cd build
 cmake -H../ -B.
+make -j4
 #cmake -Hpath/to/source -Bpath/to/build
