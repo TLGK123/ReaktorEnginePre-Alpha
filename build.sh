@@ -2,4 +2,5 @@ if [ ! -d "build" ]; then
   mkdir build
 fi
 cd build
-cmake build ..
+cmake -H../ -B.
+#cmake -Hpath/to/source -Bpath/to/build
