@@ -1,6 +1,5 @@
 file(GLOB_RECURSE headers 
 "Core/*.h"
-"Core/Log/*.h"
 "Core/*.h??"
 "Plantform/FileSystem/*.h"
 "Plantform/FileSystem/*.hpp"
@@ -42,17 +41,6 @@ file(GLOB_RECURSE sources
 
 "Plantform/Windows/win/*.cpp"
 "Plantform/Windows/*.cpp"
-
-#"RHI/*.c"
-#"RHI/*.c??"
-
-#"Threading/*.c??"
-
-#"RHI/D3D11/*.c"
-#"RHI/D3D11/*.c??"
-
-#"RHI/Vulkan/*.c"
-#"RHI/Vulkan/*.c??"
 
 "Rendering/*.c"
 "Rendering/*.c??"
