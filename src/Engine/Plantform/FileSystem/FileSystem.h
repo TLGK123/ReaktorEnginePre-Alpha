@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <vector>
 #include <string>
 #include "Core/EngineDefs.h"
-#include "Core/Log/Log.h"
+#include "Core/Log.h"
 #include<iostream>
 
 #if !__APPLE__
@@ -41,20 +41,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //=============================
 
 //=========================================================
-static const std::string NOT_ASSIGNED		= "N/A";
-static const int NOT_ASSIGNED_HASH			= -1;
+static const std::string NOT_ASSIGNED = "N/A";
+static const int NOT_ASSIGNED_HASH = -1;
 // Metadata extensions
-static const char* METADATA_EXTENSION		= ".xml";
-static const char* METADATA_TYPE_TEXTURE	= "Texture";
-static const char* METADATA_TYPE_AUDIOCLIP	= "Audio_Clip";
+static const char* METADATA_EXTENSION = ".xml";
+static const char* METADATA_TYPE_TEXTURE = "Texture";
+static const char* METADATA_TYPE_AUDIOCLIP = "Audio_Clip";
 // Engine file extensions
-static const char* EXTENSION_WORLD			= ".world";
-static const char* EXTENSION_MATERIAL		= ".mat";
-static const char* EXTENSION_MODEL			= ".model";
-static const char* EXTENSION_PREFAB			= ".prefab";
-static const char* EXTENSION_SHADER			= ".shader";
-static const char* EXTENSION_TEXTURE		= ".texture";
-static const char* EXTENSION_MESH			= ".mesh";
+static const char* EXTENSION_WORLD = ".world";
+static const char* EXTENSION_MATERIAL = ".mat";
+static const char* EXTENSION_MODEL = ".model";
+static const char* EXTENSION_PREFAB = ".prefab";
+static const char* EXTENSION_SHADER = ".shader";
+static const char* EXTENSION_TEXTURE = ".texture";
+static const char* EXTENSION_MESH = ".mesh";
 //=========================================================
 
 namespace TmingEngine
@@ -62,7 +62,7 @@ namespace TmingEngine
 	class ENGINE_CLASS FileSystem :public Subsystem
 	{
 	public:
-        bool Initialize();
+		bool Initialize();
 		void SaveFile(std::string path, std::string content);
 		std::string GetFileContent(std::string f);
 		static std::string getPath(std::string assetpath);
@@ -130,12 +130,12 @@ namespace TmingEngine
 		//==============================================================================================================================================
 
 		//= SUPPORTED ASSET FILE FORMATS ===============================================================
-		static std::vector<std::string> GetSupportedImageFormats()	{ return m_supportedImageFormats; }
-		static std::vector<std::string> GetSupportedAudioFormats()	{ return m_supportedAudioFormats; }
-		static std::vector<std::string> GetSupportedModelFormats()	{ return m_supportedModelFormats; }
-		static std::vector<std::string> GetSupportedShaderFormats()	{ return m_supportedShaderFormats; }
-		static std::vector<std::string> GetSupportedScriptFormats()	{ return m_supportedScriptFormats; }
-		static std::vector<std::string> GetSupportedFontFormats()	{ return m_supportedFontFormats; }
+		static std::vector<std::string> GetSupportedImageFormats() { return m_supportedImageFormats; }
+		static std::vector<std::string> GetSupportedAudioFormats() { return m_supportedAudioFormats; }
+		static std::vector<std::string> GetSupportedModelFormats() { return m_supportedModelFormats; }
+		static std::vector<std::string> GetSupportedShaderFormats() { return m_supportedShaderFormats; }
+		static std::vector<std::string> GetSupportedScriptFormats() { return m_supportedScriptFormats; }
+		static std::vector<std::string> GetSupportedFontFormats() { return m_supportedFontFormats; }
 		//==============================================================================================
 
 	private:

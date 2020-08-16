@@ -28,7 +28,7 @@
 #include "Core/Engine.h"
 #include "Core/Math/Radian.h"
 #include "Core/Math/Matrix.h"
-#include "Core/Log/Log.h"
+#include "Core/Log.h"
 #include "Rendering/Camera.hpp"
 #include "Plantform/Windows/IWindows.h"
 

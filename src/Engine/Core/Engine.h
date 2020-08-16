@@ -38,7 +38,7 @@
 #include "Plantform/Time/Timer.h"
 
 #include "GameObject.hpp"
-#include "Log/Log.h"
+#include "Core/Log.h"
 
 namespace TmingEngine
 {
