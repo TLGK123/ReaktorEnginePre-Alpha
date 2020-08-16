@@ -32,7 +32,7 @@
 #include "im.h"
 #include "Core/Engine.h"
 #include "Scene/Components/Transform.h"
-#include "Core/Log/Log.h"
+#include "Core/Log.h"
 #include "Selection.hpp"
 
 namespace TmingEngine

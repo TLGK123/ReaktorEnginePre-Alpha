@@ -27,7 +27,7 @@
 #define console_h
 
 #include "Plantform/Windows/Widget.h"
-#include "Core/Log/Log.h"
+#include "Core/Log.h"
 #include "Core/Engine.h"
 #include "Core/SubSystem.h"
 #include "Core/Context.h"

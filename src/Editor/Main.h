@@ -31,7 +31,7 @@
 
 #include "Core/Engine.h"
 #include "Core/EngineDefs.h"
-#include "Core/Log/Log.h"
+#include "Core/Log.h"
 #include "Core/SmartPtr.h"
 
 #include "SceneView.h"

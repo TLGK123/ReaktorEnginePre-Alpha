@@ -27,7 +27,7 @@
 #include "Core/Context.h"
 #include "Plantform/Windows/Widget.h"
 #include "im.h"
-#include "Core/Log/Log.h"
+#include "Core/Log.h"
 #include "TextEditor/TextEditor.h"
 
 namespace TmingEngine

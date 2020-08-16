@@ -26,7 +26,7 @@
 #ifndef TmingEngine_Engine_Rending_DepthShader_hpp_
 #define TmingEngine_Engine_Rending_DepthShader_hpp_
 
-#include "Core/Log/Log.h"
+#include "Core/Log.h"
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Matrix.h"
 #include "IShader.hpp"
@@ -53,7 +53,7 @@ namespace TmingEngine
 				0 , 0 , 0 , 1 / w ,
 				});
 
-			//Í¸ÊÓ³ý·¨
+			//Í¸ï¿½Ó³ï¿½ï¿½ï¿½
 
 			auto ndcPoint = viewPoint * t1 * projectionPoint;
 
@@ -72,7 +72,7 @@ namespace TmingEngine
 				0 , 0 , 0 , 1 / w ,
 				});
 
-			//Í¸ÊÓ³ý·¨
+			//Í¸ï¿½Ó³ï¿½ï¿½ï¿½
 			//std::cout << projectionPoint << std::endl;
 
 			auto screenPoint = viewPoint * t1 * projectionPoint;
