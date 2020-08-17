@@ -46,6 +46,12 @@ extern "C"
 #include "lualib.h"
 }
 
+#include <mono/jit/jit.h>
+#include <mono/metadata/assembly.h>
+#include <mono/metadata/class.h>
+#include <mono/metadata/debug-helpers.h>
+#include <mono/metadata/mono-config.h>
+
 #include <angelscript.h>
 #include <scriptstdstring/scriptstdstring.h>
 #include <scriptbuilder/scriptbuilder.h>
@@ -85,6 +91,9 @@ namespace TmingEngine
 		void TestLua();
 		int TestAngleScript();
 		void TestScheme();
+
+		MonoDomain* domain;
+		void TestMono();
 	};
 }
 #endif

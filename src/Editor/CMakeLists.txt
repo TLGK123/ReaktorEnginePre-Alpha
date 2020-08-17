@@ -21,6 +21,12 @@ include_directories("Utility")          #添加头文件目录
 include_directories("UI")				#添加头文件目录
 include_directories("../ThirdParty/Angelscript/sdk/add_on")				#添加头文件目录
 
+if(WIN32)
+include_directories("C:/Program Files/Mono/include/mono-2.0")
+elseif(APPLE)
+
+endif()
+
 add_executable_beautiful(Editor ${headers} ${sources})
 
 set(libpath ${PROJECT_SOURCE_DIR}/Library/static)

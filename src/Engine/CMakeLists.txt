@@ -70,6 +70,7 @@ add_library_beautiful(TmingEngine STATIC ${headers} ${sources})
 
 if(WIN32)
 find_library (GLFW glfw3.lib ${libpath})
+find_library (Mono mono-2.0-sgen.lib "C:/Program Files/Mono/lib")
 elseif(APPLE)
 find_library (GLFW libglfw3.a ${libpath})
 endif()
@@ -87,5 +88,6 @@ target_link_libraries(TmingEngine TextEditor)
 target_link_libraries(TmingEngine ImNodes)
 target_link_libraries(TmingEngine angelscript)
 target_link_libraries(TmingEngine tgaimage)
+target_link_libraries(TmingEngine ${Mono})
 
 

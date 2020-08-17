@@ -33,6 +33,8 @@ namespace TmingEngine
 
 	void Console::Begin()
 	{
+		//获取应用域
+		domain = mono_jit_init("TmingCore"); //命名空间
 	}
 
 	void Console::Update()
@@ -65,7 +67,7 @@ namespace TmingEngine
 
 		if (ImGui::Button("Command"))
 		{
-			TestScheme();
+			TestMono();
 		}
 
 		if (Filter.IsActive())
@@ -91,6 +93,8 @@ namespace TmingEngine
 
 	void Console::End()
 	{
+		//释放应用域
+		mono_jit_cleanup(domain);
 	}
 
 	void Console::AddLog(const char* fmt, ...)
@@ -317,20 +321,41 @@ namespace TmingEngine
 		Pair* env = new Pair();
 		string  script = FileSystem::getPath("Data/EngineScript/scheme.scm");
 		LoadScheme(env, script);
-		float x ,y, z;
+		float x, y, z;
 		x = *env->eval(new Pair("CameraX"));
 		y = *env->eval(new Pair("CameraY"));
 		z = *env->eval(new Pair("CameraZ"));
-		Vector3 d = Vector3(x,y,z);
+		Vector3 d = Vector3(x, y, z);
 		std::cout << " Draw a model Direction :" << d << std::endl;
 
-	
 		softRender.SetRenderStatus();
 		softRender.center = d;
 
 		softRender.DrawCall();
+	}
 
+	void Console::TestMono()
+	{
+		// Program.cs所编译dll所在的位置
+		string dllpath = FileSystem::getPath("Data/EngineScript/TmingCore.dll");
+		const char* managed_binary_path = dllpath.c_str();
 
+		//加载程序集ManagedLibrary.dll
+		MonoAssembly* assembly = mono_domain_assembly_open(domain, managed_binary_path);
+		MonoImage* image = mono_assembly_get_image(assembly);
+
+		// =====================================================准备调用
+		//获取MonoClass,类似于反射
+		MonoClass* main_class = mono_class_from_name(image, "TmingCore", "Main");
+
+		//获取要调用的MonoMethodDesc,主要调用过程
+		MonoMethodDesc* entry_point_method_desc = mono_method_desc_new("TmingCore.Main:Start()", true);
+		MonoMethod* entry_point_method = mono_method_desc_search_in_class(entry_point_method_desc, main_class);
+		mono_method_desc_free(entry_point_method_desc);
+		//调用方法
+		mono_runtime_invoke(entry_point_method, NULL, NULL, NULL);
+		//释放应用域
+		//mono_jit_cleanup(domain);
 	}
 
 	void ConfigureEngine(asIScriptEngine* engine)
