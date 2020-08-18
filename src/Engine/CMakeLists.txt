@@ -13,8 +13,8 @@ file(GLOB_RECURSE headers
 "Core/Math/Quaternion.h"
 "Plantform/Windows/win/*.h"
 "Plantform/Windows/*.h"
-"Plantform/RHI/*.h??"
-
+"Plantform/RHI/*.hpp"
+"Plantform/RHI/*.h"
 "im.h"
 "Scene/*.h??"
 "Rendering/*.h"

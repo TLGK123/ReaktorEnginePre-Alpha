@@ -30,7 +30,7 @@
 #include "Core/Math/Radian.h"
 #include "Core/Math/Matrix.h"
 #include "Core/Log.h"
-#include "Rendering/IShader.hpp"
+#include "Rendering/RHI/IShader.hpp"
 #include "Rendering/Shader.hpp"
 #include "Rendering/Camera.hpp"
 #include "Plantform/Windows/IWindows.h"

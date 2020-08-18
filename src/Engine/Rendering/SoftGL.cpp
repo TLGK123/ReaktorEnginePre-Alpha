@@ -29,7 +29,7 @@
 #include "Core/Math/Matrix.h"
 #include "Rendering/Vertex.hpp"
 #include "Rendering/Light.hpp"
-#include "Rendering/IShader.hpp"
+#include "Rendering/RHI/IShader.hpp"
 #include "tgaimage/tgaimage.h"
 
 namespace TmingEngine
