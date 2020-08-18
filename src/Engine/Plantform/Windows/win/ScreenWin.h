@@ -31,7 +31,7 @@
 #include "Core/Math/Matrix.h"
 #include "Core/Log.h"
 #include "Rendering/RHI/IShader.hpp"
-#include "Rendering/Shader.hpp"
+#include "Rendering/OpenGL/OpenGLShader.hpp"
 #include "Rendering/Camera.hpp"
 #include "Plantform/Windows/IWindows.h"
 

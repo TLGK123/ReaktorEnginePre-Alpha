@@ -29,7 +29,7 @@
 #include "Core/EngineDefs.h"
 #include "Rendering/Model.hpp"
 #include "Plantform/FileSystem/FileSystem.h"
-#include "Rendering/IShader.hpp"
+#include "Rendering/RHI/IShader.hpp"
 
 namespace TmingEngine
 {

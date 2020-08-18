@@ -29,13 +29,16 @@
 #include "tgaimage/tgaimage.h"
 
 using namespace std;
-struct Texture {
-	unsigned int id;
-	string type;
-	string path;
-	int width;
-	int height;
+class ITexture {
+public:
+    ITexture() {}
+	unsigned int id=0;
+	string type="";
+	string path="";
+	int width=0;
+	int height=0;
 	TGAImage image;
+	virtual void LoadTexture(const char* path) = 0;
 };
 
 unsigned int LoadOpenGLTextureFromFile(const char* path, const string& directory, bool gamma = false);

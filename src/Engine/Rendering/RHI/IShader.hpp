@@ -30,7 +30,7 @@
 #include "Core/Math/Matrix.h"
 #include "tgaimage/tgaimage.h"
 #include "Rendering/Vertex.hpp"
-#include "Rendering/Texture.hpp"
+#include "Rendering/RHI/ITexture.hpp"
 #include "Rendering/Light.hpp"
 
 namespace TmingEngine
@@ -46,7 +46,7 @@ namespace TmingEngine
 		Matrix model;
 		Matrix viewPoint;
 
-		vector<Texture> textures;
+		vector<ITexture> textures;
 
 		Light light;
 

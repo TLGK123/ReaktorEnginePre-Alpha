@@ -23,7 +23,7 @@
    limitations under the License.
 */
 
-#include "Rendering/SoftGL.hpp"
+#include "Rendering/SoftRending/SoftGL.hpp"
 
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Matrix.h"

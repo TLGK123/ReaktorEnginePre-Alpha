@@ -9,7 +9,10 @@ either version 4 of the License, or (at your option) any later version.
 #define MESH_H
 
 #include "Vertex.hpp"
-#include "Texture.hpp"
+#include "Rendering/RHI/ITexture.hpp"
+#include "Rendering/RHI/IShader.hpp"
+#include "Rendering/OpenGL/OpenGLShader.hpp"
+
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -22,12 +25,12 @@ public:
     /*  Mesh Data  */
     vector<Vertex> vertices;
     vector<unsigned int> indices;
-    vector<Texture> textures;
+    vector<ITexture> textures;
     unsigned int VAO;
     
     /*  Functions  */
     // constructor
-    Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
+    Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<ITexture> textures)
     {
         this->vertices = vertices;
         this->indices = indices;
@@ -38,7 +41,7 @@ public:
     }
     
     // render the mesh
-    void Draw(Shader shader)
+    void Draw(IShader shader)
     {
         // bind appropriate textures
         unsigned int diffuseNr  = 1;

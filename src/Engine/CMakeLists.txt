@@ -19,6 +19,7 @@ file(GLOB_RECURSE headers
 "Scene/*.h??"
 "Rendering/*.h"
 "Rendering/*.h??"
+"Rendering/RHI/*.hpp"
 
 )
 
