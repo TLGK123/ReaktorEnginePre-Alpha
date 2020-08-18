@@ -92,7 +92,6 @@ namespace TmingEngine
 		int TestAngleScript();
 		void TestScheme();
 
-		MonoDomain* domain;
 		void TestMono();
 	};
 }

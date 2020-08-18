@@ -33,8 +33,7 @@ namespace TmingEngine
 
 	void Console::Begin()
 	{
-		//获取应用域
-		domain = mono_jit_init("TmingCore"); //命名空间
+		MonoDomain* domain = mono_jit_init("TmingCore"); //命名空间
 	}
 
 	void Console::Update()
@@ -93,8 +92,6 @@ namespace TmingEngine
 
 	void Console::End()
 	{
-		//释放应用域
-		mono_jit_cleanup(domain);
 	}
 
 	void Console::AddLog(const char* fmt, ...)
@@ -336,9 +333,15 @@ namespace TmingEngine
 
 	void Console::TestMono()
 	{
-		// Program.cs所编译dll所在的位置
 		string dllpath = FileSystem::getPath("Data/EngineScript/TmingCore.dll");
 		const char* managed_binary_path = dllpath.c_str();
+
+		//获取应用域
+
+		MonoDomain* domain = mono_domain_create_appdomain("TmingCore", NULL);
+		mono_domain_set(domain, false);
+
+		// Program.cs所编译dll所在的位置
 
 		//加载程序集ManagedLibrary.dll
 		MonoAssembly* assembly = mono_domain_assembly_open(domain, managed_binary_path);
@@ -354,8 +357,17 @@ namespace TmingEngine
 		mono_method_desc_free(entry_point_method_desc);
 		//调用方法
 		mono_runtime_invoke(entry_point_method, NULL, NULL, NULL);
+
 		//释放应用域
 		//mono_jit_cleanup(domain);
+		// unload
+		MonoDomain* domainToUnload = mono_domain_get();
+		if (domainToUnload && domainToUnload != mono_get_root_domain())
+		{
+			mono_domain_set(mono_get_root_domain(), false);
+			//mono_thread_pop_appdomain_ref();
+			mono_domain_unload(domainToUnload);
+		}
 	}
 
 	void ConfigureEngine(asIScriptEngine* engine)

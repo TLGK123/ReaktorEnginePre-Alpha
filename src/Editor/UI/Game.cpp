@@ -35,9 +35,9 @@ namespace TmingEngine
 	{
 		Debug::Log("------Start------Application Stage---------------------------------\n");
 
-		softRender.LoadAssetToMemory();
-		softRender.SetRenderStatus();
-		softRender.DrawCall();
+		//softRender.LoadAssetToMemory();
+		//softRender.SetRenderStatus();
+		//softRender.DrawCall();
 	}
 
 	void TmingEngine::Game::Update()
