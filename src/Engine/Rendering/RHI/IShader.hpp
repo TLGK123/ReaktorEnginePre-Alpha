@@ -31,6 +31,7 @@
 #include "tgaimage/tgaimage.h"
 #include "Rendering/Vertex.hpp"
 #include "Rendering/Texture.hpp"
+#include "Rendering/Light.hpp"
 
 namespace TmingEngine
 {

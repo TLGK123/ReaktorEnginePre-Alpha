@@ -22,13 +22,16 @@
 #ifndef TmingEngine_Engine_Plantform_Windows_win_ScreenWin_h
 #define TmingEngine_Engine_Plantform_Windows_win_ScreenWin_h
 
-#include "im.h"
+//#include "im.h"
+#include "GLFW/glfw3.h"
 #include "Stb_Image/stb_image.h"
 #include "Core/Context.h"
 #include "Core/Engine.h"
 #include "Core/Math/Radian.h"
 #include "Core/Math/Matrix.h"
 #include "Core/Log.h"
+#include "Rendering/IShader.hpp"
+#include "Rendering/Shader.hpp"
 #include "Rendering/Camera.hpp"
 #include "Plantform/Windows/IWindows.h"
 

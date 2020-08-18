@@ -8,15 +8,16 @@ either version 4 of the License, or (at your option) any later version.
 #ifndef SHADER_H
 #define SHADER_H
 
-#include "im.h"
+//#include "im.h"
 
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "../Plantform/FileSystem/FileSystem.h"
+#include "Plantform/FileSystem/FileSystem.h"
 #include "Core/GameObject.hpp"
-#include "../Core/Math/Matrix.h"
+#include "Core/Math/Matrix.h"
+#include "glad/glad.h"
 
 class Shader
 {
@@ -24,7 +25,7 @@ public:
 	unsigned int ID;
 	// constructor generates the shader on the fly
 	// ------------------------------------------------------------------------
-	void Init (const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr)
+	void Init(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr)
 	{
 		// 1. retrieve the vertex/fragment source code from filePath
 		std::string vertexCode;
@@ -46,7 +47,6 @@ public:
 			fp = "shader/" + fp;
 			vShaderFile.open(TmingEngine::FileSystem::getPath(vp));
 			fShaderFile.open(TmingEngine::FileSystem::getPath(fp));
-
 
 			std::stringstream vShaderStream, fShaderStream;
 			// read file's buffer contents into streams
@@ -73,7 +73,7 @@ public:
 			std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
 		}
 		const char* vShaderCode = vertexCode.c_str();
-		const char * fShaderCode = fragmentCode.c_str();
+		const char* fShaderCode = fragmentCode.c_str();
 		// 2. compile shaders
 		unsigned int vertex, fragment;
 		int success;
@@ -92,7 +92,7 @@ public:
 		unsigned int geometry;
 		if (geometryPath != nullptr)
 		{
-			const char * gShaderCode = geometryCode.c_str();
+			const char* gShaderCode = geometryCode.c_str();
 			geometry = glCreateShader(GL_GEOMETRY_SHADER);
 			glShaderSource(geometry, 1, &gShaderCode, NULL);
 			glCompileShader(geometry);
@@ -111,14 +111,13 @@ public:
 		glDeleteShader(fragment);
 		if (geometryPath != nullptr)
 			glDeleteShader(geometry);
-
 	}
 
 	Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr)
 	{
 		Init(vertexPath, fragmentPath, geometryPath);
 	}
-	
+
 	Shader() {}
 
 	// activate the shader
@@ -129,17 +128,17 @@ public:
 	}
 	// utility uniform functions
 	// ------------------------------------------------------------------------
-	void setBool(const std::string &name, bool value) const
+	void setBool(const std::string& name, bool value) const
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 	}
 	// ------------------------------------------------------------------------
-	void setInt(const std::string &name, int value) const
+	void setInt(const std::string& name, int value) const
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 	}
 	// ------------------------------------------------------------------------
-	void setFloat(const std::string &name, float value) const
+	void setFloat(const std::string& name, float value) const
 	{
 		glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 	}
@@ -148,75 +147,72 @@ public:
 //    {
 //        glUniform2f(glGetUniformLocation(ID, name.c_str()), value.x, value.y);
 //    }
-    
-	void setVec2(const std::string &name, const glm::vec2 &value) const
+
+	void setVec2(const std::string& name, const glm::vec2& value) const
 	{
 		glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
 	}
-	void setVec2(const std::string &name, float x, float y) const
+	void setVec2(const std::string& name, float x, float y) const
 	{
 		glUniform2f(glGetUniformLocation(ID, name.c_str()), x, y);
 	}
 	// ------------------------------------------------------------------------
-    //void setVec3(const std::string &name, const Vector3 &value) const
-    //{
-    //    glUniform3f(glGetUniformLocation(ID, name.c_str()),value.x, value.y, value.z);
-    //}
-	void setVec3(const std::string &name, const glm::vec3 &value) const
+	//void setVec3(const std::string &name, const Vector3 &value) const
+	//{
+	//    glUniform3f(glGetUniformLocation(ID, name.c_str()),value.x, value.y, value.z);
+	//}
+	void setVec3(const std::string& name, const glm::vec3& value) const
 	{
 		glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
 	}
-	void setVec3(const std::string &name, float x, float y, float z) const
+	void setVec3(const std::string& name, float x, float y, float z) const
 	{
 		glUniform3f(glGetUniformLocation(ID, name.c_str()), x, y, z);
 	}
 	// ------------------------------------------------------------------------
-	void setVec4(const std::string &name, const glm::vec4 &value) const
+	void setVec4(const std::string& name, const glm::vec4& value) const
 	{
 		glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
 	}
-	void setVec4(const std::string &name, float x, float y, float z, float w)
+	void setVec4(const std::string& name, float x, float y, float z, float w)
 	{
 		glUniform4f(glGetUniformLocation(ID, name.c_str()), x, y, z, w);
 	}
 	// ------------------------------------------------------------------------
-	void setMat2(const std::string &name, const glm::mat2 &mat) const
+	void setMat2(const std::string& name, const glm::mat2& mat) const
 	{
 		glUniformMatrix2fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 	}
 	// ------------------------------------------------------------------------
-	void setMat3(const std::string &name, const glm::mat3 &mat) const
+	void setMat3(const std::string& name, const glm::mat3& mat) const
 	{
 		glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 	}
 	// ------------------------------------------------------------------------
-    
-    void printPoint(const float * p ) const
-    {
-        std::cout<<"M:---------------- "<<std::endl;
-        while (p != NULL) {
-        std::cout<<"M: "<< *p <<std::endl;
-        p++;
-        }
-    }
-    
-	void setMat4(const std::string &name, const glm::mat4 &mat) const
+
+	void printPoint(const float* p) const
 	{
-        auto c = &mat[0][0];
-        //printPoint(c);
+		std::cout << "M:---------------- " << std::endl;
+		while (p != NULL) {
+			std::cout << "M: " << *p << std::endl;
+			p++;
+		}
+	}
+
+	void setMat4(const std::string& name, const glm::mat4& mat) const
+	{
+		auto c = &mat[0][0];
+		//printPoint(c);
 		glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 	}
-    
-    //void setMat4(const std::string &name, const Matrix mat) const
-    //{
-    //    float * b = new float [16];
-    //    mat.ToArray(b);
-    //    //printPoint(b);
-    //    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()) , 1 , GL_FALSE,  b);
-    //}
-    
-    
-    
+
+	//void setMat4(const std::string &name, const Matrix mat) const
+	//{
+	//    float * b = new float [16];
+	//    mat.ToArray(b);
+	//    //printPoint(b);
+	//    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()) , 1 , GL_FALSE,  b);
+	//}
 
 private:
 	// utility function for checking shader compilation/linking errors.
@@ -245,6 +241,5 @@ private:
 		}
 	}
 };
-
 
 #endif

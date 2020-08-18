@@ -13,6 +13,7 @@ file(GLOB_RECURSE headers
 "Core/Math/Quaternion.h"
 "Plantform/Windows/win/*.h"
 "Plantform/Windows/*.h"
+"Plantform/RHI/*.h??"
 
 "im.h"
 "Scene/*.h??"
@@ -41,6 +42,8 @@ file(GLOB_RECURSE sources
 
 "Plantform/Windows/win/*.cpp"
 "Plantform/Windows/*.cpp"
+
+"Plantform/RHI/*.cpp"
 
 "Rendering/*.c"
 "Rendering/*.c??"

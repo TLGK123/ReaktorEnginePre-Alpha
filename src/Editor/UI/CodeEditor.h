@@ -26,7 +26,7 @@
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
 #include "Plantform/Windows/Widget.h"
-#include "im.h"
+//#include "im.h"
 #include "Core/Log.h"
 #include "TextEditor/TextEditor.h"
 
@@ -46,7 +46,6 @@ namespace TmingEngine
 		void Begin();
 		void Update();
 		void End();
-
 	};
 }
 #endif

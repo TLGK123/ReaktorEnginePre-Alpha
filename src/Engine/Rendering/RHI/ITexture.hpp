@@ -23,55 +23,23 @@
    limitations under the License.
 */
 
-#pragma once
-
-#ifndef Game_hpp
-#define Game_hpp
-
-#include <stdio.h>
-
-//#include "im.h"
-
-#include "Plantform/Windows/Widget.h"
-#include "Plantform/FileSystem/FileSystem.h"
-
+#ifndef ITexture_hpp
+#define ITexture_hpp
+#include<string>
 #include "tgaimage/tgaimage.h"
 
-#include "angelscript.h"
-#include "scriptstdstring/scriptstdstring.h"
-#include "scriptbuilder/scriptbuilder.h"
+using namespace std;
+struct Texture {
+	unsigned int id;
+	string type;
+	string path;
+	int width;
+	int height;
+	TGAImage image;
+};
 
-#include "Core/SubSystem.h"
-#include "Core/Context.h"
-#include "Core/Math/Vector2.h"
-#include "Core/Math/Vector3.h"
-#include "Core/Math/Matrix.h"
+unsigned int LoadOpenGLTextureFromFile(const char* path, const string& directory, bool gamma = false);
 
-#include "Rendering/Model.hpp"
-#include "Rendering/Light.hpp"
-#include "Rendering/GouraudShader.hpp"
-#include "Rendering/Vertex.hpp"
-#include "Rendering/SoftRender.hpp"
+TGAImage LoadTGAImageFromFile(const char* path, const string& directory, bool gamma = false);
 
-namespace TmingEngine
-{
-	class Game :public Widget
-	{
-	public:
-
-		Game(Context* context)
-		{
-			m_title = "Game";
-		}
-		~Game();
-
-		void Begin();
-		void Update();
-		void End();
-
-		unsigned int imageId;
-		SoftRender softRender;
-	};
-}
-
-#endif
+#endif /* ITexture_hpp */

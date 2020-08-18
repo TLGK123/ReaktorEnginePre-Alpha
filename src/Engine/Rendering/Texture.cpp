@@ -5,7 +5,12 @@ either version 4 of the License, or (at your option) any later version.
 //See https ://learnopengl.com/About for more information.
 */
 
-#include "im.h"
+//#include "im.h"
+
+#include<iostream>
+#include "Texture.hpp"
+#include "glad/glad.h"
+
 #define STB_LIB_IMPLEMENTATION
 #include "Stb_Image/stb_image.h"
 

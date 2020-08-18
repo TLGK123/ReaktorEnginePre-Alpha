@@ -13,6 +13,7 @@ either version 4 of the License, or (at your option) any later version.
 #define Texture_h
 #include<string>
 #include "tgaimage/tgaimage.h"
+
 using namespace std;
 struct Texture {
 	unsigned int id;
