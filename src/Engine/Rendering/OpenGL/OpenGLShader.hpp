@@ -17,7 +17,7 @@ either version 4 of the License, or (at your option) any later version.
 #include "Plantform/FileSystem/FileSystem.h"
 #include "Core/GameObject.hpp"
 #include "Core/Math/Matrix.h"
-#include "glad/glad.h"
+#include "Rendering/OpenGL/OpenGLFunctions.hpp"
 
 class Shader
 {
