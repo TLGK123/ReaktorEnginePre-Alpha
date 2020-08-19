@@ -36,7 +36,7 @@ namespace TmingEngine
 		IMesh() {}
 		unsigned int id = 0;
 		virtual void LoadMesh(const char* path) = 0;
-		virtual void Draw(IShader shader) = 0;
+		virtual void Draw(IShader * shader) = 0;
 	};
 }
 
