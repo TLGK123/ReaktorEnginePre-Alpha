@@ -28,7 +28,9 @@
 
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Matrix.h"
+
 #include "tgaimage/tgaimage.h"
+
 #include "Rendering/Vertex.hpp"
 #include "Rendering/RHI/ITexture.hpp"
 #include "Rendering/Light.hpp"
@@ -39,10 +41,8 @@ namespace TmingEngine
 	{
 	public:
 
-
 		IShader() {};
 		~IShader() {};
-
 
 		int ID = 0;
 		Matrix porjection;
@@ -50,7 +50,7 @@ namespace TmingEngine
 		Matrix model;
 		Matrix viewPoint;
 
-		vector<ITexture> textures;
+		vector<ITexture*> textures;
 
 		Light light;
 

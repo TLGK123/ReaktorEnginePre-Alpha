@@ -28,7 +28,7 @@
 #include <iostream>
 
 using namespace std;
-
+using namespace TmingEngine;
 int main()
 {
 	Engine* engine;

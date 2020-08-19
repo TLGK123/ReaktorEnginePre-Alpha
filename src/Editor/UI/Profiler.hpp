@@ -26,7 +26,8 @@
 #ifndef Profiler_hpp
 #define Profiler_hpp
 
-#include <stdio.h>
+#include <iostream>
+#include <string>
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
 #include "Plantform/Windows/Widget.h"

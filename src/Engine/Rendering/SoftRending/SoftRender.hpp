@@ -29,13 +29,13 @@
 #include "Core/EngineDefs.h"
 #include "Plantform/FileSystem/FileSystem.h"
 
-#include "Rendering/Model.hpp"
-#include "Rendering/Color.hpp"
-#include "Rendering/Light.hpp"
+#include "Rendering/OpenGL/OpenGLModel.hpp"
 #include "Rendering/SoftRending/Primitive.hpp"
 #include "Rendering/SoftRending/GouraudShader.hpp"
 #include "Rendering/SoftRending/DepthShader.hpp"
 #include "Rendering/SoftRending/SoftGL.hpp"
+#include "Rendering/Color.hpp"
+#include "Rendering/Light.hpp"
 
 namespace TmingEngine
 {
@@ -65,15 +65,15 @@ namespace TmingEngine
 		void LoadAssetToMemory()
 		{
 			character.Init(FileSystem::getPath("resources/objects/cyborg/cyborg.obj"));
-			for (int i = 0; i < character.meshes[0].indices.size(); i += 3)
+			for (int i = 0; i < character.meshes[0]->indices.size(); i += 3)
 			{
-				int  index1 = character.meshes[0].indices[i];
-				int  index2 = character.meshes[0].indices[i + 1];
-				int  index3 = character.meshes[0].indices[i + 2];
+				int  index1 = character.meshes[0]->indices[i];
+				int  index2 = character.meshes[0]->indices[i + 1];
+				int  index3 = character.meshes[0]->indices[i + 2];
 
-				Vertex v1 = (character.meshes[0].vertices[index1]);
-				Vertex v2 = (character.meshes[0].vertices[index2]);
-				Vertex v3 = (character.meshes[0].vertices[index3]);
+				Vertex v1 = (character.meshes[0]->vertices[index1]);
+				Vertex v2 = (character.meshes[0]->vertices[index2]);
+				Vertex v3 = (character.meshes[0]->vertices[index3]);
 
 				Primitive primitive(PrimitiveType::TRIANGLES, vector<Vertex>({ v1,v2,v3 }));
 
@@ -119,10 +119,11 @@ namespace TmingEngine
 
 			shader->light = sunlitght;
 
-			vector<Texture> modelTextures;
-			Texture mainTex, normalMap;
-			mainTex.image = LoadTGAImageFromFile(string("cyborg_diffuse.tga").c_str(), FileSystem::getPath("resources/objects/cyborg"));
-			normalMap.image = LoadTGAImageFromFile(string("cyborg_normal.tga").c_str(), FileSystem::getPath("resources/objects/cyborg"));
+			vector<ITexture*> modelTextures;
+			ITexture* mainTex, * normalMap;
+			string path = string("cyborg_diffuse.tga") + '/' + FileSystem::getPath("resources/objects/cyborg");
+			mainTex->image = mainTex->LoadTGATexture(path.c_str());
+			normalMap->image = normalMap->LoadTGATexture(path.c_str());
 
 			modelTextures.push_back(mainTex);
 			modelTextures.push_back(normalMap);
@@ -169,8 +170,6 @@ namespace TmingEngine
 				-sin(180.0f / 360 * 2 * Pi),0,cos(180.0f / 360 * 2 * Pi),0,
 				0,0,0,1,
 				});
-
-
 
 			Matrix view = LookAt(CameraPos, center, up);
 

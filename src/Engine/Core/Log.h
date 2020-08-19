@@ -26,14 +26,12 @@
 #ifndef TmingEngine_Engine_Rending_Debug_hpp_
 #define TmingEngine_Engine_Rending_Debug_hpp_
 
+#include "Core/Math/MathFunctions.hpp"
 #include "Core/SubSystem.h"
 #include <chrono>
 #include <iostream>
 #include <list>
 #include <string>
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
 
 namespace TmingEngine
 {

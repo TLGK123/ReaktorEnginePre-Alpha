@@ -23,11 +23,17 @@
 #ifndef CodeEditor_h
 #define CodeEditor_h
 
+#include <iostream>
+#include <string>
+#include <fstream>
+
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
+#include "Core/Log.h"
+#include "Plantform/FileSystem/FileSystem.h"
 #include "Plantform/Windows/Widget.h"
 //#include "im.h"
-#include "Core/Log.h"
+
 #include "TextEditor/TextEditor.h"
 
 namespace TmingEngine
@@ -41,7 +47,7 @@ namespace TmingEngine
 		}
 		~CodeEditor();
 
-		string fileToEdit = "ImGuiColorTextEdit/TextEditor.cpp";
+		std::string fileToEdit = "ImGuiColorTextEdit/TextEditor.cpp";
 		TextEditor editor;
 		void Begin();
 		void Update();

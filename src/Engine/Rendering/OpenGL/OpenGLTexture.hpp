@@ -20,6 +20,7 @@ using namespace std;
 namespace TmingEngine
 {
 	class OpenGLTexture : public ITexture {
+	public:
 		unsigned int id;
 		string type;
 		string path;
@@ -28,12 +29,15 @@ namespace TmingEngine
 		TGAImage image;
 
 		// 通过 ITexture 继承
-		void LoadTexture(const char* path) override;
+		unsigned int LoadTexture(const char* path) override;
+
+		// 通过 ITexture 继承
+		virtual TGAImage LoadTGATexture(const char* path) override;
 	};
 
-	unsigned int LoadOpenGLTextureFromFile(const char* path, const string& directory, bool gamma = false);
+	//unsigned int LoadOpenGLTextureFromFile(const char* path, const string& directory, bool gamma = false);
 
-	TGAImage LoadTGAImageFromFile(const char* path, const string& directory, bool gamma = false);
+	//TGAImage LoadTGAImageFromFile(const char* path, const string& directory, bool gamma = false);
 }
 
 #endif /* OpenGLTexture_h */

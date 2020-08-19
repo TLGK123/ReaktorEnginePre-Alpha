@@ -96,9 +96,9 @@ namespace TmingEngine
 
 		bool Fragment(TGAColor& color, TmingEngine::Vertex& vertex)override
 		{
-			int u = vertex.TexCoords.x * textures[0].image.get_width();
-			int v = vertex.TexCoords.y * textures[0].image.get_height();
-			color = textures[0].image.get(u, v);
+			int u = vertex.TexCoords.x * textures[0]->image.get_width();
+			int v = vertex.TexCoords.y * textures[0]->image.get_height();
+			color = textures[0]->image.get(u, v);
 
 			Vector3 Normal = CalcBumpedNormal(vertex);
 
@@ -121,9 +121,9 @@ namespace TmingEngine
 			//Tangent = (Normal.Cross(Tangent - Tangent.Dot(Normal))).Normalize();
 			Vector3 Bitangent = Tangent.Cross(Normal);
 
-			int u = p.TexCoords.x * textures[1].image.get_width();
-			int v = p.TexCoords.y * textures[1].image.get_height();
-			TGAColor colorNormal = textures[1].image.get(u, v);
+			int u = p.TexCoords.x * textures[1]->image.get_width();
+			int v = p.TexCoords.y * textures[1]->image.get_height();
+			TGAColor colorNormal = textures[1]->image.get(u, v);
 			Vector3 BumpMapNormal = Vector3(colorNormal[2] / 255.0f, colorNormal[1] / 255.0f, colorNormal[0] / 255.0f);
 			BumpMapNormal = BumpMapNormal.Normalize();
 			BumpMapNormal = BumpMapNormal * 2 - Vector3(1, 1, 1);

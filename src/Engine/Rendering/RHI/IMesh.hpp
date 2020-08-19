@@ -34,9 +34,14 @@ namespace TmingEngine
 	class IMesh {
 	public:
 		IMesh() {}
+
+		vector<Vertex> vertices;
+		vector<unsigned int> indices;
+		vector<ITexture*> textures;
+
 		unsigned int id = 0;
 		virtual void LoadMesh(const char* path) = 0;
-		virtual void Draw(IShader * shader) = 0;
+		virtual void Draw(IShader* shader) = 0;
 	};
 }
 

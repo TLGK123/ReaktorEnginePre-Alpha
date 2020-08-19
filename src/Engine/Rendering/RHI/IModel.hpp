@@ -35,10 +35,10 @@
 #include "Rendering/RHI/IMesh.hpp"
 #include "Rendering/RHI/IShader.hpp"
 
+#include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <iostream>
 #include <map>
 #include <vector>
 using namespace std;
@@ -47,8 +47,8 @@ namespace TmingEngine
 	class IModel
 	{
 	public:
-		vector<ITexture *> textures_loaded;
-		vector<IMesh *> meshes;
+		vector<ITexture*> textures_loaded;
+		vector<IMesh*> meshes;
 		string directory;
 		bool gammaCorrection;
 
@@ -70,8 +70,8 @@ namespace TmingEngine
 
 		virtual void loadModel(string const& path) = 0;
 		virtual void  processNode(aiNode* node, const aiScene* scene) = 0;
-		virtual IMesh * processMesh(aiMesh* mesh, const aiScene* scene) = 0;
-		virtual vector<ITexture *> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName) = 0;
+		virtual IMesh* processMesh(aiMesh* mesh, const aiScene* scene) = 0;
+		virtual vector<ITexture*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName) = 0;
 	};
 } // namespace TmingEngine
 

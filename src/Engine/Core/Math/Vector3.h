@@ -34,7 +34,7 @@
 #include <iomanip>
 
 #include "Core/EngineDefs.h"
-#include "glm/glm.hpp"
+#include "Core/Math/MathFunctions.hpp"
 
 using namespace glm;
 using namespace std;

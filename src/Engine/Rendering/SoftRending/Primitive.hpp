@@ -27,7 +27,7 @@
 #define TmingEngine_Engine_Rending_Primitive_hpp_
 
 #include "Core/EngineDefs.h"
-#include "Rendering/Model.hpp"
+#include "Rendering/OpenGL/OpenGLModel.hpp"
 #include "Plantform/FileSystem/FileSystem.h"
 #include "Rendering/RHI/IShader.hpp"
 

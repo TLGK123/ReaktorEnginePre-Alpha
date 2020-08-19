@@ -26,9 +26,16 @@
 #ifndef Preview_hpp
 #define Preview_hpp
 #include <stdio.h>
+#include <iostream>
+#include <string>
+
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
+#include "Core/Log.h"
+
 #include "Plantform/Windows/Widget.h"
+#include "Rendering/OpenGL/OpenGLTexture.hpp"
+
 //#include "im.h"
 
 namespace TmingEngine
@@ -48,8 +55,8 @@ namespace TmingEngine
 		void End();
 
 		unsigned int ImageId;
-		unsigned int texture1;
-		void PreviewTexture(string path);
+
+		void PreviewTexture(std::string path);
 	};
 }
 

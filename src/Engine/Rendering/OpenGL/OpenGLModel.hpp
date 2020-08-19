@@ -8,9 +8,6 @@ either version 4 of the License, or (at your option) any later version.
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
 #include "assimp/Importer.hpp"
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
@@ -35,8 +32,8 @@ namespace TmingEngine
 	{
 	public:
 		/*  Model Data */
-		vector<ITexture *> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
-		vector<IMesh *> meshes;
+		vector<ITexture*> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+		vector<IMesh*> meshes;
 		string directory;
 		bool gammaCorrection;
 
@@ -60,7 +57,7 @@ namespace TmingEngine
 		}
 
 		// draws the model, and thus all its meshes
-		void Draw(IShader * shader)
+		void Draw(IShader* shader)
 		{
 			for (unsigned int i = 0; i < meshes.size(); i++)
 				meshes[i]->Draw(shader);
@@ -105,12 +102,12 @@ namespace TmingEngine
 			}
 		}
 
-		IMesh * processMesh(aiMesh* mesh, const aiScene* scene)
+		IMesh* processMesh(aiMesh* mesh, const aiScene* scene)
 		{
 			// data to fill
 			vector<Vertex> vertices;
 			vector<unsigned int> indices;
-			vector<ITexture> textures;
+			vector<ITexture*> textures;
 
 			// Walk through each of the mesh's vertices
 			for (unsigned int i = 0; i < mesh->mNumVertices; i++)
@@ -187,9 +184,9 @@ namespace TmingEngine
 
 		// checks all material textures of a given type and loads the textures if they're not loaded yet.
 		// the required info is returned as a Texture struct.
-		vector<ITexture *> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
+		vector<ITexture*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
 		{
-			vector<ITexture *> textures;
+			vector<ITexture*> textures;
 			for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 			{
 				aiString str;
@@ -207,11 +204,11 @@ namespace TmingEngine
 				}
 				if (!skip)
 				{   // if texture hasn't been loaded already, load it
-					ITexture * texture = new OpenGLTexture();
-					texture->id = LoadOpenGLTextureFromFile(str.C_Str(), this->directory);
+					ITexture* texture = new OpenGLTexture();
 					texture->type = typeName;
 					texture->path = directory + '/' + str.C_Str();
-					texture->image = LoadTGAImageFromFile(str.C_Str(), this->directory);
+					texture->id = texture->LoadTexture(texture->path.c_str());
+					texture->image = texture->LoadTGATexture(texture->path.c_str());
 					textures.push_back(texture);
 					textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
 				}

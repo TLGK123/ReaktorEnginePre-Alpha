@@ -31,7 +31,8 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#else
+#elif _WIN32
+#include "Rendering/OpenGL/OpenGLFunctions.hpp"
 #include <io.h>
 #endif
 
@@ -51,7 +52,7 @@
 #include "Core/Log.h"
 #include "Plantform/Windows/IWindows.h"
 #include "Plantform/Windows/Widget.h"
-//#include "im.h"
+//#include "im1.h"
 #include "CodeEditor.h"
 #include "Selection.hpp"
 #include "Preview.hpp"

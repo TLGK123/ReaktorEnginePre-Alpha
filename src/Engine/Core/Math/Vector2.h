@@ -33,8 +33,8 @@
 #include <iomanip>
 
 #include "Core/EngineDefs.h"
+#include "Core//Math/MathFunctions.hpp"
 #include "ImGui/imgui.h"
-#include "glm/glm.hpp"
 
 using namespace glm;
 using namespace std;

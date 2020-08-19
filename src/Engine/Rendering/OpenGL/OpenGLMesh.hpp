@@ -26,14 +26,12 @@ namespace TmingEngine
 	{
 	public:
 		/*  Mesh Data  */
-		vector<Vertex> vertices;
-		vector<unsigned int> indices;
-		vector<ITexture> textures;
+
 		unsigned int VAO;
 
 		/*  Functions  */
 		// constructor
-		OpenGLMesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<ITexture> textures)
+		OpenGLMesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<ITexture*> textures)
 		{
 			this->vertices = vertices;
 			this->indices = indices;
@@ -44,7 +42,7 @@ namespace TmingEngine
 		}
 
 		// render the mesh
-		void Draw(IShader shader)
+		void Draw(IShader* shader)
 		{
 			// bind appropriate textures
 			unsigned int diffuseNr = 1;
@@ -56,7 +54,7 @@ namespace TmingEngine
 				glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
 				// retrieve texture number (the N in diffuse_textureN)
 				string number;
-				string name = textures[i].type;
+				string name = textures[i]->type;
 				if (name == "texture_diffuse")
 					number = std::to_string(diffuseNr++);
 				else if (name == "texture_specular")
@@ -67,9 +65,9 @@ namespace TmingEngine
 					number = std::to_string(heightNr++); // transfer unsigned int to stream
 
 				// now set the sampler to the correct texture unit
-				glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i);
+				glUniform1i(glGetUniformLocation(shader->ID, (name + number).c_str()), i);
 				// and finally bind the texture
-				glBindTexture(GL_TEXTURE_2D, textures[i].id);
+				glBindTexture(GL_TEXTURE_2D, textures[i]->id);
 			}
 
 			// draw mesh
@@ -83,12 +81,6 @@ namespace TmingEngine
 
 		void LoadMesh(const char* path) override
 		{
-		
-		}
-
-		void Draw(IShader* shader) override
-		{
-		
 		}
 
 	private:

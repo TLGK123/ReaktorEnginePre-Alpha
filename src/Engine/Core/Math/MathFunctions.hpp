@@ -23,27 +23,11 @@
    limitations under the License.
 */
 
-#ifndef ITexture_hpp
-#define ITexture_hpp
-#include<string>
-#include "tgaimage/tgaimage.h"
+#ifndef MathFunctions_hpp
+#define MathFunctions_hpp
 
-using namespace std;
-class ITexture {
-public:
-	ITexture() {}
-	unsigned int id = 0;
-	string type = "";
-	string path = "";
-	int width = 0;
-	int height = 0;
-	TGAImage image;
-	virtual unsigned int LoadTexture(const char* path) = 0;
-	virtual TGAImage LoadTGATexture(const char* path) = 0;
-};
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
-//unsigned int LoadOpenGLTextureFromFile(const char* path, const string& directory, bool gamma = false);
-//
-//TGAImage LoadTGAImageFromFile(const char* path, const string& directory, bool gamma = false);
-
-#endif /* ITexture_hpp */
+#endif
