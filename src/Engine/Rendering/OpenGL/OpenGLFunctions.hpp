@@ -1,3 +1,4 @@
+#pragma once
 #ifndef OpenGLFunctions
 #define OpenGLFunctions
 

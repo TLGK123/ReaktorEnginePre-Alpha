@@ -9,23 +9,27 @@ either version 4 of the License, or (at your option) any later version.
 //  TmingEngine
 //
 
-#ifndef Texture_h
-#define Texture_h
+#ifndef OpenGLTexture_h
+#define OpenGLTexture_h
 #include<string>
 #include "tgaimage/tgaimage.h"
+#include "OpenGLFunctions.hpp"
 
 using namespace std;
-struct Texture {
-	unsigned int id;
-	string type;
-	string path;
-	int width;
-	int height;
-	TGAImage image;
-};
+namespace TmingEngine
+{
+	struct Texture {
+		unsigned int id;
+		string type;
+		string path;
+		int width;
+		int height;
+		TGAImage image;
+	};
 
-unsigned int LoadOpenGLTextureFromFile(const char* path, const string& directory, bool gamma = false);
+	unsigned int LoadOpenGLTextureFromFile(const char* path, const string& directory, bool gamma = false);
 
-TGAImage LoadTGAImageFromFile(const char* path, const string& directory, bool gamma = false);
+	TGAImage LoadTGAImageFromFile(const char* path, const string& directory, bool gamma = false);
+}
 
-#endif /* Texture_h */
+#endif /* OpenGLTexture_h */

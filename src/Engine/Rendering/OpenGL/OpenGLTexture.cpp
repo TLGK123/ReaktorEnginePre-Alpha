@@ -9,7 +9,6 @@ either version 4 of the License, or (at your option) any later version.
 
 #include<iostream>
 #include "OpenGLTexture.hpp"
-#include "OpenGLFunctions.hpp"
 
 #define STB_LIB_IMPLEMENTATION
 #include "Stb_Image/stb_image.h"

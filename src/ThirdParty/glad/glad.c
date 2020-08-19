@@ -63,14 +63,14 @@ static PFNGLXGETPROCADDRESSPROC_PRIVATE gladGetProcAddressPtr;
 static
 int open_gl(void) {
 #ifdef __APPLE__
-	static const char *NAMES[] = {
+	static const char* NAMES[] = {
 		"../Frameworks/OpenGL.framework/OpenGL",
 		"/Library/Frameworks/OpenGL.framework/OpenGL",
 		"/System/Library/Frameworks/OpenGL.framework/OpenGL",
 		"/System/Library/Frameworks/OpenGL.framework/Versions/Current/OpenGL"
 	};
 #else
-	static const char *NAMES[] = { "libGL.so.1", "libGL.so" };
+	static const char* NAMES[] = { "libGL.so.1", "libGL.so" };
 #endif
 
 	unsigned int index = 0;
@@ -101,7 +101,7 @@ void close_gl(void) {
 #endif
 
 static
-void* get_proc(const char *namez) {
+void* get_proc(const char* namez) {
 	void* result = NULL;
 	if (libGL == NULL) return NULL;
 
@@ -141,15 +141,15 @@ struct gladGLversionStruct GLVersion;
 static int max_loaded_major;
 static int max_loaded_minor;
 
-static const char *exts = NULL;
+static const char* exts = NULL;
 static int num_exts_i = 0;
-static const char **exts_i = NULL;
+static const char** exts_i = NULL;
 
 static int get_exts(void) {
 #ifdef _GLAD_IS_SOME_NEW_VERSION
 	if (max_loaded_major < 3) {
 #endif
-		exts = (const char *)glGetString(GL_EXTENSIONS);
+		exts = (const char*)glGetString(GL_EXTENSIONS);
 #ifdef _GLAD_IS_SOME_NEW_VERSION
 	}
 	else {
@@ -158,7 +158,7 @@ static int get_exts(void) {
 		num_exts_i = 0;
 		glGetIntegerv(GL_NUM_EXTENSIONS, &num_exts_i);
 		if (num_exts_i > 0) {
-			exts_i = (const char **)realloc((void *)exts_i, (size_t)num_exts_i * (sizeof *exts_i));
+			exts_i = (const char**)realloc((void*)exts_i, (size_t)num_exts_i * (sizeof * exts_i));
 		}
 
 		if (exts_i == NULL) {
@@ -166,10 +166,10 @@ static int get_exts(void) {
 		}
 
 		for (index = 0; index < (unsigned)num_exts_i; index++) {
-			const char *gl_str_tmp = (const char*)glGetStringi(GL_EXTENSIONS, index);
+			const char* gl_str_tmp = (const char*)glGetStringi(GL_EXTENSIONS, index);
 			size_t len = strlen(gl_str_tmp);
 
-			char *local_str = (char*)malloc((len + 1) * sizeof(char));
+			char* local_str = (char*)malloc((len + 1) * sizeof(char));
 			if (local_str != NULL) {
 #if _MSC_VER >= 1400
 				strncpy_s(local_str, len + 1, gl_str_tmp, len);
@@ -188,20 +188,20 @@ static void free_exts(void) {
 	if (exts_i != NULL) {
 		int index;
 		for (index = 0; index < num_exts_i; index++) {
-			free((char *)exts_i[index]);
+			free((char*)exts_i[index]);
 		}
-		free((void *)exts_i);
+		free((void*)exts_i);
 		exts_i = NULL;
 	}
 }
 
-static int has_ext(const char *ext) {
+static int has_ext(const char* ext) {
 #ifdef _GLAD_IS_SOME_NEW_VERSION
 	if (max_loaded_major < 3) {
 #endif
-		const char *extensions;
-		const char *loc;
-		const char *terminator;
+		const char* extensions;
+		const char* loc;
+		const char* terminator;
 		extensions = exts;
 		if (extensions == NULL || ext == NULL) {
 			return 0;
@@ -226,7 +226,7 @@ static int has_ext(const char *ext) {
 		int index;
 		if (exts_i == NULL) return 0;
 		for (index = 0; index < num_exts_i; index++) {
-			const char *e = exts_i[index];
+			const char* e = exts_i[index];
 
 			if (exts_i[index] != NULL && strcmp(e, ext) == 0) {
 				return 1;
