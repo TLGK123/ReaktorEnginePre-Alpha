@@ -28,7 +28,7 @@
 
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Matrix.h"
-#include "IShader.hpp"
+#include "Rendering/RHI/IShader.hpp"
 
 namespace TmingEngine
 {

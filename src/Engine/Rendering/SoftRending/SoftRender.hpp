@@ -28,13 +28,14 @@
 
 #include "Core/EngineDefs.h"
 #include "Plantform/FileSystem/FileSystem.h"
+
 #include "Rendering/Model.hpp"
-#include "Rendering/Primitive.hpp"
-#include "Rendering/GouraudShader.hpp"
-#include "Rendering/DepthShader.hpp"
 #include "Rendering/Color.hpp"
 #include "Rendering/Light.hpp"
-#include "Rendering/SoftGL.hpp"
+#include "Rendering/SoftRending/Primitive.hpp"
+#include "Rendering/SoftRending/GouraudShader.hpp"
+#include "Rendering/SoftRending/DepthShader.hpp"
+#include "Rendering/SoftRending/SoftGL.hpp"
 
 namespace TmingEngine
 {

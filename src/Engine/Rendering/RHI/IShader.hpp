@@ -38,9 +38,13 @@ namespace TmingEngine
 	class IShader
 	{
 	public:
+
+
 		IShader() {};
 		~IShader() {};
 
+
+		int ID = 0;
 		Matrix porjection;
 		Matrix view;
 		Matrix model;

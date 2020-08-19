@@ -8,7 +8,6 @@ either version 4 of the License, or (at your option) any later version.
 #ifndef MODEL_H
 #define MODEL_H
 
-//#include "Rendering/OpenGL/OpenGLFunctions.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -16,6 +15,7 @@ either version 4 of the License, or (at your option) any later version.
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
 
+#include "Rendering/OpenGL/OpenGLFunctions.hpp"
 #include "Rendering/RHI/ITexture.hpp"
 #include "Rendering/RHI/IMesh.hpp"
 #include "Rendering/RHI/IShader.hpp"
@@ -103,12 +103,12 @@ namespace TmingEngine
 			}
 		}
 
-		Mesh processMesh(aiMesh* mesh, const aiScene* scene)
+		IMesh processMesh(aiMesh* mesh, const aiScene* scene)
 		{
 			// data to fill
 			vector<Vertex> vertices;
 			vector<unsigned int> indices;
-			vector<Texture> textures;
+			vector<ITexture> textures;
 
 			// Walk through each of the mesh's vertices
 			for (unsigned int i = 0; i < mesh->mNumVertices; i++)
@@ -167,16 +167,16 @@ namespace TmingEngine
 			// normal: texture_normalN
 
 			// 1. diffuse maps
-			vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+			vector<ITexture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 			textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 			// 2. specular maps
-			vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+			vector<ITexture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 			textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 			// 3. normal maps
-			std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+			std::vector<ITexture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
 			textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 			// 4. height maps
-			std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+			std::vector<ITexture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
 			textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
 			// return a mesh object created from the extracted mesh data
@@ -185,9 +185,9 @@ namespace TmingEngine
 
 		// checks all material textures of a given type and loads the textures if they're not loaded yet.
 		// the required info is returned as a Texture struct.
-		vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
+		vector<ITexture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
 		{
-			vector<Texture> textures;
+			vector<ITexture> textures;
 			for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 			{
 				aiString str;
@@ -205,7 +205,7 @@ namespace TmingEngine
 				}
 				if (!skip)
 				{   // if texture hasn't been loaded already, load it
-					Texture texture;
+					ITexture texture;
 					texture.id = LoadOpenGLTextureFromFile(str.C_Str(), this->directory);
 					texture.type = typeName;
 					texture.path = directory + '/' + str.C_Str();

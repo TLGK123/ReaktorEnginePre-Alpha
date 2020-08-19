@@ -8,7 +8,7 @@ either version 4 of the License, or (at your option) any later version.
 #ifndef OpenGLMesh_H
 #define OpenGLMesh_H
 
-#include "Vertex.hpp"
+#include "Rendering/Vertex.hpp"
 #include "Rendering/RHI/ITexture.hpp"
 #include "Rendering/RHI/IShader.hpp"
 #include "Rendering/OpenGL/OpenGLShader.hpp"

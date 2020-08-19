@@ -27,13 +27,17 @@
 #include "Stb_Image/stb_image.h"
 #include "Core/Context.h"
 #include "Core/Engine.h"
+#include "Core/Log.h"
 #include "Core/Math/Radian.h"
 #include "Core/Math/Matrix.h"
-#include "Core/Log.h"
+
 #include "Rendering/RHI/IShader.hpp"
 #include "Rendering/OpenGL/OpenGLShader.hpp"
 #include "Rendering/Camera.hpp"
 #include "Plantform/Windows/IWindows.h"
+
+#include "ImGui/imgui_impl_opengl3.h"
+#include "ImGui/imgui_impl_glfw.h"
 
 namespace TmingEngine
 {

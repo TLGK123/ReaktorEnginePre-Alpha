@@ -29,7 +29,7 @@
 #include "Core/Log.h"
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Matrix.h"
-#include "IShader.hpp"
+#include "Rendering/RHI/IShader.hpp"
 
 namespace TmingEngine
 {
@@ -53,7 +53,6 @@ namespace TmingEngine
 				0 , 0 , 0 , 1 / w ,
 				});
 
-			//͸�ӳ���
 
 			auto ndcPoint = viewPoint * t1 * projectionPoint;
 
@@ -72,7 +71,6 @@ namespace TmingEngine
 				0 , 0 , 0 , 1 / w ,
 				});
 
-			//͸�ӳ���
 			//std::cout << projectionPoint << std::endl;
 
 			auto screenPoint = viewPoint * t1 * projectionPoint;

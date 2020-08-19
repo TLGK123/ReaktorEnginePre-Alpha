@@ -49,9 +49,9 @@
 
 #include "Rendering/Model.hpp"
 #include "Rendering/Light.hpp"
-#include "Rendering/GouraudShader.hpp"
+#include "Rendering/OpenGL/OpenGLShader.hpp"
 #include "Rendering/Vertex.hpp"
-#include "Rendering/SoftRender.hpp"
+#include "Rendering/SoftRending/SoftRender.hpp"
 
 namespace TmingEngine
 {
