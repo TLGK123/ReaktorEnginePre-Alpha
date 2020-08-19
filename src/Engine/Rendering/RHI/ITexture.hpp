@@ -29,7 +29,7 @@
 #include "tgaimage/tgaimage.h"
 
 using namespace std;
-class ITexture {
+class ITexture  {
 public:
     ITexture() {}
 	unsigned int id=0;

@@ -14,17 +14,21 @@ either version 4 of the License, or (at your option) any later version.
 #include<string>
 #include "tgaimage/tgaimage.h"
 #include "OpenGLFunctions.hpp"
+#include "Rendering/RHI/ITexture.hpp"
 
 using namespace std;
 namespace TmingEngine
 {
-	struct Texture {
+	class OpenGLTexture : public ITexture {
 		unsigned int id;
 		string type;
 		string path;
 		int width;
 		int height;
 		TGAImage image;
+
+		// Í¨¹ý ITexture ¼Ì³Ð
+		void LoadTexture(const char* path) override;
 	};
 
 	unsigned int LoadOpenGLTextureFromFile(const char* path, const string& directory, bool gamma = false);

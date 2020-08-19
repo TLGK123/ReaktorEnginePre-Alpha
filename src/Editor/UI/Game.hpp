@@ -47,10 +47,10 @@
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Matrix.h"
 
-#include "Rendering/Model.hpp"
+#include "Rendering/Vertex.hpp"
 #include "Rendering/Light.hpp"
 #include "Rendering/OpenGL/OpenGLShader.hpp"
-#include "Rendering/Vertex.hpp"
+#include "Rendering/OpenGL/OpenGLMesh.hpp"
 #include "Rendering/SoftRending/SoftRender.hpp"
 
 namespace TmingEngine

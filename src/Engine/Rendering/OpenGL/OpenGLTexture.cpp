@@ -81,3 +81,7 @@ TGAImage LoadTGAImageFromFile(const char* path, const string& directory, bool ga
 
 	return image;
 }
+
+void TmingEngine::OpenGLTexture::LoadTexture(const char* path)
+{
+}
