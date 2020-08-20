@@ -38,7 +38,9 @@ target_link_libraries(Editor "-framework Cocoa")
 target_link_libraries(Editor "-framework OpenGL")
 target_link_libraries(Editor "-framework IOKit")
 target_link_libraries(Editor "-framework CoreVideo")
-endif(APPLE)
+elseif(WIN32)
+target_link_libraries(Editor "opengl32.lib")
+endif()
 
 #add_custom_command(TARGET Editor POST_BUILD     #拷贝文件夹             
 #COMMAND ${CMAKE_COMMAND} -E copy_directory                     

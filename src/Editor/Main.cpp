@@ -22,6 +22,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+#ifdef WIN32
+#include <WTypes.h> // Include this first on Win (bug #35683)
+#endif
 
 #include "Main.h"
 

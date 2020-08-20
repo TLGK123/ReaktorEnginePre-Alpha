@@ -32,7 +32,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #elif _WIN32
-#include "Rendering/OpenGL/OpenGLFunctions.hpp"
+//#include "windows.h"
+#include <WTypes.h>
 #include <io.h>
 #endif
 
