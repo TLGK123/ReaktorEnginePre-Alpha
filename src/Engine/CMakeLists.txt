@@ -51,8 +51,6 @@ file(GLOB_RECURSE sources
 
 "Plantform/Time/*.c??"
 
-#"../ThirdParty/Angelscript/sdk/add_on/scriptstdstring/*.c??"
-
 ) 
 
 include_directories("../../include")									#添加头文件目录

@@ -30,7 +30,6 @@
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
 
-#include "Rendering/OpenGL/OpenGLFunctions.hpp"
 #include "Rendering/RHI/ITexture.hpp"
 #include "Rendering/RHI/IMesh.hpp"
 #include "Rendering/RHI/IShader.hpp"

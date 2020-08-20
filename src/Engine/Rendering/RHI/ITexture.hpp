@@ -42,8 +42,4 @@ public:
 	virtual TGAImage LoadTGATexture(const char* path) = 0;
 };
 
-//unsigned int LoadOpenGLTextureFromFile(const char* path, const string& directory, bool gamma = false);
-//
-//TGAImage LoadTGAImageFromFile(const char* path, const string& directory, bool gamma = false);
-
 #endif /* ITexture_hpp */
