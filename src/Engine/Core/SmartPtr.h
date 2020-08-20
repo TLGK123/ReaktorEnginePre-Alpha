@@ -25,96 +25,98 @@
 
 #ifndef SmartPtr_H
 #define SmartPtr_H
-
 #include <iostream>
 
-template <typename T>
-class GlobalStatic {
-public:
-	static T t;
-};
-template <typename T> T  GlobalStatic<T>::t;
-template <typename T>
-T& Global()
+namespace TmingEngine
 {
-	return GlobalStatic<T>::t;
-}
-
-class RefCount
-{
-private:
-	int crefs;
-public:
-	RefCount(void)
+	template <typename T>
+	class GlobalStatic {
+	public:
+		static T t;
+	};
+	template <typename T> T  GlobalStatic<T>::t;
+	template <typename T>
+	T& Global()
 	{
-		crefs = 0;
-	}
-	virtual ~RefCount() {}
-	void upcount(void)
-	{
-		++crefs;
-		;
-	}
-	void downcount(void)
-	{
-		if (--crefs != 0)
-			return;
-
-		delete this;
-	}
-};
-
-//如果对象要能使用智能指针,那么这个对应一定需要有
-//类模板中的成员函数 upcount downcount  ,所以这样的类必须是继承 RefCount
-//智能指针也就是为了处理野指针,所做的智能垃圾回收处理
-
-template <class T>
-class SmartPtr
-{
-private:
-	T* p;
-public:
-	SmartPtr(T* p_)
-	{
-		p = p_;
-		if (p != NULL)
-			p->upcount();     //类模板中的成员函数
+		return GlobalStatic<T>::t;
 	}
 
-	SmartPtr(const SmartPtr<T>& p_)
+	class RefCount
 	{
-		p = NULL;
-		operator=(p_.p);
-	}
+	private:
+		int crefs;
+	public:
+		RefCount(void)
+		{
+			crefs = 0;
+		}
+		virtual ~RefCount() {}
+		void upcount(void)
+		{
+			++crefs;
+			;
+		}
+		void downcount(void)
+		{
+			if (--crefs != 0)
+				return;
 
-	SmartPtr() : p(NULL) {}
+			delete this;
+		}
+	};
 
-	~SmartPtr(void)
+	//如果对象要能使用智能指针,那么这个对应一定需要有
+	//类模板中的成员函数 upcount downcount  ,所以这样的类必须是继承 RefCount
+	//智能指针也就是为了处理野指针,所做的智能垃圾回收处理
+
+	template <class T>
+	class SmartPtr
 	{
-		if (p) p->downcount();     //类模板中的成员函数
-	}
+	private:
+		T* p;
+	public:
+		SmartPtr(T* p_)
+		{
+			p = p_;
+			if (p != NULL)
+				p->upcount();     //类模板中的成员函数
+		}
 
-	operator T* (void) { return p; }
-	T& operator*(void) { return *p; }
-	T* operator->(void) { return p; }
+		SmartPtr(const SmartPtr<T>& p_)
+		{
+			p = NULL;
+			operator=(p_.p);
+		}
 
-	SmartPtr& operator=(SmartPtr<T>& p_)
-	{
-		return operator=((T*)p_);
-	}
+		SmartPtr() : p(NULL) {}
 
-	SmartPtr& operator=(T* p_)
-	{
-		if (p_)
-			p_->upcount();
+		~SmartPtr(void)
+		{
+			if (p) p->downcount();     //类模板中的成员函数
+		}
 
-		if (p)
-			p->downcount();
+		operator T* (void) { return p; }
+		T& operator*(void) { return *p; }
+		T* operator->(void) { return p; }
 
-		p = p_;
+		SmartPtr& operator=(SmartPtr<T>& p_)
+		{
+			return operator=((T*)p_);
+		}
 
-		return *this;
-	}
+		SmartPtr& operator=(T* p_)
+		{
+			if (p_)
+				p_->upcount();
+
+			if (p)
+				p->downcount();
+
+			p = p_;
+
+			return *this;
+		}
+	};
 };
 
 #endif //SmartPtr_H

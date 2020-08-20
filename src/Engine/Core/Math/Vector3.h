@@ -36,9 +36,6 @@
 #include "Core/EngineDefs.h"
 #include "Core/Math/MathFunctions.hpp"
 
-using namespace glm;
-using namespace std;
-
 namespace TmingEngine
 {
 	ENGINE_CLASS class Vector3
@@ -59,7 +56,7 @@ namespace TmingEngine
 			this->z = z;
 		}
 
-		Vector3(vec3 v)
+		Vector3(glm::vec3 v)
 		{
 			this->x = v.x;
 			this->y = v.y;
@@ -124,13 +121,13 @@ namespace TmingEngine
 			return Vector3(x * other, y * other, z * other);
 		}
 
-		friend ostream& operator<<(ostream& stream, const Vector3 c)
+		friend std::ostream& operator<<(std::ostream& stream, const Vector3 c)
 		{
-			ostringstream oss;
-			oss << setiosflags(ios::fixed | ios::right) << setw(8) << setprecision(2) << "(" << c.x << " , " << c.y << " , " << c.z << ")" << endl;
+			std::ostringstream oss;
+			oss << std::setiosflags(std::ios::fixed | std::ios::right) << std::setw(8) << std::setprecision(2) << "(" << c.x << " , " << c.y << " , " << c.z << ")" << std::endl;
 
 			std::string s = "";
-			s = string(oss.str());
+			s = std::string(oss.str());
 			stream << s;
 			return stream;
 		}

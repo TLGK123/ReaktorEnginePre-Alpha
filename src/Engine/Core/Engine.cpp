@@ -25,8 +25,6 @@
 
 #include "Engine.h"
 
-using namespace std;
-
 namespace TmingEngine
 {
 	Engine::Engine(Context* context) : Subsystem(context)

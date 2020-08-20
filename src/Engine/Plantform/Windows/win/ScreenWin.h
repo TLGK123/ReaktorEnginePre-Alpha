@@ -22,7 +22,6 @@
 #ifndef TmingEngine_Engine_Plantform_Windows_win_ScreenWin_h
 #define TmingEngine_Engine_Plantform_Windows_win_ScreenWin_h
 
-//#include "im.h"
 #include "GLFW/glfw3.h"
 #include "Stb_Image/stb_image.h"
 #include "Core/Context.h"

@@ -23,11 +23,10 @@
    limitations under the License.
 */
 
-#ifndef TmingEngine_Engine_Core_Engine_hpp_
-#define TmingEngine_Engine_Core_Engine_hpp_
+#ifndef TmingEngine_Engine_Core_Engine_h_
+#define TmingEngine_Engine_Core_Engine_h_
 
 #define ENGINE_VERSION "v0.0.1"
-#define TmengineLib
 
 #include <memory>
 
@@ -77,4 +76,4 @@ namespace TmingEngine
 	};
 }
 
-#endif //TmingEngine_Engine_Core_Engine_hpp_
+#endif //TmingEngine_Engine_Core_Engine_h_

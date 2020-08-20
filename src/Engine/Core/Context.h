@@ -17,12 +17,14 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#pragma once
+#ifndef TmingEngine_Engine_Core_Context_h_
+#define TmingEngine_Engine_Core_Context_h_
+
+#include <vector>
+
 #include "SmartPtr.h"
 #include "EngineDefs.h"
-#include <vector>
 #include "SubSystem.h"
-//====================
 
 namespace TmingEngine
 {
@@ -51,4 +53,6 @@ namespace TmingEngine
 
 		return nullptr;
 	}
-}
+} // namespace TmingEngine
+
+#endif //TmingEngine_Engine_Core_Context_h_

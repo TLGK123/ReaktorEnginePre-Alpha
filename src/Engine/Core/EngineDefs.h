@@ -21,15 +21,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #ifndef EngineDef
 #define EngineDef
-#ifdef COMPILING_LIB
-#if WIN32
-    #define ENGINE_CLASS __declspec(dllexport)
-#else
-    #define ENGINE_CLASS
-#endif
-#else
-    #define ENGINE_CLASS
-#endif
 
+#ifdef TmingEngineLib
+#if WIN32
+#define ENGINE_CLASS __declspec(dllexport)
+#else
+#define ENGINE_CLASS
+#endif
+#else
+#define ENGINE_CLASS
+#endif
 
 #endif

@@ -27,17 +27,16 @@
 #define TmingEngine_Engine_Math_Vector2_h_
 
 #include <stdio.h>
+
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <iomanip>
 
 #include "Core/EngineDefs.h"
-#include "Core//Math/MathFunctions.hpp"
+#include "Core/Math/MathFunctions.hpp"
 #include "ImGui/imgui.h"
 
-using namespace glm;
-using namespace std;
 namespace TmingEngine
 {
 	ENGINE_CLASS class Vector2
@@ -70,13 +69,13 @@ namespace TmingEngine
 			return Vector2(x * num, y * num);
 		}
 
-		friend ostream& operator<<(ostream& stream, const Vector2 c)
+		friend std::ostream& operator<<(std::ostream& stream, const Vector2 c)
 		{
-			ostringstream oss;
-			oss << setiosflags(ios::fixed | ios::right) << setw(8) << setprecision(2) << "(" << c.x << " , " << c.y << ")" << endl;
+			std::ostringstream oss;
+			oss << std::setiosflags(std::ios::fixed | std::ios::right) << std::setw(8) << std::setprecision(2) << "(" << c.x << " , " << c.y << ")" << std::endl;
 
 			std::string s = "";
-			s = string(oss.str());
+			s = std::string(oss.str());
 			stream << s;
 			return stream;
 		}
@@ -100,7 +99,7 @@ namespace TmingEngine
 			this->y = y;
 		}
 
-		Vector2(vec2 v2)
+		Vector2(glm::vec2 v2)
 		{
 			this->x = v2.x;
 			this->y = v2.y;
@@ -111,9 +110,9 @@ namespace TmingEngine
 			return ImVec2(x, y);
 		}
 
-		operator vec2()
+		operator glm::vec2()
 		{
-			return vec2(x, y);
+			return glm::vec2(x, y);
 		}
 
 		static const Vector2 Zero;

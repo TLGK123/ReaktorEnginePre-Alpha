@@ -92,4 +92,6 @@ target_link_libraries(TmingEngine angelscript)
 target_link_libraries(TmingEngine tgaimage)
 target_link_libraries(TmingEngine ${Mono})
 
+add_definitions(-DTmingEngineLib)
+
 
