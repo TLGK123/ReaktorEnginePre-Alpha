@@ -26,13 +26,12 @@
 #ifndef TmingEngine_Editor_UI_SceneView_h
 #define TmingEngine_Editor_UI_SceneView_h
 
+#include "Core/Engine.h"
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
-#include "Plantform/Windows/Widget.h"
-//#include "im.h"
-#include "Core/Engine.h"
-#include "Scene/Components/Transform.h"
 #include "Core/Log.h"
+#include "Plantform/Windows/Widget.h"
+#include "Scene/Components/Transform.h"
 #include "Selection.hpp"
 
 namespace TmingEngine
