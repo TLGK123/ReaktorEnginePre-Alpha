@@ -23,14 +23,14 @@
    limitations under the License.
 */
 
-#ifndef console_h
-#define console_h
+#ifndef TmingEngine_Editor_UI_Console_hpp
+#define TmingEngine_Editor_UI_Console_hpp
 
-#include "Plantform/Windows/Widget.h"
 #include "Core/Log.h"
 #include "Core/Engine.h"
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
+#include "Plantform/Windows/Widget.h"
 #include "Game.hpp"
 
 extern "C"
@@ -93,5 +93,5 @@ namespace TmingEngine
 
 		void TestMono();
 	};
-}
-#endif
+} // namespace TmingEngine
+#endif // TmingEngine_Editor_UI_Console_hpp

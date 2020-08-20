@@ -23,9 +23,11 @@
    limitations under the License.
 */
 
-#ifndef Preview_hpp
-#define Preview_hpp
+#ifndef TmingEngine_Editor_UI_Preview_hpp
+#define TmingEngine_Editor_UI_Preview_hpp
+
 #include <stdio.h>
+
 #include <iostream>
 #include <string>
 
@@ -35,8 +37,6 @@
 
 #include "Plantform/Windows/Widget.h"
 #include "Rendering/OpenGL/OpenGLTexture.hpp"
-
-//#include "im.h"
 
 namespace TmingEngine
 {
@@ -58,6 +58,6 @@ namespace TmingEngine
 
 		void PreviewTexture(std::string path);
 	};
-}
+}// namespace TmingEngine
 
-#endif /* Preview_hpp */
+#endif /* TmingEngine_Editor_UI_Preview_hpp */

@@ -23,7 +23,7 @@
    limitations under the License.
 */
 
-#include "Console.h"
+#include "Console.hpp"
 
 namespace TmingEngine
 {

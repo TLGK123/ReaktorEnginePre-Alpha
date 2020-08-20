@@ -23,14 +23,10 @@
    limitations under the License.
 */
 
-#pragma once
-
-#ifndef Game_hpp
-#define Game_hpp
+#ifndef TmingEngine_Editor_UI_Game_hpp
+#define TmingEngine_Editor_UI_Game_hpp
 
 #include <stdio.h>
-
-//#include "im.h"
 
 #include "Plantform/Windows/Widget.h"
 #include "Plantform/FileSystem/FileSystem.h"
@@ -72,6 +68,6 @@ namespace TmingEngine
 		unsigned int imageId;
 		SoftRender softRender;
 	};
-}
+} // namespace TmingEngine
 
-#endif
+#endif  /* TmingEngine_Editor_UI_Game_hpp */

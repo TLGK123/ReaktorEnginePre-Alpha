@@ -23,15 +23,14 @@
    limitations under the License.
 */
 
-#pragma once
+#ifndef TmingEngine_Editor_UI_Inspector_hpp
+#define TmingEngine_Editor_UI_Inspector_hpp
 
-#ifndef Inspector_hpp
-#define Inspector_hpp
 #include <stdio.h>
+
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
 #include "Plantform/Windows/Widget.h"
-//#include "im.h"
 #include "Selection.hpp"
 
 namespace TmingEngine
@@ -54,4 +53,4 @@ namespace TmingEngine
 	};
 }
 
-#endif /* Inspector_hpp */
+#endif /* TmingEngine_Editor_UI_Inspector_hpp */

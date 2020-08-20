@@ -23,9 +23,8 @@
    limitations under the License.
 */
 
-#pragma once
-#ifndef CodeEditor_h
-#define CodeEditor_h
+#ifndef TmingEngine_Editor_UI_CodeEditor_hpp
+#define TmingEngine_Editor_UI_CodeEditor_hpp
 
 #include <iostream>
 #include <string>
@@ -36,7 +35,6 @@
 #include "Core/Log.h"
 #include "Plantform/FileSystem/FileSystem.h"
 #include "Plantform/Windows/Widget.h"
-//#include "im.h"
 
 #include "TextEditor/TextEditor.h"
 
@@ -57,5 +55,5 @@ namespace TmingEngine
 		void Update();
 		void End();
 	};
-}
-#endif
+} // namespace TmingEngine
+#endif //TmingEngine_Editor_UI_CodeEditor_hpp

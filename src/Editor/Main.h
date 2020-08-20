@@ -36,12 +36,12 @@
 
 #include "SceneView.h"
 #include "Project.h"
-#include "Hierachy.h"
+#include "Hierachy.hpp"
 #include "Inspector.hpp"
 #include "Game.hpp"
 #include "Profiler.hpp"
 #include "Project.h"
-#include "Console.h"
+#include "Console.hpp"
 
 void SetEditorWidget();
 

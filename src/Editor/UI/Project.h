@@ -53,8 +53,8 @@
 #include "Core/Log.h"
 #include "Plantform/Windows/IWindows.h"
 #include "Plantform/Windows/Widget.h"
-//#include "im1.h"
-#include "CodeEditor.h"
+
+#include "CodeEditor.hpp"
 #include "Selection.hpp"
 #include "Preview.hpp"
 

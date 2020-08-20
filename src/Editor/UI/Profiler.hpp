@@ -23,15 +23,18 @@
    limitations under the License.
 */
 
-#ifndef Profiler_hpp
-#define Profiler_hpp
+#ifndef TmingEngine_Editor_UI_Profiler_hpp
+#define TmingEngine_Editor_UI_Profiler_hpp
 
 #include <iostream>
 #include <string>
+
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
 #include "Plantform/Windows/Widget.h"
-//#include "im.h"
+
+#include "ImNodes/ImNodes.h"
+#include "ImNodes/ImNodesEz.h"
 
 namespace TmingEngine
 {
@@ -51,6 +54,6 @@ namespace TmingEngine
 
 		int ImageId;
 	};
-}
+}// namespace TmingEngine
 
-#endif /* Profiler_hpp */
+#endif /* TmingEngine_Editor_UI_Profiler_hpp */

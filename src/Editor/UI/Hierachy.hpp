@@ -23,14 +23,16 @@
    limitations under the License.
 */
 
-#pragma once
+#ifndef TmingEngine_Editor_UI_Hierachy_hpp
+#define TmingEngine_Editor_UI_Hierachy_hpp
+
+#include "Core/Engine.h"
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
-#include "Plantform/Windows/Widget.h"
-//#include "im.h"
-#include "Core/Engine.h"
-#include "Scene/Components/Transform.h"
 #include "Core/Log.h"
+
+#include "Scene/Components/Transform.h"
+#include "Plantform/Windows/Widget.h"
 #include "Selection.hpp"
 
 namespace TmingEngine
@@ -52,3 +54,5 @@ namespace TmingEngine
 		int ImageId;
 	};
 }
+
+#endif /* TmingEngine_Editor_UI_Hierachy_hpp */

@@ -23,14 +23,15 @@
    limitations under the License.
 */
 
-#include "Hierachy.h"
+#include "Hierachy.hpp"
+
 namespace TmingEngine
 {
-	TmingEngine::Hierachy::~Hierachy()
+	Hierachy::~Hierachy()
 	{
 	}
 
-	void TmingEngine::Hierachy::Begin()
+	void Hierachy::Begin()
 	{
 	}
 
@@ -78,7 +79,7 @@ namespace TmingEngine
 		}
 	}
 
-	void TmingEngine::Hierachy::Update()
+	void Hierachy::Update()
 	{
 		bool p_open = true;
 		ImGui::SetNextWindowSize(ImVec2(350, 560), ImGuiCond_FirstUseEver);
@@ -99,7 +100,7 @@ namespace TmingEngine
 		ImGui::End();
 	}
 
-	void TmingEngine::Hierachy::End()
+	void Hierachy::End()
 	{
 	}
 }
