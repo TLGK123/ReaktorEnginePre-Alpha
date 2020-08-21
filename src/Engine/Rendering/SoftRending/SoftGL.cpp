@@ -69,6 +69,8 @@ namespace TmingEngine
 		return result;
 	}
 
+
+	// http://www.songho.ca/opengl/gl_projectionmatrix.html
 	// left right bottom ,top ,near ,far
 	Matrix Perspective(float l, float r, float b, float t, float n, float f)
 	{
@@ -82,7 +84,8 @@ namespace TmingEngine
 		return prespective;
 	}
 
-	//// left == right, bottom == top ,near ,far  simplified  Matrix
+
+	// left == right, bottom == top ,near ,far  simplified  Matrix
 	Matrix Perspective(float r, float t, float n, float f)
 	{
 		//r + l = 0;
@@ -101,6 +104,7 @@ namespace TmingEngine
 		return perspective;
 	}
 
+
 	Matrix Orthographic(float l, float r, float b, float t, float n, float f)
 	{
 		Matrix orthographic(4, 4,
@@ -112,6 +116,7 @@ namespace TmingEngine
 			});
 		return orthographic;
 	}
+
 
 	Matrix Orthographic(float r, float t, float n, float f)
 	{
