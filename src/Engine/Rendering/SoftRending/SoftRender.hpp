@@ -47,8 +47,8 @@ namespace TmingEngine
 
 		unsigned int frameID = 0;
 
-		int frameWidth = 800;
-		int frameHeight = 800;
+		int frameWidth = 640;
+		int frameHeight = 640;
 		ILight* sunlitght;
 		Model character;
 		Vector3 CameraPos = Vector3(0, 2, 1);
@@ -111,6 +111,7 @@ namespace TmingEngine
 		// spicify the Texture , vertex shader ,fragment shader for each Primitive
 		void SetRenderStatus()
 		{
+			sunlitght = new DirectLight();
 			((DirectLight*)sunlitght)->Direction = Vector3(0, 0, -3);
 			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
 
@@ -121,7 +122,10 @@ namespace TmingEngine
 
 			vector<ITexture*> modelTextures;
 			ITexture* mainTex, * normalMap;
-			string path = string("cyborg_diffuse.tga") + '/' + FileSystem::getPath("resources/objects/cyborg");
+			mainTex = new OpenGLTexture();
+			normalMap = new OpenGLTexture();
+
+			string path = FileSystem::getPath("resources/objects/cyborg") + '/' + string("cyborg_diffuse.tga");
 			mainTex->image = mainTex->LoadTGATexture(path.c_str());
 			normalMap->image = normalMap->LoadTGATexture(path.c_str());
 

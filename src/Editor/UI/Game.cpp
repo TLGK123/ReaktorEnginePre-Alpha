@@ -35,15 +35,15 @@ namespace TmingEngine
 	{
 		Debug::Log("------Start------Application Stage---------------------------------\n");
 
-		//softRender.LoadAssetToMemory();
-		//softRender.SetRenderStatus();
-		//softRender.DrawCall();
+		softRender.LoadAssetToMemory();
+		softRender.SetRenderStatus();
+		softRender.DrawCall();
 	}
 
 	void TmingEngine::Game::Update()
 	{
 		bool p_open = true;
-		ImGui::SetNextWindowSize(Vector2(640, 360), ImGuiCond_FirstUseEver);
+		ImGui::SetNextWindowSize(Vector2(640, 640), ImGuiCond_FirstUseEver);
 		if (!ImGui::Begin("Game", &p_open))
 		{
 			ImGui::End();
