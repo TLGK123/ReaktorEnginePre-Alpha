@@ -102,7 +102,7 @@ namespace TmingEngine
 
 			Vector3 Normal = CalcBumpedNormal(vertex);
 
-			float intensity = light.Direction.Normalize().Dot(Normal);
+			float intensity = ((DirectLight*)light)->Direction.Normalize().Dot(Normal);
 			if (intensity > 0)
 			{
 				color = color * intensity;

@@ -69,7 +69,6 @@ namespace TmingEngine
 		return result;
 	}
 
-
 	// http://www.songho.ca/opengl/gl_projectionmatrix.html
 	// left right bottom ,top ,near ,far
 	Matrix Perspective(float l, float r, float b, float t, float n, float f)
@@ -83,7 +82,6 @@ namespace TmingEngine
 			});
 		return prespective;
 	}
-
 
 	// left == right, bottom == top ,near ,far  simplified  Matrix
 	Matrix Perspective(float r, float t, float n, float f)
@@ -104,7 +102,6 @@ namespace TmingEngine
 		return perspective;
 	}
 
-
 	Matrix Orthographic(float l, float r, float b, float t, float n, float f)
 	{
 		Matrix orthographic(4, 4,
@@ -116,7 +113,6 @@ namespace TmingEngine
 			});
 		return orthographic;
 	}
-
 
 	Matrix Orthographic(float r, float t, float n, float f)
 	{
@@ -235,7 +231,7 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangleFromEdge(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color, Light sunlitght)
+	void fillTriangleFromEdge(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color, ILight* sunlitght)
 	{
 		Vector2 A, B, C;
 		A = Vector2(t0.x, t0.y);
@@ -247,7 +243,7 @@ namespace TmingEngine
 		//drawBox(minPoint, maxPoint,image,color);
 
 		Vector3 N = ((t1 - t0).Cross(t2 - t0)).Normalize();
-		float intensity = N.Dot(sunlitght.Direction);
+		float intensity = N.Dot(((DirectLight*)sunlitght)->Direction);
 
 		if (intensity < 0)
 		{
@@ -285,7 +281,7 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, Light sunlitght, IShader* shader)
+	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader)
 	{
 		Vector2* boxs = findTriangleBox(t0, t1, t2);
 
@@ -294,7 +290,7 @@ namespace TmingEngine
 		//drawBox(minPoint, maxPoint,image,color);
 
 		Vector3 N = ((t1 - t0).Cross(t2 - t0)).Normalize();
-		float intensity = N.Dot(sunlitght.Direction.Normalize());
+		float intensity = N.Dot(((DirectLight*)sunlitght)->Direction.Normalize());
 
 		if (intensity < 0)
 		{
@@ -342,7 +338,7 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangleFromEdgeWitchZbuffer(Vertex v1, Vertex v2, Vertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, Light sunlitght, IShader* shader)
+	void fillTriangleFromEdgeWitchZbuffer(Vertex v1, Vertex v2, Vertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader)
 	{
 		Vector2* boxs = findTriangleBox(v1.Position, v2.Position, v3.Position);
 

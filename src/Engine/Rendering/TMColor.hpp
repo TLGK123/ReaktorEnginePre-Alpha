@@ -30,7 +30,7 @@
 
 namespace TmingEngine
 {
-	class Color
+	class TMColor
 	{
 	public:
 		float r = 0;
@@ -38,18 +38,18 @@ namespace TmingEngine
 		float b = 0;
 		float a = 255;
 
-		Color()
+		TMColor()
 		{
 		}
 
-		Color(float R, float G, float B)
+		TMColor(float R, float G, float B)
 		{
 			r = R;
 			g = G;
 			b = B;
 		}
 
-		Color(float R, float G, float B, float A)
+		TMColor(float R, float G, float B, float A)
 		{
 			r = R;
 			g = G;

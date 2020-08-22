@@ -34,7 +34,7 @@
 #include "Rendering/SoftRending/GouraudShader.hpp"
 #include "Rendering/SoftRending/DepthShader.hpp"
 #include "Rendering/SoftRending/SoftGL.hpp"
-#include "Rendering/Color.hpp"
+#include "Rendering/TMColor.hpp"
 #include "Rendering/Light.hpp"
 
 namespace TmingEngine
@@ -49,7 +49,7 @@ namespace TmingEngine
 
 		int frameWidth = 800;
 		int frameHeight = 800;
-		Light sunlitght;
+		ILight* sunlitght;
 		Model character;
 		Vector3 CameraPos = Vector3(0, 2, 1);
 		Vector3 center = Vector3(0, 2, 0);	//相机朝向原点
@@ -111,8 +111,8 @@ namespace TmingEngine
 		// spicify the Texture , vertex shader ,fragment shader for each Primitive
 		void SetRenderStatus()
 		{
-			sunlitght.Direction = Vector3(0, 0, -3);
-			sunlitght.Color = Color(0.5, 0.5, 0);
+			((DirectLight*)sunlitght)->Direction = Vector3(0, 0, -3);
+			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
 
 			IShader* shader = new GouraudShader();
 			//shader->textures = character.textures_loaded;

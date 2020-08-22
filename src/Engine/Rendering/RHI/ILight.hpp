@@ -23,8 +23,8 @@
    limitations under the License.
 */
 
-#ifndef TmingEngine_Engine_Rending_Vertex_hpp_
-#define TmingEngine_Engine_Rending_Vertex_hpp_
+#ifndef TmingEngine_Engine_Rending_ILight_hpp_
+#define TmingEngine_Engine_Rending_ILight_hpp_
 
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Vector2.h"
@@ -32,19 +32,15 @@
 
 namespace TmingEngine
 {
-	struct Vertex {
-		Vector3 Position;
-
-		Vector3 Normal;
-
-		Vector2 TexCoords;
-
-		Vector3 Tangent;
-
-		Vector3 Bitangent;
-
+	class ILight
+	{
+	public:
 		TMColor Color;
+
+		ILight()
+		{
+		}
 	};
 }
 
-#endif //TmingEngine_Engine_Rending_Vertex_hpp_
+#endif //TmingEngine_Engine_Rending_ILight_hpp_

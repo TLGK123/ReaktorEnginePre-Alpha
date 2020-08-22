@@ -52,7 +52,7 @@ namespace TmingEngine
 
 		vector<ITexture*> textures;
 
-		Light light;
+		ILight* light;
 
 		void SetProjection(Matrix p)
 		{

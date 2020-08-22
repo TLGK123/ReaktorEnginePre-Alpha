@@ -26,23 +26,22 @@
 #ifndef TmingEngine_Engine_Rending_Light_hpp_
 #define TmingEngine_Engine_Rending_Light_hpp_
 
-#include "Core/Math/Vector3.h"
-#include "Color.hpp"
+#include "Rendering/RHI/ILight.hpp"
+#include "Rendering/TMColor.hpp"
 
 namespace TmingEngine
 {
-	class Light
+	class DirectLight : public ILight
 	{
 	public:
 		Vector3 Position;
-		Color Color;
 		Vector3 Direction;
 
-		Light()
+		DirectLight()
 		{
 		}
 
-		friend ostream& operator<<(ostream& stream, const Light c)
+		friend ostream& operator<<(ostream& stream, const DirectLight c)
 		{
 			ostringstream oss;
 			oss << setiosflags(ios::fixed | ios::right) << setw(8) << setprecision(2) << "Position£º " << c.Position << ")" << endl;
