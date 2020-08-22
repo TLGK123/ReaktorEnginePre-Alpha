@@ -68,6 +68,8 @@ namespace TmingEngine
 
 	Matrix Viewport(int x, int y, int width, int heigh);
 
+	void point(int x, int y, TGAImage& image, TGAColor color);
+
 	void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color);
 
 	void line(Vector2 x, Vector2 y, TGAImage& image, TGAColor color);

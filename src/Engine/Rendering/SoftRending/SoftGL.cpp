@@ -139,6 +139,11 @@ namespace TmingEngine
 		return mat;
 	}
 
+	void point(int x, int y, TGAImage& image, TGAColor color)
+	{
+		image.set(x, y, color);
+	}
+
 	void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color) {
 		bool steep = false;
 		if (std::abs(x0 - x1) < std::abs(y0 - y1)) {
@@ -157,10 +162,12 @@ namespace TmingEngine
 		int y = y0;
 		for (int x = x0; x <= x1; x += 1) {
 			if (steep) {
-				image.set(y, x, color);
+				point(y, x, image, color);
+				//image.set(y, x, color);
 			}
 			else {
-				image.set(x, y, color);
+				point(x, y, image, color);
+				//image.set(x, y, color);
 			}
 			error2 += derror2;
 			if (error2 > dx) {
@@ -225,7 +232,8 @@ namespace TmingEngine
 
 				if (fabp <= 0 && fbcp <= 0 && fcap <= 0)   //一般使用顺时针 点 顺序表示正面
 				{
-					image.set(x, y, col);
+					//image.set(x, y, col);
+					point(x, y, image, col);
 				}
 			}
 		}
@@ -275,7 +283,8 @@ namespace TmingEngine
 
 				if (fabp <= 0 && fbcp <= 0 && fcap <= 0)   //一般使用顺时针 点 顺序表示正面
 				{
-					image.set(x, y, col);
+					//image.set(x, y, col);
+					point(x, y, image, color);
 				}
 			}
 		}
@@ -319,7 +328,8 @@ namespace TmingEngine
 							bool discard = shader->Fragment(col);
 							if (!discard)
 							{
-								image.set(P.x, P.y, col);
+								//image.set(P.x, P.y, col);
+								point(P.x, P.y, image, col);
 								zbuffer[int(x + y * frameWidth)] = P.z;
 							}
 						}
@@ -371,7 +381,8 @@ namespace TmingEngine
 							bool discard = shader->Fragment(col, P);
 							if (!discard)
 							{
-								image.set(P.Position.x, P.Position.y, col);
+								//image.set(P.Position.x, P.Position.y, col);
+								point(P.Position.x, P.Position.y, image, col);
 								zbuffer[int(x + y * frameWidth)] = P.Position.z;
 							}
 						}
