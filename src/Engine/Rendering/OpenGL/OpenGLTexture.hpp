@@ -34,10 +34,6 @@ namespace TmingEngine
 		// Í¨¹ý ITexture ¼Ì³Ð
 		virtual TGAImage LoadTGATexture(const char* path) override;
 	};
-
-	//unsigned int LoadOpenGLTextureFromFile(const char* path, const string& directory, bool gamma = false);
-
-	//TGAImage LoadTGAImageFromFile(const char* path, const string& directory, bool gamma = false);
 }
 
 #endif /* OpenGLTexture_h */

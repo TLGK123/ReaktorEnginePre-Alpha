@@ -23,28 +23,19 @@
    limitations under the License.
 */
 
-#ifndef TmingEngine_Engine_Rending_Vertex_hpp_
-#define TmingEngine_Engine_Rending_Vertex_hpp_
+#ifndef TmingEngine_Engine_Rending_OpenGL_OpenGLVertex_hpp_
+#define TmingEngine_Engine_Rending_OpenGL_OpenGLVertex_hpp_
 
-#include "Core/Math/Vector3.h"
-#include "Core/Math/Vector2.h"
-#include "Rendering/TMColor.hpp"
+#include<string>
+#include "OpenGLFunctions.hpp"
+#include "Rendering/RHI/IVertex.hpp"
 
+using namespace std;
 namespace TmingEngine
 {
-	struct Vertex {
-		Vector3 Position;
-
-		Vector3 Normal;
-
-		Vector2 TexCoords;
-
-		Vector3 Tangent;
-
-		Vector3 Bitangent;
-
-		TMColor Color;
+	class OpenGLVertex : public IVertex {
+	public:
 	};
 }
 
-#endif //TmingEngine_Engine_Rending_Vertex_hpp_
+#endif /* TmingEngine_Engine_Rending_OpenGL_OpenGLVertex_hpp_ */

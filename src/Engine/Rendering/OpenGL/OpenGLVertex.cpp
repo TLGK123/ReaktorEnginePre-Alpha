@@ -23,26 +23,9 @@
    limitations under the License.
 */
 
-#ifndef IMesh_hpp
-#define IMesh_hpp
-
-#include "Rendering/RHI/IShader.hpp"
-using namespace std;
+#include<iostream>
+#include "OpenGLVertex.hpp"
 
 namespace TmingEngine
 {
-	class IMesh {
-	public:
-		IMesh() {}
-
-		vector<IVertex> vertices;
-		vector<unsigned int> indices;
-		vector<ITexture*> textures;
-
-		unsigned int id = 0;
-		virtual void LoadMesh(const char* path) = 0;
-		virtual void Draw(IShader* shader) = 0;
-	};
 }
-
-#endif /* IMesh_hpp */

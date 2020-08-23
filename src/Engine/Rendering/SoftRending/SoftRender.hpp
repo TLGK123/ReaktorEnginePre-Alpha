@@ -71,11 +71,11 @@ namespace TmingEngine
 				int  index2 = character.meshes[0]->indices[i + 1];
 				int  index3 = character.meshes[0]->indices[i + 2];
 
-				Vertex v1 = (character.meshes[0]->vertices[index1]);
-				Vertex v2 = (character.meshes[0]->vertices[index2]);
-				Vertex v3 = (character.meshes[0]->vertices[index3]);
+				IVertex v1 = (character.meshes[0]->vertices[index1]);
+				IVertex v2 = (character.meshes[0]->vertices[index2]);
+				IVertex v3 = (character.meshes[0]->vertices[index3]);
 
-				Primitive primitive(PrimitiveType::TRIANGLES, vector<Vertex>({ v1,v2,v3 }));
+				Primitive primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ v1,v2,v3 }));
 
 				primitiveDatas.push_back(primitive);
 			}

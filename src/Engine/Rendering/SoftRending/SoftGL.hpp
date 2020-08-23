@@ -28,8 +28,8 @@
 
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Matrix.h"
-#include "Rendering/Vertex.hpp"
 #include "Rendering/Light.hpp"
+#include "Rendering/RHI/IVertex.hpp"
 #include "Rendering/RHI/IShader.hpp"
 #include "tgaimage/tgaimage.h"
 
@@ -44,7 +44,7 @@ namespace TmingEngine
 
 	Vector3 barycentricCoordinateCrossProduct(Vector3 a, Vector3 b, Vector3 c, Vector3 p);
 
-	Vector3 barycentricCoordinateCrossProduct(Vertex a, Vertex b, Vertex c, Vertex p);
+	Vector3 barycentricCoordinateCrossProduct(IVertex a, IVertex b, IVertex c, IVertex p);
 
 	void fillUpTriangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);
 
@@ -76,7 +76,7 @@ namespace TmingEngine
 
 	void triangle(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);
 
-	void triangle(Vertex t0, Vertex t1, Vertex t2, TGAImage& image, TGAColor color);
+	void triangle(IVertex t0, IVertex t1, IVertex t2, TGAImage& image, TGAColor color);
 
 	void drawBox(Vector2 miniP, Vector2 maxP, TGAImage& image, TGAColor color);
 
@@ -86,7 +86,7 @@ namespace TmingEngine
 
 	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader);
 
-	void fillTriangleFromEdgeWitchZbuffer(Vertex v1, Vertex v2, Vertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader);
+	void fillTriangleFromEdgeWitchZbuffer(IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader);
 
 	void fillTriangleLinerScan(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);
 } // namespace TmingEngine

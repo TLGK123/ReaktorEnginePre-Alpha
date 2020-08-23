@@ -27,9 +27,9 @@
 
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Matrix.h"
-#include "Rendering/Vertex.hpp"
 #include "Rendering/Light.hpp"
 #include "Rendering/RHI/IShader.hpp"
+#include "Rendering/RHI/IVertex.hpp"
 #include "tgaimage/tgaimage.h"
 
 namespace TmingEngine
@@ -188,7 +188,7 @@ namespace TmingEngine
 		line(t2, t0, image, color);
 	}
 
-	void triangle(Vertex t0, Vertex t1, Vertex t2, TGAImage& image, TGAColor color) {
+	void triangle(IVertex t0, IVertex t1, IVertex t2, TGAImage& image, TGAColor color) {
 		line(Vector2(t0.Position.x, t0.Position.y), Vector2(t2.Position.x, t2.Position.y), image, color);
 		line(Vector2(t1.Position.x, t1.Position.y), Vector2(t2.Position.x, t2.Position.y), image, color);
 		line(Vector2(t2.Position.x, t2.Position.y), Vector2(t0.Position.x, t0.Position.y), image, color);
@@ -348,7 +348,7 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangleFromEdgeWitchZbuffer(Vertex v1, Vertex v2, Vertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader)
+	void fillTriangleFromEdgeWitchZbuffer(IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader)
 	{
 		Vector2* boxs = findTriangleBox(v1.Position, v2.Position, v3.Position);
 
@@ -359,7 +359,7 @@ namespace TmingEngine
 		{
 			for (int x = minPoint.x; x <= maxPoint.x; x += 1)
 			{
-				Vertex P;
+				IVertex P;
 				P.Position = Vector3(x, y, 0);
 				Vector3 barycent = barycentricCoordinateCrossProduct(v1, v2, v3, P);
 				P.Position.z = v1.Position.z * barycent.x + v2.Position.z * barycent.y + v3.Position.z * barycent.z;
@@ -616,7 +616,7 @@ namespace TmingEngine
 		}
 	}
 
-	Vector3 barycentricCoordinateCrossProduct(Vertex a, Vertex b, Vertex c, Vertex p)
+	Vector3 barycentricCoordinateCrossProduct(IVertex a, IVertex b, IVertex c, IVertex p)
 	{
 		auto v1 = a.Position - c.Position;
 		auto v2 = b.Position - c.Position;

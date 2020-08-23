@@ -59,7 +59,7 @@ namespace TmingEngine
 			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
 		};
 
-		Vector3 Vertex(TmingEngine::Vertex& vertex) override
+		Vector3 Vertex(TmingEngine::IVertex& vertex) override
 		{
 			auto projectionPoint = porjection * view * model * vertex.Position;
 			float w = projectionPoint[3][0];
@@ -94,7 +94,7 @@ namespace TmingEngine
 			return false;
 		}
 
-		bool Fragment(TGAColor& color, TmingEngine::Vertex& vertex)override
+		bool Fragment(TGAColor& color, TmingEngine::IVertex& vertex)override
 		{
 			int u = vertex.TexCoords.x * textures[0]->image.get_width();
 			int v = vertex.TexCoords.y * textures[0]->image.get_height();
@@ -114,7 +114,7 @@ namespace TmingEngine
 			}
 		}
 
-		Vector3 CalcBumpedNormal(TmingEngine::Vertex p)
+		Vector3 CalcBumpedNormal(TmingEngine::IVertex p)
 		{
 			Vector3 Normal = p.Normal.Normalize();
 			Vector3 Tangent = p.Tangent.Normalize();

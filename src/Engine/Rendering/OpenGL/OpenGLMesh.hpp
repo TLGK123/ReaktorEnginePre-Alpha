@@ -8,7 +8,7 @@ either version 4 of the License, or (at your option) any later version.
 #ifndef OpenGLMesh_H
 #define OpenGLMesh_H
 
-#include "Rendering/Vertex.hpp"
+#include "Rendering/RHI/IVertex.hpp"
 #include "Rendering/RHI/ITexture.hpp"
 #include "Rendering/RHI/IShader.hpp"
 #include "Rendering/RHI/IMesh.hpp"
@@ -31,7 +31,7 @@ namespace TmingEngine
 
 		/*  Functions  */
 		// constructor
-		OpenGLMesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<ITexture*> textures)
+		OpenGLMesh(vector<IVertex> vertices, vector<unsigned int> indices, vector<ITexture*> textures)
 		{
 			this->vertices = vertices;
 			this->indices = indices;
@@ -102,7 +102,7 @@ namespace TmingEngine
 			// A great thing about structs is that their memory layout is sequential for all its items.
 			// The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
 			// again translates to 3/2 floats which translates to a byte array.
-			glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(IVertex), &vertices[0], GL_STATIC_DRAW);
 
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
@@ -110,19 +110,19 @@ namespace TmingEngine
 			// set the vertex attribute pointers
 			// vertex Positions
 			glEnableVertexAttribArray(0);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(IVertex), (void*)0);
 			// vertex normals
 			glEnableVertexAttribArray(1);
-			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(IVertex), (void*)offsetof(IVertex, Normal));
 			// vertex texture coords
 			glEnableVertexAttribArray(2);
-			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
+			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(IVertex), (void*)offsetof(IVertex, TexCoords));
 			// vertex tangent
 			glEnableVertexAttribArray(3);
-			glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
+			glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(IVertex), (void*)offsetof(IVertex, Tangent));
 			// vertex bitangent
 			glEnableVertexAttribArray(4);
-			glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
+			glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(IVertex), (void*)offsetof(IVertex, Bitangent));
 
 			glBindVertexArray(0);
 		}

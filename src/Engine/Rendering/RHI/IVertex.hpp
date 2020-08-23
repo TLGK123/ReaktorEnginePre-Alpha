@@ -23,26 +23,28 @@
    limitations under the License.
 */
 
-#ifndef IMesh_hpp
-#define IMesh_hpp
+#ifndef TmingEngine_Engine_Rending_IVertex_hpp_
+#define TmingEngine_Engine_Rending_IVertex_hpp_
 
-#include "Rendering/RHI/IShader.hpp"
-using namespace std;
+#include "Core/Math/Vector3.h"
+#include "Core/Math/Vector2.h"
+#include "Rendering/TMColor.hpp"
 
 namespace TmingEngine
 {
-	class IMesh {
-	public:
-		IMesh() {}
+	struct IVertex {
+		Vector3 Position;
 
-		vector<IVertex> vertices;
-		vector<unsigned int> indices;
-		vector<ITexture*> textures;
+		Vector3 Normal;
 
-		unsigned int id = 0;
-		virtual void LoadMesh(const char* path) = 0;
-		virtual void Draw(IShader* shader) = 0;
+		Vector2 TexCoords;
+
+		Vector3 Tangent;
+
+		Vector3 Bitangent;
+
+		TMColor Color;
 	};
 }
 
-#endif /* IMesh_hpp */
+#endif //TmingEngine_Engine_Rending_IVertex_hpp_

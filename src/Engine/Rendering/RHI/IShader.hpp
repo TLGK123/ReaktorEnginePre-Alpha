@@ -31,7 +31,7 @@
 
 #include "tgaimage/tgaimage.h"
 
-#include "Rendering/Vertex.hpp"
+#include "Rendering/RHI/IVertex.hpp"
 #include "Rendering/RHI/ITexture.hpp"
 #include "Rendering/Light.hpp"
 
@@ -75,10 +75,10 @@ namespace TmingEngine
 		}
 
 		virtual Vector3 Vertex(Vector3 pos) = 0;
-		virtual Vector3 Vertex(TmingEngine::Vertex& vertex) = 0;
+		virtual Vector3 Vertex(TmingEngine::IVertex& vertex) = 0;
 		virtual bool Fragment(TGAColor& color, Vector3 barycent) = 0;
 		virtual bool Fragment(TGAColor& color) = 0;
-		virtual bool Fragment(TGAColor& color, TmingEngine::Vertex& vertex) = 0;
+		virtual bool Fragment(TGAColor& color, TmingEngine::IVertex& vertex) = 0;
 	};
 }
 

@@ -44,14 +44,14 @@ namespace TmingEngine
 	{
 	public:
 		PrimitiveType	primitiveType;
-		vector<Vertex>	poins;
+		vector<IVertex>	poins;
 		IShader* shader;
 
 		Primitive()
 		{
 		}
 
-		Primitive(PrimitiveType pt, vector<Vertex> manyPoints)
+		Primitive(PrimitiveType pt, vector<IVertex> manyPoints)
 		{
 			primitiveType = pt;
 			poins = manyPoints;

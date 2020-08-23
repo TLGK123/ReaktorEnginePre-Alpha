@@ -53,13 +53,12 @@ namespace TmingEngine
 				0 , 0 , 0 , 1 / w ,
 				});
 
-
 			auto ndcPoint = viewPoint * t1 * projectionPoint;
 
 			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
 		};
 
-		Vector3 Vertex(TmingEngine::Vertex& vertex) override
+		Vector3 Vertex(TmingEngine::IVertex& vertex) override
 		{
 			auto projectionPoint = porjection * view * model * vertex.Position;
 			float w = projectionPoint[3][0];
@@ -92,7 +91,7 @@ namespace TmingEngine
 			return false;
 		}
 
-		bool Fragment(TGAColor& color, TmingEngine::Vertex& vertex)override
+		bool Fragment(TGAColor& color, TmingEngine::IVertex& vertex)override
 		{
 			float f = 255 - vertex.Position.z;
 			color = TGAColor(f, f, f);
