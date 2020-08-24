@@ -37,7 +37,9 @@ namespace TmingEngine
 	{
 	public:
 
-		IWindows(Context* context);
+		IWindows(Context* context) : Subsystem(context)
+		{
+		}
 		virtual void WinRender() = 0;
 		virtual void WinClose() = 0;
 		virtual bool WinShouldClose() = 0;
