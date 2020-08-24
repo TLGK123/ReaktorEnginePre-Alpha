@@ -43,7 +43,7 @@ namespace TmingEngine
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
 
-	void ScreenWin::WinInitialize()
+	bool ScreenWin::Initialize()
 	{
 		cout << "Hello World" << endl;
 		InitOpenGL();
@@ -52,6 +52,7 @@ namespace TmingEngine
 			InitImgui();
 			InitWidgets();
 		}
+		return true;
 	}
 
 	void ScreenWin::WinRender()

@@ -51,8 +51,6 @@ namespace TmingEngine
 
 		bool Initialize() override;
 
-		void InitializeWin();
-
 		void Update();
 
 		void Destory();

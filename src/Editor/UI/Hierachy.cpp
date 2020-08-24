@@ -93,7 +93,7 @@ namespace TmingEngine
 		auto scene = engine->currentScene;
 		if (ImGui::TreeNode("test"))
 		{
-			//showTransform(scene->SceneRoot->transform);
+			showTransform(scene->SceneRoot->transform);
 			ImGui::TreePop();
 		}
 

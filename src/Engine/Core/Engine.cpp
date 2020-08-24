@@ -41,12 +41,6 @@ namespace TmingEngine
 		return true;
 	}
 
-	void Engine::InitializeWin()
-	{
-		windows->isEditorWindows = isEditorMode;
-		windows->WinInitialize();
-	}
-
 	void Engine::Update()
 	{
 		windows->WinRender();
@@ -73,5 +67,6 @@ namespace TmingEngine
 	void Engine::SetEngineModeToEditor(bool mode)
 	{
 		isEditorMode = mode;
+		windows->isEditorWindows = mode;
 	}
 }

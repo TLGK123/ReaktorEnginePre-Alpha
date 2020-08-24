@@ -19,7 +19,6 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 // 注释掉就可以显示log  ,这个可以去掉黑色调试界面
 //#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )
 
@@ -34,20 +33,18 @@ using namespace std;
 
 namespace TmingEngine
 {
-	
 	class ENGINE_CLASS IWindows : public Subsystem
 	{
 	public:
 
 		IWindows(Context* context);
-		virtual void WinInitialize() = 0;   //纯虚函数 =0 表示
 		virtual void WinRender() = 0;
 		virtual void WinClose() = 0;
 		virtual bool WinShouldClose() = 0;
-		virtual void SetViewPoint(int startX, int startY, int width, int height) =0;
+		virtual void SetViewPoint(int startX, int startY, int width, int height) = 0;
 		vector<Widget*> m_widgets;
 
-		void (*InsertEditorWidget)()= nullptr;
+		void (*InsertEditorWidget)() = nullptr;
 
 		void RegisteWidget(Widget* widget)
 		{
@@ -75,9 +72,6 @@ namespace TmingEngine
 			}
 		}
 	};
-
 }
-
-
 
 #endif

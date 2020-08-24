@@ -54,7 +54,7 @@ namespace TmingEngine
 
 		unsigned int VBO, VAO;
 
-		void WinInitialize()  override;
+		bool Initialize()  override;
 		void WinRender() override;
 		void WinClose() override;
 		bool WinShouldClose() override;
