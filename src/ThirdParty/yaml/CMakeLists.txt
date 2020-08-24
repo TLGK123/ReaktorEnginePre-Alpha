@@ -362,3 +362,5 @@ endif()
 #	COMMAND clang-format --style=file -i ${all_sources}
 #	COMMENT "Running clang-format"
 #	VERBATIM)
+
+install_header_files (DIRECTORY ./ DESTINATION ${DEST_INCLUDE_DIR}/yaml-cpp FILES_MATCHING PATTERN *.hpp *.h USE_FILE_SYMLINK BUILD_TREE_ONLY)

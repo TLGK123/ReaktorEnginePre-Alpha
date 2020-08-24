@@ -48,21 +48,16 @@ file(GLOB_RECURSE sources
 
 "Rendering/*.c"
 "Rendering/*.c??"
-
 "Plantform/Time/*.c??"
-
 ) 
-
-include_directories("../../include")									#添加头文件目录
-include_directories(".")    	
-include_directories("../ThirdParty/Box2D")
+message(${DEST_INCLUDE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${DEST_INCLUDE_DIR})									#添加头文件目录   	
 include_directories("../ThirdParty/Box2D/Testbed/Framework")            #添加头文件目录
-include_directories("../ThirdParty/Vulkan_1.1.106.0/shaderc")
-include_directories("../ThirdParty/Vulkan_1.1.106.0/vulkan")
-include_directories("../ThirdParty/SPIRV-Cross-2019-03-29")
 include_directories("../ThirdParty/Angelscript/sdk/add_on")
-include_directories("../../include/angelscript")
-include_directories("../../include/ImGui")
+include_directories("${DEST_INCLUDE_DIR}/include/angelscript")
+include_directories("${DEST_INCLUDE_DIR}/ImGui")
+include_directories("${DEST_INCLUDE_DIR}/yaml-cpp")
 
 set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
 link_directories(${libpath})

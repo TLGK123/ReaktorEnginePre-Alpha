@@ -19,45 +19,48 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 #include "Scene.hpp"
 
 namespace TmingEngine {
+	Scene::Scene()
+	{
+		name = "Untitled";
+		SceneRoot = new GameObject("SceneRoot");
+		auto camera = new GameObject("Main Camera");
+		camera->transform->SetParent(SceneRoot->transform);
+		camera->transform->SetPositionLocal(Vector3(0.0f, 0.0f, 5.0f));
 
-    Scene::Scene()
-    {
-        name = "Untitled";
-        SceneRoot = new GameObject("SceneRoot");
-        auto camera = new GameObject("Main Camera");
-        camera->transform->SetParent(SceneRoot->transform);
-        camera->transform->SetPositionLocal(Vector3(0.0f, 0.0f, 5.0f));
+		//        auto go = new GameObject("Cube");
+		//        go->transform->SetParent(SceneRoot->transform);
+		//
+		//        auto go1 = new GameObject("Cube1");
+		//        go1->transform->SetParent(SceneRoot->transform);
+		//
+		//        auto go2 = new GameObject("Cube2");
+		//        go2->transform->SetParent(SceneRoot->transform);
+		//
+		//        auto go3 = new GameObject("Cube3");
+		//        go3->transform->SetParent(go2->transform);
+		//
+		//        auto go4 = new GameObject("Cube4");
+		//        go4->transform->SetParent(go2->transform);
+		//        ;
+	}
 
-//        auto go = new GameObject("Cube");
-//        go->transform->SetParent(SceneRoot->transform);
-//        
-//        auto go1 = new GameObject("Cube1");
-//        go1->transform->SetParent(SceneRoot->transform);
-//        
-//        auto go2 = new GameObject("Cube2");
-//        go2->transform->SetParent(SceneRoot->transform);
-//        
-//        auto go3 = new GameObject("Cube3");
-//        go3->transform->SetParent(go2->transform);
-//        
-//        auto go4 = new GameObject("Cube4");
-//        go4->transform->SetParent(go2->transform);
-//        ;
-    }
+	void Scene::Update()
+	{
+		RendeObject();
+	}
 
+	void Scene::Save()
+	{
+	}
 
-   
-    void Scene::Update()
-    {
-        RendeObject();
-    }
-    
-    void Scene::RendeObject()
-    {
+	void Scene::Load(string path)
+	{
+	}
 
-    }
+	void Scene::RendeObject()
+	{
+	}
 }

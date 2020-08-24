@@ -33,27 +33,22 @@
 
 using namespace std;
 namespace TmingEngine {
-    class Scene
-    {
-    public:
-        
-        int buildIndex;
-        bool isDirty;
-        bool isLoaded;
-        string path;
-        string name;
-        
-        GameObject * SceneRoot;
-        bool IsValid();
-        Scene();
-        
-        void Update();
-    private:
-        
-        void RendeObject();
-    };
- 
-}
+	class Scene
+	{
+	public:
+		string path;
+		string name;
+		GameObject* SceneRoot;
 
+		Scene();
+
+		void Update();
+		void Save();
+		void Load(string path);
+	private:
+
+		void RendeObject();
+	};
+}
 
 #endif /* Scene_hpp */

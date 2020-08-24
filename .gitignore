@@ -59,3 +59,4 @@ include/ImNodes/
 src/Editor/Module/DLLProject/.vs/
 /include/tgaimage
 /include/ScriptEngine
+/include/yaml-cpp
