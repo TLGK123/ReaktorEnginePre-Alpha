@@ -23,8 +23,8 @@
    limitations under the License.
 */
 
-#ifndef TmingEngine_Engine_Rending_Color_hpp_
-#define TmingEngine_Engine_Rending_Color_hpp_
+#ifndef TmingEngine_Engine_Rending_TMColor_hpp_
+#define TmingEngine_Engine_Rending_TMColor_hpp_
 
 #include "Core/Math/Vector3.h"
 
