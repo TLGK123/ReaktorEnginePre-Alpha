@@ -62,3 +62,4 @@ src/Editor/Module/DLLProject/.vs/
 /include/yaml-cpp
 /include/lua
 /include/angelscript
+/src/Managed/TmingCore/obj

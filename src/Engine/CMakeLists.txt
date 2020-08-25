@@ -55,7 +55,7 @@ include_directories("../ThirdParty/Box2D/Testbed/Framework")
 include_directories("../ThirdParty/Angelscript/sdk/add_on")
 include_directories("${DEST_INCLUDE_DIR}/include/angelscript")
 include_directories(${DEST_INCLUDE_DIR}/ImGui)
-include_directories("${DEST_INCLUDE_DIR}/yaml-cpp/include")
+include_directories(${DEST_INCLUDE_DIR}/yaml-cpp/include)
 include_directories(${DEST_INCLUDE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 

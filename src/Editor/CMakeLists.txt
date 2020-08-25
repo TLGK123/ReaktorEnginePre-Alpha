@@ -19,7 +19,8 @@ include_directories("../../include/angelscript")    #添加头文件目录
 include_directories("../Engine")        #添加头文件目录
 include_directories("Utility")          #添加头文件目录
 include_directories("UI")				#添加头文件目录
-include_directories("../ThirdParty/Angelscript/sdk/add_on")				#添加头文件目录
+include_directories("../ThirdParty/Angelscript/sdk/add_on")
+include_directories(${DEST_INCLUDE_DIR}/yaml-cpp/include)
 
 if(WIN32)
 include_directories("C:/Program Files/Mono/include/mono-2.0")

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TmingCore", "TmingCore.csproj", "{F89E7D12-84EE-48AF-8B07-69FBEB1089DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F89E7D12-84EE-48AF-8B07-69FBEB1089DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F89E7D12-84EE-48AF-8B07-69FBEB1089DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F89E7D12-84EE-48AF-8B07-69FBEB1089DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F89E7D12-84EE-48AF-8B07-69FBEB1089DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5748C714-CCE6-471F-8A1B-6E056B396719}
+	EndGlobalSection
+EndGlobal
