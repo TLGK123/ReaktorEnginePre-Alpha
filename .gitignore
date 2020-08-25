@@ -61,3 +61,4 @@ src/Editor/Module/DLLProject/.vs/
 /include/ScriptEngine
 /include/yaml-cpp
 /include/lua
+/include/angelscript
