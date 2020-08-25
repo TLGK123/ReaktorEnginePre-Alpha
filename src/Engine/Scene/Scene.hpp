@@ -27,9 +27,10 @@
 
 #include <string>
 #include <stdio.h>
-#include "../Scene/Components/Transform.h"
-#include "../Core/GameObject.hpp"
+#include "Scene/Components/Transform.h"
+#include "Core/GameObject.hpp"
 #include "tgaimage/tgaimage.h"
+#include "yaml-cpp/yaml.h"
 
 using namespace std;
 namespace TmingEngine {

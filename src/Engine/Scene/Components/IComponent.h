@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //= INCLUDES =====================
 #include <memory>
 #include <string>
-#include "../../Core/EngineDefs.h"
+#include "Core/EngineDefs.h"
 //================================
 
 namespace TmingEngine
@@ -68,7 +68,7 @@ namespace TmingEngine
 		virtual void OnStop() {}
 
 		// Runs when the component is removed
-		virtual void OnRemove(){}
+		virtual void OnRemove() {}
 
 		// Runs every frame
 		virtual void OnUpdate() {}
@@ -78,7 +78,7 @@ namespace TmingEngine
 
 		// Runs when the GameObject is being loaded
 		virtual void Deserialize(FileStream* stream) {}
-		
+
 		//= PROPERTIES ========================================================================
 		GameObject* GetGameObject_Ref() { return m_gameObject; }
 		std::shared_ptr<GameObject> GetGameObject_RefStrong();
@@ -100,16 +100,16 @@ namespace TmingEngine
 
 	protected:
 		// The type of the component
-		ComponentType m_type		= ComponentType_Unknown;
+		ComponentType m_type = ComponentType_Unknown;
 		// The id of the component
-		unsigned int m_ID			= 0;
+		unsigned int m_ID = 0;
 		// The state of the component
-		bool m_enabled				= false;
+		bool m_enabled = false;
 		// The owner of the component
-		GameObject* m_gameObject	= nullptr;
+		GameObject* m_gameObject = nullptr;
 		// The transform of the component (always exists)
-		Transform* m_transform		= nullptr;
+		Transform* m_transform = nullptr;
 		// The context of the engine
-		Context* m_context			= nullptr;
+		Context* m_context = nullptr;
 	};
 }
