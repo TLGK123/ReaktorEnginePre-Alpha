@@ -341,11 +341,14 @@ namespace TmingEngine
 "--soft-breakpoints",
 "--debugger-agent=transport=dt_socket,server=y,address=127.0.0.1:5555,server=y,suspend=y"
 		};
+		//server参数为y，表示这里是socket的监听方，然后suspend=y。之后MyApp.exe并没开始运行，而是等待连接。
+
 		mono_jit_parse_options(sizeof(options) / sizeof(char*), (char**)options);
 
 		mono_debug_init(MONO_DEBUG_FORMAT_MONO);
-
 		MonoDomain* domain = mono_domain_create_appdomain("TmingCore", NULL);
+		mono_debug_domain_create(domain);
+
 		mono_domain_set(domain, false);
 
 		// Program.cs所编译dll所在的位置
@@ -370,13 +373,13 @@ namespace TmingEngine
 		//mono_jit_cleanup(domain);
 		// unload
 
-		//MonoDomain* domainToUnload = mono_domain_get();
-		//if (domainToUnload && domainToUnload != mono_get_root_domain())
-		//{
-		//	mono_domain_set(mono_get_root_domain(), false);
-		//	//mono_thread_pop_appdomain_ref();
-		//	mono_domain_unload(domainToUnload);
-		//}
+		MonoDomain* domainToUnload = mono_domain_get();
+		if (domainToUnload && domainToUnload != mono_get_root_domain())
+		{
+			mono_domain_set(mono_get_root_domain(), false);
+			//mono_thread_pop_appdomain_ref();
+			mono_domain_unload(domainToUnload);
+		}
 	}
 
 	void ConfigureEngine(asIScriptEngine* engine)
