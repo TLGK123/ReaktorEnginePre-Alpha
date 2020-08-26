@@ -336,29 +336,24 @@ namespace TmingEngine
 		string dllpath = FileSystem::getPath("Data/EngineScript/TmingCore.dll");
 		const char* managed_binary_path = dllpath.c_str();
 
-		//获取应用域
-		const char* options[] = {
-"--soft-breakpoints",
-"--debugger-agent=transport=dt_socket,server=y,address=127.0.0.1:5555,server=y,suspend=y"
+		const char* options[] =
+		{
+			"--soft-breakpoints",
+			"--debugger-agent=transport=dt_socket,server=y,address=127.0.0.1:666"
 		};
 		//server参数为y，表示这里是socket的监听方，然后suspend=y。之后MyApp.exe并没开始运行，而是等待连接。
 
 		mono_jit_parse_options(sizeof(options) / sizeof(char*), (char**)options);
-
 		mono_debug_init(MONO_DEBUG_FORMAT_MONO);
-		MonoDomain* domain = mono_domain_create_appdomain("TmingCore", NULL);
-		mono_debug_domain_create(domain);
 
-		mono_domain_set(domain, false);
+		//获取应用域
+		//MonoDomain* domain = mono_domain_create_appdomain("TmingCore", NULL);
+		MonoDomain* domain = mono_jit_init("TmingCore");
 
-		// Program.cs所编译dll所在的位置
-
-		//加载程序集ManagedLibrary.dll
+		//加载程序集 TmingCore.dll
 		MonoAssembly* assembly = mono_domain_assembly_open(domain, managed_binary_path);
-	
 		MonoImage* image = mono_assembly_get_image(assembly);
 
-		// =====================================================准备调用
 		//获取MonoClass,类似于反射
 		MonoClass* main_class = mono_class_from_name(image, "TmingCore", "Main");
 
@@ -371,7 +366,6 @@ namespace TmingEngine
 
 		//释放应用域
 		//mono_jit_cleanup(domain);
-		// unload
 
 		MonoDomain* domainToUnload = mono_domain_get();
 		if (domainToUnload && domainToUnload != mono_get_root_domain())
