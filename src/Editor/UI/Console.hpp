@@ -50,6 +50,7 @@ extern "C"
 #include <mono/metadata/class.h>
 #include <mono/metadata/debug-helpers.h>
 #include <mono/metadata/mono-config.h>
+#include <mono/metadata/mono-debug.h>
 
 #include <angelscript.h>
 #include <scriptstdstring/scriptstdstring.h>

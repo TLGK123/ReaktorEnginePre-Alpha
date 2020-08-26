@@ -337,6 +337,13 @@ namespace TmingEngine
 		const char* managed_binary_path = dllpath.c_str();
 
 		//获取应用域
+		const char* options[] = {
+"--soft-breakpoints",
+"--debugger-agent=transport=dt_socket,server=y,address=127.0.0.1:5555,server=y,suspend=y"
+		};
+		mono_jit_parse_options(sizeof(options) / sizeof(char*), (char**)options);
+
+		mono_debug_init(MONO_DEBUG_FORMAT_MONO);
 
 		MonoDomain* domain = mono_domain_create_appdomain("TmingCore", NULL);
 		mono_domain_set(domain, false);
@@ -345,6 +352,7 @@ namespace TmingEngine
 
 		//加载程序集ManagedLibrary.dll
 		MonoAssembly* assembly = mono_domain_assembly_open(domain, managed_binary_path);
+	
 		MonoImage* image = mono_assembly_get_image(assembly);
 
 		// =====================================================准备调用
@@ -361,13 +369,14 @@ namespace TmingEngine
 		//释放应用域
 		//mono_jit_cleanup(domain);
 		// unload
-		MonoDomain* domainToUnload = mono_domain_get();
-		if (domainToUnload && domainToUnload != mono_get_root_domain())
-		{
-			mono_domain_set(mono_get_root_domain(), false);
-			//mono_thread_pop_appdomain_ref();
-			mono_domain_unload(domainToUnload);
-		}
+
+		//MonoDomain* domainToUnload = mono_domain_get();
+		//if (domainToUnload && domainToUnload != mono_get_root_domain())
+		//{
+		//	mono_domain_set(mono_get_root_domain(), false);
+		//	//mono_thread_pop_appdomain_ref();
+		//	mono_domain_unload(domainToUnload);
+		//}
 	}
 
 	void ConfigureEngine(asIScriptEngine* engine)

@@ -12,7 +12,20 @@ namespace TmingCore
         {
             Console.WriteLine("TmingEngine core start success");
             Console.WriteLine("TmingEngine core start do something else");
-            int a = Add(1, 6);
+            int a = Add(1, 8);
+            Console.WriteLine("a: "+a);
+            int i = 1;
+            while (true)
+            {               
+                int j = i + 1;
+
+                i =j;
+                if (i > 100)
+                {
+                    break;
+                }
+            }
+            Console.WriteLine("I: " + i);
         }
 
         public static int Add(int a, int b)
