@@ -335,20 +335,23 @@ namespace TmingEngine
 	{
 		string dllpath = FileSystem::getPath("Data/EngineScript/TmingCore.dll");
 		const char* managed_binary_path = dllpath.c_str();
-
+		
+		/*
 		const char* options[] =
 		{
 			"--soft-breakpoints",
-			"--debugger-agent=transport=dt_socket,server=y,address=127.0.0.1:666"
+			"--debugger-agent=transport=dt_socket,address=10.246.120.57:10000,server=y"
 		};
 		//server参数为y，表示这里是socket的监听方，然后suspend=y。之后MyApp.exe并没开始运行，而是等待连接。
 
 		mono_jit_parse_options(sizeof(options) / sizeof(char*), (char**)options);
 		mono_debug_init(MONO_DEBUG_FORMAT_MONO);
+		*/
+
 
 		//获取应用域
-		//MonoDomain* domain = mono_domain_create_appdomain("TmingCore", NULL);
-		MonoDomain* domain = mono_jit_init("TmingCore");
+		MonoDomain* domain = mono_domain_create_appdomain("TmingCore", NULL);
+		//MonoDomain* domain = mono_jit_init("TmingCore");
 
 		//加载程序集 TmingCore.dll
 		MonoAssembly* assembly = mono_domain_assembly_open(domain, managed_binary_path);
