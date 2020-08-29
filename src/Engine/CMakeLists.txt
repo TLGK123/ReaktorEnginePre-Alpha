@@ -50,14 +50,22 @@ file(GLOB_RECURSE sources
 "Rendering/*.c??"
 "Plantform/Time/*.c??"
 ) 
-								
+
+include_directories(${DEST_INCLUDE_DIR})
+message("----DEST_INCLUDE_DIR----")
+message(${DEST_INCLUDE_DIR})
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})								
+
+message("----CMAKE_CURRENT_SOURCE_DIR----")
+message(${CMAKE_CURRENT_SOURCE_DIR})
+
 include_directories("../ThirdParty/Box2D/Testbed/Framework")            
 include_directories("../ThirdParty/Angelscript/sdk/add_on")
 include_directories("${DEST_INCLUDE_DIR}/include/angelscript")
 include_directories(${DEST_INCLUDE_DIR}/ImGui)
 include_directories(${DEST_INCLUDE_DIR}/yaml-cpp/include)
-include_directories(${DEST_INCLUDE_DIR})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
 
 set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
 link_directories(${libpath})

@@ -25,10 +25,12 @@
 #ifndef IWindows_H
 #define IWindows_H
 
+#include <vector>
+
 #include "Core/Context.h"
 #include "Core/Subsystem.h"
-#include <vector>
 #include "Widget.h"
+
 using namespace std;
 
 namespace TmingEngine
