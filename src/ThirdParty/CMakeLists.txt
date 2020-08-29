@@ -12,7 +12,7 @@ add_subdirectory(TextEditor)
 add_subdirectory(ImNodes)
 add_subdirectory(Angelscript/sdk/angelscript/projects/cmake)
 add_subdirectory(tgaimage)
-add_subdirectory(SDL2-2.0.10)
+add_subdirectory(SDL2)   #version 2.0.12
 
 SET_PROPERTY(TARGET glad  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET Box2D  PROPERTY FOLDER "ThirdParty")
