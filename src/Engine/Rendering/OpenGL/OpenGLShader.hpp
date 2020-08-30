@@ -5,10 +5,8 @@ either version 4 of the License, or (at your option) any later version.
 //See https ://learnopengl.com/About for more information.
 */
 
-#ifndef OpenGLShader_H
-#define OpenGLShader_H
-
-//#include "im.h"
+#ifndef OpenGLShader_HPP
+#define OpenGLShader_HPP
 
 #include <string>
 #include <fstream>

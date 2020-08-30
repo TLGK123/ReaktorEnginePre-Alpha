@@ -57,7 +57,8 @@
 #elif __ANDROID__
 // android
 #elif __linux__
-// linux
+#include <iostream>
+#include <unistd.h>
 #elif __unix__ // all unices not caught above
 // Unix
 #elif defined(_POSIX_VERSION)
