@@ -21,8 +21,8 @@
 
 #pragma once
 #include<string>
-#include"Core/SmartPtr.h"
-#include "ImGUI/imgui.h"
+#include "Core/SmartPtr.h"
+#include "ImGui/imgui.h"
 
 namespace TmingEngine
 {
@@ -46,6 +46,5 @@ namespace TmingEngine
 		bool m_isWindow = true;
 		std::string m_title;
 		int m_windowFlags = 0;
-
 	};
 }
