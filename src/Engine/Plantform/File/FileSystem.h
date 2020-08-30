@@ -23,6 +23,9 @@
    limitations under the License.
 */
 
+#ifndef TmingEngine_Engine_Plantform_File_FileSystem_h_
+#define TmingEngine_Engine_Plantform_File_FileSystem_h_
+
 #include <vector>
 #include <string>
 #include <iostream>
@@ -78,3 +81,5 @@ namespace TmingEngine
 		static std::string getPath(std::string assetpath);
 	};
 }
+
+#endif

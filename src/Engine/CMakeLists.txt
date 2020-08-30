@@ -1,8 +1,8 @@
 file(GLOB_RECURSE headers 
 "Core/*.h"
 "Core/*.h??"
-"Plantform/FileSystem/*.h"
-"Plantform/FileSystem/*.hpp"
+"Plantform/File/*.h"
+"Plantform/File/*.hpp"
 "Scene/Components/Transform.h"
 "Plantform/Time/*.h"
 "Scene/Components/IComponent.h"
@@ -26,7 +26,7 @@ file(GLOB_RECURSE headers
 file(GLOB_RECURSE sources 
 "Core/*.cpp" 
 "Core/Log/*.cpp"
-"Plantform/FileSystem/*.cpp" 
+"Plantform/File/*.cpp" 
 "imgui/*.c"
 "imgui/*.c??"
 "3Part/STB/*.cpp"
@@ -52,14 +52,7 @@ file(GLOB_RECURSE sources
 ) 
 
 include_directories(${DEST_INCLUDE_DIR})
-message("----DEST_INCLUDE_DIR----")
-message(${DEST_INCLUDE_DIR})
-
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})								
-
-message("----CMAKE_CURRENT_SOURCE_DIR----")
-message(${CMAKE_CURRENT_SOURCE_DIR})
-
 include_directories("../ThirdParty/Box2D/Testbed/Framework")            
 include_directories("../ThirdParty/Angelscript/sdk/add_on")
 include_directories("${DEST_INCLUDE_DIR}/include/angelscript")
@@ -78,6 +71,8 @@ find_library (GLFW glfw3.lib ${libpath})
 find_library (Mono mono-2.0-sgen.lib "C:/Program Files/Mono/lib")
 elseif(APPLE)
 find_library (GLFW libglfw3.a ${libpath})
+elseif(UNIX)
+
 endif()
 
 target_link_libraries(TmingEngine lua)
