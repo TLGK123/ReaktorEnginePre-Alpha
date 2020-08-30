@@ -28,7 +28,7 @@
 #include <vector>
 
 #include "Core/Context.h"
-#include "Core/Subsystem.h"
+#include "Core/SubSystem.h"
 #include "Widget.h"
 
 using namespace std;
