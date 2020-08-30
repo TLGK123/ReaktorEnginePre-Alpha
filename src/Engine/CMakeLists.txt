@@ -96,5 +96,5 @@ target_link_libraries(TmingEngine tgaimage)
 target_link_libraries(TmingEngine ${Mono})
 
 add_definitions(-DTmingEngineLib)
-
+add_definitions(-DGLFW_INCLUDE_NONE)
 
