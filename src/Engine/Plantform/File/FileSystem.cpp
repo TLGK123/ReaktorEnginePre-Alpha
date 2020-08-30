@@ -51,4 +51,25 @@ namespace TmingEngine
 		//Debug::Log(s.c_str());
 		return path;
 	}
+
+	void FileSystem::SaveFile(string path, string content)
+	{
+		ofstream fout(path);
+		if (!fout)return;
+		fout << content << endl;
+		fout.close();
+	}
+
+	string FileSystem::GetFileContent(string f)
+	{
+		string content;
+		ifstream fin(f);
+		string  s;
+		while (getline(fin, s))
+		{
+			content += s + "\n";
+		}
+		fin.close();
+		return content;
+	}
 }
