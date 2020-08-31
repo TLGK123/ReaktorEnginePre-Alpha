@@ -37,7 +37,7 @@ namespace TmingEngine
 
 		m_context->RegisterSubsystem(this);
 		m_context->RegisterSubsystem(windows);
-
+		currentScene = new Scene();
 		return true;
 	}
 
