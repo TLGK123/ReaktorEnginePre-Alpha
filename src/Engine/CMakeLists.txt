@@ -1,54 +1,50 @@
 file(GLOB_RECURSE headers 
 "Core/*.h"
 "Core/*.h??"
-"Plantform/File/*.h"
-"Plantform/File/*.hpp"
-"Scene/Components/Transform.h"
-"Plantform/Time/*.h"
-"Scene/Components/IComponent.h"
 "Core/Math/Vector2.h"
 "Core/Math/Vector3.h"
 "Core/Math/Matrix.h"
 "Core/Math/Radian.h"
 "Core/Math/Quaternion.h"
+
+"Plantform/File/*.h"
+"Plantform/File/*.hpp"
+"Plantform/Time/*.h"
 "Plantform/Windows/win/*.h"
 "Plantform/Windows/*.h"
 "Plantform/RHI/*.hpp"
 "Plantform/RHI/*.h"
-"im.h"
-"Scene/*.h??"
+
 "Rendering/*.h"
 "Rendering/*.h??"
 "Rendering/RHI/*.hpp"
+
+"Scene/*.h??"
+"Scene/Components/Transform.h"
+"Scene/Components/IComponent.h"
 
 )
 
 file(GLOB_RECURSE sources 
 "Core/*.cpp" 
-"Core/Log/*.cpp"
-"Plantform/File/*.cpp" 
-"imgui/*.c"
-"imgui/*.c??"
-"3Part/STB/*.cpp"
-"../../include/*.cpp"
-"Model/model.cpp"
 "Core/Math/Vector2.cpp"
 "Core/Math/Vector3.cpp"
 "Core/Math/Matrix.cpp"
 "Core/Math/Quaternion.cpp"
 
-"Scene/Components/Transform.cpp"
-"Scene/Components/IComponent.cpp"
-"Scene/*.cpp"
-
+"Plantform/File/*.cpp" 
 "Plantform/Windows/win/*.cpp"
 "Plantform/Windows/*.cpp"
-
 "Plantform/RHI/*.cpp"
 
 "Rendering/*.c"
 "Rendering/*.c??"
 "Plantform/Time/*.c??"
+
+"Scene/*.cpp"
+"Scene/Components/Transform.cpp"
+"Scene/Components/IComponent.cpp"
+
 ) 
 
 include_directories(${DEST_INCLUDE_DIR})
@@ -64,7 +60,6 @@ set(libpath ${PROJECT_SOURCE_DIR}/Library/static)
 link_directories(${libpath})
 
 add_library_beautiful(TmingEngine STATIC ${headers} ${sources})
-
 
 if(WIN32)
 find_library (GLFW glfw3.lib ${libpath})
