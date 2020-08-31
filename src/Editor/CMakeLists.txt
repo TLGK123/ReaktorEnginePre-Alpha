@@ -25,7 +25,7 @@ include_directories(${DEST_INCLUDE_DIR}/yaml-cpp/include)
 if(WIN32)
 include_directories("C:/Program Files/Mono/include/mono-2.0")
 elseif(APPLE)
-
+include_directories("/Library/Frameworks/Mono.framework/Versions/Current/include/mono-2.0")
 endif()
 
 add_executable_beautiful(Editor ${headers} ${sources})

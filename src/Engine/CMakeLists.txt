@@ -71,6 +71,7 @@ find_library (GLFW glfw3.lib ${libpath})
 find_library (Mono mono-2.0-sgen.lib "C:/Program Files/Mono/lib")
 elseif(APPLE)
 find_library (GLFW libglfw3.a ${libpath})
+find_library (Mono libmonosgen-2.0.a "/Library/Frameworks/Mono.framework/Versions/Current/lib")
 elseif(UNIX)
 
 endif()
