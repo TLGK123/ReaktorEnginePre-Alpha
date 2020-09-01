@@ -64,3 +64,4 @@ src/Editor/Module/DLLProject/.vs/
 /include/angelscript
 /src/Managed/TmingCore/obj
 /src/Managed/TmingCore/.vs
+/src/ThirdParty/SDL2/android-project/.idea
