@@ -94,6 +94,7 @@ namespace TmingEngine
 		bool Fragment(TGAColor& color, TmingEngine::IVertex& vertex)override
 		{
 			float f = 255 - vertex.Position.z;
+			//Debug::Log(std::to_string(vertex.Position.z));
 			color = TGAColor(f, f, f);
 			return false;
 		}

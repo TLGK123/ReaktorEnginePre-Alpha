@@ -79,33 +79,6 @@ namespace TmingEngine
 
 				primitiveDatas.push_back(primitive);
 			}
-
-			//Vertex v1, v2, v3;
-			//v1.Position = Vector3(0, 0, 0);
-			//v1.TexCoords = Vector2(0, 0);
-
-			//v2.Position = Vector3(0, 1, 0);
-			//v2.TexCoords = Vector2(0, 1);
-
-			//v3.Position = Vector3(1, 0, 0);
-			//v3.TexCoords = Vector2(1, 0);
-
-			//Primitive primitive(PrimitiveType::TRIANGLES, vector<Vertex>({ v1,v2,v3 }));
-
-			//Vertex v11, v12, v13;
-			//v11.Position = Vector3(-1, -1, 0);
-			//v11.TexCoords = Vector2(0, 0);
-
-			//v12.Position = Vector3(-1, 1, 0);
-			//v12.TexCoords = Vector2(0, 1);
-
-			//v13.Position = Vector3(1, -1, 0);
-			//v13.TexCoords = Vector2(1, 0);
-
-			//Primitive primitive2(PrimitiveType::TRIANGLES, vector<Vertex>({ v11,v12,v13 }));
-
-			////primitiveDatas.push_back(primitive);
-			//primitiveDatas.push_back(primitive2);
 		}
 
 		// spicify the Texture , vertex shader ,fragment shader for each Primitive
@@ -115,11 +88,9 @@ namespace TmingEngine
 			((DirectLight*)sunlitght)->Direction = Vector3(0, 0, -3);
 			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
 
-			IShader* shader = new GouraudShader();
-			//shader->textures = character.textures_loaded;
+			IShader* shader = new DepthShader();
 
 			shader->light = sunlitght;
-
 			vector<ITexture*> modelTextures;
 			ITexture* mainTex, * normalMap;
 			mainTex = new OpenGLTexture();
