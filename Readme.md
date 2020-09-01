@@ -31,7 +31,9 @@ Use this code editor we can  write glsl shader more easy , maybe support other f
 We can select a glsl file at the editor asset layout  , then the shader code will be open .
 
 ## Editor Download Link
-[Windows 64](https://download.csdn.net/download/nan_feng_yu/11871143) (outdated)
+
+[Windows 64](https://github.com/xiaomingfun/TmingEngine/releases/tag/v1.0)
+
 [MacOS](https:prepa//download.csdn.net/download/nan_feng_yu/11870943) (outdated)
 
 ## Building
