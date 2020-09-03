@@ -151,6 +151,14 @@ namespace TmingEngine
 		//glfwSetCursorPosCallback(window, mouse_callback);
 		//glfwSetScrollCallback(window, scroll_callback);
 
+		// Initialize OpenGL loader----------------------
+		bool err = gl3wInit() != 0;
+		if (err)
+		{
+			IM_ASSERT(stderr, "Failed to initialize OpenGL loader!\n");
+			return ;
+		}
+
 		InitVertextData();
 		InitTextureData();
 		InitModel();
