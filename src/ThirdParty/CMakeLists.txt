@@ -1,5 +1,30 @@
 #add_subdirectory(glad)
-add_subdirectory(gl3w)
+
+if(WIN32)
+    message("Windows imgui 编译设置 IMGUI_IMPL_OPENGL_LOADER_GL3W")
+    add_definitions(-DIMGUI_IMPL_OPENGL_LOADER_GL3W)
+	add_subdirectory(gl3w)
+	SET_PROPERTY(TARGET gl3w  PROPERTY FOLDER "ThirdParty")
+elseif(IOS)
+    message("iOS imgui 编译设置 IMGUI_IMPL_OPENGL_ES3")
+    add_definitions(-DIMGUI_IMPL_OPENGL_ES3)
+elseif(APPLE)
+    message("Mac OS imgui 编译设置 IMGUI_IMPL_OPENGL_LOADER_GL3W")
+    add_definitions(-DIMGUI_IMPL_OPENGL_LOADER_GL3W)
+	add_subdirectory(gl3w)
+	SET_PROPERTY(TARGET gl3w  PROPERTY FOLDER "ThirdParty")
+elseif(ANDROID)
+    message("Android imgui 编译设置 IMGUI_IMPL_OPENGL_ES3")
+    add_definitions(-DIMGUI_IMPL_OPENGL_ES3)
+elseif(LINUX)
+    message("Linux  编译设置 IMGUI_IMPL_OPENGL_ES3")
+    add_definitions(-DIMGUI_IMPL_OPENGL_ES3)
+	add_subdirectory(gl3w)
+	SET_PROPERTY(TARGET gl3w  PROPERTY FOLDER "ThirdParty")	
+endif()
+
+
+
 add_subdirectory(Lua)
 add_subdirectory(Box2D)
 add_subdirectory(KHR)
@@ -16,7 +41,9 @@ add_subdirectory(tgaimage)
 add_subdirectory(SDL2)   #version 2.0.12
 
 #SET_PROPERTY(TARGET glad  PROPERTY FOLDER "ThirdParty")
-SET_PROPERTY(TARGET gl3w  PROPERTY FOLDER "ThirdParty")
+
+
+
 SET_PROPERTY(TARGET Box2D  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET glm  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET ImGui  PROPERTY FOLDER "ThirdParty")
