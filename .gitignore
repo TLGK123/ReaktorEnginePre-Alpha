@@ -65,3 +65,5 @@ src/Editor/Module/DLLProject/.vs/
 /src/Managed/TmingCore/obj
 /src/Managed/TmingCore/.vs
 /src/ThirdParty/SDL2/android-project/.idea
+/src/ThirdParty/SDL2/android-project/.gradle
+/src/ThirdParty/SDL2/android-project/app/.cxx
