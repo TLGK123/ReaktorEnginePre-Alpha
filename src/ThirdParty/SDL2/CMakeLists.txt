@@ -2214,3 +2214,5 @@ if(TARGET uninstall)
   add_custom_target(uninstall
       COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 endif()
+
+install_header_files (DIRECTORY ./ DESTINATION ${DEST_INCLUDE_DIR}/SDL FILES_MATCHING PATTERN *.hpp *.h *.inl USE_FILE_SYMLINK BUILD_TREE_ONLY)

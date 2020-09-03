@@ -61,7 +61,16 @@ namespace TmingEngine
 
 	void ScreenWin::WinRender()
 	{
-		
+		done = false;
+		SDL_Event event;
+		while (SDL_PollEvent(&event))
+		{
+			ImGui_ImplSDL2_ProcessEvent(&event);
+			if (event.type == SDL_QUIT)
+				done = true;
+			if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window))
+				done = true;
+		}
 
 		//float currentFrame = glfwGetTime();
 		//deltaTime = currentFrame - lastFrame;
@@ -116,8 +125,8 @@ namespace TmingEngine
 		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
 		{
 			IM_ASSERT("Error: %s\n", SDL_GetError());
-			return ;
-		}
+			return;
+}
 
 		// Decide GL+GLSL versions
 #if __APPLE__
@@ -156,7 +165,7 @@ namespace TmingEngine
 		if (err)
 		{
 			IM_ASSERT(stderr, "Failed to initialize OpenGL loader!\n");
-			return ;
+			return;
 		}
 
 		InitVertextData();
@@ -248,17 +257,6 @@ namespace TmingEngine
 
 	bool ScreenWin::ScreenShouldClose()
 	{
-		done = false;
-		SDL_Event event;
-		while (SDL_PollEvent(&event))
-		{
-			ImGui_ImplSDL2_ProcessEvent(&event);
-			if (event.type == SDL_QUIT)
-				done = true;
-			if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window))
-				done = true;
-		}
-
 		return done;
 	}
 
