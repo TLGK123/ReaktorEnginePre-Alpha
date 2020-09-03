@@ -67,3 +67,4 @@ src/Editor/Module/DLLProject/.vs/
 /src/ThirdParty/SDL2/android-project/.idea
 /src/ThirdParty/SDL2/android-project/.gradle
 /src/ThirdParty/SDL2/android-project/app/.cxx
+/include/gl3w

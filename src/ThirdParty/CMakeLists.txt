@@ -1,11 +1,12 @@
 add_subdirectory(glad)
+add_subdirectory(gl3w)
 add_subdirectory(Lua)
 add_subdirectory(Box2D)
 add_subdirectory(KHR)
 add_subdirectory(GLFW)
 add_subdirectory(glm)
 add_subdirectory(Assimp)
-add_subdirectory(ImGui)
+add_subdirectory(ImGui)		#version 1.79 docking
 add_subdirectory(Stb_Image)
 add_subdirectory(yaml)
 add_subdirectory(TextEditor)
@@ -15,6 +16,7 @@ add_subdirectory(tgaimage)
 add_subdirectory(SDL2)   #version 2.0.12
 
 SET_PROPERTY(TARGET glad  PROPERTY FOLDER "ThirdParty")
+SET_PROPERTY(TARGET gl3w  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET Box2D  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET glm  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET ImGui  PROPERTY FOLDER "ThirdParty")
