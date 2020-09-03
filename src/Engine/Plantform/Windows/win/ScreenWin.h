@@ -57,7 +57,7 @@ namespace TmingEngine
 		SDL_Window* window;
 		unsigned int texture1, texture2, texture3;
 		Shader screenShader;
-		bool done = false;			//true close app£¬ when click X   
+		bool done = false;			//true close app£¬ when click X
 
 		unsigned int VBO, VAO;
 
@@ -83,7 +83,7 @@ namespace TmingEngine
 		unsigned int textureColorbufferCa;
 
 		void ShutDown();
-
+		void ApplyStyle();
 		bool ScreenShouldClose();
 
 		void InitOpenGL();
