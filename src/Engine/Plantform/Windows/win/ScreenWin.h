@@ -26,7 +26,8 @@
 #ifndef TmingEngine_Engine_Plantform_Windows_win_ScreenWin_h
 #define TmingEngine_Engine_Plantform_Windows_win_ScreenWin_h
 
-#include "GLFW/glfw3.h"
+#include <SDL.h>
+#include "GL/gl3w.h"
 #include "Stb_Image/stb_image.h"
 #include "Core/Context.h"
 #include "Core/Engine.h"
@@ -40,21 +41,23 @@
 #include "Plantform/Windows/IWindows.h"
 
 #include "ImGui/imgui_impl_opengl3.h"
-#include "ImGui/imgui_impl_glfw.h"
+#include "ImGui/imgui_impl_sdl.h"
 
 namespace TmingEngine
 {
-	void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-	void processInput(GLFWwindow* window);
-	void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+	//void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+	//void processInput(GLFWwindow* window);
+	//void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+	//void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 	class ScreenWin : public IWindows
 	{
 	public:
-		GLFWwindow* window;
+		SDL_GLContext gl_context;
+		SDL_Window* window;
 		unsigned int texture1, texture2, texture3;
 		Shader screenShader;
+		bool done = false;			//true close app£¬ when click X   
 
 		unsigned int VBO, VAO;
 
@@ -97,8 +100,8 @@ namespace TmingEngine
 		void ShowExampleAppDockSpace(bool* p_open);
 		void ShowDebugWindows(bool* p_open);
 
-		void MouseMove(GLFWwindow* window, double xpos, double ypos);
-		void MouseScroll(GLFWwindow* window, double xoffset, double yoffset);
+		//void MouseMove(GLFWwindow* window, double xpos, double ypos);
+		//void MouseScroll(GLFWwindow* window, double xoffset, double yoffset);
 
 		ScreenWin(Context* context) : IWindows(context)
 		{

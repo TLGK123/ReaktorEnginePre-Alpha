@@ -2,6 +2,6 @@
 #ifndef OpenGLFunctions
 #define OpenGLFunctions
 
-#include "glad/glad.h"
+#include <GL/gl3w.h> 
 
 #endif /* OpenGLFunctions */

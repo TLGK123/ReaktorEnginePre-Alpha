@@ -301,8 +301,8 @@ if (NOT DEFINED SDL_SHARED_ENABLED_BY_DEFAULT)
   elseif (BUILD_SHARED_LIBS)
     # In this case, we assume the user wants a shared lib and don't build
     # the static one
-    set(SDL_SHARED_ENABLED_BY_DEFAULT ON)
-    set(SDL_STATIC_ENABLED_BY_DEFAULT OFF)
+    set(SDL_SHARED_ENABLED_BY_DEFAULT OFF)
+    set(SDL_STATIC_ENABLED_BY_DEFAULT ON)
   endif()
 endif()
 
@@ -390,6 +390,10 @@ set_option(HIDAPI              "Use HIDAPI for low level joystick drivers" ${OPT
 
 set(SDL_SHARED ${SDL_SHARED_ENABLED_BY_DEFAULT} CACHE BOOL "Build a shared version of the library")
 set(SDL_STATIC ${SDL_STATIC_ENABLED_BY_DEFAULT} CACHE BOOL "Build a static version of the library")
+
+set(SDL_SHARED OFF)
+set(SDL_STATIC ON)
+
 
 dep_option(SDL_STATIC_PIC      "Static version of the library should be built with Position Independent Code" OFF "SDL_STATIC" OFF)
 set_option(SDL_TEST            "Build the test directory" OFF)

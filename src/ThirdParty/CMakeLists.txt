@@ -1,4 +1,4 @@
-add_subdirectory(glad)
+#add_subdirectory(glad)
 add_subdirectory(gl3w)
 add_subdirectory(Lua)
 add_subdirectory(Box2D)
@@ -15,12 +15,12 @@ add_subdirectory(Angelscript/sdk/angelscript/projects/cmake)
 add_subdirectory(tgaimage)
 add_subdirectory(SDL2)   #version 2.0.12
 
-SET_PROPERTY(TARGET glad  PROPERTY FOLDER "ThirdParty")
+#SET_PROPERTY(TARGET glad  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET gl3w  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET Box2D  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET glm  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET ImGui  PROPERTY FOLDER "ThirdParty")
-SET_PROPERTY(TARGET SDL2  PROPERTY FOLDER "ThirdParty")
+SET_PROPERTY(TARGET SDL2-static  PROPERTY FOLDER "ThirdParty")
 SET_PROPERTY(TARGET SDL2main  PROPERTY FOLDER "ThirdParty")
 
 SET_PROPERTY(TARGET stb  PROPERTY FOLDER "ThirdParty")

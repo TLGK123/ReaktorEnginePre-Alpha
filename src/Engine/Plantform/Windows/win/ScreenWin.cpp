@@ -61,12 +61,12 @@ namespace TmingEngine
 
 	void ScreenWin::WinRender()
 	{
-		glfwPollEvents();
+		
 
-		float currentFrame = glfwGetTime();
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
-		processInput(window);
+		//float currentFrame = glfwGetTime();
+		//deltaTime = currentFrame - lastFrame;
+		//lastFrame = currentFrame;
+		//processInput(window);
 		RenderFrameBuffer();
 
 		glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
@@ -80,7 +80,7 @@ namespace TmingEngine
 			Render_EditorUI();
 		}
 
-		glfwSwapBuffers(window);
+		SDL_GL_SwapWindow(window);
 	}
 
 	void ScreenWin::WinClose()
@@ -89,7 +89,7 @@ namespace TmingEngine
 
 	bool ScreenWin::WinShouldClose()
 	{
-		return  glfwWindowShouldClose(window);
+		return  done;
 	}
 
 	void ScreenWin::InitVertextData()
@@ -110,41 +110,46 @@ namespace TmingEngine
 
 	void ScreenWin::InitOpenGL()
 	{
-		if (!glfwInit())
+		// Setup SDL
+		// (Some versions of SDL before <2.0.10 appears to have performance/stalling issues on a minority of Windows systems,
+		// depending on whether SDL_INIT_GAMECONTROLLER is enabled or disabled.. updating to latest version of SDL is recommended!)
+		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
 		{
-			IM_ASSERT(false && "glfwInit()  failure");
-			return;
+			IM_ASSERT("Error: %s\n", SDL_GetError());
+			return ;
 		}
 
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-#ifdef __APPLE__
-		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // uncomment this statement to fix compilation on OS X
+		// Decide GL+GLSL versions
+#if __APPLE__
+	// GL 3.2 Core + GLSL 150
+		const char* glsl_version = "#version 150";
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG); // Always required on Mac
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+#else
+	// GL 3.0 + GLSL 130
+		const char* glsl_version = "#version 130";
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 #endif
 
-		window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "TmingEngine", NULL, NULL);
-		if (window == NULL)
-		{
-			IM_ASSERT("Failed to create GLFW window");
-			glfwTerminate();
-			return;
-		}
-		//IM_ASSERT(1 > 3 && "Failed to test IM_ASSERT");
-		glfwMakeContextCurrent(window);
-		glfwSwapInterval(1); // Enable vsync  开启垂直同步 游戏最大帧率和显示器刷新帧率一致
+		// Create window with graphics context
+		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+		SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
+		window = SDL_CreateWindow("TmingEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1366, 768, window_flags);
+		SDL_GLContext gl_context = SDL_GL_CreateContext(window);
+		SDL_GL_MakeCurrent(window, gl_context);
+		SDL_GL_SetSwapInterval(1); // Enable vsync
 
-		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-		{
-			std::cout << "Failed to initialize GLAD" << std::endl;
-			return;
-		}
-
-		glViewport(0, 0, 1366, 768);
-		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-		glfwSetCursorPosCallback(window, mouse_callback);
-		glfwSetScrollCallback(window, scroll_callback);
+		//glViewport(0, 0, 1366, 768);
+		//glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+		//glfwSetCursorPosCallback(window, mouse_callback);
+		//glfwSetScrollCallback(window, scroll_callback);
 
 		InitVertextData();
 		InitTextureData();
@@ -219,22 +224,34 @@ namespace TmingEngine
 
 	void ScreenWin::ShutDown()
 	{
-		if (isEditorWindows)
-		{
-			ImGui_ImplOpenGL3_Shutdown();
-			ImGui_ImplGlfw_Shutdown();
-			ImGui::DestroyContext();
-		}
-
 		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);
-		glfwDestroyWindow(window);
-		glfwTerminate();
+		if (isEditorWindows)
+		{
+			// Cleanup
+			ImGui_ImplOpenGL3_Shutdown();
+			ImGui_ImplSDL2_Shutdown();
+			ImGui::DestroyContext();
+		}
+		SDL_GL_DeleteContext(gl_context);
+		SDL_DestroyWindow(window);
+		SDL_Quit();
 	}
 
 	bool ScreenWin::ScreenShouldClose()
 	{
-		return glfwWindowShouldClose(window);
+		done = false;
+		SDL_Event event;
+		while (SDL_PollEvent(&event))
+		{
+			ImGui_ImplSDL2_ProcessEvent(&event);
+			if (event.type == SDL_QUIT)
+				done = true;
+			if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window))
+				done = true;
+		}
+
+		return done;
 	}
 
 	string initfile = FileSystem::getPath("Data/Setting/imgui.ini");
@@ -263,7 +280,8 @@ namespace TmingEngine
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}
 
-		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		// Setup Platform/Renderer bindings
+		ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
 		ImGui_ImplOpenGL3_Init(glsl_version);
 
 		string fontpath = FileSystem::getPath("resources/font/SourceHanSansCN-Medium.ttf");
@@ -284,8 +302,9 @@ namespace TmingEngine
 
 	void ScreenWin::Render_EditorUI()
 	{
+		// Start the Dear ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
+		ImGui_ImplSDL2_NewFrame(window);
 		ImGui::NewFrame();
 
 		if (show_demo_window)
@@ -317,16 +336,17 @@ namespace TmingEngine
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		// Update and Render additional Platform Windows
 		// (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
-		//  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
-		ImGuiIO& io = ImGui::GetIO();
+		//  For this specific demo app we could also call SDL_GL_MakeCurrent(window, gl_context) directly)
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
-			GLFWwindow* backup_current_context = glfwGetCurrentContext();
+			SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
+			SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
-			glfwMakeContextCurrent(backup_current_context);
+			SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 		}
 	}
 
@@ -481,70 +501,70 @@ namespace TmingEngine
 		ImGui::End();
 	}
 
-	void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-	{
-		//glViewport(0, 0, frame_width, frame_height);
-	}
+	//void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+	//{
+	//	//glViewport(0, 0, frame_width, frame_height);
+	//}
 
-	void mouse_callback(GLFWwindow* window, double xpos, double ypos)
-	{
-		Global<Context>().GetSubsystem<ScreenWin>()->MouseMove(window, xpos, ypos);
-	}
+	//void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+	//{
+	//	Global<Context>().GetSubsystem<ScreenWin>()->MouseMove(window, xpos, ypos);
+	//}
 
-	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-	{
-		Global<Context>().GetSubsystem<ScreenWin>()->MouseScroll(window, xoffset, yoffset);
-	}
+	//void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+	//{
+	//	Global<Context>().GetSubsystem<ScreenWin>()->MouseScroll(window, xoffset, yoffset);
+	//}
 
-	void processInput(GLFWwindow* window)
-	{
-		//if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		//	glfwSetWindowShouldClose(window, true);
+	//void processInput(GLFWwindow* window)
+	//{
+	//	//if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	//	//	glfwSetWindowShouldClose(window, true);
 
-		//if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		//	EditorCamera.ProcessKeyboard(FORWARD, deltaTime);
-		//if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		//	EditorCamera.ProcessKeyboard(BACKWARD, deltaTime);
-		//if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		//	EditorCamera.ProcessKeyboard(LEFT, deltaTime);
-		//if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		//	EditorCamera.ProcessKeyboard(RIGHT, deltaTime);
-	}
+	//	//if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	//	//	EditorCamera.ProcessKeyboard(FORWARD, deltaTime);
+	//	//if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	//	//	EditorCamera.ProcessKeyboard(BACKWARD, deltaTime);
+	//	//if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	//	//	EditorCamera.ProcessKeyboard(LEFT, deltaTime);
+	//	//if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	//	//	EditorCamera.ProcessKeyboard(RIGHT, deltaTime);
+	//}
 
-	void ScreenWin::MouseMove(GLFWwindow* window, double xpos, double ypos)
-	{
-		if (firstMouse)
-		{
-			lastX = xpos;
-			lastY = ypos;
-			firstMouse = false;
-		}
+	//void ScreenWin::MouseMove(GLFWwindow* window, double xpos, double ypos)
+	//{
+	//	if (firstMouse)
+	//	{
+	//		lastX = xpos;
+	//		lastY = ypos;
+	//		firstMouse = false;
+	//	}
 
-		float xoffset = xpos - lastX;
-		float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+	//	float xoffset = xpos - lastX;
+	//	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
 
-		lastX = xpos;
-		lastY = ypos;
+	//	lastX = xpos;
+	//	lastY = ypos;
 
-		if (isEditorWindows)
-		{
-			ImGuiIO& io = ImGui::GetIO();
+	//	if (isEditorWindows)
+	//	{
+	//		ImGuiIO& io = ImGui::GetIO();
 
-			if (&io != NULL && io.MouseDownDuration[1] >= 0)
-			{
-				//bool selected = GetSubWidget<SceneView>()->IsSceneviewFoucsed;
-				//if (selected)
-				//{
-				//	EditorCamera.ProcessMouseMovement(xoffset, yoffset);
-				//}
-			}
-		}
-	}
+	//		if (&io != NULL && io.MouseDownDuration[1] >= 0)
+	//		{
+	//			//bool selected = GetSubWidget<SceneView>()->IsSceneviewFoucsed;
+	//			//if (selected)
+	//			//{
+	//			//	EditorCamera.ProcessMouseMovement(xoffset, yoffset);
+	//			//}
+	//		}
+	//	}
+	//}
 
-	void ScreenWin::MouseScroll(GLFWwindow* window, double xoffset, double yoffset)
-	{
-		ImGuiContext* c = ImGui::GetCurrentContext();
+	//void ScreenWin::MouseScroll(GLFWwindow* window, double xoffset, double yoffset)
+	//{
+	//	ImGuiContext* c = ImGui::GetCurrentContext();
 
-		//EditorCamera.ProcessMouseScroll(yoffset);
-	}
+	//	//EditorCamera.ProcessMouseScroll(yoffset);
+	//}
 }
