@@ -31,8 +31,8 @@
 
 #include "Core/EngineDefs.h"
 #include "Core/Context.h"
-#include "Scene/Components/Transform.h"
-#include "Scene/Components/IComponent.h"
+#include "SceneManager/Components/Transform.h"
+#include "SceneManager/Components/IComponent.h"
 
 using namespace std;
 

@@ -23,55 +23,10 @@
    limitations under the License.
 */
 
-#ifndef TmingEngine_Engine_Core_Engine_h_
-#define TmingEngine_Engine_Core_Engine_h_
+#include "Scene.hpp"
 
-#define ENGINE_VERSION "v0.0.1"
+namespace TmingEngine {
 
-#include <memory>
 
-#include "Context.h"
-#include "SceneManager/Scene.hpp"
-#include "Plantform/Windows/IWindows.h"
-#include "Plantform/Windows/win/ScreenWin.h"
-#include "Plantform/Time/Timer.h"
 
-#include "GameObject.hpp"
-#include "Core/Log.h"
-
-namespace TmingEngine
-{
-	class Timer;
-
-	class ENGINE_CLASS Engine : public Subsystem
-	{
-	public:
-
-		Engine(Context* context);
-
-		bool Initialize() override;
-
-		void Update();
-
-		void Destory();
-
-		void RenderScene();
-
-		bool ShouldClose();
-
-		bool isEditorMode = false;
-
-		void SetEngineModeToEditor(bool mode);
-
-		Context* GetContext() { return m_context; }
-
-		Scene* currentScene;
-
-		IWindows* windows;
-	private:
-
-		Timer* m_timer;
-	};
 }
-
-#endif //TmingEngine_Engine_Core_Engine_h_

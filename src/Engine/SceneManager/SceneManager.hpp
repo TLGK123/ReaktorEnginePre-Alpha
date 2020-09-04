@@ -28,28 +28,19 @@
 
 #include <string>
 #include <stdio.h>
-#include "Scene/Components/Transform.h"
+#include "SceneManager/Components/Transform.h"
 #include "Core/GameObject.hpp"
 #include "tgaimage/tgaimage.h"
 #include "yaml-cpp/yaml.h"
 
 using namespace std;
 namespace TmingEngine {
-	class Scene
+	class SceneManager
 	{
 	public:
-		string path;
-		string name;
-		GameObject* SceneRoot;
 
-		Scene();
-
-		void Update();
-		void Save();
-		void Load(string path);
 	private:
 
-		void RendeObject();
 	};
 }
 

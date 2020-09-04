@@ -19,9 +19,9 @@ file(GLOB_RECURSE headers
 "Rendering/*.h??"
 "Rendering/RHI/*.hpp"
 
-"Scene/*.h??"
-"Scene/Components/Transform.h"
-"Scene/Components/IComponent.h"
+"SceneManager/*.h??"
+"SceneManager/Components/Transform.h"
+"SceneManager/Components/IComponent.h"
 
 )
 
@@ -41,9 +41,9 @@ file(GLOB_RECURSE sources
 "Rendering/*.c??"
 "Plantform/Time/*.c??"
 
-"Scene/*.cpp"
-"Scene/Components/Transform.cpp"
-"Scene/Components/IComponent.cpp"
+"SceneManager/*.cpp"
+"SceneManager/Components/Transform.cpp"
+"SceneManager/Components/IComponent.cpp"
 
 ) 
 
