@@ -1,30 +1,22 @@
-#add_subdirectory(glad)
-
 if(WIN32)
-    message("Windows imgui 编译设置 IMGUI_IMPL_OPENGL_LOADER_GL3W")
-    add_definitions(-DIMGUI_IMPL_OPENGL_LOADER_GL3W)
 	add_subdirectory(gl3w)
 	SET_PROPERTY(TARGET gl3w  PROPERTY FOLDER "ThirdParty")
 elseif(IOS)
-    message("iOS imgui 编译设置 IMGUI_IMPL_OPENGL_ES3")
-    add_definitions(-DIMGUI_IMPL_OPENGL_ES3)
+
 elseif(APPLE)
-    message("Mac OS imgui 编译设置 IMGUI_IMPL_OPENGL_LOADER_GL3W")
-    add_definitions(-DIMGUI_IMPL_OPENGL_LOADER_GL3W)
+
 	add_subdirectory(gl3w)
 	SET_PROPERTY(TARGET gl3w  PROPERTY FOLDER "ThirdParty")
 elseif(ANDROID)
-    message("Android imgui 编译设置 IMGUI_IMPL_OPENGL_ES3")
-    add_definitions(-DIMGUI_IMPL_OPENGL_ES3)
+
 elseif(LINUX)
-    message("Linux  编译设置 IMGUI_IMPL_OPENGL_ES3")
-    add_definitions(-DIMGUI_IMPL_OPENGL_ES3)
+
 	add_subdirectory(gl3w)
 	SET_PROPERTY(TARGET gl3w  PROPERTY FOLDER "ThirdParty")	
 endif()
 
 
-
+#add_subdirectory(glad)
 add_subdirectory(Lua)
 add_subdirectory(Box2D)
 add_subdirectory(KHR)
