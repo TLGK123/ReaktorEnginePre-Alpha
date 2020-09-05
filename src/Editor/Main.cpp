@@ -55,6 +55,7 @@ int main(int argc, char* argv[])
 	}
 
 	engine->Destory();
+	return 0;
 }
 
 void SetEditorWidget()

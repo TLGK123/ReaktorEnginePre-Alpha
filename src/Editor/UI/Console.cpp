@@ -33,7 +33,6 @@ namespace TmingEngine
 
 	void Console::Begin()
 	{
-		MonoDomain* domain = mono_jit_init("TmingCore"); //命名空间
 	}
 
 	void Console::Update()
@@ -335,29 +334,26 @@ namespace TmingEngine
 	{
 		string dllpath = FileSystem::getPath("Data/EngineScript/TmingCore.dll");
 		const char* managed_binary_path = dllpath.c_str();
-		
-		/*
+
 		const char* options[] =
 		{
 			"--soft-breakpoints",
-			"--debugger-agent=transport=dt_socket,address=10.246.120.57:10000,server=y"
+			"--debugger-agent=transport=dt_socket,address=127.0.0.1:10000,server=y"
 		};
 		//server参数为y，表示这里是socket的监听方，然后suspend=y。之后MyApp.exe并没开始运行，而是等待连接。
 
 		mono_jit_parse_options(sizeof(options) / sizeof(char*), (char**)options);
 		mono_debug_init(MONO_DEBUG_FORMAT_MONO);
-		*/
-
 
 		//获取应用域
-		MonoDomain* domain = mono_domain_create_appdomain("TmingCore", NULL);
+		MonoDomain* domain = mono_jit_init("TmingCore");
 		//MonoDomain* domain = mono_jit_init("TmingCore");
 
 		//加载程序集 TmingCore.dll
 		MonoAssembly* assembly = mono_domain_assembly_open(domain, managed_binary_path);
 		MonoImage* image = mono_assembly_get_image(assembly);
 
-		//获取MonoClass,类似于反射
+		//获取MonoClass
 		MonoClass* main_class = mono_class_from_name(image, "TmingCore", "Main");
 
 		//获取要调用的MonoMethodDesc,主要调用过程
@@ -368,15 +364,15 @@ namespace TmingEngine
 		mono_runtime_invoke(entry_point_method, NULL, NULL, NULL);
 
 		//释放应用域
-		//mono_jit_cleanup(domain);
+		mono_jit_cleanup(domain);
 
-		MonoDomain* domainToUnload = mono_domain_get();
-		if (domainToUnload && domainToUnload != mono_get_root_domain())
-		{
-			mono_domain_set(mono_get_root_domain(), false);
-			//mono_thread_pop_appdomain_ref();
-			mono_domain_unload(domainToUnload);
-		}
+		//MonoDomain* domainToUnload = mono_domain_get();
+		//if (domainToUnload && domainToUnload != mono_get_root_domain())
+		//{
+		//	mono_domain_set(mono_get_root_domain(), false);
+		//	//mono_thread_pop_appdomain_ref();
+		//	mono_domain_unload(domainToUnload);
+		//}
 	}
 
 	void ConfigureEngine(asIScriptEngine* engine)

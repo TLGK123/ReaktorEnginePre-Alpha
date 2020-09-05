@@ -28,7 +28,7 @@
 
 #include <stdio.h>
 #include "Core/Context.h"
-#include "Scene/Components/Transform.h"
+#include "SceneManager/Components/Transform.h"
 
 namespace TmingEngine
 {

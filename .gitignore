@@ -68,3 +68,5 @@ src/Editor/Module/DLLProject/.vs/
 /src/ThirdParty/SDL2/android-project/.gradle
 /src/ThirdParty/SDL2/android-project/app/.cxx
 /include/gl3w
+/Data/Tools/MonoRemoteDebugger.Server/Temp
+/Data/Tools/MonoRemoteDebugger.Server/Log
