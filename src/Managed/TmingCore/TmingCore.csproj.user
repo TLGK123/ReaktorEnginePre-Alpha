@@ -2,8 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Project</StartAction>
-    <RemoteDebugEnabled>true</RemoteDebugEnabled>
-    <RemoteDebugMachine>127.0.0.1:5555</RemoteDebugMachine>
+    <RemoteDebugEnabled>false</RemoteDebugEnabled>
+    <RemoteDebugMachine>
+    </RemoteDebugMachine>
     <AuthenticationMode>None</AuthenticationMode>
     <StartArguments>
     </StartArguments>

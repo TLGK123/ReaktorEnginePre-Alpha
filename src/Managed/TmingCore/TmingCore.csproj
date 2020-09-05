@@ -49,4 +49,8 @@
     <PostBuildEvent>
 pdb2mdb $(TargetPath)</PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>

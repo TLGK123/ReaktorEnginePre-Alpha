@@ -65,6 +65,15 @@ CMake [https://cmake.org](https://cmake.org)
 3. ./GenerateProject.sh
 4. enjoy it !!
 
+## Scripting With Mono
+> TmingEngine use mono to support C# for scripting . And we can debug the c# code from source code with Visual Studio. So we can make a breakpoint in the c++ Editor project and make breakpoint in C# script project at the time.
+
+1. Open  TmingEngine\src\Managed\TmingCore\TmingCore.sln
+2. build sln to generate 2 files TmingCore.dll TmingCore.dll.pdb 
+3. VS build success envt will use pdb2mdb tool generate TmingCore.dll.mdb
+4. dll output path : TmingEngine\Data\EngineScript
+
+
 ## Roadmap
 - [x] import assimp by source code
 - [x] Auto docking layout  that windows can mixing and dispersing
@@ -100,3 +109,4 @@ CMake [https://cmake.org](https://cmake.org)
 13. [https://github.com/adobe-fonts/source-han-sans/tree/release](https://github.com/adobe-fonts/source-han-sans/tree/release)
 14. [https://github.com/ssloy/tinyrenderer](https://github.com/ssloy/tinyrenderer)
 15. [http://www.yinwang.org/blog-cn/2012/08/01/interpreter](http://www.yinwang.org/blog-cn/2012/08/01/interpreter)
+16. https://marketplace.visualstudio.com/items?itemName=Bongho.MonoRemoteDebugger
