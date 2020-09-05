@@ -1,3 +1,4 @@
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200703085730198.jpg)  
 
 # TmingEngine
@@ -68,11 +69,22 @@ CMake [https://cmake.org](https://cmake.org)
 ## Scripting With Mono
 > TmingEngine use mono to support C# for scripting . And we can debug the c# code from source code with Visual Studio. So we can make a breakpoint in the c++ Editor project and make breakpoint in C# script project at the time.
 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200905173730751.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25hbl9mZW5nX3l1,size_16,color_FFFFFF,t_70#pic_center)
+### Run TmingCore.dll
 1. Open  TmingEngine\src\Managed\TmingCore\TmingCore.sln
 2. build sln to generate 2 files TmingCore.dll TmingCore.dll.pdb 
-3. VS build success envt will use pdb2mdb tool generate TmingCore.dll.mdb
+3. VS build success event will use pdb2mdb tool generate TmingCore.dll.mdb
 4. dll output path : TmingEngine\Data\EngineScript
+5. TmingEngine    Editor ==>  Console ==> Command   run TmingCore.dll
 
+### Soft  Debug TmingCore.dll
+1. Visual Studio  install plugin  [MonoRemoteDebugger](https://marketplace.visualstudio.com/items?itemName=Bongho.MonoRemoteDebugger)
+2. run TmingCore.dll
+3. run TmingEngine\Data\Tools\MonoRemoteDebugger.Server
+4. use TmingCore.sln 
+5. Toolbar -> Extensions -> MonoRemoteDebugger -> Debug with Mono (remote)
+6. Type remote IP Address .
+7. Click Connect button.
 
 ## Roadmap
 - [x] import assimp by source code
@@ -89,8 +101,6 @@ CMake [https://cmake.org](https://cmake.org)
 - [x] load a model from file manager 
 - [x] 使用思源字体支持中文
  
-
-
 
 #  The reference 
 
@@ -109,4 +119,4 @@ CMake [https://cmake.org](https://cmake.org)
 13. [https://github.com/adobe-fonts/source-han-sans/tree/release](https://github.com/adobe-fonts/source-han-sans/tree/release)
 14. [https://github.com/ssloy/tinyrenderer](https://github.com/ssloy/tinyrenderer)
 15. [http://www.yinwang.org/blog-cn/2012/08/01/interpreter](http://www.yinwang.org/blog-cn/2012/08/01/interpreter)
-16. https://marketplace.visualstudio.com/items?itemName=Bongho.MonoRemoteDebugger
+16. [https://marketplace.visualstudio.com/items?itemName=Bongho.MonoRemoteDebugger](https://marketplace.visualstudio.com/items?itemName=Bongho.MonoRemoteDebugger)
