@@ -40,11 +40,18 @@ namespace TmingEngine
 	ENGINE_CLASS class Camera
 	{
 	public:
-		Vector3 Position;
+
 		Camera(Vector3 pos)
 		{
 			Position = pos;
 		}
+
+		Matrix LookAt()
+		{
+		}
+		Vector3 Position = Vector3(0, 2, 1);
+		Vector3 center = Vector3(0, 2, 0);	//相机朝向原点
+		Vector3 up = Vector3(0, 1, 0);		//相机向上
 	};
 }
 #endif // TmingEngine_Engine_Rending_Camera_hpp_ 

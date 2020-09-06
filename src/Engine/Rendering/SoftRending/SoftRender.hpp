@@ -65,7 +65,7 @@ namespace TmingEngine
 		//so on to the VRAM (Vedio Random Access Memory)
 		void LoadAssetToMemory()
 		{
-			character.Init(FileSystem::getPath("resources/objects/cyborg/cyborg.obj"));
+			character.Init(FileSystem::getPath("resources/obj/african_head/african_head.obj"));
 			for (int i = 0; i < character.meshes[0]->indices.size(); i += 3)
 			{
 				int  index1 = character.meshes[0]->indices[i];
@@ -137,7 +137,8 @@ namespace TmingEngine
 			//// load image, create texture and generate mipmaps
 			int nrChannels;
 
-			TGAImage image(frameWidth, frameHeight, TGAImage::RGB);
+			TGAImage frame(frameWidth, frameHeight, TGAImage::RGB);
+			TGAImage depth(frameWidth, frameHeight, TGAImage::RGB);
 
 			//around the Y axis rotate 180
 			Matrix model(4, 4, {
@@ -155,10 +156,9 @@ namespace TmingEngine
 
 			Matrix viewPoint = Viewport(0, 0, frameWidth, frameHeight);
 
-			//std::cout << view << std::endl;
-
 			int len = frameWidth * frameHeight;
 			int* zbuffer = new int[len];
+			int* shadowbuffer = new int[len];
 
 			for (int inedx = 0; inedx < len; inedx++)
 			{
@@ -183,19 +183,35 @@ namespace TmingEngine
 					primitiveDatas[i].poins[1],
 					primitiveDatas[i].poins[2],
 					frameWidth, frameHeight,
-					image, red, zbuffer, sunlitght, primitiveDatas[i].shader);
-
-				//	triangle(primitiveDatas[i].poins[0],
-				//	primitiveDatas[i].poins[1],
-				//	primitiveDatas[i].poins[2], image, red);
+					depth, red, zbuffer, sunlitght, primitiveDatas[i].shader);
 			}
 
-			image.flip_horizontally();
+			for (int i = 0; i < primitiveDatas.size(); i++)
+			{
+				primitiveDatas[i].shader = new GouraudShader();
+				primitiveDatas[i].shader->SetModel(model);
+				primitiveDatas[i].shader->SetView(view);
+				primitiveDatas[i].shader->SetProjection(orthographic);
+				primitiveDatas[i].shader->SetViewPoint(viewPoint);
+
+				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
+				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+
+				fillTriangleFromEdgeWitchZbuffer(
+					primitiveDatas[i].poins[0],
+					primitiveDatas[i].poins[1],
+					primitiveDatas[i].poins[2],
+					frameWidth, frameHeight,
+					frame, red, zbuffer, sunlitght, primitiveDatas[i].shader);
+			}
+
+			frame.flip_horizontally();
 			//image.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/1.tga").c_str());
 
-			image.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
-			unsigned char* data = image.buffer(); // directly set the opengl texture data with tag imgae data
-			nrChannels = image.get_bytespp();
+			frame.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
+			unsigned char* data = frame.buffer(); // directly set the opengl texture data with tag imgae data
+			nrChannels = frame.get_bytespp();
 
 			if (data)
 			{
@@ -229,7 +245,7 @@ namespace TmingEngine
 				std::cout << "Failed to load texture" << std::endl;
 			}
 
-			image.clear();
+			depth.clear();
 		}
 	};
 } //namespace TmingEngine

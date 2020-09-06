@@ -80,7 +80,7 @@ namespace TmingEngine
 		//float currentFrame = glfwGetTime();
 		//deltaTime = currentFrame - lastFrame;
 		//lastFrame = currentFrame;
-		//processInput(window);
+
 		RenderFrameBuffer();
 
 		glClearColor(0.2f, 0.2f, 0.3f, 1.0f);

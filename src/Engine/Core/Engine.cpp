@@ -35,8 +35,9 @@ namespace TmingEngine
 	{
 		m_windows = new ScreenWin(m_context);
 		m_sceneManager = new SceneManager();
-		m_sceneManager->AllScenes.push_back(new Scene());
 		m_softRender = new SoftRender(m_context);
+
+		m_sceneManager->AllScenes.push_back(new Scene());
 
 		m_context->RegisterSubsystem(this);
 		m_context->RegisterSubsystem(m_windows);
@@ -62,6 +63,7 @@ namespace TmingEngine
 			for (int i = 0; i < m_sceneManager->AllScenes.size(); i++)
 			{
 				m_sceneManager->AllScenes[i]->Update();
+				//m_softRender->DrawCall();
 			}
 		}
 	}
