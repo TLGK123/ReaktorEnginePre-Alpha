@@ -23,10 +23,16 @@
    limitations under the License.
 */
 
-#include "Scene.hpp"
+#include "SceneManager.hpp"
 
 namespace TmingEngine {
-
-
-
+	void SceneManager::LoadScene()
+	{
+	}
+	void SceneManager::UnLoadScene()
+	{
+	}
+	void SceneManager::CreateScene()
+	{
+	}
 }

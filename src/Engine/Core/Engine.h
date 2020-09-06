@@ -30,14 +30,16 @@
 
 #include <memory>
 
-#include "Context.h"
-#include "SceneManager/Scene.hpp"
+#include "Core/Context.h"
+#include "Core/GameObject.hpp"
+#include "Core/Log.h"
+
 #include "Plantform/Windows/IWindows.h"
 #include "Plantform/Windows/win/ScreenWin.h"
 #include "Plantform/Time/Timer.h"
 
-#include "GameObject.hpp"
-#include "Core/Log.h"
+#include "SceneManager/SceneManager.hpp"
+#include "SceneManager/Scene.hpp"
 
 namespace TmingEngine
 {
@@ -65,9 +67,10 @@ namespace TmingEngine
 
 		Context* GetContext() { return m_context; }
 
-		Scene* currentScene;
+		SceneManager* m_sceneManager;
 
 		IWindows* windows;
+
 	private:
 
 		Timer* m_timer;

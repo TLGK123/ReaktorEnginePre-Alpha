@@ -23,25 +23,29 @@
    limitations under the License.
 */
 
-#ifndef TmingEngine_Engine_Scene_hpp_
-#define TmingEngine_Engine_Scene_hpp_
+#ifndef TmingEngine_Engine_SceneManager_hpp_
+#define TmingEngine_Engine_SceneManager_hpp_
 
 #include <string>
-#include <stdio.h>
-#include "SceneManager/Components/Transform.h"
+#include <vector>
+
 #include "Core/GameObject.hpp"
+#include "SceneManager/Scene.hpp"
+#include "SceneManager/Components/Transform.h"
+
 #include "tgaimage/tgaimage.h"
 #include "yaml-cpp/yaml.h"
 
-using namespace std;
 namespace TmingEngine {
 	class SceneManager
 	{
 	public:
-
+		vector<Scene*> AllScenes;
+		void LoadScene();
+		void UnLoadScene();
+		void CreateScene();
 	private:
-
 	};
 }
 
-#endif /* Scene_hpp */
+#endif /* TmingEngine_Engine_SceneManager_hpp_ */

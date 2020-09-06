@@ -90,11 +90,15 @@ namespace TmingEngine
 		}
 
 		auto engine = Global<Context>().GetSubsystem<Engine>();
-		auto scene = engine->currentScene;
-		if (ImGui::TreeNode("test"))
+		auto allScene = engine->m_sceneManager->AllScenes;
+		for (int i = 0; i < allScene.size(); i++)
 		{
-			showTransform(scene->SceneRoot->transform);
-			ImGui::TreePop();
+			auto scene = allScene[i];
+			if (ImGui::TreeNode(scene->name.c_str()))
+			{
+				showTransform(scene->SceneRoot->transform);
+				ImGui::TreePop();
+			}
 		}
 
 		ImGui::End();

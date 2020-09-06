@@ -34,10 +34,12 @@ namespace TmingEngine
 	bool Engine::Initialize()
 	{
 		windows = new ScreenWin(m_context);
+		m_sceneManager = new SceneManager();
+		m_sceneManager->AllScenes.push_back(new Scene());
 
 		m_context->RegisterSubsystem(this);
 		m_context->RegisterSubsystem(windows);
-		currentScene = new Scene();
+
 		return true;
 	}
 
@@ -53,9 +55,12 @@ namespace TmingEngine
 
 	void Engine::RenderScene()
 	{
-		if (currentScene != nullptr)
+		if (m_sceneManager != nullptr && m_sceneManager->AllScenes.size() > 0)
 		{
-			currentScene->Update();
+			for (int i = 0; i < m_sceneManager->AllScenes.size(); i++)
+			{
+				m_sceneManager->AllScenes[i]->Update();
+			}
 		}
 	}
 
