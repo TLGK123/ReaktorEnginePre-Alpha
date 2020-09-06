@@ -34,10 +34,12 @@ namespace TmingEngine
 	void TmingEngine::Game::Begin()
 	{
 		Debug::Log("------Start------Application Stage---------------------------------\n");
-
-		softRender.LoadAssetToMemory();
-		softRender.SetRenderStatus();
-		softRender.DrawCall();
+		auto context = &Global<Context>();
+		Engine* eg = context->GetSubsystem<Engine>();
+		softRender = eg->m_softRender;
+		softRender->LoadAssetToMemory();
+		softRender->SetRenderStatus();
+		softRender->DrawCall();
 	}
 
 	void TmingEngine::Game::Update()
@@ -49,9 +51,9 @@ namespace TmingEngine
 			ImGui::End();
 			return;
 		}
-		ImTextureID my_tex_id = (void*)softRender.frameID;
-		float my_tex_w = softRender.frameWidth;
-		float my_tex_h = softRender.frameHeight;
+		ImTextureID my_tex_id = (void*)softRender->frameID;
+		float my_tex_w = softRender->frameWidth;
+		float my_tex_h = softRender->frameHeight;
 
 		ImGui::Text("%.0fx%.0f", my_tex_w, my_tex_h);
 		//----------------------------------------------------------------- -1 -1  Image reversal

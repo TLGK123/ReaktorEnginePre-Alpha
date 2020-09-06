@@ -308,11 +308,11 @@ namespace TmingEngine
 	{
 		auto context = &Global<Context>();
 		Engine* eg = context->GetSubsystem<Engine>();
-		IWindows* win = eg->windows;
+		IWindows* win = eg->m_windows;
 		auto ga = win->GetSubWidget<Game>();
 
-		SoftRender softRender;
-		softRender.LoadAssetToMemory();
+		SoftRender* softRender = eg->m_softRender;
+		softRender->LoadAssetToMemory();
 
 		Pair* env = new Pair();
 		string  script = FileSystem::getPath("Data/EngineScript/scheme.scm");
@@ -324,10 +324,10 @@ namespace TmingEngine
 		Vector3 d = Vector3(x, y, z);
 		std::cout << " Draw a model Direction :" << d << std::endl;
 
-		softRender.SetRenderStatus();
-		softRender.center = d;
+		softRender->SetRenderStatus();
+		softRender->center = d;
 
-		softRender.DrawCall();
+		softRender->DrawCall();
 	}
 
 	void Console::TestMono()

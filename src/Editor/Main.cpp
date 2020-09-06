@@ -44,8 +44,8 @@ int main(int argc, char* argv[])
 	}
 
 	engine->SetEngineModeToEditor(true);
-	engine->windows->InsertEditorWidget = SetEditorWidget;
-	engine->windows->Initialize();
+	engine->m_windows->InsertEditorWidget = SetEditorWidget;
+	engine->m_windows->Initialize();
 
 	long frameNum = 0;
 	while (!engine->ShouldClose())
@@ -62,7 +62,7 @@ void SetEditorWidget()
 {
 	auto context = &Global<Context>();
 	Engine* eg = context->GetSubsystem<Engine>();
-	IWindows* win = eg->windows;
+	IWindows* win = eg->m_windows;
 	win->RegisteWidget(new SceneView(context));
 	//win->RegisteWidget(new DemoMenu(context));
 	win->RegisteWidget(new Project(context));

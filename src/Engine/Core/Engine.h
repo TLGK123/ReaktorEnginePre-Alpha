@@ -41,6 +41,8 @@
 #include "SceneManager/SceneManager.hpp"
 #include "SceneManager/Scene.hpp"
 
+#include "Rendering/SoftRending/SoftRender.hpp"
+
 namespace TmingEngine
 {
 	class Timer;
@@ -69,7 +71,9 @@ namespace TmingEngine
 
 		SceneManager* m_sceneManager;
 
-		IWindows* windows;
+		IWindows* m_windows;
+
+		SoftRender* m_softRender;
 
 	private:
 

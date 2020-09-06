@@ -27,6 +27,7 @@
 #define TmingEngine_Engine_Rending_SoftRender_hpp_
 
 #include "Core/EngineDefs.h"
+#include "Core/SubSystem.h"
 #include "Plantform/File/FileSystem.h"
 
 #include "Rendering/OpenGL/OpenGLModel.hpp"
@@ -39,10 +40,10 @@
 
 namespace TmingEngine
 {
-	ENGINE_CLASS class SoftRender
+	ENGINE_CLASS class SoftRender : public Subsystem
 	{
 	public:
-		SoftRender() {};
+		SoftRender(Context* context) : Subsystem(context) {};
 		~SoftRender() {};
 
 		unsigned int frameID = 0;

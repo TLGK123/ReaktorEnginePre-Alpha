@@ -208,7 +208,7 @@ namespace TmingEngine
 							|| (t.name.find(".lua") != string::npos)
 							)
 						{
-							auto screen = Global<Context>().GetSubsystem<Engine>()->windows;
+							auto screen = Global<Context>().GetSubsystem<Engine>()->m_windows;
 							auto codeEditor = screen->GetSubWidget<CodeEditor>();
 							auto txt = Global<Context>().GetSubsystem<FileSystem>()->GetFileContent(fpath);
 
@@ -227,7 +227,7 @@ namespace TmingEngine
 							|| (t.name.find(".TGA") != string::npos)
 							)
 						{
-							auto screen = Global<Context>().GetSubsystem<Engine>()->windows;
+							auto screen = Global<Context>().GetSubsystem<Engine>()->m_windows;
 							auto previewer = screen->GetSubWidget<Preview>();
 							previewer->PreviewTexture(fpath);
 							previewer->Show();

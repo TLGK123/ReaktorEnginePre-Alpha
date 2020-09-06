@@ -33,24 +33,26 @@ namespace TmingEngine
 
 	bool Engine::Initialize()
 	{
-		windows = new ScreenWin(m_context);
+		m_windows = new ScreenWin(m_context);
 		m_sceneManager = new SceneManager();
 		m_sceneManager->AllScenes.push_back(new Scene());
+		m_softRender = new SoftRender(m_context);
 
 		m_context->RegisterSubsystem(this);
-		m_context->RegisterSubsystem(windows);
+		m_context->RegisterSubsystem(m_windows);
+		m_context->RegisterSubsystem(m_softRender);
 
 		return true;
 	}
 
 	void Engine::Update()
 	{
-		windows->WinRender();
+		m_windows->WinRender();
 	}
 
 	void Engine::Destory()
 	{
-		windows->WinClose();
+		m_windows->WinClose();
 	}
 
 	void Engine::RenderScene()
@@ -66,12 +68,12 @@ namespace TmingEngine
 
 	bool Engine::ShouldClose()
 	{
-		return windows->WinShouldClose();
+		return m_windows->WinShouldClose();
 	}
 
 	void Engine::SetEngineModeToEditor(bool mode)
 	{
 		isEditorMode = mode;
-		windows->isEditorWindows = mode;
+		m_windows->isEditorWindows = mode;
 	}
 }

@@ -37,6 +37,7 @@
 #include "scriptstdstring/scriptstdstring.h"
 #include "scriptbuilder/scriptbuilder.h"
 
+#include "Core/Engine.h"
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
 #include "Core/Math/Vector2.h"
@@ -64,9 +65,8 @@ namespace TmingEngine
 		void Begin();
 		void Update();
 		void End();
-
+		SoftRender* softRender;
 		unsigned int imageId;
-		SoftRender softRender;
 	};
 } // namespace TmingEngine
 
