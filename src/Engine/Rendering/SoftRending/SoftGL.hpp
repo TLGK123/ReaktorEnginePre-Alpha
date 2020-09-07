@@ -54,20 +54,6 @@ namespace TmingEngine
 
 	Vector2* findTriangleBox(Vector3 t0, Vector3 t1, Vector3 t2);
 
-	Matrix LookAt(Vector3 eye, Vector3 center, Vector3 up);
-
-	// left right bottom ,top ,near ,far
-	Matrix Perspective(float l, float r, float b, float t, float n, float f);
-
-	//// left == right, bottom == top ,near ,far  simplified  Matrix
-	Matrix Perspective(float r, float t, float n, float f);
-
-	Matrix Orthographic(float l, float r, float b, float t, float n, float f);
-
-	Matrix Orthographic(float r, float t, float n, float f);
-
-	Matrix Viewport(int x, int y, int width, int heigh);
-
 	void point(int x, int y, TGAImage& image, TGAColor color);
 
 	void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color);

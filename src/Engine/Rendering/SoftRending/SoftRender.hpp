@@ -37,6 +37,7 @@
 #include "Rendering/SoftRending/SoftGL.hpp"
 #include "Rendering/TMColor.hpp"
 #include "Rendering/Light.hpp"
+#include "Rendering/Camera.hpp"
 
 namespace TmingEngine
 {
@@ -44,6 +45,7 @@ namespace TmingEngine
 	{
 	public:
 		SoftRender(Context* context) : Subsystem(context) {};
+
 		~SoftRender() {};
 
 		unsigned int frameID = 0;
@@ -52,9 +54,7 @@ namespace TmingEngine
 		int frameHeight = 640;
 		ILight* sunlitght;
 		Model character;
-		Vector3 CameraPos = Vector3(0, 2, 1);
-		Vector3 center = Vector3(0, 2, 0);	//相机朝向原点
-		Vector3 up = Vector3(0, 1, 0);		//相机向上
+		Camera camera;
 
 		//---------- Simulate  VRAM    Data
 		vector<Primitive> primitiveDatas;
@@ -88,6 +88,10 @@ namespace TmingEngine
 			sunlitght = new DirectLight();
 			((DirectLight*)sunlitght)->Direction = Vector3(0, 0, -3);
 			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
+
+			camera.position = Vector3(0, 2, 1);
+			camera.center = Vector3(0, 2, 0);
+			camera.up = Vector3(0, 1, 0);
 
 			IShader* shader = new DepthShader();
 
@@ -148,13 +152,13 @@ namespace TmingEngine
 				0,0,0,1,
 				});
 
-			Matrix view = LookAt(CameraPos, center, up);
+			Matrix view = camera.LookAt();
 
-			Matrix perspective = Perspective(1, 1, 1, 3);
+			Matrix perspective = camera.Perspective(1, 1, 1, 3);
 
-			Matrix orthographic = Orthographic(2, 2, 0, 5);
+			Matrix orthographic = camera.Orthographic(2, 2, 0, 5);
 
-			Matrix viewPoint = Viewport(0, 0, frameWidth, frameHeight);
+			Matrix viewPoint = camera.Viewport(0, 0, frameWidth, frameHeight);
 
 			int len = frameWidth * frameHeight;
 			int* zbuffer = new int[len];
@@ -166,29 +170,29 @@ namespace TmingEngine
 			}
 
 			Debug::Log("------Start------Rasterizer Stage------------------------------------\n");
+			////IShader* shader = new DepthShader();
+			//for (int i = 0; i < primitiveDatas.size(); i++)
+			//{
+			//	primitiveDatas[i].shader->SetModel(model);
+			//	primitiveDatas[i].shader->SetView(view);
+			//	primitiveDatas[i].shader->SetProjection(orthographic);
+			//	primitiveDatas[i].shader->SetViewPoint(viewPoint);
 
+			//	primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
+			//	primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+			//	primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+
+			//	fillTriangleFromEdgeWitchZbuffer(
+			//		primitiveDatas[i].poins[0],
+			//		primitiveDatas[i].poins[1],
+			//		primitiveDatas[i].poins[2],
+			//		frameWidth, frameHeight,
+			//		depth, red, zbuffer, sunlitght, primitiveDatas[i].shader);
+			//}
+
+			//shader = new GouraudShader();
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
-				primitiveDatas[i].shader->SetModel(model);
-				primitiveDatas[i].shader->SetView(view);
-				primitiveDatas[i].shader->SetProjection(orthographic);
-				primitiveDatas[i].shader->SetViewPoint(viewPoint);
-
-				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
-				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
-				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
-
-				fillTriangleFromEdgeWitchZbuffer(
-					primitiveDatas[i].poins[0],
-					primitiveDatas[i].poins[1],
-					primitiveDatas[i].poins[2],
-					frameWidth, frameHeight,
-					depth, red, zbuffer, sunlitght, primitiveDatas[i].shader);
-			}
-
-			for (int i = 0; i < primitiveDatas.size(); i++)
-			{
-				primitiveDatas[i].shader = new GouraudShader();
 				primitiveDatas[i].shader->SetModel(model);
 				primitiveDatas[i].shader->SetView(view);
 				primitiveDatas[i].shader->SetProjection(orthographic);

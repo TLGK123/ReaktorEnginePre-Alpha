@@ -34,6 +34,7 @@
 #include "Core/Math/Matrix.h"
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Vector2.h"
+#include "Rendering/SoftRending/SoftGL.hpp"
 
 namespace TmingEngine
 {
@@ -41,17 +42,123 @@ namespace TmingEngine
 	{
 	public:
 
-		Camera(Vector3 pos)
+		Camera()
 		{
-			Position = pos;
+		}
+
+		Vector3 position = Vector3(0, 2, 1);
+		Vector3 center = Vector3(0, 2, 0);	//相机朝向原点
+		Vector3 up = Vector3(0, 1, 0);		//相机向上
+
+		Matrix LookAt(Vector3 eye, Vector3 center, Vector3 up)
+		{
+			Vector3 R, U, D;  // x y z
+			D = (eye - center).Normalize();    //从观察的物体到相机的一个方向向量
+			R = (up.Cross(D)).Normalize();
+			U = (D.Cross(R)).Normalize();
+
+			// A * B = C
+			// A-----a point dinfined in the new coordination space (camera space)
+			// B-----a new base axis define in the A coordination
+			// c-----the same point  aspect in the source coordination(world space)
+			// now we know the A (world space point position) ,the
+			// so B = A-1 * C   , A -1  = A transpose , a is a identity matrix
+			// but we must let the origin ponit is the same
+
+			Matrix Rotate(4, 4,
+				{
+				R.x , R.y , R.z , 0,
+				U.x , U.y , U.z , 0,
+				D.x , D.y , D.z , 0,
+				0	, 0   , 0   , 1,
+				});
+
+			Matrix T(4, 4,
+				{
+				1, 0, 0, -eye.x,
+				0, 1, 0, -eye.y,
+				0, 0, 1, -eye.z,
+				0, 0, 0,	1,
+				});
+
+			auto result = Rotate * T;
+			return result;
 		}
 
 		Matrix LookAt()
 		{
+			return	LookAt(position, center, up);
 		}
-		Vector3 Position = Vector3(0, 2, 1);
-		Vector3 center = Vector3(0, 2, 0);	//相机朝向原点
-		Vector3 up = Vector3(0, 1, 0);		//相机向上
+
+		// http://www.songho.ca/opengl/gl_projectionmatrix.html
+		// left right bottom ,top ,near ,far
+		Matrix Perspective(float l, float r, float b, float t, float n, float f)
+		{
+			Matrix prespective(4, 4,
+				{
+					2 * n / (r - l) , 0,(r + l) / (r - l),0,
+					0, 2 * n / (t - b) ,(t + b) / (t - b),0,
+					0,0, -(f + n) / (f - n),-2 * f * n / (f - n),
+					0,0,-1,0,
+				});
+			return prespective;
+		}
+
+		// left == right, bottom == top ,near ,far  simplified  Matrix
+		Matrix Perspective(float r, float t, float n, float f)
+		{
+			//r + l = 0;
+			//r - l = 2r; width
+
+			//t + b =0;
+			//t - b =2t  height
+
+			Matrix perspective(4, 4,
+				{
+					n / r ,0,0,0,
+					0, n / t,0, 0,
+					0,0, -(f + n) / (f - n),-2 * f * n / (f - n),
+					0,0,-1,0,
+				});
+			return perspective;
+		}
+
+		Matrix Orthographic(float l, float r, float b, float t, float n, float f)
+		{
+			Matrix orthographic(4, 4,
+				{
+					2 / (r - l) , 0, 0, -(r + l) / (r - l),
+					0, 2 / (t - b) , 0, -(t + b) / (t - b),
+					0, 0, -2 / (f - n), -(f + n) / (f - n),
+					0,0,0,1,
+				});
+			return orthographic;
+		}
+
+		Matrix Orthographic(float r, float t, float n, float f)
+		{
+			Matrix orthographic(4, 4,
+				{
+					1 / r , 0, 0, 0,
+					0, 1 / t , 0,0,
+					0, 0, -2 / (f - n), -(f + n) / (f - n),
+					0,0,0,1,
+				});
+			return orthographic;
+		}
+
+		Matrix Viewport(int x, int y, int width, int heigh)
+		{
+			int d = 255;
+			Matrix mat(4, 4,
+				{
+					width / 2.0f ,0,0, x + width / 2.0f ,
+					0 ,heigh / 2.0f ,0, y + heigh / 2.0f ,
+					0 ,0 ,d / 2.0f, d / 2.0f ,
+					0 ,0 ,d / 2.0f, 1 ,
+				});
+			return mat;
+		}
 	};
 }
 #endif // TmingEngine_Engine_Rending_Camera_hpp_ 

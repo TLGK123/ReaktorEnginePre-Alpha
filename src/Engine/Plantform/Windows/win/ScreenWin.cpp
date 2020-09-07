@@ -37,7 +37,7 @@ namespace TmingEngine
 	unsigned int frame_width = 1366;
 	unsigned int frame_height = 768;
 
-	Camera EditorCamera(Vector3(0.0f, 0.0f, 5.0f));     //  Editor  Scene  camera
+	Camera EditorCamera;     //  Editor  Scene  camera
 	glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 	float lastX = SCR_WIDTH / 2.0f;
