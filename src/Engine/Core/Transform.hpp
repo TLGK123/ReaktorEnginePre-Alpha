@@ -31,11 +31,11 @@
 
 #include "Core/EngineDefs.h"
 #include "Core/Context.h"
-//#include "Core/GameObject.hpp"
+#include "Core/GameObject.hpp"
 #include "Core/Math/Vector3.h"
 
 namespace TmingEngine {
-	class GameObject;
+	//extern class GameObject;
 	class ENGINE_CLASS Transform
 	{
 	public:

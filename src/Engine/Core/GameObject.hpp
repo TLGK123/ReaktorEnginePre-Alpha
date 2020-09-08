@@ -31,12 +31,12 @@
 
 #include "Core/EngineDefs.h"
 #include "Core/Context.h"
-#include "Core/Transform.hpp"
+//#include "Core/Transform.hpp"
 
 using namespace std;
 
 namespace TmingEngine {
-	//	class Transform;
+	extern	class Transform;
 	class ENGINE_CLASS GameObject
 	{
 	public:

@@ -24,6 +24,7 @@
 */
 
 #include "GameObject.hpp"
+#include "Core/Transform.hpp"
 
 namespace TmingEngine
 {
