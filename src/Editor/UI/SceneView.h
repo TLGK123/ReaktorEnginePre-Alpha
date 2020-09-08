@@ -30,8 +30,9 @@
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
 #include "Core/Log.h"
+#include "Core/Transform.hpp"
+
 #include "Plantform/Windows/Widget.h"
-#include "SceneManager/Components/Transform.h"
 #include "Selection.hpp"
 
 namespace TmingEngine

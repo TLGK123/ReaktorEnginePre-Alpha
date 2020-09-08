@@ -49,7 +49,7 @@ namespace TmingEngine
 		if (selectActive != NULL)
 		{
 			ImGui::Text(Selecttion::GetActiveObjectName().c_str());
-			Vector3 pos = selectActive->GetPositionLocal();
+			Vector3 pos = selectActive->position;
 
 			ImGui::InputFloat("X", &pos.x, 1.0f);
 			ImGui::InputFloat("Y", &pos.y, 1.0f);

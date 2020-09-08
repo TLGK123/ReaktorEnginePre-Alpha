@@ -28,13 +28,13 @@
 namespace TmingEngine {
 	Context* Selecttion::activeContext = NULL;
 	Transform* Selecttion::activeTransform = NULL;
-	string Selecttion::ProjectSelected = "";
+	std::string Selecttion::ProjectSelected = "";
 
-	string Selecttion::GetActiveObjectName()
+	std::string Selecttion::GetActiveObjectName()
 	{
 		if (activeTransform != NULL)
 		{
-			return activeTransform->GetGameObject()->GetGameObjectName();
+			return activeTransform->gameObject->GetGameObjectName();
 		}
 		else
 		{

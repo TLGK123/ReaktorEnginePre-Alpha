@@ -23,29 +23,41 @@
    limitations under the License.
 */
 
-#ifndef TmingEngine_Engine_SceneManager_hpp_
-#define TmingEngine_Engine_SceneManager_hpp_
+#ifndef TmingEngine_Engine_Core_Transform_hpp_
+#define TmingEngine_Engine_Core_Transform_hpp_
 
+#include <stdio.h>
 #include <string>
-#include <vector>
 
-#include "Core/GameObject.hpp"
-#include "SceneManager/Scene.hpp"
-#include "Core/Transform.hpp"
-
-#include "tgaimage/tgaimage.h"
-#include "yaml-cpp/yaml.h"
+#include "Core/EngineDefs.h"
+#include "Core/Context.h"
+//#include "Core/GameObject.hpp"
+#include "Core/Math/Vector3.h"
 
 namespace TmingEngine {
-	class SceneManager
+	class GameObject;
+	class ENGINE_CLASS Transform
 	{
 	public:
-		vector<Scene*> AllScenes;
-		void LoadScene();
-		void UnLoadScene();
-		void CreateScene();
-	private:
+		Transform();
+		GameObject* gameObject;
+
+		std::vector<Transform*> m_children;
+		Vector3 position;
+
+		Transform* parent;
+		std::string name;
+		void SetParent(Transform* p)
+		{
+			parent = p;
+			parent->m_children.push_back(p);
+		}
+
+		void SetPositionLocal(Vector3 p)
+		{
+			position = p;
+		}
 	};
 }
 
-#endif /* TmingEngine_Engine_SceneManager_hpp_ */
+#endif //TmingEngine_Engine_Core_Transform_hpp_

@@ -123,7 +123,7 @@ namespace TmingEngine
 
 	private:
 		// generate one frame mean that we will make one picture ,
-		// if we change the picture at the main therad update ,
+		// if we change the picture at the main thread update ,
 		// we will get a consecutive game scene
 		//
 		void GenerateFrames()
@@ -141,9 +141,7 @@ namespace TmingEngine
 			//// load image, create texture and generate mipmaps
 			int nrChannels;
 
-			TGAImage frame(frameWidth, frameHeight, TGAImage::RGB);
 			TGAImage depth(frameWidth, frameHeight, TGAImage::RGB);
-
 			//around the Y axis rotate 180
 			Matrix model(4, 4, {
 				cos(180.0f / 360 * 2 * Pi),0,sin(180.0f / 360 * 2 * Pi),0,
@@ -170,29 +168,46 @@ namespace TmingEngine
 			}
 
 			Debug::Log("------Start------Rasterizer Stage------------------------------------\n");
-			////IShader* shader = new DepthShader();
-			//for (int i = 0; i < primitiveDatas.size(); i++)
-			//{
-			//	primitiveDatas[i].shader->SetModel(model);
-			//	primitiveDatas[i].shader->SetView(view);
-			//	primitiveDatas[i].shader->SetProjection(orthographic);
-			//	primitiveDatas[i].shader->SetViewPoint(viewPoint);
 
-			//	primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
-			//	primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
-			//	primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+			ITexture* mainTex, * normalMap;
+			mainTex = new OpenGLTexture();
+			normalMap = new OpenGLTexture();
+			string path = FileSystem::getPath("resources/objects/cyborg") + '/' + string("cyborg_diffuse.tga");
+			mainTex->image = mainTex->LoadTGATexture(path.c_str());
+			normalMap->image = normalMap->LoadTGATexture(path.c_str());
+			vector<ITexture*> modelTextures;
+			modelTextures.push_back(mainTex);
+			modelTextures.push_back(normalMap);
 
-			//	fillTriangleFromEdgeWitchZbuffer(
-			//		primitiveDatas[i].poins[0],
-			//		primitiveDatas[i].poins[1],
-			//		primitiveDatas[i].poins[2],
-			//		frameWidth, frameHeight,
-			//		depth, red, zbuffer, sunlitght, primitiveDatas[i].shader);
-			//}
+			IShader* depthShader = new DepthShader();
+			depthShader->textures = modelTextures;
 
-			//shader = new GouraudShader();
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
+				primitiveDatas[i].shader = depthShader;
+				primitiveDatas[i].shader->SetModel(model);
+				primitiveDatas[i].shader->SetView(view);
+				primitiveDatas[i].shader->SetProjection(orthographic);
+				primitiveDatas[i].shader->SetViewPoint(viewPoint);
+
+				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
+				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+
+				fillTriangleFromEdgeWitchZbuffer(
+					primitiveDatas[i].poins[0],
+					primitiveDatas[i].poins[1],
+					primitiveDatas[i].poins[2],
+					frameWidth, frameHeight,
+					depth, red, zbuffer, sunlitght, primitiveDatas[i].shader);
+			}
+			;
+
+			TGAImage frame(frameWidth, frameHeight, TGAImage::RGB);
+			IShader* gouraudShader = new GouraudShader();
+			for (int i = 0; i < primitiveDatas.size(); i++)
+			{
+				primitiveDatas[i].shader = gouraudShader;
 				primitiveDatas[i].shader->SetModel(model);
 				primitiveDatas[i].shader->SetView(view);
 				primitiveDatas[i].shader->SetProjection(orthographic);

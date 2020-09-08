@@ -40,8 +40,7 @@ namespace TmingEngine
 
 	void GameObject::Initializer()
 	{
-		auto context = &Global<Context>();
-		transform = new Transform(context, this, nullptr);
+		transform = new Transform();
 	}
 
 	string GameObject::GetGameObjectName()

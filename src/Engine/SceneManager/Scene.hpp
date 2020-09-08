@@ -28,7 +28,7 @@
 
 #include <string>
 #include <stdio.h>
-#include "SceneManager/Components/Transform.h"
+#include "Core/Transform.hpp"
 #include "Core/GameObject.hpp"
 #include "tgaimage/tgaimage.h"
 #include "yaml-cpp/yaml.h"

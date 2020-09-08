@@ -30,8 +30,8 @@
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
 #include "Core/Log.h"
+#include "Core/Transform.hpp"
 
-#include "SceneManager/Components/Transform.h"
 #include "Plantform/Windows/Widget.h"
 #include "Selection.hpp"
 

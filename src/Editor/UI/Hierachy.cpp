@@ -43,21 +43,21 @@ namespace TmingEngine
 		{
 			if ((*ite)->m_children.size() > 0)
 			{
-				if (ImGui::TreeNode((*ite)->GetGameObject()->name.c_str()))
+				if (ImGui::TreeNode((*ite)->gameObject->name.c_str()))
 				{
 					if (ImGui::IsItemClicked())
 					{
-						Debug::Log("选中--1-父级对象 %s \n", (*ite)->GetGameObject()->name.c_str());
+						Debug::Log("选中--1-父级对象 %s \n", (*ite)->gameObject->name.c_str());
 						Selecttion::activeTransform = *ite;
 					}
-					showTransform((*ite)->GetGameObject()->transform);
+					showTransform((*ite)->gameObject->transform);
 					ImGui::TreePop();
 				}
 				else
 				{
 					if (ImGui::IsItemClicked())
 					{
-						Debug::Log("选中--2-父级对象 %s \n", (*ite)->GetGameObject()->name.c_str());
+						Debug::Log("选中--2-父级对象 %s \n", (*ite)->gameObject->name.c_str());
 						Selecttion::activeTransform = *ite;
 					}
 				}
@@ -67,11 +67,11 @@ namespace TmingEngine
 				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 				node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 				int tempIndex = 9, node_clicked;
-				if (ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags, (*ite)->GetGameObject()->name.c_str()))
+				if (ImGui::TreeNodeEx((void*)(intptr_t)tempIndex, node_flags, (*ite)->gameObject->name.c_str()))
 				{
 					if (ImGui::IsItemClicked())
 					{
-						Debug::Log("选中--末端物体 %s \n", (*ite)->GetGameObject()->name.c_str());
+						Debug::Log("选中--末端物体 %s \n", (*ite)->gameObject->name.c_str());
 						Selecttion::activeTransform = *ite;
 					}
 				}

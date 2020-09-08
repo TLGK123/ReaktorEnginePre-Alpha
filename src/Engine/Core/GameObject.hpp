@@ -31,12 +31,12 @@
 
 #include "Core/EngineDefs.h"
 #include "Core/Context.h"
-#include "SceneManager/Components/Transform.h"
-#include "SceneManager/Components/IComponent.h"
+#include "Core/Transform.hpp"
 
 using namespace std;
 
 namespace TmingEngine {
+	//	class Transform;
 	class ENGINE_CLASS GameObject
 	{
 	public:

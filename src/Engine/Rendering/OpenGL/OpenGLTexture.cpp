@@ -58,27 +58,8 @@ namespace TmingEngine
 	{
 		TGAImage image;
 		string filename = string(path);
-		//int width, height, channel;
-		//unsigned char* data = stbi_load(filename.c_str(), &width, &height, &channel, 0);
-		//if (data)
-		//{
-		//	image.data = data;
-		//	image.width = width;
-		//	image.height = height;
-		//	image.bytespp = channel;
-		//}
-		//else
-		//{
-		//	std::cout << "Texture failed to load at path: " << path << std::endl;
-		//	stbi_image_free(data);
-		//}
 		image.read_tga_file(filename.c_str());
-		//image.flip_horizontally();
 		image.flip_vertically();
-
-		//string wf = filename + ".tga";
-		//image.write_tga_file(wf.c_str());
-
 		return image;
 	}
 }

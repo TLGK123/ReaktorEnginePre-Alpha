@@ -27,8 +27,10 @@
 #define Selection_hpp
 
 #include <stdio.h>
+#include <string>
+
 #include "Core/Context.h"
-#include "SceneManager/Components/Transform.h"
+#include "Core/Transform.hpp"
 
 namespace TmingEngine
 {
@@ -37,8 +39,8 @@ namespace TmingEngine
 	public:
 		static Context* activeContext;
 		static Transform* activeTransform;
-		static string GetActiveObjectName();
-		static string ProjectSelected;
+		static std::string GetActiveObjectName();
+		static std::string ProjectSelected;
 	};
 }
 
