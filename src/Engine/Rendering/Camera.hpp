@@ -47,7 +47,7 @@ namespace TmingEngine
 		}
 
 		Vector3 position = Vector3(0, 2, 1);
-		Vector3 center = Vector3(0, 2, 0);	//相机朝向原点
+		Vector3 center = Vector3(0, 0, 0);	//相机朝向原点
 		Vector3 up = Vector3(0, 1, 0);		//相机向上
 
 		Matrix LookAt(Vector3 eye, Vector3 center, Vector3 up)

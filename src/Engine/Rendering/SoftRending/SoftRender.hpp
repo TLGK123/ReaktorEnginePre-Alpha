@@ -65,7 +65,8 @@ namespace TmingEngine
 		//so on to the VRAM (Vedio Random Access Memory)
 		void LoadAssetToMemory()
 		{
-			character.Init(FileSystem::getPath("resources/obj/african_head/african_head.obj"));
+			character.Init(FileSystem::getPath("resources/objects/cyborg/cyborg.obj"));
+			primitiveDatas.clear();
 			for (int i = 0; i < character.meshes[0]->indices.size(); i += 3)
 			{
 				int  index1 = character.meshes[0]->indices[i];
@@ -128,19 +129,6 @@ namespace TmingEngine
 		//
 		void GenerateFrames()
 		{
-			glGenTextures(1, &frameID);
-
-			glBindTexture(GL_TEXTURE_2D, frameID);
-			// set the texture wrapping parameters
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			// set texture wrapping to GL_REPEAT (default wrapping method)
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			// set texture filtering parameters
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			//// load image, create texture and generate mipmaps
-			int nrChannels;
-
 			TGAImage depth(frameWidth, frameHeight, TGAImage::RGB);
 			//around the Y axis rotate 180
 			Matrix model(4, 4, {
@@ -181,30 +169,34 @@ namespace TmingEngine
 
 			IShader* depthShader = new DepthShader();
 			depthShader->textures = modelTextures;
+			depthShader->light = sunlitght;
+			//for (int i = 0; i < primitiveDatas.size(); i++)
+			//{
+			//	primitiveDatas[i].shader = depthShader;
+			//	primitiveDatas[i].shader->SetModel(model);
+			//	primitiveDatas[i].shader->SetView(view);
+			//	primitiveDatas[i].shader->SetProjection(orthographic);
+			//	primitiveDatas[i].shader->SetViewPoint(viewPoint);
 
-			for (int i = 0; i < primitiveDatas.size(); i++)
-			{
-				primitiveDatas[i].shader = depthShader;
-				primitiveDatas[i].shader->SetModel(model);
-				primitiveDatas[i].shader->SetView(view);
-				primitiveDatas[i].shader->SetProjection(orthographic);
-				primitiveDatas[i].shader->SetViewPoint(viewPoint);
+			//	primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
+			//	primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+			//	primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
 
-				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
-				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
-				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+			//	fillTriangleFromEdgeWitchZbuffer(
+			//		primitiveDatas[i].poins[0],
+			//		primitiveDatas[i].poins[1],
+			//		primitiveDatas[i].poins[2],
+			//		frameWidth, frameHeight,
+			//		depth, red, zbuffer, sunlitght, primitiveDatas[i].shader);
+			//}
 
-				fillTriangleFromEdgeWitchZbuffer(
-					primitiveDatas[i].poins[0],
-					primitiveDatas[i].poins[1],
-					primitiveDatas[i].poins[2],
-					frameWidth, frameHeight,
-					depth, red, zbuffer, sunlitght, primitiveDatas[i].shader);
-			}
 			;
 
+			LoadAssetToMemory();
 			TGAImage frame(frameWidth, frameHeight, TGAImage::RGB);
 			IShader* gouraudShader = new GouraudShader();
+			gouraudShader->textures = modelTextures;
+			gouraudShader->light = sunlitght;
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = gouraudShader;
@@ -226,45 +218,48 @@ namespace TmingEngine
 			}
 
 			frame.flip_horizontally();
-			//image.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/1.tga").c_str());
+
+			frame.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/1.tga").c_str());
 
 			frame.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
+
+			glGenTextures(1, &frameID);
+
+			glBindTexture(GL_TEXTURE_2D, frameID);
+			// set the texture wrapping parameters
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			// set texture wrapping to GL_REPEAT (default wrapping method)
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			// set texture filtering parameters
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			//// load image, create texture and generate mipmaps
+			int nrChannels;
+
 			unsigned char* data = frame.buffer(); // directly set the opengl texture data with tag imgae data
 			nrChannels = frame.get_bytespp();
 
-			if (data)
+			if (nrChannels == 4)
 			{
-				try
-				{
-					if (nrChannels == 4)
-					{
-						glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frameWidth, frameHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-					}
-					else if (nrChannels == 3)
-					{
-						glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frameWidth, frameHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-					}
-					else if (nrChannels == 1)
-					{
-						glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, frameWidth, frameHeight, 0, GL_RED, GL_UNSIGNED_BYTE, data);
-					}
-					else
-					{
-						int c = nrChannels;
-					}
-
-					glGenerateMipmap(GL_TEXTURE_2D);
-				}
-				catch (const std::exception&)
-				{
-				}
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frameWidth, frameHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			}
+			else if (nrChannels == 3)
+			{
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frameWidth, frameHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			}
+			else if (nrChannels == 1)
+			{
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, frameWidth, frameHeight, 0, GL_RED, GL_UNSIGNED_BYTE, data);
 			}
 			else
 			{
-				std::cout << "Failed to load texture" << std::endl;
+				int c = nrChannels;
 			}
 
+			glGenerateMipmap(GL_TEXTURE_2D);
+
 			depth.clear();
+			frame.clear();
 		}
 	};
 } //namespace TmingEngine

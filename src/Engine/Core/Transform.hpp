@@ -35,7 +35,6 @@
 #include "Core/Math/Vector3.h"
 
 namespace TmingEngine {
-	//extern class GameObject;
 	class ENGINE_CLASS Transform
 	{
 	public:
