@@ -86,34 +86,6 @@ namespace TmingEngine
 		// spicify the Texture , vertex shader ,fragment shader for each Primitive
 		void SetRenderStatus()
 		{
-			sunlitght = new DirectLight();
-			((DirectLight*)sunlitght)->Direction = Vector3(0, 0, -3);
-			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
-
-			camera.position = Vector3(0, 2, 1);
-			camera.center = Vector3(0, 2, 0);
-			camera.up = Vector3(0, 1, 0);
-
-			IShader* shader = new DepthShader();
-
-			shader->light = sunlitght;
-			vector<ITexture*> modelTextures;
-			ITexture* mainTex, * normalMap;
-			mainTex = new OpenGLTexture();
-			normalMap = new OpenGLTexture();
-
-			string path = FileSystem::getPath("resources/objects/cyborg") + '/' + string("cyborg_diffuse.tga");
-			mainTex->image = mainTex->LoadTGATexture(path.c_str());
-			normalMap->image = normalMap->LoadTGATexture(path.c_str());
-
-			modelTextures.push_back(mainTex);
-			modelTextures.push_back(normalMap);
-
-			shader->textures = modelTextures;
-			for (int i = 0; i < primitiveDatas.size(); i++)
-			{
-				primitiveDatas[i].shader = shader;
-			}
 		}
 
 		void DrawCall()
@@ -129,12 +101,20 @@ namespace TmingEngine
 		//
 		void GenerateFrames()
 		{
+			sunlitght = new DirectLight();
+			((DirectLight*)sunlitght)->Direction = Vector3(0, -2, -1);
+			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
+
+			camera.position = Vector3(0, 2, 1);
+			camera.center = Vector3(0, 2, 0);
+			camera.up = Vector3(0, 1, 0);
+
 			TGAImage depth(frameWidth, frameHeight, TGAImage::RGB);
 			//around the Y axis rotate 180
 			Matrix model(4, 4, {
-				cos(180.0f / 360 * 2 * Pi),0,sin(180.0f / 360 * 2 * Pi),0,
+				cos(85.0f / 360 * 2 * Pi),0,sin(85.0f / 360 * 2 * Pi),0,
 				0,1,0,0,
-				-sin(180.0f / 360 * 2 * Pi),0,cos(180.0f / 360 * 2 * Pi),0,
+				-sin(85.0f / 360 * 2 * Pi),0,cos(85.0f / 360 * 2 * Pi),0,
 				0,0,0,1,
 				});
 
@@ -152,6 +132,7 @@ namespace TmingEngine
 
 			for (int inedx = 0; inedx < len; inedx++)
 			{
+				shadowbuffer[inedx] = 10000000;
 				zbuffer[inedx] = 10000000;
 			}
 
@@ -170,26 +151,30 @@ namespace TmingEngine
 			IShader* depthShader = new DepthShader();
 			depthShader->textures = modelTextures;
 			depthShader->light = sunlitght;
-			//for (int i = 0; i < primitiveDatas.size(); i++)
-			//{
-			//	primitiveDatas[i].shader = depthShader;
-			//	primitiveDatas[i].shader->SetModel(model);
-			//	primitiveDatas[i].shader->SetView(view);
-			//	primitiveDatas[i].shader->SetProjection(orthographic);
-			//	primitiveDatas[i].shader->SetViewPoint(viewPoint);
+			view = camera.LookAt(Vector3(0, 2, 1), camera.center, camera.up);
+			for (int i = 0; i < primitiveDatas.size(); i++)
+			{
+				primitiveDatas[i].shader = depthShader;
+				primitiveDatas[i].shader->SetModel(model);
+				primitiveDatas[i].shader->SetView(view);
+				primitiveDatas[i].shader->SetProjection(orthographic);
+				primitiveDatas[i].shader->SetViewPoint(viewPoint);
 
-			//	primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
-			//	primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
-			//	primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
+				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
 
-			//	fillTriangleFromEdgeWitchZbuffer(
-			//		primitiveDatas[i].poins[0],
-			//		primitiveDatas[i].poins[1],
-			//		primitiveDatas[i].poins[2],
-			//		frameWidth, frameHeight,
-			//		depth, red, zbuffer, sunlitght, primitiveDatas[i].shader);
-			//}
-
+				fillTriangleFromEdgeWitchZbuffer(
+					primitiveDatas[i].poins[0],
+					primitiveDatas[i].poins[1],
+					primitiveDatas[i].poins[2],
+					frameWidth, frameHeight,
+					depth, red, shadowbuffer, sunlitght, primitiveDatas[i].shader);
+			}
+			depth.flip_horizontally();
+			depth.flip_vertically();  //for write to disk
+			depth.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/depth.tga").c_str());
+			depth.flip_vertically();  // reture normal
 			;
 
 			LoadAssetToMemory();
@@ -197,6 +182,7 @@ namespace TmingEngine
 			IShader* gouraudShader = new GouraudShader();
 			gouraudShader->textures = modelTextures;
 			gouraudShader->light = sunlitght;
+			view = camera.LookAt(camera.position, camera.center, camera.up);
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = gouraudShader;
@@ -218,9 +204,9 @@ namespace TmingEngine
 			}
 
 			frame.flip_horizontally();
-
-			frame.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/1.tga").c_str());
-
+			frame.flip_vertically();
+			frame.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/frame.tga").c_str());
+			frame.flip_vertically();
 			frame.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
 
 			glGenTextures(1, &frameID);
