@@ -49,6 +49,7 @@ namespace TmingEngine
 		~SoftRender() {};
 
 		unsigned int frameID = 0;
+		unsigned int depthID = 0;
 
 		int frameWidth = 640;
 		int frameHeight = 640;
@@ -102,7 +103,7 @@ namespace TmingEngine
 		void GenerateFrames()
 		{
 			sunlitght = new DirectLight();
-			((DirectLight*)sunlitght)->Direction = Vector3(0, -2, -1);
+			((DirectLight*)sunlitght)->Direction = Vector3(-1, -2, 0);
 			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
 
 			camera.position = Vector3(0, 2, 1);
@@ -112,9 +113,9 @@ namespace TmingEngine
 			TGAImage depth(frameWidth, frameHeight, TGAImage::RGB);
 			//around the Y axis rotate 180
 			Matrix model(4, 4, {
-				cos(85.0f / 360 * 2 * Pi),0,sin(85.0f / 360 * 2 * Pi),0,
+				cos(180.0f / 360 * 2 * Pi),0,sin(180.0f / 360 * 2 * Pi),0,
 				0,1,0,0,
-				-sin(85.0f / 360 * 2 * Pi),0,cos(85.0f / 360 * 2 * Pi),0,
+				-sin(180.0f / 360 * 2 * Pi),0,cos(180.0f / 360 * 2 * Pi),0,
 				0,0,0,1,
 				});
 
@@ -151,7 +152,7 @@ namespace TmingEngine
 			IShader* depthShader = new DepthShader();
 			depthShader->textures = modelTextures;
 			depthShader->light = sunlitght;
-			view = camera.LookAt(Vector3(0, 2, 1), camera.center, camera.up);
+			view = camera.LookAt(Vector3(1, 2, 0), camera.center, camera.up);
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = depthShader;
@@ -209,41 +210,9 @@ namespace TmingEngine
 			frame.flip_vertically();
 			frame.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
 
-			glGenTextures(1, &frameID);
-
-			glBindTexture(GL_TEXTURE_2D, frameID);
-			// set the texture wrapping parameters
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			// set texture wrapping to GL_REPEAT (default wrapping method)
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			// set texture filtering parameters
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			//// load image, create texture and generate mipmaps
-			int nrChannels;
-
-			unsigned char* data = frame.buffer(); // directly set the opengl texture data with tag imgae data
-			nrChannels = frame.get_bytespp();
-
-			if (nrChannels == 4)
-			{
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frameWidth, frameHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-			}
-			else if (nrChannels == 3)
-			{
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frameWidth, frameHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-			}
-			else if (nrChannels == 1)
-			{
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, frameWidth, frameHeight, 0, GL_RED, GL_UNSIGNED_BYTE, data);
-			}
-			else
-			{
-				int c = nrChannels;
-			}
-
-			glGenerateMipmap(GL_TEXTURE_2D);
-
+			ITexture* tga2Opengl = new OpenGLTexture();
+			frameID = tga2Opengl->TGA2GLTexture(frame);
+			depthID = tga2Opengl->TGA2GLTexture(depth);
 			depth.clear();
 			frame.clear();
 		}

@@ -38,8 +38,10 @@ public:
 	int width = 0;
 	int height = 0;
 	TGAImage image;
+
 	virtual unsigned int LoadTexture(const char* path) = 0;
 	virtual TGAImage LoadTGATexture(const char* path) = 0;
+	virtual unsigned int TGA2GLTexture(TGAImage image) = 0;
 };
 
 #endif /* ITexture_hpp */

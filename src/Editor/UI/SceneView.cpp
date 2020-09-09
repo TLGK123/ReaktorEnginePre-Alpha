@@ -33,6 +33,9 @@ namespace TmingEngine
 
 	void TmingEngine::SceneView::Begin()
 	{
+		auto context = &Global<Context>();
+		Engine* eg = context->GetSubsystem<Engine>();
+		softRender = eg->m_softRender;
 	}
 
 	int lastSceneX = -1;
@@ -48,13 +51,18 @@ namespace TmingEngine
 			return;
 		}
 		IsSceneviewFoucsed = ImGui::IsWindowFocused();
-		ImTextureID my_tex_id = (void*)ImageId;
-		float my_tex_w = ImGui::GetWindowSize().x - 0;
-		float my_tex_h = ImGui::GetWindowSize().y - 0;
+
+		ImTextureID my_tex_id = (void*)softRender->depthID;
+		float my_tex_w = softRender->frameWidth;
+		float my_tex_h = softRender->frameHeight;
+
+		ImGui::Text("%.0fx%.0f", my_tex_w, my_tex_h);
+		//----------------------------------------------------------------- -1 -1  Image reversal
+		ImGui::Image(my_tex_id, Vector2(my_tex_w, my_tex_h), Vector2(0, 0), Vector2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 
 		//ImGui::Text(" Scene  %.0fx%.0f", my_tex_w, my_tex_h);
 
-		auto s = ImGui::GetWindowViewport();
+		//auto s = ImGui::GetWindowViewport();
 		//if (lastSceneX != my_tex_w || lastSceneY != my_tex_h)
 		//{
 		//	if (lastSceneX != -1 || lastSceneY != -1)
@@ -65,9 +73,9 @@ namespace TmingEngine
 		//	lastSceneX = my_tex_w;
 		//	lastSceneY = my_tex_h;
 		//}
-		Global<Context>().GetSubsystem<Engine>()->m_windows->SetViewPoint(s->Pos.x, s->Pos.y, s->Size.x, s->Size.y);
+		//Global<Context>().GetSubsystem<Engine>()->m_windows->SetViewPoint(s->Pos.x, s->Pos.y, s->Size.x, s->Size.y);
 		//----------------------------------------------------------------- -1 -1  Image reversal
-		ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+		//ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 		ImGui::End();
 	}
 

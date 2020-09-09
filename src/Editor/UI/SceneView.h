@@ -51,6 +51,7 @@ namespace TmingEngine
 		void Update();
 		void End();
 
+		SoftRender* softRender;
 		int ImageId;
 		bool IsSceneviewFoucsed = false;
 		void SetTexture(int Id);

@@ -16,7 +16,6 @@ either version 4 of the License, or (at your option) any later version.
 namespace TmingEngine
 {
 	unsigned int OpenGLTexture::LoadTexture(const char* path)
-
 	{
 		string filename = string(path);
 		unsigned int textureID;
@@ -61,5 +60,48 @@ namespace TmingEngine
 		image.read_tga_file(filename.c_str());
 		image.flip_vertically();
 		return image;
+	}
+
+	unsigned int OpenGLTexture::TGA2GLTexture(TGAImage image)
+	{
+		unsigned int imageID;
+		int frameWidth = image.get_width();
+		int frameHeight = image.get_height();
+		glGenTextures(1, &imageID);
+
+		glBindTexture(GL_TEXTURE_2D, imageID);
+		// set the texture wrapping parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		// set texture wrapping to GL_REPEAT (default wrapping method)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		// set texture filtering parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		//// load image, create texture and generate mipmaps
+		int nrChannels;
+
+		unsigned char* data = image.buffer(); // directly set the opengl texture data with tag imgae data
+		nrChannels = image.get_bytespp();
+
+		if (nrChannels == 4)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frameWidth, frameHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		}
+		else if (nrChannels == 3)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frameWidth, frameHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		}
+		else if (nrChannels == 1)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, frameWidth, frameHeight, 0, GL_RED, GL_UNSIGNED_BYTE, data);
+		}
+		else
+		{
+			int c = nrChannels;
+		}
+
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		return imageID;
 	}
 }

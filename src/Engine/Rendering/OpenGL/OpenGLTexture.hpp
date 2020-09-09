@@ -33,6 +33,8 @@ namespace TmingEngine
 
 		// Í¨¹ý ITexture ¼Ì³Ð
 		virtual TGAImage LoadTGATexture(const char* path) override;
+
+		virtual unsigned int TGA2GLTexture(TGAImage image)override;
 	};
 }
 
