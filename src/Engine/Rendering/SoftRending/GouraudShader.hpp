@@ -98,7 +98,14 @@ namespace TmingEngine
 		{
 			int u = vertex.TexCoords.x * textures[0]->image.get_width();
 			int v = vertex.TexCoords.y * textures[0]->image.get_height();
-			color = textures[0]->image.get(u, v);
+			if (vertex.TexCoords.x == 0 && vertex.TexCoords.y == 0)
+			{
+				color = TGAColor(125, 125, 125, 255);
+			}
+			else
+			{
+				color = textures[0]->image.get(u, v);
+			}
 
 			Vector3 Normal = CalcBumpedNormal(vertex);
 

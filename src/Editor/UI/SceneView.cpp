@@ -52,7 +52,7 @@ namespace TmingEngine
 		}
 		IsSceneviewFoucsed = ImGui::IsWindowFocused();
 
-		ImTextureID my_tex_id = (void*)softRender->depthID;
+		ImTextureID my_tex_id = (void*)softRender->sceneID;
 		float my_tex_w = softRender->frameWidth;
 		float my_tex_h = softRender->frameHeight;
 

@@ -50,19 +50,21 @@ namespace TmingEngine
 
 		unsigned int frameID = 0;
 		unsigned int depthID = 0;
+		unsigned int sceneID = 0;
 
-		int frameWidth = 640;
-		int frameHeight = 640;
-		ILight* sunlitght;
+		int frameWidth = 500;
+		int frameHeight = 500;
+		ILight* sunlitght = nullptr;
 		Model character;
-		Camera camera;
+		Camera MainCamera;
+		Camera EditorCamera;
 
 		//---------- Simulate  VRAM    Data
 		vector<Primitive> primitiveDatas;
 
 		//---------- Simulate  VRAM    Data
 
-		//if we use opegl, we need to load data that like mesh , texture and
+		//if we use opegl, we need to load data ;  mesh , texture , shader and
 		//so on to the VRAM (Vedio Random Access Memory)
 		void LoadAssetToMemory()
 		{
@@ -106,9 +108,9 @@ namespace TmingEngine
 			((DirectLight*)sunlitght)->Direction = Vector3(-1, -2, 0);
 			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
 
-			camera.position = Vector3(0, 2, 1);
-			camera.center = Vector3(0, 2, 0);
-			camera.up = Vector3(0, 1, 0);
+			MainCamera.position = Vector3(0, 2, 1);
+			MainCamera.center = Vector3(0, 2, 0);
+			MainCamera.up = Vector3(0, 1, 0);
 
 			TGAImage depth(frameWidth, frameHeight, TGAImage::RGB);
 			//around the Y axis rotate 180
@@ -119,22 +121,24 @@ namespace TmingEngine
 				0,0,0,1,
 				});
 
-			Matrix view = camera.LookAt();
+			Matrix view = MainCamera.LookAt();
 
-			Matrix perspective = camera.Perspective(1, 1, 1, 3);
+			Matrix perspective = MainCamera.Perspective(1, 1, 1, 3);
 
-			Matrix orthographic = camera.Orthographic(2, 2, 0, 5);
+			Matrix orthographic = MainCamera.Orthographic(2, 2, 0, 5);
 
-			Matrix viewPoint = camera.Viewport(0, 0, frameWidth, frameHeight);
+			Matrix viewPoint = MainCamera.Viewport(0, 0, frameWidth, frameHeight);
 
 			int len = frameWidth * frameHeight;
 			int* zbuffer = new int[len];
 			int* shadowbuffer = new int[len];
+			int* editorZbuffer = new int[len];
 
 			for (int inedx = 0; inedx < len; inedx++)
 			{
 				shadowbuffer[inedx] = 10000000;
 				zbuffer[inedx] = 10000000;
+				editorZbuffer[inedx] = 10000000;
 			}
 
 			Debug::Log("------Start------Rasterizer Stage------------------------------------\n");
@@ -152,7 +156,7 @@ namespace TmingEngine
 			IShader* depthShader = new DepthShader();
 			depthShader->textures = modelTextures;
 			depthShader->light = sunlitght;
-			view = camera.LookAt(Vector3(1, 2, 0), camera.center, camera.up);
+			view = MainCamera.LookAt(Vector3(1, 2, 0), MainCamera.center, MainCamera.up);
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = depthShader;
@@ -183,7 +187,7 @@ namespace TmingEngine
 			IShader* gouraudShader = new GouraudShader();
 			gouraudShader->textures = modelTextures;
 			gouraudShader->light = sunlitght;
-			view = camera.LookAt(camera.position, camera.center, camera.up);
+			view = MainCamera.LookAt(MainCamera.position, MainCamera.center, MainCamera.up);
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = gouraudShader;
@@ -210,9 +214,78 @@ namespace TmingEngine
 			frame.flip_vertically();
 			frame.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
 
+			LoadAssetToMemory();
+			TGAImage scene(frameWidth, frameHeight, TGAImage::RGB);
+			EditorCamera.position = Vector3(5, 2, 0);
+			EditorCamera.center = Vector3(0, 2, 0);
+			EditorCamera.up = Vector3(0, 1, 0);
+			view = EditorCamera.LookAt(EditorCamera.position, EditorCamera.center, EditorCamera.up);
+			orthographic = EditorCamera.Orthographic(4, 4, 0, 7);
+			IVertex c1, c2, c3, c4, c5, c6, c7, c8;
+			c1.Position = MainCamera.position + Vector3(0.5f, 0.5f, 0.5f);
+			c2.Position = MainCamera.position + Vector3(0.5f, 0.5f, -0.5f);
+			c3.Position = MainCamera.position + Vector3(0.5f, -0.5f, -0.5f);
+			c4.Position = MainCamera.position + Vector3(0.5f, -0.5f, 0.5f);
+			c5.Position = MainCamera.position + Vector3(-0.5f, -0.5f, 0.5f);
+			c6.Position = MainCamera.position + Vector3(-0.5f, 0.5f, 0.5f);
+			c7.Position = MainCamera.position + Vector3(-0.5f, 0.5f, -0.5f);
+			c8.Position = MainCamera.position + Vector3(-0.5f, -0.5f, -0.5f);
+
+			primitiveDatas.clear();
+
+			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c1,c2,c3 })));
+			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c1,c3,c4 })));
+
+			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c1,c4,c5 })));
+			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c1,c5,c6 })));
+
+			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c1,c6,c7 })));
+			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c1,c7,c2 })));
+
+			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c8,c7,c6 })));
+			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c8,c6,c5 })));
+
+			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c8,c5,c4 })));
+			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c8,c4,c3 })));
+
+			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c8,c3,c2 })));
+			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c8,c2,c7 })));
+
+			for (int i = 0; i < primitiveDatas.size(); i++)
+			{
+				primitiveDatas[i].shader = gouraudShader;
+				primitiveDatas[i].shader->SetModel(model);
+				primitiveDatas[i].shader->SetView(view);
+				primitiveDatas[i].shader->SetProjection(orthographic);
+				primitiveDatas[i].shader->SetViewPoint(viewPoint);
+
+				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
+				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+
+				if (primitiveDatas[i].primitiveType == PrimitiveType::TRIANGLES)
+				{
+					fillTriangleFromEdgeWitchZbuffer(
+						primitiveDatas[i].poins[0],
+						primitiveDatas[i].poins[1],
+						primitiveDatas[i].poins[2],
+						frameWidth, frameHeight,
+						scene, red, editorZbuffer, sunlitght, primitiveDatas[i].shader);
+				}if (primitiveDatas[i].primitiveType == PrimitiveType::POINTS)
+				{
+				}
+			}
+
+			scene.flip_horizontally();
+			scene.flip_vertically();
+			scene.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/scene.tga").c_str());
+			scene.flip_vertically();
+			scene.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
+
 			ITexture* tga2Opengl = new OpenGLTexture();
 			frameID = tga2Opengl->TGA2GLTexture(frame);
 			depthID = tga2Opengl->TGA2GLTexture(depth);
+			sceneID = tga2Opengl->TGA2GLTexture(scene);
 			depth.clear();
 			frame.clear();
 		}

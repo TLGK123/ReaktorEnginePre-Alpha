@@ -325,7 +325,7 @@ namespace TmingEngine
 		std::cout << " Draw a model Direction :" << d << std::endl;
 
 		softRender->SetRenderStatus();
-		softRender->camera.center = d;
+		softRender->MainCamera.center = d;
 
 		softRender->DrawCall();
 	}
