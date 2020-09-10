@@ -218,20 +218,21 @@ namespace TmingEngine
 
 			LoadAssetToMemory();
 			TGAImage scene(frameWidth, frameHeight, TGAImage::RGB);
-			EditorCamera.position = Vector3(5, 0, 0);
-			EditorCamera.center = Vector3(0, 0, 0);
+			EditorCamera.position = Vector3(5, 2, 0);
+			EditorCamera.center = Vector3(0, 2, 0);
 			EditorCamera.up = Vector3(0, 1, 0);
 			view = EditorCamera.LookAt(EditorCamera.position, EditorCamera.center, EditorCamera.up);
-			orthographic = EditorCamera.Orthographic(4, 4, 0, 7);
+			orthographic = EditorCamera.Orthographic(2, 2, 0, 7);
 			IVertex c1, c2, c3, c4, c5, c6, c7, c8;
-			c1.Position = MainCamera.position + Vector3(0.5f, 0.5f, 0.5f) * 1;
-			c2.Position = MainCamera.position + Vector3(0.5f, 0.5f, -0.5f) * 1;
-			c3.Position = MainCamera.position + Vector3(0.5f, -0.5f, -0.5f) * 1;
-			c4.Position = MainCamera.position + Vector3(0.5f, -0.5f, 0.5f) * 1;
-			c5.Position = MainCamera.position + Vector3(-0.5f, -0.5f, 0.5f) * 1;
-			c6.Position = MainCamera.position + Vector3(-0.5f, 0.5f, 0.5f) * 1;
-			c7.Position = MainCamera.position + Vector3(-0.5f, 0.5f, -0.5f) * 1;
-			c8.Position = MainCamera.position + Vector3(-0.5f, -0.5f, -0.5f) * 1;
+			float dist = 0.25f;
+			c1.Position = MainCamera.position + Vector3(0.5f, 0.5f, 0.5f) * dist;
+			c2.Position = MainCamera.position + Vector3(0.5f, 0.5f, -0.5f) * dist;
+			c3.Position = MainCamera.position + Vector3(0.5f, -0.5f, -0.5f) * dist;
+			c4.Position = MainCamera.position + Vector3(0.5f, -0.5f, 0.5f) * dist;
+			c5.Position = MainCamera.position + Vector3(-0.5f, -0.5f, 0.5f) * dist;
+			c6.Position = MainCamera.position + Vector3(-0.5f, 0.5f, 0.5f) * dist;
+			c7.Position = MainCamera.position + Vector3(-0.5f, 0.5f, -0.5f) * dist;
+			c8.Position = MainCamera.position + Vector3(-0.5f, -0.5f, -0.5f) * dist;
 
 			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c1,c2,c3 })));
 			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c1,c3,c4 })));
