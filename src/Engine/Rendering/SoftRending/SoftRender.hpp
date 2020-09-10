@@ -112,6 +112,8 @@ namespace TmingEngine
 			MainCamera.center = Vector3(0, 2, 0);
 			MainCamera.up = Vector3(0, 1, 0);
 
+			//goto sceneJump;
+
 			TGAImage depth(frameWidth, frameHeight, TGAImage::RGB);
 			//around the Y axis rotate 180
 			Matrix model(4, 4, {
@@ -157,25 +159,25 @@ namespace TmingEngine
 			depthShader->textures = modelTextures;
 			depthShader->light = sunlitght;
 			view = MainCamera.LookAt(Vector3(1, 2, 0), MainCamera.center, MainCamera.up);
-			for (int i = 0; i < primitiveDatas.size(); i++)
-			{
-				primitiveDatas[i].shader = depthShader;
-				primitiveDatas[i].shader->SetModel(model);
-				primitiveDatas[i].shader->SetView(view);
-				primitiveDatas[i].shader->SetProjection(orthographic);
-				primitiveDatas[i].shader->SetViewPoint(viewPoint);
+			//for (int i = 0; i < primitiveDatas.size(); i++)
+			//{
+			//	primitiveDatas[i].shader = depthShader;
+			//	primitiveDatas[i].shader->SetModel(model);
+			//	primitiveDatas[i].shader->SetView(view);
+			//	primitiveDatas[i].shader->SetProjection(orthographic);
+			//	primitiveDatas[i].shader->SetViewPoint(viewPoint);
 
-				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
-				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
-				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+			//	primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
+			//	primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+			//	primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
 
-				fillTriangleFromEdgeWitchZbuffer(
-					primitiveDatas[i].poins[0],
-					primitiveDatas[i].poins[1],
-					primitiveDatas[i].poins[2],
-					frameWidth, frameHeight,
-					depth, red, shadowbuffer, sunlitght, primitiveDatas[i].shader);
-			}
+			//	fillTriangleFromEdgeWitchZbuffer(
+			//		primitiveDatas[i].poins[0],
+			//		primitiveDatas[i].poins[1],
+			//		primitiveDatas[i].poins[2],
+			//		frameWidth, frameHeight,
+			//		depth, red, shadowbuffer, sunlitght, primitiveDatas[i].shader);
+			//}
 			depth.flip_horizontally();
 			depth.flip_vertically();  //for write to disk
 			depth.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/depth.tga").c_str());
@@ -188,25 +190,25 @@ namespace TmingEngine
 			gouraudShader->textures = modelTextures;
 			gouraudShader->light = sunlitght;
 			view = MainCamera.LookAt(MainCamera.position, MainCamera.center, MainCamera.up);
-			for (int i = 0; i < primitiveDatas.size(); i++)
-			{
-				primitiveDatas[i].shader = gouraudShader;
-				primitiveDatas[i].shader->SetModel(model);
-				primitiveDatas[i].shader->SetView(view);
-				primitiveDatas[i].shader->SetProjection(orthographic);
-				primitiveDatas[i].shader->SetViewPoint(viewPoint);
+			//for (int i = 0; i < primitiveDatas.size(); i++)
+			//{
+			//	primitiveDatas[i].shader = gouraudShader;
+			//	primitiveDatas[i].shader->SetModel(model);
+			//	primitiveDatas[i].shader->SetView(view);
+			//	primitiveDatas[i].shader->SetProjection(orthographic);
+			//	primitiveDatas[i].shader->SetViewPoint(viewPoint);
 
-				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
-				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
-				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+			//	primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
+			//	primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+			//	primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
 
-				fillTriangleFromEdgeWitchZbuffer(
-					primitiveDatas[i].poins[0],
-					primitiveDatas[i].poins[1],
-					primitiveDatas[i].poins[2],
-					frameWidth, frameHeight,
-					frame, red, zbuffer, sunlitght, primitiveDatas[i].shader);
-			}
+			//	fillTriangleFromEdgeWitchZbuffer(
+			//		primitiveDatas[i].poins[0],
+			//		primitiveDatas[i].poins[1],
+			//		primitiveDatas[i].poins[2],
+			//		frameWidth, frameHeight,
+			//		frame, red, zbuffer, sunlitght, primitiveDatas[i].shader);
+			//}
 
 			frame.flip_horizontally();
 			frame.flip_vertically();
@@ -214,22 +216,24 @@ namespace TmingEngine
 			frame.flip_vertically();
 			frame.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
 
+		//sceneJump:
+
 			LoadAssetToMemory();
 			TGAImage scene(frameWidth, frameHeight, TGAImage::RGB);
-			EditorCamera.position = Vector3(5, 2, 0);
-			EditorCamera.center = Vector3(0, 2, 0);
+			EditorCamera.position = Vector3(5, 0, 0);
+			EditorCamera.center = Vector3(0, 0, 0);
 			EditorCamera.up = Vector3(0, 1, 0);
 			view = EditorCamera.LookAt(EditorCamera.position, EditorCamera.center, EditorCamera.up);
 			orthographic = EditorCamera.Orthographic(4, 4, 0, 7);
 			IVertex c1, c2, c3, c4, c5, c6, c7, c8;
-			c1.Position = MainCamera.position + Vector3(0.5f, 0.5f, 0.5f);
-			c2.Position = MainCamera.position + Vector3(0.5f, 0.5f, -0.5f);
-			c3.Position = MainCamera.position + Vector3(0.5f, -0.5f, -0.5f);
-			c4.Position = MainCamera.position + Vector3(0.5f, -0.5f, 0.5f);
-			c5.Position = MainCamera.position + Vector3(-0.5f, -0.5f, 0.5f);
-			c6.Position = MainCamera.position + Vector3(-0.5f, 0.5f, 0.5f);
-			c7.Position = MainCamera.position + Vector3(-0.5f, 0.5f, -0.5f);
-			c8.Position = MainCamera.position + Vector3(-0.5f, -0.5f, -0.5f);
+			c1.Position = /* MainCamera.position + */ Vector3(0.5f, 0.5f, 0.5f) * 5;
+			c2.Position = /* MainCamera.position + */ Vector3(0.5f, 0.5f, -0.5f) * 5;
+			c3.Position = /* MainCamera.position + */ Vector3(0.5f, -0.5f, -0.5f) * 5;
+			c4.Position = /* MainCamera.position + */ Vector3(0.5f, -0.5f, 0.5f) * 5;
+			c5.Position = /* MainCamera.position + */ Vector3(-0.5f, -0.5f, 0.5f) * 5;
+			c6.Position = /* MainCamera.position + */ Vector3(-0.5f, 0.5f, 0.5f) * 5;
+			c7.Position = /* MainCamera.position + */ Vector3(-0.5f, 0.5f, -0.5f) * 5;
+			c8.Position = /* MainCamera.position + */ Vector3(-0.5f, -0.5f, -0.5f) * 5;
 
 			primitiveDatas.clear();
 
