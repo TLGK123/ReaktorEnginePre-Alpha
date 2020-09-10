@@ -190,33 +190,31 @@ namespace TmingEngine
 			gouraudShader->textures = modelTextures;
 			gouraudShader->light = sunlitght;
 			view = MainCamera.LookAt(MainCamera.position, MainCamera.center, MainCamera.up);
-			//for (int i = 0; i < primitiveDatas.size(); i++)
-			//{
-			//	primitiveDatas[i].shader = gouraudShader;
-			//	primitiveDatas[i].shader->SetModel(model);
-			//	primitiveDatas[i].shader->SetView(view);
-			//	primitiveDatas[i].shader->SetProjection(orthographic);
-			//	primitiveDatas[i].shader->SetViewPoint(viewPoint);
+			for (int i = 0; i < primitiveDatas.size(); i++)
+			{
+				primitiveDatas[i].shader = gouraudShader;
+				primitiveDatas[i].shader->SetModel(model);
+				primitiveDatas[i].shader->SetView(view);
+				primitiveDatas[i].shader->SetProjection(orthographic);
+				primitiveDatas[i].shader->SetViewPoint(viewPoint);
 
-			//	primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
-			//	primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
-			//	primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
+				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
 
-			//	fillTriangleFromEdgeWitchZbuffer(
-			//		primitiveDatas[i].poins[0],
-			//		primitiveDatas[i].poins[1],
-			//		primitiveDatas[i].poins[2],
-			//		frameWidth, frameHeight,
-			//		frame, red, zbuffer, sunlitght, primitiveDatas[i].shader);
-			//}
+				fillTriangleFromEdgeWitchZbuffer(
+					primitiveDatas[i].poins[0],
+					primitiveDatas[i].poins[1],
+					primitiveDatas[i].poins[2],
+					frameWidth, frameHeight,
+					frame, red, zbuffer, sunlitght, primitiveDatas[i].shader);
+			}
 
 			frame.flip_horizontally();
 			frame.flip_vertically();
 			frame.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/frame.tga").c_str());
 			frame.flip_vertically();
 			frame.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
-
-		//sceneJump:
 
 			LoadAssetToMemory();
 			TGAImage scene(frameWidth, frameHeight, TGAImage::RGB);
@@ -226,16 +224,14 @@ namespace TmingEngine
 			view = EditorCamera.LookAt(EditorCamera.position, EditorCamera.center, EditorCamera.up);
 			orthographic = EditorCamera.Orthographic(4, 4, 0, 7);
 			IVertex c1, c2, c3, c4, c5, c6, c7, c8;
-			c1.Position = /* MainCamera.position + */ Vector3(0.5f, 0.5f, 0.5f) * 5;
-			c2.Position = /* MainCamera.position + */ Vector3(0.5f, 0.5f, -0.5f) * 5;
-			c3.Position = /* MainCamera.position + */ Vector3(0.5f, -0.5f, -0.5f) * 5;
-			c4.Position = /* MainCamera.position + */ Vector3(0.5f, -0.5f, 0.5f) * 5;
-			c5.Position = /* MainCamera.position + */ Vector3(-0.5f, -0.5f, 0.5f) * 5;
-			c6.Position = /* MainCamera.position + */ Vector3(-0.5f, 0.5f, 0.5f) * 5;
-			c7.Position = /* MainCamera.position + */ Vector3(-0.5f, 0.5f, -0.5f) * 5;
-			c8.Position = /* MainCamera.position + */ Vector3(-0.5f, -0.5f, -0.5f) * 5;
-
-			primitiveDatas.clear();
+			c1.Position = MainCamera.position + Vector3(0.5f, 0.5f, 0.5f) * 1;
+			c2.Position = MainCamera.position + Vector3(0.5f, 0.5f, -0.5f) * 1;
+			c3.Position = MainCamera.position + Vector3(0.5f, -0.5f, -0.5f) * 1;
+			c4.Position = MainCamera.position + Vector3(0.5f, -0.5f, 0.5f) * 1;
+			c5.Position = MainCamera.position + Vector3(-0.5f, -0.5f, 0.5f) * 1;
+			c6.Position = MainCamera.position + Vector3(-0.5f, 0.5f, 0.5f) * 1;
+			c7.Position = MainCamera.position + Vector3(-0.5f, 0.5f, -0.5f) * 1;
+			c8.Position = MainCamera.position + Vector3(-0.5f, -0.5f, -0.5f) * 1;
 
 			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c1,c2,c3 })));
 			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c1,c3,c4 })));
@@ -254,6 +250,13 @@ namespace TmingEngine
 
 			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c8,c3,c2 })));
 			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c8,c2,c7 })));
+			//model = Matrix(4, 4,
+			//	{
+			//	1,0,0,0,
+			//	0,1,0,0,
+			//	0,0,1,0,
+			//	0,0,0,1,
+			//	});
 
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{

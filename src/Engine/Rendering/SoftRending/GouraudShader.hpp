@@ -101,6 +101,7 @@ namespace TmingEngine
 			if (vertex.TexCoords.x == 0 && vertex.TexCoords.y == 0)
 			{
 				color = TGAColor(125, 125, 125, 255);
+				return false;
 			}
 			else
 			{
