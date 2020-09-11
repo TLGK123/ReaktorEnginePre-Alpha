@@ -178,7 +178,7 @@ namespace TmingEngine
 			//		frameWidth, frameHeight,
 			//		depth, red, shadowbuffer, sunlitght, primitiveDatas[i].shader);
 			//}
-			depth.flip_horizontally();
+			//depth.flip_horizontally();
 			depth.flip_vertically();  //for write to disk
 			depth.write_tga_file(FileSystem::getPath("depth.tga").c_str());
 			depth.flip_vertically();  // reture normal
@@ -210,7 +210,7 @@ namespace TmingEngine
 					frame, red, zbuffer, sunlitght, primitiveDatas[i].shader);
 			}
 
-			frame.flip_horizontally();
+			//frame.flip_horizontally();
 			frame.flip_vertically();
 			frame.write_tga_file(FileSystem::getPath("frame.tga").c_str());
 			frame.flip_vertically();
@@ -250,7 +250,7 @@ namespace TmingEngine
 			}
 
 			IVertex c1, c2, c3, c4, c5, c6, c7, c8;
-			float dist = 0.25f;
+			float dist = 0.15f;
 			c1.Position = MainCamera.position + Vector3(0.5f, 0.5f, 0.5f) * dist;
 			c2.Position = MainCamera.position + Vector3(0.5f, 0.5f, -0.5f) * dist;
 			c3.Position = MainCamera.position + Vector3(0.5f, -0.5f, -0.5f) * dist;
@@ -310,7 +310,7 @@ namespace TmingEngine
 				}
 			}
 
-			scene.flip_horizontally();
+			//scene.flip_horizontally();
 			scene.flip_vertically();
 			scene.write_tga_file(FileSystem::getPath("scene.tga").c_str());
 			scene.flip_vertically();
