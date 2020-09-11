@@ -180,7 +180,7 @@ namespace TmingEngine
 			//}
 			depth.flip_horizontally();
 			depth.flip_vertically();  //for write to disk
-			depth.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/depth.tga").c_str());
+			depth.write_tga_file(FileSystem::getPath("depth.tga").c_str());
 			depth.flip_vertically();  // reture normal
 			;
 
@@ -212,7 +212,7 @@ namespace TmingEngine
 
 			frame.flip_horizontally();
 			frame.flip_vertically();
-			frame.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/frame.tga").c_str());
+			frame.write_tga_file(FileSystem::getPath("frame.tga").c_str());
 			frame.flip_vertically();
 			frame.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
 
@@ -312,7 +312,7 @@ namespace TmingEngine
 
 			scene.flip_horizontally();
 			scene.flip_vertically();
-			scene.write_tga_file(string("E:/WorkSpace/Giteet/TmingEngine/scene.tga").c_str());
+			scene.write_tga_file(FileSystem::getPath("scene.tga").c_str());
 			scene.flip_vertically();
 			scene.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
 
