@@ -223,6 +223,32 @@ namespace TmingEngine
 			EditorCamera.up = Vector3(0, 1, 0);
 			view = EditorCamera.LookAt(EditorCamera.position, EditorCamera.center, EditorCamera.up);
 			orthographic = EditorCamera.Orthographic(2, 2, 0, 7);
+
+			for (int i = 0; i < primitiveDatas.size(); i++)
+			{
+				primitiveDatas[i].shader = gouraudShader;
+				primitiveDatas[i].shader->SetModel(model);
+				primitiveDatas[i].shader->SetView(view);
+				primitiveDatas[i].shader->SetProjection(orthographic);
+				primitiveDatas[i].shader->SetViewPoint(viewPoint);
+
+				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
+				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+
+				if (primitiveDatas[i].primitiveType == PrimitiveType::TRIANGLES)
+				{
+					fillTriangleFromEdgeWitchZbuffer(
+						primitiveDatas[i].poins[0],
+						primitiveDatas[i].poins[1],
+						primitiveDatas[i].poins[2],
+						frameWidth, frameHeight,
+						scene, red, editorZbuffer, sunlitght, primitiveDatas[i].shader);
+				}if (primitiveDatas[i].primitiveType == PrimitiveType::POINTS)
+				{
+				}
+			}
+
 			IVertex c1, c2, c3, c4, c5, c6, c7, c8;
 			float dist = 0.25f;
 			c1.Position = MainCamera.position + Vector3(0.5f, 0.5f, 0.5f) * dist;
@@ -233,7 +259,7 @@ namespace TmingEngine
 			c6.Position = MainCamera.position + Vector3(-0.5f, 0.5f, 0.5f) * dist;
 			c7.Position = MainCamera.position + Vector3(-0.5f, 0.5f, -0.5f) * dist;
 			c8.Position = MainCamera.position + Vector3(-0.5f, -0.5f, -0.5f) * dist;
-
+			primitiveDatas.clear();
 			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c1,c2,c3 })));
 			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c1,c3,c4 })));
 
@@ -251,13 +277,13 @@ namespace TmingEngine
 
 			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c8,c3,c2 })));
 			primitiveDatas.push_back(Primitive(PrimitiveType::TRIANGLES, vector<IVertex>({ c8,c2,c7 })));
-			//model = Matrix(4, 4,
-			//	{
-			//	1,0,0,0,
-			//	0,1,0,0,
-			//	0,0,1,0,
-			//	0,0,0,1,
-			//	});
+			model = Matrix(4, 4,
+				{
+				1,0,0,0,
+				0,1,0,0,
+				0,0,1,0,
+				0,0,0,1,
+				});
 
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
