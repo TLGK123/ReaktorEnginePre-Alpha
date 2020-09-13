@@ -140,9 +140,9 @@ namespace TmingEngine
 		{
 			Matrix orthographic(4, 4,
 				{
-					1 / r , 0, 0, 0,
-					0, 1 / t , 0,0,
-					0, 0, -2 / (f - n), -(f + n) / (f - n),
+					1.0f / r , 0, 0, 0,
+					0, 1.0f / t , 0,0,
+					0, 0, -2.0f / (f - n), -(f + n) / (f - n),
 					0,0,0,1,
 				});
 			return orthographic;
@@ -150,13 +150,13 @@ namespace TmingEngine
 
 		Matrix Viewport(int x, int y, int width, int heigh)
 		{
-			int d = 255;
+			float d = 255;
 			Matrix mat(4, 4,
 				{
 					width / 2.0f ,0,0, x + width / 2.0f ,
 					0 ,heigh / 2.0f ,0, y + heigh / 2.0f ,
-					0 ,0 ,d / 2.0f, d / 2.0f ,
-					0 ,0 ,d / 2.0f, 1 ,
+					0 ,0 ,d /2.0f, d/2.0f ,
+					0 ,0 ,0, 1 ,
 				});
 			return mat;
 		}

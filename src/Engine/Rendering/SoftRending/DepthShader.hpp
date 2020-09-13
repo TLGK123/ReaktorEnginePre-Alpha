@@ -43,8 +43,9 @@ namespace TmingEngine
 
 		Vector3 Vertex(Vector3 pos) override
 		{
-			auto projectionPoint = porjection * view * model * pos;
-			float w = projectionPoint[3][0];
+			auto clipPoint = porjection * view * model * pos;
+			std::cout << clipPoint << std::endl;
+			float w = clipPoint[3][0];
 			Matrix t1(4, 4,
 				{
 				1 / w , 0 , 0 , 0 ,
@@ -53,15 +54,37 @@ namespace TmingEngine
 				0 , 0 , 0 , 1 / w ,
 				});
 
-			auto ndcPoint = viewPoint * t1 * projectionPoint;
+			auto ndcPoint = viewPoint * t1 * clipPoint;
 
 			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
 		};
 
 		Vector3 Vertex(TmingEngine::IVertex& vertex) override
 		{
-			auto projectionPoint = porjection * view * model * vertex.Position;
-			float w = projectionPoint[3][0];
+			//std::cout << "pos: " << std::endl;
+			//std::cout << vertex.Position << std::endl;
+
+			//std::cout << "model: " << std::endl;
+			//std::cout << model << std::endl;
+
+			//std::cout << "view: " << std::endl;
+			//std::cout << view << std::endl;
+
+			auto eyePoint = view * model * vertex.Position;
+
+			//std::cout << "eyePoint: " << std::endl;
+			//std::cout << eyePoint << std::endl;
+
+
+			//std::cout << "porjection: " << std::endl;
+			//std::cout << porjection << std::endl;
+
+			auto clipPoint = porjection * eyePoint;
+
+			//std::cout << "clipPoint: " << std::endl;
+			//std::cout << clipPoint << std::endl;
+
+			float w = clipPoint[3][0];
 			Matrix t1(4, 4,
 				{
 				1 / w , 0 , 0 , 0 ,
@@ -70,9 +93,12 @@ namespace TmingEngine
 				0 , 0 , 0 , 1 / w ,
 				});
 
-			//std::cout << projectionPoint << std::endl;
+			//std::cout << "viewPoint: " << std::endl;
+			//std::cout << viewPoint << std::endl;
+			auto screenPoint = viewPoint * t1 * clipPoint;
+			//std::cout << "screenPoint: " << std::endl;
+			//std::cout << screenPoint << std::endl;
 
-			auto screenPoint = viewPoint * t1 * projectionPoint;
 
 			vertex.Position = screenPoint;
 			return screenPoint;
@@ -94,8 +120,21 @@ namespace TmingEngine
 		bool Fragment(TGAColor& color, TmingEngine::IVertex& vertex)override
 		{
 			float f = 255 - vertex.Position.z;
-			//Debug::Log(std::to_string(vertex.Position.z));
-			color = TGAColor(f, f, f);
+			if (f > 255 )
+			{
+				//std::cout << f << std::endl;
+				color = TGAColor(255, 0, 0);
+			}
+			else if (f < 0)
+			{
+				//std::cout << f << std::endl;
+				color = TGAColor(0, 255, 0);
+			}
+			else
+			{
+				color = TGAColor(f, f, f);
+			}
+			
 			return false;
 		}
 	};

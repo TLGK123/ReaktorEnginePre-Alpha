@@ -138,9 +138,9 @@ namespace TmingEngine
 
 			for (int inedx = 0; inedx < len; inedx++)
 			{
-				shadowbuffer[inedx] = 10000000;
-				zbuffer[inedx] = 10000000;
-				editorZbuffer[inedx] = 10000000;
+				shadowbuffer[inedx] = INT_MAX;
+				zbuffer[inedx] = INT_MAX;
+				editorZbuffer[inedx] = INT_MAX;
 			}
 
 			Debug::Log("------Start------Rasterizer Stage------------------------------------\n");
@@ -158,7 +158,7 @@ namespace TmingEngine
 			IShader* depthShader = new DepthShader();
 			depthShader->textures = modelTextures;
 			depthShader->light = sunlitght;
-			view = MainCamera.LookAt(Vector3(1, 2, 0), MainCamera.center, MainCamera.up);
+			view = MainCamera.LookAt(Vector3(1, 4, 0), Vector3(0, 2, 0), MainCamera.up);
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = depthShader;
@@ -246,7 +246,7 @@ namespace TmingEngine
 						primitiveDatas[i].poins[2],
 						frameWidth, frameHeight,
 						scene, red, editorZbuffer, sunlitght, primitiveDatas[i].shader);
-				}if (primitiveDatas[i].primitiveType == PrimitiveType::POINTS)
+				}else if (primitiveDatas[i].primitiveType == PrimitiveType::POINTS)
 				{
 				}
 			}
