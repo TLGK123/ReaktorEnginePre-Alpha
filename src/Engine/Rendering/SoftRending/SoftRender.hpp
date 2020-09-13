@@ -159,28 +159,29 @@ namespace TmingEngine
 			depthShader->textures = modelTextures;
 			depthShader->light = sunlitght;
 			view = MainCamera.LookAt(Vector3(1, 2, 0), MainCamera.center, MainCamera.up);
-			//for (int i = 0; i < primitiveDatas.size(); i++)
-			//{
-			//	primitiveDatas[i].shader = depthShader;
-			//	primitiveDatas[i].shader->SetModel(model);
-			//	primitiveDatas[i].shader->SetView(view);
-			//	primitiveDatas[i].shader->SetProjection(orthographic);
-			//	primitiveDatas[i].shader->SetViewPoint(viewPoint);
+			for (int i = 0; i < primitiveDatas.size(); i++)
+			{
+				primitiveDatas[i].shader = depthShader;
+				primitiveDatas[i].shader->SetModel(model);
+				primitiveDatas[i].shader->SetView(view);
+				primitiveDatas[i].shader->SetProjection(orthographic);
+				primitiveDatas[i].shader->SetViewPoint(viewPoint);
 
-			//	primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
-			//	primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
-			//	primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
+				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
+				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
 
-			//	fillTriangleFromEdgeWitchZbuffer(
-			//		primitiveDatas[i].poins[0],
-			//		primitiveDatas[i].poins[1],
-			//		primitiveDatas[i].poins[2],
-			//		frameWidth, frameHeight,
-			//		depth, red, shadowbuffer, sunlitght, primitiveDatas[i].shader);
-			//}
-			//depth.flip_horizontally();
+				fillTriangleFromEdgeWitchZbuffer(
+					primitiveDatas[i].poins[0],
+					primitiveDatas[i].poins[1],
+					primitiveDatas[i].poins[2],
+					frameWidth, frameHeight,
+					depth, red, shadowbuffer, sunlitght, primitiveDatas[i].shader);
+			}
+			depth.flip_horizontally();
 			depth.flip_vertically();  //for write to disk
 			depth.write_tga_file(FileSystem::getPath("depth.tga").c_str());
+			depth.flip_horizontally();
 			depth.flip_vertically();  // reture normal
 			;
 
@@ -210,9 +211,10 @@ namespace TmingEngine
 					frame, red, zbuffer, sunlitght, primitiveDatas[i].shader);
 			}
 
-			//frame.flip_horizontally();
+			frame.flip_horizontally();
 			frame.flip_vertically();
 			frame.write_tga_file(FileSystem::getPath("frame.tga").c_str());
+			frame.flip_horizontally();
 			frame.flip_vertically();
 			frame.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
 
@@ -310,9 +312,10 @@ namespace TmingEngine
 				}
 			}
 
-			//scene.flip_horizontally();
+			scene.flip_horizontally();
 			scene.flip_vertically();
 			scene.write_tga_file(FileSystem::getPath("scene.tga").c_str());
+			scene.flip_horizontally();
 			scene.flip_vertically();
 			scene.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
 

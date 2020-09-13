@@ -48,14 +48,15 @@ namespace TmingEngine
 
 		Vector3 position = Vector3(0, 2, 1);
 		Vector3 center = Vector3(0, 0, 0);	//相机朝向原点
-		Vector3 up = Vector3(0, 1, 0);		//相机向上
+		Vector3 up = Vector3(0, 1, 0);		//相机向上（先假定的向上的一个方向）
 
+		//http://www.songho.ca/opengl/gl_transform.html#modelview
 		Matrix LookAt(Vector3 eye, Vector3 center, Vector3 up)
 		{
 			Vector3 R, U, D;  // x y z
-			D = (eye - center).Normalize();    //从观察的物体到相机的一个方向向量
-			R = (up.Cross(D)).Normalize();
-			U = (D.Cross(R)).Normalize();
+			D = (eye - center).Normalize();		//从被观察的物体到相机的一个方向向量(相机面向的物体的相反方向) 相机的 Z轴正方向
+			R = (up.Cross(D)).Normalize();		//假定的上 Cross 方向向量 ==相机X轴正方向
+			U = (D.Cross(R)).Normalize();		//相机真正的向上的 Y轴 正方向
 
 			// A * B = C
 			// A-----a point dinfined in the new coordination space (camera space)
