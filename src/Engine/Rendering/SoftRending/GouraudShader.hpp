@@ -40,23 +40,14 @@ namespace TmingEngine
 
 		Matrix TBN;
 
-		float* shadowbuffer = NULL;
+		int * shadowbuffer = NULL;
+		Matrix object2ShadowScreen;
+		Matrix frameScreen2Object;
 
 		Vector3 Vertex(Vector3 pos) override
 		{
 			auto projectionPoint = porjection * view * model * pos;
-			float w = projectionPoint[3][0];
-			Matrix t1(4, 4,
-				{
-				1 / w , 0 , 0 , 0 ,
-				0 , 1 / w , 0 , 0 ,
-				0 , 0 , 1 / w , 0 ,
-				0 , 0 , 0 , 1 / w ,
-				});
-
-			//透视除法
-
-			auto ndcPoint = viewPoint * t1 * projectionPoint;
+			auto ndcPoint = viewPoint  * projectionPoint;
 
 			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
 		};
@@ -64,18 +55,7 @@ namespace TmingEngine
 		Vector3 Vertex(TmingEngine::IVertex& vertex) override
 		{
 			auto projectionPoint = porjection * view * model * vertex.Position;
-			float w = projectionPoint[3][0];
-			Matrix t1(4, 4,
-				{
-				1 / w , 0 , 0 , 0 ,
-				0 , 1 / w , 0 , 0 ,
-				0 , 0 , 1 / w , 0 ,
-				0 , 0 , 0 , 1 / w ,
-				});
-
-			//透视除法
-
-			auto ndcPoint = viewPoint * t1 * projectionPoint;
+			auto ndcPoint = viewPoint *  projectionPoint;
 			vertex.Position = ndcPoint;
 			vertex.Normal = porjection * view * model * vertex.Normal;
 			vertex.Tangent = porjection * view * model * vertex.Tangent;
@@ -98,9 +78,12 @@ namespace TmingEngine
 
 		bool Fragment(TGAColor& color, TmingEngine::IVertex& vertex)override
 		{
-			int index = (int)vertex.Position.x + (int)vertex.Position.y * screenWidth;
+			auto posInShaowScreen = object2ShadowScreen * frameScreen2Object * vertex.Position;
 
-			float shadow = 0.3f + 0.7f * (shadowbuffer[index] < vertex.Position.z);
+			int index = (int)vertex.Position.x + (int)vertex.Position.y * screenWidth;
+			
+			float tempf = (shadowbuffer[index] < vertex.Position.z) ? 1 : 0;
+			float shadow = 0.3f+ 0.7 * tempf;
 
 			int u = vertex.TexCoords.x * textures[0]->image.get_width();
 			int v = vertex.TexCoords.y * textures[0]->image.get_height();

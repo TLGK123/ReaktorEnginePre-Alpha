@@ -159,6 +159,9 @@ namespace TmingEngine
 			depthShader->textures = modelTextures;
 			depthShader->light = sunlitght;
 			view = MainCamera.LookAt(Vector3(1, 4, 0), Vector3(0, 2, 0), MainCamera.up);
+
+			Matrix objectToShadowScreen = viewPoint * orthographic * view * model;
+
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = depthShader;
@@ -186,11 +189,16 @@ namespace TmingEngine
 			;
 
 			LoadAssetToMemory();
-			TGAImage frame(frameWidth, frameHeight, TGAImage::RGB);
+			view = MainCamera.LookAt(MainCamera.position, MainCamera.center, MainCamera.up);
+			Matrix  frameScreen2Object = viewPoint * orthographic * view * model; //to do invert
+			TGAImage frame(frameWidth, frameHeight, TGAImage::RGB); // invert()
 			IShader* gouraudShader = new GouraudShader();
 			gouraudShader->textures = modelTextures;
 			gouraudShader->light = sunlitght;
-			view = MainCamera.LookAt(MainCamera.position, MainCamera.center, MainCamera.up);
+			((GouraudShader*)gouraudShader)->shadowbuffer = shadowbuffer;
+			((GouraudShader*)gouraudShader)->object2ShadowScreen = objectToShadowScreen;
+			((GouraudShader*)gouraudShader)->frameScreen2Object = frameScreen2Object;
+
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = gouraudShader;
