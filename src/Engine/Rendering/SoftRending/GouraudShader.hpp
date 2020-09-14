@@ -78,12 +78,12 @@ namespace TmingEngine
 
 		bool Fragment(TGAColor& color, TmingEngine::IVertex& vertex)override
 		{
-			auto posInShaowScreen = object2ShadowScreen * frameScreen2Object * vertex.Position;
+			//auto posInShaowScreen = object2ShadowScreen * frameScreen2Object * vertex.Position;
 
-			int index = (int)vertex.Position.x + (int)vertex.Position.y * screenWidth;
-			
-			float tempf = (shadowbuffer[index] < vertex.Position.z) ? 1 : 0;
-			float shadow = 0.3f+ 0.7 * tempf;
+			//int index = (int)vertex.Position.x + (int)vertex.Position.y * screenWidth;
+			//
+			//float tempf = (shadowbuffer[index] < vertex.Position.z) ? 1 : 0;
+			//float shadow = 0.3f+ 0.7 * tempf;
 
 			int u = vertex.TexCoords.x * textures[0]->image.get_width();
 			int v = vertex.TexCoords.y * textures[0]->image.get_height();

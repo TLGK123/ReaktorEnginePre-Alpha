@@ -102,6 +102,19 @@ namespace TmingEngine
 			return matrix[i];
 		}
 
+		Matrix Transpose()
+		{
+			Matrix reslut(cloumn , row);
+			for (int i = 0; i < row; i++)
+			{
+				for (int j = 0; j < cloumn; j++)
+				{
+					reslut[j][i] = matrix[i][j];
+				}
+			}
+			return reslut;
+		}
+
 		Matrix operator * (Matrix mat)const
 		{
 			Matrix reslut(row, mat.cloumn);
@@ -268,6 +281,8 @@ namespace TmingEngine
 
 			return Vector3(matrix[0][cloumn - 1], matrix[1][cloumn - 1], matrix[2][cloumn - 1]);
 		}
+
+
 	};
 }
 

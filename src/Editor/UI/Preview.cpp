@@ -34,6 +34,10 @@ namespace TmingEngine
 	void Preview::Begin()
 	{
 		p_open = true;
+		auto context = &Global<Context>();
+		Engine* eg = context->GetSubsystem<Engine>();
+		auto softRender = eg->m_softRender;
+		ImageId = softRender->depthID;
 	}
 
 	void Preview::Update()

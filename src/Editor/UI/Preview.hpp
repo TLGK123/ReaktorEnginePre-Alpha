@@ -34,9 +34,11 @@
 #include "Core/SubSystem.h"
 #include "Core/Context.h"
 #include "Core/Log.h"
+#include "Core/Engine.h"
 
 #include "Plantform/Windows/Widget.h"
 #include "Rendering/OpenGL/OpenGLTexture.hpp"
+#include "Rendering/SoftRending/SoftRender.hpp"
 
 namespace TmingEngine
 {
