@@ -40,7 +40,6 @@
 #include "Core/Math/Vector3.h"
 #include "Core/EngineDefs.h"
 
-
 namespace TmingEngine
 {
 	ENGINE_CLASS class Determinant
@@ -52,6 +51,24 @@ namespace TmingEngine
 
 		//行列式一定是方阵
 		Determinant(int n, std::initializer_list<float> il)
+		{
+			row = n;
+			cloumn = n;
+			std::vector<std::vector<float>> vec(row, std::vector<float>(cloumn));//初始层数，赋值
+			int index = 0;
+
+			for (auto beg = il.begin(); beg != il.end(); ++beg)
+			{
+				int	i = index / cloumn;
+				int	j = index % cloumn;
+				index++;
+				vec[i][j] = *beg;
+			}
+			determinant = vec;
+		}
+
+		//行列式一定是方阵
+		Determinant(int n, std::vector<float> il)
 		{
 			row = n;
 			cloumn = n;
@@ -103,12 +120,79 @@ namespace TmingEngine
 			return determinant[i];
 		}
 
+		//行列式的值
 		float Det()
 		{
-			if (row ==2 && cloumn==2)
+			if (row == 1 && cloumn == 1)
 			{
-
+				return determinant[0][0];
 			}
+			else
+			{
+				float detValue = 0;
+				int i = 0;
+				{
+					for (int j = 0; j < cloumn; j++)
+					{
+						if ((i + j) % 2 == 0)
+						{
+							float f1 = determinant[i][j];
+							float f2 = Cofactor(i, j).Det();
+							detValue = detValue + f1 * f2;
+						}
+						else
+						{
+							float f3 = determinant[i][j];
+							float f4 = Cofactor(i, j).Det();
+							detValue = detValue - f3 * f4;
+						}
+					}
+				}
+				return detValue;
+			}
+		}
+
+		//余子式
+		Determinant Cofactor(int m, int n)
+		{
+			std::vector<float> data;
+			for (int i = 0; i < row; i++)
+			{
+				for (int j = 0; j < cloumn; j++)
+				{
+					if (i == m || n == j)
+					{
+						continue;
+					}
+					else
+					{
+						data.push_back(determinant[i][j]);
+					}
+				}
+			}
+
+			//row == cloumn
+			Determinant lessDet(row - 1, data);
+			return lessDet;
+		}
+
+		friend std::ostream& operator<<(std::ostream& stream, Determinant c)
+		{
+			std::string s = "";
+			for (int x = 0; x < c.row; x++)
+			{
+				s += "|";
+				for (int y = 0; y < c.cloumn; y++)
+				{
+					std::ostringstream oss;
+					oss << std::setiosflags(std::ios::fixed | std::ios::right) << std::setw(8) << std::setprecision(2) << c[x][y];
+					s += std::string(oss.str()) + std::string(" ");
+				}
+				s += "|";
+				s += std::string("\n");
+			}
+			stream << s;
+			return stream;
 		}
 	};
 }

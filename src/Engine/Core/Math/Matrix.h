@@ -38,6 +38,7 @@
 
 #include "Core/Math/Radian.h"
 #include "Core/Math/Vector3.h"
+#include "Core/Math/Determinant.h"
 #include "Core/EngineDefs.h"
 
 namespace TmingEngine
@@ -103,7 +104,7 @@ namespace TmingEngine
 
 		Matrix Transpose()
 		{
-			Matrix reslut(cloumn , row);
+			Matrix reslut(cloumn, row);
 			for (int i = 0; i < row; i++)
 			{
 				for (int j = 0; j < cloumn; j++)
@@ -281,7 +282,70 @@ namespace TmingEngine
 			return Vector3(matrix[0][cloumn - 1], matrix[1][cloumn - 1], matrix[2][cloumn - 1]);
 		}
 
+		operator Determinant()
+		{
+			return ToDeterminant();
+		}
 
+	private:
+		//矩阵转换成对于行列式
+		Determinant ToDeterminant()
+		{
+			Determinant result(row);
+			if (row != cloumn)
+			{
+				std::cout << "不满足行列式必须是方阵 " << std::endl;
+				return result;
+			}
+
+			for (int i = 0; i < row; i++)
+			{
+				for (int j = 0; j < cloumn; j++)
+				{
+					result[i][j] = matrix[i][j];
+				}
+			}
+			return result;
+		}
+	public:
+		//伴随矩阵
+		Matrix Adjugate()
+		{
+			Matrix result(row, cloumn);
+			Determinant sourceDet = ToDeterminant();
+			for (int x = 0; x < row; x++)
+			{
+				for (int y = 0; y < cloumn; y++)
+				{
+					float temp = (x + y) % 2 == 0 ? 1 : -1;
+
+					auto f2 = sourceDet.Cofactor(x, y);
+					//std::cout << f2 << std::endl;
+
+					auto f3 = f2.Det();
+					//std::cout << f3 << std::endl;
+					auto f4 = temp * f3;
+					result[x][y] = temp * sourceDet.Cofactor(x, y).Det();
+				}
+			}
+			return result;
+		}
+
+		Matrix Inverse()
+		{
+			Matrix result(row, cloumn);
+			Determinant sourceDet = ToDeterminant();
+			float det = 1.0f / sourceDet.Det();
+			auto adj = Adjugate();
+			std::cout << "adj" << std::endl;
+			std::cout << adj << std::endl;
+			result = adj * det;
+
+			std::cout << "result" << std::endl;
+			std::cout << result << std::endl;
+
+			return result;
+		}
 	};
 }
 

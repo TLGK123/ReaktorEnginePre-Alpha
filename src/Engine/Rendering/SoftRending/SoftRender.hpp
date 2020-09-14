@@ -28,6 +28,7 @@
 
 #include "Core/EngineDefs.h"
 #include "Core/SubSystem.h"
+#include "Core/Math//Determinant.h"
 #include "Plantform/File/FileSystem.h"
 
 #include "Rendering/OpenGL/OpenGLModel.hpp"
@@ -112,8 +113,6 @@ namespace TmingEngine
 			MainCamera.center = Vector3(0, 2, 0);
 			MainCamera.up = Vector3(0, 1, 0);
 
-			//goto sceneJump;
-
 			TGAImage depth(frameWidth, frameHeight, TGAImage::RGB);
 			//around the Y axis rotate 180
 			Matrix model(4, 4, {
@@ -122,6 +121,19 @@ namespace TmingEngine
 				-sin(180.0f / 360 * 2 * Pi),0,cos(180.0f / 360 * 2 * Pi),0,
 				0,0,0,1,
 				});
+
+			Matrix testMat(3, 3, {
+				1,0,5,
+				2,1,6,
+				3,4,0,
+				});
+			std::cout << "----testMat-----" << std::endl;
+			std::cout << testMat << std::endl;
+			std::cout << "----testMat--inv---" << std::endl;
+			std::cout << testMat.Inverse() << std::endl;
+			auto check = testMat * testMat.Inverse();
+			std::cout << "----check-----" << std::endl;
+			std::cout << check << std::endl;
 
 			Matrix view = MainCamera.LookAt();
 
@@ -254,7 +266,8 @@ namespace TmingEngine
 						primitiveDatas[i].poins[2],
 						frameWidth, frameHeight,
 						scene, red, editorZbuffer, sunlitght, primitiveDatas[i].shader);
-				}else if (primitiveDatas[i].primitiveType == PrimitiveType::POINTS)
+				}
+				else if (primitiveDatas[i].primitiveType == PrimitiveType::POINTS)
 				{
 				}
 			}

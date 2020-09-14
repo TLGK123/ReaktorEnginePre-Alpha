@@ -41,13 +41,13 @@ namespace TmingEngine
 		{
 		}
 
-		friend ostream& operator<<(ostream& stream, const DirectLight c)
+		friend std::ostream& operator<<(std::ostream& stream, const DirectLight c)
 		{
-			ostringstream oss;
-			oss << setiosflags(ios::fixed | ios::right) << setw(8) << setprecision(2) << "Position£º " << c.Position << ")" << endl;
+			std::ostringstream oss;
+			oss << std::setiosflags(std::ios::fixed | std::ios::right) << std::setw(8) << std::setprecision(2) << "Position£º " << c.Position << ")" << std::endl;
 
 			std::string s = "";
-			s = string(oss.str());
+			s = std::string(oss.str());
 			stream << s;
 			return stream;
 		}
