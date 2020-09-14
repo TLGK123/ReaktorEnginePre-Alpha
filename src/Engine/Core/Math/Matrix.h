@@ -40,21 +40,20 @@
 #include "Core/Math/Vector3.h"
 #include "Core/EngineDefs.h"
 
-using namespace std;
 namespace TmingEngine
 {
 	ENGINE_CLASS class Matrix
 	{
 	public:
-		vector<vector<float>> matrix;
+		std::vector<std::vector<float>> matrix;
 		int row = 0;
 		int cloumn = 0;
 
-		Matrix(int m, int n, initializer_list<float> il)
+		Matrix(int m, int n, std::initializer_list<float> il)
 		{
 			row = m;
 			cloumn = n;
-			vector<vector<float>> vec(row, vector<float>(cloumn));//初始层数，赋值
+			std::vector<std::vector<float>> vec(row, std::vector<float>(cloumn));//初始层数，赋值
 			int index = 0;
 
 			for (auto beg = il.begin(); beg != il.end(); ++beg)
@@ -71,7 +70,7 @@ namespace TmingEngine
 		{
 			row = m;
 			cloumn = n;
-			vector<vector<float>> vec(row, vector<float>(cloumn));//初始层数，赋值
+			std::vector<std::vector<float>> vec(row, std::vector<float>(cloumn));//初始层数，赋值
 			matrix = vec;
 		}
 
@@ -79,7 +78,7 @@ namespace TmingEngine
 		{
 			row = 4;
 			cloumn = 4;
-			vector<vector<float>> vec(row, vector<float>(cloumn));//初始层数，赋值
+			std::vector<std::vector<float>> vec(row, std::vector<float>(cloumn));//初始层数，赋值
 			matrix = vec;
 
 			for (int i = 0; i < row; i++)
@@ -97,7 +96,7 @@ namespace TmingEngine
 			}
 		}
 
-		vector<float>& operator[](int i)
+		std::vector<float>& operator[](int i)
 		{
 			return matrix[i];
 		}
@@ -252,7 +251,7 @@ namespace TmingEngine
 			return result;
 		}
 
-		friend ostream& operator<<(ostream& stream, Matrix c)
+		friend std::ostream& operator<<(std::ostream& stream, Matrix c)
 		{
 			std::string s = "";
 			for (int x = 0; x < c.row; x++)
@@ -260,12 +259,12 @@ namespace TmingEngine
 				s += "|";
 				for (int y = 0; y < c.cloumn; y++)
 				{
-					ostringstream oss;
-					oss << setiosflags(ios::fixed | ios::right) << setw(8) << setprecision(2) << c[x][y];
-					s += string(oss.str()) + string(" ");
+					std::ostringstream oss;
+					oss << std::setiosflags(std::ios::fixed | std::ios::right) << std::setw(8) << std::setprecision(2) << c[x][y];
+					s += std::string(oss.str()) + std::string(" ");
 				}
 				s += "|";
-				s += string("\n");
+				s += std::string("\n");
 			}
 			stream << s;
 			return stream;
