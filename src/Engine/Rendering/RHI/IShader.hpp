@@ -54,6 +54,9 @@ namespace TmingEngine
 
 		ILight* light;
 
+		int screenWidth;
+		int screenHeight;
+
 		void SetProjection(Matrix p)
 		{
 			porjection = p;

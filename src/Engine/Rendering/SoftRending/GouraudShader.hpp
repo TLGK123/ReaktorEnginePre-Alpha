@@ -40,6 +40,8 @@ namespace TmingEngine
 
 		Matrix TBN;
 
+		float* shadowbuffer = NULL;
+
 		Vector3 Vertex(Vector3 pos) override
 		{
 			auto projectionPoint = porjection * view * model * pos;
@@ -96,6 +98,10 @@ namespace TmingEngine
 
 		bool Fragment(TGAColor& color, TmingEngine::IVertex& vertex)override
 		{
+			int index = (int)vertex.Position.x + (int)vertex.Position.y * screenWidth;
+
+			float shadow = 0.3f + 0.7f * (shadowbuffer[index] < vertex.Position.z);
+
 			int u = vertex.TexCoords.x * textures[0]->image.get_width();
 			int v = vertex.TexCoords.y * textures[0]->image.get_height();
 			if (vertex.TexCoords.x == 0 && vertex.TexCoords.y == 0)
