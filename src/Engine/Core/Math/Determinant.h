@@ -134,18 +134,10 @@ namespace TmingEngine
 				{
 					for (int j = 0; j < cloumn; j++)
 					{
-						if ((i + j) % 2 == 0)
-						{
-							float f1 = determinant[i][j];
-							float f2 = Cofactor(i, j).Det();
-							detValue = detValue + f1 * f2;
-						}
-						else
-						{
-							float f3 = determinant[i][j];
-							float f4 = Cofactor(i, j).Det();
-							detValue = detValue - f3 * f4;
-						}
+						float f1 = determinant[i][j];
+						float f2 = AlgebraicCofactor(i, j);
+
+						detValue = detValue + f1 * f2;
 					}
 				}
 				return detValue;
@@ -177,11 +169,11 @@ namespace TmingEngine
 			return lessDet;
 		}
 
-		//Aij 代数余子式
-		Determinant AlgebraicCofactor(int m, int n)
+		//Aij 代数余子式的值
+		float AlgebraicCofactor(int m, int n)
 		{
 			float sign = (m + n) % 2 == 0 ? 1 : -1;
-			return Cofactor(m, n);
+			return sign * Cofactor(m, n).Det();
 		}
 
 		friend std::ostream& operator<<(std::ostream& stream, Determinant c)

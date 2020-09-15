@@ -122,18 +122,6 @@ namespace TmingEngine
 				0,0,0,1,
 				});
 
-			Matrix testMat(3, 3, {
-				1,2,3,
-				0,1,4,
-				5,6,0,
-				});
-			std::cout << "----testMat-----" << std::endl;
-			std::cout << testMat << std::endl;
-			auto inv = testMat.Inverse();
-			auto check = testMat * inv;
-			std::cout << "----check-----" << std::endl;
-			std::cout << check << std::endl;
-
 			Matrix view = MainCamera.LookAt();
 
 			Matrix perspective = MainCamera.Perspective(1, 1, 1, 3);

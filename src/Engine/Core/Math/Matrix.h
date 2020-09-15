@@ -317,12 +317,8 @@ namespace TmingEngine
 			{
 				for (int y = 0; y < cloumn; y++)
 				{
-					auto f2 = sourceDet.AlgebraicCofactor(x, y);
-					auto f3 = f2.Det();
-
-					std::cout << f2 << std::endl;
-					std::cout << f3 << std::endl;
-					result[y][x] = f3;
+					auto f2 = sourceDet.AlgebraicCofactor(x, y);	
+					result[y][x] = f2;
 				}
 			}
 			return result;
