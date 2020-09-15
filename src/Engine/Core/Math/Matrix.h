@@ -348,12 +348,12 @@ namespace TmingEngine
 				return result;
 			}
 			auto adj = Adjugate();
-			std::cout << "---adj---" << std::endl;
-			std::cout << adj << std::endl;
+			//std::cout << "---adj---" << std::endl;
+			//std::cout << adj << std::endl;
 			result = adj * (1.0f / det);
 
-			std::cout << "---Inverse----" << std::endl;
-			std::cout << result << std::endl;
+			//std::cout << "---Inverse----" << std::endl;
+			//std::cout << result << std::endl;
 
 			return result;
 		}
