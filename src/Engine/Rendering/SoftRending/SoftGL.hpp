@@ -76,6 +76,8 @@ namespace TmingEngine
 	void fillTriangleFromEdgeWitchZbuffer(IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader);
 
 	void fillTriangleLinerScan(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);
+
+	void fillTriangleUseClip(Matrix viewPoint, IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader);
 } // namespace TmingEngine
 
 #endif //TmingEngine_Engine_Rending_SoftGL_hpp_

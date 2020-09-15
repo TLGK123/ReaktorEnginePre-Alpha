@@ -218,7 +218,8 @@ namespace TmingEngine
 				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
 				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
 
-				fillTriangleFromEdgeWitchZbuffer(
+				fillTriangleUseClip(
+					viewPoint,
 					primitiveDatas[i].poins[0],
 					primitiveDatas[i].poins[1],
 					primitiveDatas[i].poins[2],
