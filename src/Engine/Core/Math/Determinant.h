@@ -152,7 +152,7 @@ namespace TmingEngine
 			}
 		}
 
-		//余子式
+		//Aij 的余子式
 		Determinant Cofactor(int m, int n)
 		{
 			std::vector<float> data;
@@ -166,7 +166,8 @@ namespace TmingEngine
 					}
 					else
 					{
-						data.push_back(determinant[i][j]);
+						float c = determinant[i][j];
+						data.push_back(c);
 					}
 				}
 			}
@@ -174,6 +175,13 @@ namespace TmingEngine
 			//row == cloumn
 			Determinant lessDet(row - 1, data);
 			return lessDet;
+		}
+
+		//Aij 代数余子式
+		Determinant AlgebraicCofactor(int m, int n)
+		{
+			float sign = (m + n) % 2 == 0 ? 1 : -1;
+			return Cofactor(m, n);
 		}
 
 		friend std::ostream& operator<<(std::ostream& stream, Determinant c)

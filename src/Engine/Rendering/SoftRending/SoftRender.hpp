@@ -123,15 +123,14 @@ namespace TmingEngine
 				});
 
 			Matrix testMat(3, 3, {
-				1,0,5,
-				2,1,6,
-				3,4,0,
+				1,2,3,
+				0,1,4,
+				5,6,0,
 				});
 			std::cout << "----testMat-----" << std::endl;
 			std::cout << testMat << std::endl;
-			std::cout << "----testMat--inv---" << std::endl;
-			std::cout << testMat.Inverse() << std::endl;
-			auto check = testMat * testMat.Inverse();
+			auto inv = testMat.Inverse();
+			auto check = testMat * inv;
 			std::cout << "----check-----" << std::endl;
 			std::cout << check << std::endl;
 

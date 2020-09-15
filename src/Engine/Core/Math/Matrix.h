@@ -147,7 +147,7 @@ namespace TmingEngine
 			{
 				for (int j = 0; j < cloumn; j++)
 				{
-					reslut[i][j] = reslut[i][j] * num;
+					reslut[i][j] = matrix[i][j] * num;
 				}
 			}
 			return reslut;
@@ -317,15 +317,12 @@ namespace TmingEngine
 			{
 				for (int y = 0; y < cloumn; y++)
 				{
-					float temp = (x + y) % 2 == 0 ? 1 : -1;
-
-					auto f2 = sourceDet.Cofactor(x, y);
-					//std::cout << f2 << std::endl;
-
+					auto f2 = sourceDet.AlgebraicCofactor(x, y);
 					auto f3 = f2.Det();
-					//std::cout << f3 << std::endl;
-					auto f4 = temp * f3;
-					result[x][y] = temp * sourceDet.Cofactor(x, y).Det();
+
+					std::cout << f2 << std::endl;
+					std::cout << f3 << std::endl;
+					result[y][x] = f3;
 				}
 			}
 			return result;
@@ -335,13 +332,18 @@ namespace TmingEngine
 		{
 			Matrix result(row, cloumn);
 			Determinant sourceDet = ToDeterminant();
-			float det = 1.0f / sourceDet.Det();
+			float det = sourceDet.Det();
+			if (det == 0)
+			{
+				std::cout << "矩阵对应行列式的值为0，矩阵不可逆" << std::endl;
+				return result;
+			}
 			auto adj = Adjugate();
-			std::cout << "adj" << std::endl;
+			std::cout << "---adj---" << std::endl;
 			std::cout << adj << std::endl;
-			result = adj * det;
+			result = adj * (1.0f / det);
 
-			std::cout << "result" << std::endl;
+			std::cout << "---Inverse----" << std::endl;
 			std::cout << result << std::endl;
 
 			return result;
