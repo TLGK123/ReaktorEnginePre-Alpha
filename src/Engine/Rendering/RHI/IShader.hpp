@@ -57,6 +57,19 @@ namespace TmingEngine
 		int screenWidth;
 		int screenHeight;
 
+		std::vector<Vector2> varying_uv;
+		std::vector<Vector4> varying_tri;
+		std::vector<Vector3> varying_nrm;
+		std::vector<Vector3> ndc_tri;
+
+		void Clean()
+		{
+			varying_uv.clear();
+			varying_tri.clear();
+			varying_nrm.clear();
+			ndc_tri.clear();
+		}
+
 		void SetProjection(Matrix p)
 		{
 			porjection = p;

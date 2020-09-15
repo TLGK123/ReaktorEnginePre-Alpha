@@ -144,18 +144,22 @@ namespace TmingEngine
 
 			Debug::Log("------Start------Rasterizer Stage------------------------------------\n");
 
-			ITexture* mainTex, * normalMap;
+			ITexture* mainTex, * normalMap ,* specularTex;
 			mainTex = new OpenGLTexture();
 			normalMap = new OpenGLTexture();
-			string path = FileSystem::getPath("resources/objects/cyborg") + '/' + string("cyborg_diffuse.tga");
-			mainTex->image = mainTex->LoadTGATexture(path.c_str());
-			normalMap->image = normalMap->LoadTGATexture(path.c_str());
+			specularTex = new OpenGLTexture();
+			string mainPath = FileSystem::getPath("resources/objects/cyborg") + '/' + string("cyborg_diffuse.tga");
+			string normalPath = FileSystem::getPath("resources/objects/cyborg") + '/' + string("cyborg_normal.tga");
+			string specularPath = FileSystem::getPath("resources/objects/cyborg") + '/' + string("cyborg_specular.tga");
+			mainTex->image = mainTex->LoadTGATexture(mainPath.c_str());
+			normalMap->image = normalMap->LoadTGATexture(normalPath.c_str());
+			specularTex->image = specularTex->LoadTGATexture(specularPath.c_str());
 			vector<ITexture*> modelTextures;
 			modelTextures.push_back(mainTex);
 			modelTextures.push_back(normalMap);
+			modelTextures.push_back(specularTex);
 
 			IShader* depthShader = new DepthShader();
-			depthShader->textures = modelTextures;
 			depthShader->light = sunlitght;
 			view = MainCamera.LookAt(Vector3(1, 4, 0), Vector3(0, 2, 0), MainCamera.up);
 
@@ -189,14 +193,18 @@ namespace TmingEngine
 
 			LoadAssetToMemory();
 			view = MainCamera.LookAt(MainCamera.position, MainCamera.center, MainCamera.up);
-			Matrix  frameScreen2Object = viewPoint * orthographic * view * model; //to do invert
-			TGAImage frame(frameWidth, frameHeight, TGAImage::RGB); // invert()
+			Matrix object2GameScreen = viewPoint * orthographic * view * model; 
+			Matrix  gameScreen2Object = object2GameScreen.Inverse(); // revert the transform 
+			TGAImage frame(frameWidth, frameHeight, TGAImage::RGB); 
 			IShader* gouraudShader = new GouraudShader();
 			gouraudShader->textures = modelTextures;
 			gouraudShader->light = sunlitght;
+
 			((GouraudShader*)gouraudShader)->shadowbuffer = shadowbuffer;
 			((GouraudShader*)gouraudShader)->object2ShadowScreen = objectToShadowScreen;
-			((GouraudShader*)gouraudShader)->frameScreen2Object = frameScreen2Object;
+			((GouraudShader*)gouraudShader)->frameScreen2Object = gameScreen2Object;
+			((GouraudShader*)gouraudShader)->screenWidth = frameWidth;
+			((GouraudShader*)gouraudShader)->screenHeight = frameHeight;
 
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{

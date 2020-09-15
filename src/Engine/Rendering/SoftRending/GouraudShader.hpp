@@ -38,52 +38,98 @@ namespace TmingEngine
 		GouraudShader() {};
 		~GouraudShader() {};
 
-		Matrix TBN;
-
-		int * shadowbuffer = NULL;
+		int* shadowbuffer = NULL;
 		Matrix object2ShadowScreen;
 		Matrix frameScreen2Object;
+		Vector3 light_dir;
 
-		Vector3 Vertex(Vector3 pos) override
+		Vector3 CalcBumpedNormal(TmingEngine::IVertex p)
 		{
-			auto projectionPoint = porjection * view * model * pos;
-			auto ndcPoint = viewPoint  * projectionPoint;
+			int u = p.TexCoords.x * textures[1]->image.get_width();
+			int v = p.TexCoords.y * textures[1]->image.get_height();
+			TGAColor colorNormal = textures[1]->image.get(u, v);
 
-			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
-		};
+			Vector3 BumpMapNormal = Vector3(colorNormal[2] * 2 / 255.0f - 1, colorNormal[1] * 2 / 255.0f - 1, colorNormal[0] * 2 / 255.0f - 1);
+			return  BumpMapNormal.Normalize();
+		}
+
+		TGAColor CalcSpecular(TmingEngine::IVertex p)
+		{
+			int u = p.TexCoords.x * textures[2]->image.get_width();
+			int v = p.TexCoords.y * textures[2]->image.get_height();
+			TGAColor specColor = textures[2]->image.get(u, v);
+			return specColor;
+		}
+
 
 		Vector3 Vertex(TmingEngine::IVertex& vertex) override
 		{
-			auto projectionPoint = porjection * view * model * vertex.Position;
-			auto ndcPoint = viewPoint *  projectionPoint;
-			vertex.Position = ndcPoint;
-			vertex.Normal = porjection * view * model * vertex.Normal;
-			vertex.Tangent = porjection * view * model * vertex.Tangent;
-
-			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
+			// triangle uv coordinates
+			varying_uv.push_back(vertex.TexCoords);
+			// normal per vertex
+			varying_nrm.push_back((porjection * view * model).Inverse().Transpose() * vertex.Normal );
+			//triangle coordinates (clip coordinates)
+			Vector4 gl_Vertex = porjection * view * model * vertex.Position;
+			varying_tri.push_back(gl_Vertex);
+			// triangle in normalized device coordinates
+			Vector3 npos = gl_Vertex / gl_Vertex.w;
+			ndc_tri.push_back(npos);
+	
+			// transform the light vector to the normalized device coordinates
+			light_dir =((Vector3)(porjection * view * model * ((DirectLight*)light)->Direction)).Normalize();
+			return vertex.Position;
 		};
-
-		bool Fragment(TGAColor& color, Vector3 barycent)override
-		{
-			//color = TGAColor(125,125,125,255);
-
-			return false;
-		}
-
-		bool Fragment(TGAColor& color)override
-		{
-			//color = TGAColor(125,125,125,255);
-			return false;
-		}
 
 		bool Fragment(TGAColor& color, TmingEngine::IVertex& vertex)override
 		{
-			//auto posInShaowScreen = object2ShadowScreen * frameScreen2Object * vertex.Position;
+			Vector3 bn = vertex.Normal.Normalize();
+			Vector2 uv = vertex.TexCoords;
 
-			//int index = (int)vertex.Position.x + (int)vertex.Position.y * screenWidth;
-			//
-			//float tempf = (shadowbuffer[index] < vertex.Position.z) ? 1 : 0;
-			//float shadow = 0.3f+ 0.7 * tempf;
+			Vector3 v1 = ndc_tri[1] - ndc_tri[0];
+			Vector3 v2 = ndc_tri[2] - ndc_tri[0];
+
+			Matrix A(3, 3,
+				{
+				 v1.x ,v1.y,v1.z,
+				 v2.x ,v2.y,v2.z,
+				 bn.x, bn.y, bn.z,
+				});
+
+
+			Matrix AI = A.Inverse();
+			Vector2 delatUV1 = varying_uv[1] - varying_uv[0];
+			Vector2 delatUV2 = varying_uv[2] - varying_uv[0];
+			
+			Vector3 i = AI * Vector3(delatUV1.x, delatUV2.x, 0);
+			Vector3 j = AI * Vector3(delatUV1.y, delatUV2.y, 0);
+			
+			i = i.Normalize();
+			j = j.Normalize();
+
+			Matrix B = Matrix(3, 3, {
+				i.x,i.y ,i.z,
+				j.x,j.y ,j.z,
+				bn.x,bn.y ,bn.z,
+				}).Transpose();
+
+			Vector3 Normal = CalcBumpedNormal(vertex);
+			Vector3 n = (Vector3(B * Normal)).Normalize(); // transform the normal from the texture to the tangent space
+			Vector3 l = light_dir;
+			
+			float diff = std::max(l.Dot(n), 0.f);
+			Vector3 r = (n * (n.Dot(l)) * 2 - l);   // reflected light direction
+			TGAColor specColor = CalcSpecular(vertex);
+			float spec = std::pow(std::max(r.z, 0.f), 5 + specColor.bgra[0]);
+
+			auto posInShaowScreen = object2ShadowScreen * frameScreen2Object * vertex.Position;
+			int index = (int)vertex.Position.x + (int)vertex.Position.y * screenWidth;
+			int shadowDepth = shadowbuffer[index];
+			float tempf = (shadowDepth < vertex.Position.z) ? 1 : 0;
+			if (tempf == 1)
+			{
+				int c = 0;
+			}
+			float shadow = 0.3f + 0.7 * tempf;
 
 			int u = vertex.TexCoords.x * textures[0]->image.get_width();
 			int v = vertex.TexCoords.y * textures[0]->image.get_height();
@@ -97,44 +143,32 @@ namespace TmingEngine
 				color = textures[0]->image.get(u, v);
 			}
 
-			Vector3 Normal = CalcBumpedNormal(vertex);
+			for (int i = 0; i < 3; i++)
+			{
+				color[i] = std::min(10 + color[i]+(diff * spec),255.0f);
+			}
 
-			float intensity = ((DirectLight*)light)->Direction.Normalize().Dot(Normal);
-			if (intensity > 0)
-			{
-				color = color * intensity;
-				return false;
-			}
-			else
-			{
-				return true;
-			}
+			return false;
 		}
 
-		Vector3 CalcBumpedNormal(TmingEngine::IVertex p)
+
+
+		Vector3 GouraudShader::Vertex(Vector3 pos)
 		{
-			Vector3 Normal = p.Normal.Normalize();
-			Vector3 Tangent = p.Tangent.Normalize();
-			//Tangent = (Normal.Cross(Tangent - Tangent.Dot(Normal))).Normalize();
-			Vector3 Bitangent = Tangent.Cross(Normal);
-
-			int u = p.TexCoords.x * textures[1]->image.get_width();
-			int v = p.TexCoords.y * textures[1]->image.get_height();
-			TGAColor colorNormal = textures[1]->image.get(u, v);
-			Vector3 BumpMapNormal = Vector3(colorNormal[2] / 255.0f, colorNormal[1] / 255.0f, colorNormal[0] / 255.0f);
-			BumpMapNormal = BumpMapNormal.Normalize();
-			BumpMapNormal = BumpMapNormal * 2 - Vector3(1, 1, 1);
-
-			Vector3 NewNormal;
-			Matrix TBN = Matrix(3, 3, {
-				Tangent.x ,  Bitangent.x , Normal.x ,
-				Tangent.y ,  Bitangent.y,  Normal.y ,
-				Tangent.z ,  Bitangent.z , Normal.z });
-			NewNormal = TBN * Matrix(3, 1, { BumpMapNormal.x,BumpMapNormal.y,BumpMapNormal.z });
-			NewNormal = NewNormal.Normalize();
-			return NewNormal;
+			return Vector3();
 		}
-	};
+
+		bool GouraudShader::Fragment(TGAColor& color, Vector3 barycent)
+		{
+			return false;
+		}
+
+		bool GouraudShader::Fragment(TGAColor& color)
+		{
+			return false;
+		}
+
+};
 }
 
 #endif //TmingEngine_Engine_Rending_GouraudShader_hpp_

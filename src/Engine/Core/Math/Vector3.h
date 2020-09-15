@@ -73,24 +73,19 @@ namespace TmingEngine
 			return Vector3(x + other.x, y + other.y, z + other.z);
 		}
 
-		Vector3 operator +(int  offset) const
-		{
-			return Vector3(x + offset, y + offset, z + offset);
-		}
-
 		Vector3 operator -(const Vector3& other) const
 		{
 			return Vector3(x - other.x, y - other.y, z - other.z);
 		}
 
-		Vector3 operator -(float other) const
-		{
-			return Vector3(x - other, y - other, z - other);
-		}
-
 		Vector3 operator +(float other) const
 		{
 			return Vector3(x + other, y + other, z + other);
+		}
+
+		Vector3 operator -(float other) const
+		{
+			return Vector3(x - other, y - other, z - other);
 		}
 
 		Vector3 Cross(const Vector3& v2) const
@@ -120,6 +115,17 @@ namespace TmingEngine
 		{
 			return Vector3(x * other, y * other, z * other);
 		}
+
+		Vector3 operator / (const float other)const
+		{
+			if (other == 0)
+			{
+				std::cout << "³ý0 ·Ç·¨" << std::endl;
+				return Vector3(0,0,0);
+			}
+			return Vector3(x / other, y / other, z / other);
+		}
+
 
 		friend std::ostream& operator<<(std::ostream& stream, const Vector3 c)
 		{

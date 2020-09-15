@@ -38,6 +38,7 @@
 
 #include "Core/Math/Radian.h"
 #include "Core/Math/Vector3.h"
+#include "Core/Math/Vector4.h"
 #include "Core/Math/Determinant.h"
 #include "Core/EngineDefs.h"
 
@@ -232,6 +233,7 @@ namespace TmingEngine
 			return result;
 		}
 
+
 		Matrix operator - (Matrix mat)const
 		{
 			Matrix result(row, cloumn);
@@ -280,6 +282,17 @@ namespace TmingEngine
 			}
 
 			return Vector3(matrix[0][cloumn - 1], matrix[1][cloumn - 1], matrix[2][cloumn - 1]);
+		}
+
+		operator Vector4()
+		{
+			if (row < 4)
+			{
+				std::cout << "不满足自动矩阵 转 Vector3 格式 " << std::endl;
+				return Vector4();
+			}
+
+			return Vector4(matrix[0][cloumn - 1], matrix[1][cloumn - 1], matrix[2][cloumn - 1],  matrix[3][cloumn - 1]);
 		}
 
 		operator Determinant()

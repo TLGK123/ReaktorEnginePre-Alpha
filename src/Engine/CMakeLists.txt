@@ -91,6 +91,8 @@ target_link_libraries(TmingEngine ${Mono})
 
 add_definitions(-DTmingEngineLib)
 add_definitions(-DGLFW_INCLUDE_NONE)
-
+if(WIN32)
+add_definitions(-DNOMINMAX)
+endif()
 
 

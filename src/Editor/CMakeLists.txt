@@ -44,6 +44,10 @@ elseif(WIN32)
 target_link_libraries(Editor "opengl32.lib")
 endif()
 
+if(WIN32)
+add_definitions(-DNOMINMAX)
+endif()
+
 #add_custom_command(TARGET Editor POST_BUILD     #拷贝文件夹             
 #COMMAND ${CMAKE_COMMAND} -E copy_directory                     
 #"${PROJECT_SOURCE_DIR}/Library/shared"                                                     

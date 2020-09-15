@@ -88,6 +88,7 @@ namespace TmingEngine
 
 		void VertexShader()
 		{
+			shader->Clean();
 			for (int i = 0; i < poins.size(); i++)
 			{
 				shader->Vertex(poins[i]);
