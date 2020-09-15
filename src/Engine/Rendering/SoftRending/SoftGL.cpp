@@ -296,8 +296,8 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangleUseClip(Matrix viewPoint , IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader)
-	{ 
+	void fillTriangleUseClip(Matrix viewPoint, IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader)
+	{
 		Vector3 pos1 = viewPoint * v1.Position;
 		Vector3 pos2 = viewPoint * v2.Position;
 		Vector3 pos3 = viewPoint * v3.Position;
@@ -312,17 +312,20 @@ namespace TmingEngine
 			for (int x = minPoint.x; x <= maxPoint.x; x += 1)
 			{
 				IVertex P;
-				P.Position = Vector3(x, y, 0);
-				Vector3 barycent = barycentricCoordinateCrossProduct(pos1, pos2, pos3, P.Position);
-				P.Position.z = pos1.z * barycent.x + pos2.z * barycent.y + pos3.z * barycent.z;
-				P.TexCoords = (v1.TexCoords * barycent.x) + (v2.TexCoords * barycent.y) + (v3.TexCoords * barycent.z);				
+				Vector3 barycent = barycentricCoordinateCrossProduct(pos1, pos2, pos3, Vector3(x, y, 0));
+
+				P.Position.x = v1.Position.x * barycent.x + v2.Position.x * barycent.y + v3.Position.x * barycent.z;
+				P.Position.y = v1.Position.y * barycent.x + v2.Position.y * barycent.y + v3.Position.y * barycent.z;
+				P.Position.z = v1.Position.z * barycent.x + v2.Position.z * barycent.y + v3.Position.z * barycent.z;
+
+				P.TexCoords = (v1.TexCoords * barycent.x) + (v2.TexCoords * barycent.y) + (v3.TexCoords * barycent.z);
 				P.Normal = (v1.Normal * barycent.x) + (v2.Normal * barycent.y) + (v3.Normal * barycent.z);
 				P.Tangent = v1.Tangent * barycent.x + v2.Tangent * barycent.y + v3.Tangent * barycent.z;
 
 				TGAColor col = TGAColor(255, 255, 255, 255);
 				if (barycent.x >= 0 && barycent.y >= 0 && barycent.z >= 0)
 				{
-					if (P.Position.x >= 0 && P.Position.y >= 0 && P.Position.x <= frameWidth && P.Position.y <= frameHeight)
+					if (x >= 0 && y >= 0 && x <= frameWidth && y <= frameHeight)
 					{
 						int cacheDepth = zbuffer[int(x + y * frameWidth)];
 						if (P.Position.z < cacheDepth)
@@ -334,7 +337,7 @@ namespace TmingEngine
 							if (!discard)
 							{
 								//image.set(P.Position.x, P.Position.y, col);
-								point(P.Position.x, P.Position.y, image, col);
+								point(x, y, image, col);
 								zbuffer[int(x + y * frameWidth)] = P.Position.z;
 							}
 						}
@@ -352,7 +355,6 @@ namespace TmingEngine
 			}
 		}
 	}
-
 
 	void fillTriangleLinerScan(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color)
 	{

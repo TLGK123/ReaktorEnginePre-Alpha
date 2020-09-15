@@ -144,7 +144,7 @@ namespace TmingEngine
 
 			Debug::Log("------Start------Rasterizer Stage------------------------------------\n");
 
-			ITexture* mainTex, * normalMap ,* specularTex;
+			ITexture* mainTex, * normalMap, * specularTex;
 			mainTex = new OpenGLTexture();
 			normalMap = new OpenGLTexture();
 			specularTex = new OpenGLTexture();
@@ -193,16 +193,16 @@ namespace TmingEngine
 
 			LoadAssetToMemory();
 			view = MainCamera.LookAt(MainCamera.position, MainCamera.center, MainCamera.up);
-			Matrix object2GameScreen = viewPoint * orthographic * view * model; 
-			Matrix  gameScreen2Object = object2GameScreen.Inverse(); // revert the transform 
-			TGAImage frame(frameWidth, frameHeight, TGAImage::RGB); 
+			Matrix object2clip = orthographic * view * model;
+			Matrix  clip2Object = object2clip.Inverse(); // revert the transform
+			TGAImage frame(frameWidth, frameHeight, TGAImage::RGB);
 			IShader* gouraudShader = new GouraudShader();
 			gouraudShader->textures = modelTextures;
 			gouraudShader->light = sunlitght;
 
 			((GouraudShader*)gouraudShader)->shadowbuffer = shadowbuffer;
 			((GouraudShader*)gouraudShader)->object2ShadowScreen = objectToShadowScreen;
-			((GouraudShader*)gouraudShader)->frameScreen2Object = gameScreen2Object;
+			((GouraudShader*)gouraudShader)->clip2Object = clip2Object;
 			((GouraudShader*)gouraudShader)->screenWidth = frameWidth;
 			((GouraudShader*)gouraudShader)->screenHeight = frameHeight;
 
@@ -233,7 +233,7 @@ namespace TmingEngine
 			frame.flip_horizontally();
 			frame.flip_vertically();
 			frame.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
-
+/*
 			LoadAssetToMemory();
 			TGAImage scene(frameWidth, frameHeight, TGAImage::RGB);
 			EditorCamera.position = Vector3(5, 2, 0);
@@ -241,7 +241,11 @@ namespace TmingEngine
 			EditorCamera.up = Vector3(0, 1, 0);
 			view = EditorCamera.LookAt(EditorCamera.position, EditorCamera.center, EditorCamera.up);
 			orthographic = EditorCamera.Orthographic(2, 2, 0, 7);
-
+			((GouraudShader*)gouraudShader)->shadowbuffer = shadowbuffer;
+			((GouraudShader*)gouraudShader)->object2ShadowScreen = objectToShadowScreen;
+			((GouraudShader*)gouraudShader)->frameScreen2Object = gameScreen2Object;
+			((GouraudShader*)gouraudShader)->screenWidth = frameWidth;
+			((GouraudShader*)gouraudShader)->screenHeight = frameHeight;
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
 				primitiveDatas[i].shader = gouraudShader;
@@ -335,11 +339,11 @@ namespace TmingEngine
 			scene.flip_horizontally();
 			scene.flip_vertically();
 			scene.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
-
+*/
 			ITexture* tga2Opengl = new OpenGLTexture();
 			frameID = tga2Opengl->TGA2GLTexture(frame);
 			depthID = tga2Opengl->TGA2GLTexture(depth);
-			sceneID = tga2Opengl->TGA2GLTexture(scene);
+			//sceneID = tga2Opengl->TGA2GLTexture(scene);
 			depth.clear();
 			frame.clear();
 		}

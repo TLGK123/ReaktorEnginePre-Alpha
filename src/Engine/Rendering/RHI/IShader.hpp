@@ -45,7 +45,7 @@ namespace TmingEngine
 		~IShader() {};
 
 		int ID = 0;
-		Matrix porjection;
+		Matrix projection;
 		Matrix view;
 		Matrix model;
 		Matrix viewPoint;
@@ -72,7 +72,7 @@ namespace TmingEngine
 
 		void SetProjection(Matrix p)
 		{
-			porjection = p;
+			projection = p;
 		}
 
 		void SetView(Matrix v)

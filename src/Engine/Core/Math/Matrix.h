@@ -233,7 +233,6 @@ namespace TmingEngine
 			return result;
 		}
 
-
 		Matrix operator - (Matrix mat)const
 		{
 			Matrix result(row, cloumn);
@@ -292,7 +291,7 @@ namespace TmingEngine
 				return Vector4();
 			}
 
-			return Vector4(matrix[0][cloumn - 1], matrix[1][cloumn - 1], matrix[2][cloumn - 1],  matrix[3][cloumn - 1]);
+			return Vector4(matrix[0][cloumn - 1], matrix[1][cloumn - 1], matrix[2][cloumn - 1], matrix[3][cloumn - 1]);
 		}
 
 		operator Determinant()
@@ -330,7 +329,7 @@ namespace TmingEngine
 			{
 				for (int y = 0; y < cloumn; y++)
 				{
-					auto f2 = sourceDet.AlgebraicCofactor(x, y);	
+					auto f2 = sourceDet.AlgebraicCofactor(x, y);
 					result[y][x] = f2;
 				}
 			}

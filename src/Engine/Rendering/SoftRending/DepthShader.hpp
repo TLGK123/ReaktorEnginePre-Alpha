@@ -43,7 +43,7 @@ namespace TmingEngine
 
 		Vector3 Vertex(Vector3 pos) override
 		{
-			auto clipPoint = porjection * view * model * pos;
+			auto clipPoint = projection * view * model * pos;
 			std::cout << clipPoint << std::endl;
 			float w = clipPoint[3][0];
 			Matrix t1(4, 4,
@@ -75,11 +75,10 @@ namespace TmingEngine
 			//std::cout << "eyePoint: " << std::endl;
 			//std::cout << eyePoint << std::endl;
 
-
 			//std::cout << "porjection: " << std::endl;
 			//std::cout << porjection << std::endl;
 
-			auto clipPoint = porjection * eyePoint;
+			auto clipPoint = projection * eyePoint;
 
 			//std::cout << "clipPoint: " << std::endl;
 			//std::cout << clipPoint << std::endl;
@@ -98,7 +97,6 @@ namespace TmingEngine
 			auto screenPoint = viewPoint * t1 * clipPoint;
 			//std::cout << "screenPoint: " << std::endl;
 			//std::cout << screenPoint << std::endl;
-
 
 			vertex.Position = screenPoint;
 			return screenPoint;
@@ -120,7 +118,7 @@ namespace TmingEngine
 		bool Fragment(TGAColor& color, TmingEngine::IVertex& vertex)override
 		{
 			float f = 255 - vertex.Position.z;
-			if (f > 255 )
+			if (f > 255)
 			{
 				//std::cout << f << std::endl;
 				color = TGAColor(255, 0, 0);
@@ -134,7 +132,7 @@ namespace TmingEngine
 			{
 				color = TGAColor(f, f, f);
 			}
-			
+
 			return false;
 		}
 	};
