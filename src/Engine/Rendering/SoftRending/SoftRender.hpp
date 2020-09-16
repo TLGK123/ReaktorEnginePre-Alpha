@@ -343,7 +343,7 @@ namespace TmingEngine
 			ITexture* tga2Opengl = new OpenGLTexture();
 			frameID = tga2Opengl->TGA2GLTexture(frame);
 			depthID = tga2Opengl->TGA2GLTexture(depth);
-			sceneID = tga2Opengl->TGA2GLTexture(mainTex->image);
+			sceneID = tga2Opengl->TGA2GLTexture(normalMap->image);
 			depth.clear();
 			frame.clear();
 		}

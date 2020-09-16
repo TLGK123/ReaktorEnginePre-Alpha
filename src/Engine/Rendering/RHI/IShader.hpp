@@ -48,6 +48,7 @@ namespace TmingEngine
 		Matrix projection;
 		Matrix view;
 		Matrix model;
+		Matrix modelIT;
 		Matrix viewPoint;
 
 		vector<ITexture*> textures;
@@ -83,6 +84,7 @@ namespace TmingEngine
 		void SetModel(Matrix m)
 		{
 			model = m;
+			modelIT = model.Inverse().Transpose();
 		}
 
 		void SetViewPoint(Matrix vp)

@@ -46,13 +46,12 @@ namespace TmingEngine
 
 		Vector3 CalcBumpedNormal(TmingEngine::IVertex p)
 		{
-			Matrix normalMatrix = model.Inverse().Transpose();
-			Vector3 Normal = ((Vector3)(normalMatrix * p.Normal)).Normalize();
-			p.Normal = Normal;
-			return Normal;
+			//return p.Normal;
+			Matrix normalMatrix = modelIT;
 
+			Vector3 Normal = ((Vector3)(normalMatrix * p.Normal)).Normalize();
 			Vector3 Tangent = ((Vector3)(normalMatrix * p.Tangent)).Normalize();
-			Vector3 Bitangent = ((Vector3)(normalMatrix * p.Bitangent)).Normalize();
+			Vector3 Bitangent = ((Vector3)(normalMatrix * (Normal.Cross(Tangent)))).Normalize();
 			
 			int u = p.TexCoords.x * textures[1]->image.get_width();
 			int v = p.TexCoords.y * textures[1]->image.get_height();
@@ -60,7 +59,7 @@ namespace TmingEngine
 			Vector3 BumpMapNormal = Vector3(colorNormal[2] / 255.0f, colorNormal[1] / 255.0f, colorNormal[0] / 255.0f);
 			BumpMapNormal = BumpMapNormal.Normalize();
 			BumpMapNormal = BumpMapNormal * 2 - Vector3(1, 1, 1);
-
+			return BumpMapNormal;
 			Vector3 NewNormal;
 			Matrix TBN = Matrix(3, 3, {
 				Tangent.x ,  Bitangent.x , Normal.x ,
@@ -109,7 +108,7 @@ namespace TmingEngine
 			//	});
 
 			//light_dir = ((DirectLight*)light)->Direction.Normalize();
-			 CalcBumpedNormal(vertex);
+			
 			vertex.Position = viewPoint * projection * view * model * vertex.Position;
 
 			return vertex.Position;
@@ -150,7 +149,9 @@ namespace TmingEngine
 			//Matrix matn(3, 1, { Normal.x,Normal.y,Normal.z });
 			//Vector3 n = TBN * matn;
 			//Vector3 l = light_dir;
-			float diff =((DirectLight*)light)->Direction.Normalize().Dot(vertex.Normal);
+
+			Vector3 Normal = CalcBumpedNormal(vertex);
+			float diff =((DirectLight*)light)->Direction.Normalize().Dot(Normal);
 			//float diff = std::max(l.Dot(n), 0.f);
 			//Vector3 r = (n * (n.Dot(l)) * 2 - l);   // reflected light direction
 			//TGAColor specColor = CalcSpecular(vertex);
@@ -173,9 +174,11 @@ namespace TmingEngine
 			{
 				color = textures[0]->image.get(u, v);
 			}
-		
-			color = color * diff;
+			// Ambient
+			TGAColor ambient =  color * 0.1;
+			TGAColor diffuse =  color * diff;
 			
+			color = ambient + diffuse;
 			return false;
 		}
 
