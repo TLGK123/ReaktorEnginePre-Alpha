@@ -145,17 +145,17 @@ namespace TmingEngine
 			//	bn.x,bn.y ,bn.z,
 			//	}).Transpose();
 
-			
-			//Matrix matn(3, 1, { Normal.x,Normal.y,Normal.z });
-			//Vector3 n = TBN * matn;
-			//Vector3 l = light_dir;
-
 			Vector3 Normal = CalcBumpedNormal(vertex);
-			float diff =((DirectLight*)light)->Direction.Normalize().Dot(Normal);
-			//float diff = std::max(l.Dot(n), 0.f);
-			//Vector3 r = (n * (n.Dot(l)) * 2 - l);   // reflected light direction
-			//TGAColor specColor = CalcSpecular(vertex);
-			//float spec = std::pow(std::max(r.z, 0.f), 5 + specColor.bgra[0]);
+
+			//Matrix matn(3, 1, { Normal.x,Normal.y,Normal.z });
+			Vector3 n = Normal; //TBN * matn;
+			Vector3 l = ((DirectLight*)light)->Direction.Normalize();
+	
+			//float diff =l.Dot(Normal);
+			float diff = std::max(l.Dot(n), 0.f);
+			Vector3 r = (n * (n.Dot(l)) * 2 - l);   // reflected light direction
+			TGAColor specColor = CalcSpecular(vertex);
+			float spec = std::pow(std::max(r.z, 0.f), 5 + specColor.bgra[0]);
 
 			//Vector3 posInShaowScreen = object2ShadowScreen * clip2Object * vertex.Position;
 			//int index = (int)posInShaowScreen.x + (int)posInShaowScreen.y * screenWidth;
@@ -177,8 +177,9 @@ namespace TmingEngine
 			// Ambient
 			TGAColor ambient =  color * 0.1;
 			TGAColor diffuse =  color * diff;
+			TGAColor specular = TGAColor(255 * 0.2 ,255 *0.2 ,255* 0.2 ,255)* spec;
 			
-			color = ambient + diffuse;
+			color = ambient + diffuse + specular;
 			return false;
 		}
 
