@@ -317,6 +317,7 @@ namespace TmingEngine
 				P.Position.x = v1.Position.x * barycent.x + v2.Position.x * barycent.y + v3.Position.x * barycent.z;
 				P.Position.y = v1.Position.y * barycent.x + v2.Position.y * barycent.y + v3.Position.y * barycent.z;
 				P.Position.z = v1.Position.z * barycent.x + v2.Position.z * barycent.y + v3.Position.z * barycent.z;
+				int depth = pos1.z * barycent.x + pos2.z * barycent.y + pos3.z * barycent.z;
 
 				P.TexCoords = (v1.TexCoords * barycent.x) + (v2.TexCoords * barycent.y) + (v3.TexCoords * barycent.z);
 				P.Normal = (v1.Normal * barycent.x) + (v2.Normal * barycent.y) + (v3.Normal * barycent.z);
@@ -338,7 +339,7 @@ namespace TmingEngine
 							{
 								//image.set(P.Position.x, P.Position.y, col);
 								point(x, y, image, col);
-								zbuffer[int(x + y * frameWidth)] = P.Position.z;
+								zbuffer[int(x + y * frameWidth)] = depth;
 							}
 						}
 						else
