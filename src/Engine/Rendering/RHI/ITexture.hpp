@@ -23,8 +23,8 @@
    limitations under the License.
 */
 
-#ifndef ITexture_hpp
-#define ITexture_hpp
+#ifndef TmingEngine_Engine_Rending_RHI_ITexture_hpp_
+#define TmingEngine_Engine_Rending_RHI_ITexture_hpp_
 #include<string>
 #include "tgaimage/tgaimage.h"
 

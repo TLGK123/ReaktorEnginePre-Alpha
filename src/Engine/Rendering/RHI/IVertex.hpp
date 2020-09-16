@@ -23,8 +23,8 @@
    limitations under the License.
 */
 
-#ifndef TmingEngine_Engine_Rending_IVertex_hpp_
-#define TmingEngine_Engine_Rending_IVertex_hpp_
+#ifndef TmingEngine_Engine_Rending_RHI_IVertex_hpp_
+#define TmingEngine_Engine_Rending_RHI_IVertex_hpp_
 
 #include "Core/Math/Vector3.h"
 #include "Core/Math/Vector2.h"

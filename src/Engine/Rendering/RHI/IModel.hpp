@@ -23,8 +23,8 @@
    limitations under the License.
 */
 
-#ifndef IMODEL_H
-#define IMODEL_H
+#ifndef TmingEngine_Engine_Rending_RHI_IModel_hpp_
+#define TmingEngine_Engine_Rending_RHI_IModel_hpp_
 
 #include "assimp/Importer.hpp"
 #include "assimp/scene.h"

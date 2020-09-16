@@ -23,8 +23,8 @@
    limitations under the License.
 */
 
-#ifndef IMesh_hpp
-#define IMesh_hpp
+#ifndef TmingEngine_Engine_Rending_RHI_IMesh_hpp_
+#define TmingEngine_Engine_Rending_RHI_IMesh_hpp_
 
 #include "Rendering/RHI/IShader.hpp"
 using namespace std;
@@ -45,4 +45,4 @@ namespace TmingEngine
 	};
 }
 
-#endif /* IMesh_hpp */
+#endif /* TmingEngine_Engine_Rending_IMesh_hpp_ */
