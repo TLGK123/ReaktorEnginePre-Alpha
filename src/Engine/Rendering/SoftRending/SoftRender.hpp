@@ -193,16 +193,16 @@ namespace TmingEngine
 
 			LoadAssetToMemory();
 			view = MainCamera.LookAt(MainCamera.position, MainCamera.center, MainCamera.up);
-			Matrix object2clip = orthographic * view * model;
-			Matrix  clip2Object = object2clip.Inverse(); // revert the transform
+			//Matrix object2clip = orthographic * view * model;
+			//Matrix  clip2Object = object2clip.Inverse(); // revert the transform
 			TGAImage frame(frameWidth, frameHeight, TGAImage::RGB);
 			IShader* gouraudShader = new GouraudShader();
 			gouraudShader->textures = modelTextures;
 			gouraudShader->light = sunlitght;
 
 			((GouraudShader*)gouraudShader)->shadowbuffer = shadowbuffer;
-			((GouraudShader*)gouraudShader)->object2ShadowScreen = objectToShadowScreen;
-			((GouraudShader*)gouraudShader)->clip2Object = clip2Object;
+			//((GouraudShader*)gouraudShader)->object2ShadowScreen = objectToShadowScreen;
+			//((GouraudShader*)gouraudShader)->clip2Object = clip2Object;
 			((GouraudShader*)gouraudShader)->screenWidth = frameWidth;
 			((GouraudShader*)gouraudShader)->screenHeight = frameHeight;
 
@@ -215,11 +215,11 @@ namespace TmingEngine
 				primitiveDatas[i].shader->SetViewPoint(viewPoint);
 
 				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
-				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+ 				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
 				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
 
-				fillTriangleUseClip(
-					viewPoint,
+				fillTriangleFromEdgeWitchZbuffer(
+
 					primitiveDatas[i].poins[0],
 					primitiveDatas[i].poins[1],
 					primitiveDatas[i].poins[2],
@@ -343,7 +343,7 @@ namespace TmingEngine
 			ITexture* tga2Opengl = new OpenGLTexture();
 			frameID = tga2Opengl->TGA2GLTexture(frame);
 			depthID = tga2Opengl->TGA2GLTexture(depth);
-			//sceneID = tga2Opengl->TGA2GLTexture(scene);
+			sceneID = tga2Opengl->TGA2GLTexture(mainTex->image);
 			depth.clear();
 			frame.clear();
 		}

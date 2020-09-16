@@ -46,12 +46,29 @@ namespace TmingEngine
 
 		Vector3 CalcBumpedNormal(TmingEngine::IVertex p)
 		{
+			Matrix normalMatrix = model.Inverse().Transpose();
+			Vector3 Normal = ((Vector3)(normalMatrix * p.Normal)).Normalize();
+			p.Normal = Normal;
+			return Normal;
+
+			Vector3 Tangent = ((Vector3)(normalMatrix * p.Tangent)).Normalize();
+			Vector3 Bitangent = ((Vector3)(normalMatrix * p.Bitangent)).Normalize();
+			
 			int u = p.TexCoords.x * textures[1]->image.get_width();
 			int v = p.TexCoords.y * textures[1]->image.get_height();
 			TGAColor colorNormal = textures[1]->image.get(u, v);
+			Vector3 BumpMapNormal = Vector3(colorNormal[2] / 255.0f, colorNormal[1] / 255.0f, colorNormal[0] / 255.0f);
+			BumpMapNormal = BumpMapNormal.Normalize();
+			BumpMapNormal = BumpMapNormal * 2 - Vector3(1, 1, 1);
 
-			Vector3 BumpMapNormal = Vector3(colorNormal[2] * 2 / 255.0f - 1, colorNormal[1] * 2 / 255.0f - 1, colorNormal[0] * 2 / 255.0f - 1);
-			return  BumpMapNormal.Normalize();
+			Vector3 NewNormal;
+			Matrix TBN = Matrix(3, 3, {
+				Tangent.x ,  Bitangent.x , Normal.x ,
+				Tangent.y ,  Bitangent.y,  Normal.y ,
+				Tangent.z ,  Bitangent.z , Normal.z });
+			NewNormal = TBN * Matrix(3, 1, { BumpMapNormal.x,BumpMapNormal.y,BumpMapNormal.z });
+			NewNormal = NewNormal.Normalize();
+			return NewNormal;
 		}
 
 		TGAColor CalcSpecular(TmingEngine::IVertex p)
@@ -77,19 +94,24 @@ namespace TmingEngine
 
 			// transform the light vector to the normalized device coordinates
 
+		    //定义在世界坐标中的相机基本坐标系   相机空间的坐标 = 世界坐标
+			
 			//应用于法线向量的变换矩阵是顶点变换矩阵的逆转置矩阵
-			Matrix normalMatrix = model.Inverse().Transpose();
-			Vector3 T = ((Vector3)(normalMatrix * vertex.Tangent)).Normalize();
-			Vector3 B = ((Vector3)(normalMatrix * vertex.Bitangent)).Normalize();
-			Vector3 N = ((Vector3)(normalMatrix * vertex.Normal)).Normalize();
-			vertex.Position = projection * view * model * vertex.Position;
-			TBN = Matrix(3, 3, {
-				T.x,B.x,N.x,
-				T.y,B.y,N.y,
-				T.z,B.z,N.z,
-				});
+			//Matrix normalMatrix = model.Inverse().Transpose();
+			//Vector3 T = ((Vector3)(normalMatrix * vertex.Tangent)).Normalize();
+			//Vector3 B = ((Vector3)(normalMatrix * vertex.Bitangent)).Normalize();
+			//Vector3 N = ((Vector3)(normalMatrix * vertex.Normal)).Normalize();
+			//vertex.Position = viewPoint * projection * view * model * vertex.Position;
+			//TBN = Matrix(3, 3, {
+			//	T.x,B.x,N.x,
+			//	T.y,B.y,N.y,
+			//	T.z,B.z,N.z,
+			//	});
 
-			light_dir = ((DirectLight*)light)->Direction.Normalize();
+			//light_dir = ((DirectLight*)light)->Direction.Normalize();
+			 CalcBumpedNormal(vertex);
+			vertex.Position = viewPoint * projection * view * model * vertex.Position;
+
 			return vertex.Position;
 		};
 
@@ -124,39 +146,36 @@ namespace TmingEngine
 			//	bn.x,bn.y ,bn.z,
 			//	}).Transpose();
 
-			Vector3 Normal = CalcBumpedNormal(vertex);
-			Matrix matn(3, 1, { Normal.x,Normal.y,Normal.z });
-			Vector3 n = TBN * matn;
-			Vector3 l = light_dir;
+			
+			//Matrix matn(3, 1, { Normal.x,Normal.y,Normal.z });
+			//Vector3 n = TBN * matn;
+			//Vector3 l = light_dir;
+			float diff =((DirectLight*)light)->Direction.Normalize().Dot(vertex.Normal);
+			//float diff = std::max(l.Dot(n), 0.f);
+			//Vector3 r = (n * (n.Dot(l)) * 2 - l);   // reflected light direction
+			//TGAColor specColor = CalcSpecular(vertex);
+			//float spec = std::pow(std::max(r.z, 0.f), 5 + specColor.bgra[0]);
 
-			float diff = std::max(l.Dot(n), 0.f);
-			Vector3 r = (n * (n.Dot(l)) * 2 - l);   // reflected light direction
-			TGAColor specColor = CalcSpecular(vertex);
-			float spec = std::pow(std::max(r.z, 0.f), 5 + specColor.bgra[0]);
-
-			Vector3 posInShaowScreen = object2ShadowScreen * clip2Object * vertex.Position;
-			int index = (int)posInShaowScreen.x + (int)posInShaowScreen.y * screenWidth;
-			int shadowDepth = shadowbuffer[index];
-			float tempf = (shadowDepth < posInShaowScreen.z) ? 1 : 0;
-			float shadow = 0.3f + 0.7 * tempf;
+			//Vector3 posInShaowScreen = object2ShadowScreen * clip2Object * vertex.Position;
+			//int index = (int)posInShaowScreen.x + (int)posInShaowScreen.y * screenWidth;
+			//int shadowDepth = shadowbuffer[index];
+			//float tempf = (shadowDepth < posInShaowScreen.z) ? 1 : 0;
+			//float shadow = 0.3f + 0.7 * tempf;
 
 			int u = vertex.TexCoords.x * textures[0]->image.get_width();
 			int v = vertex.TexCoords.y * textures[0]->image.get_height();
 			if (vertex.TexCoords.x == 0 && vertex.TexCoords.y == 0)
 			{
-				color = TGAColor(125, 125, 125, 255);
+				color = TGAColor(255, 0, 0, 255);
 				return false;
 			}
 			else
 			{
 				color = textures[0]->image.get(u, v);
 			}
-
-			for (int i = 0; i < 3; i++)
-			{
-				color[i] = std::min(10 + color[i] + (diff * spec), 255.0f);
-			}
-
+		
+			color = color * diff;
+			
 			return false;
 		}
 

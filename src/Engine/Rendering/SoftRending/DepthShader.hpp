@@ -44,17 +44,17 @@ namespace TmingEngine
 		Vector3 Vertex(Vector3 pos) override
 		{
 			auto clipPoint = projection * view * model * pos;
-			std::cout << clipPoint << std::endl;
-			float w = clipPoint[3][0];
-			Matrix t1(4, 4,
-				{
-				1 / w , 0 , 0 , 0 ,
-				0 , 1 / w , 0 , 0 ,
-				0 , 0 , 1 / w , 0 ,
-				0 , 0 , 0 , 1 / w ,
-				});
+			//std::cout << clipPoint << std::endl;
+			//float w = clipPoint[3][0];
+			//Matrix t1(4, 4,
+			//	{
+			//	1 / w , 0 , 0 , 0 ,
+			//	0 , 1 / w , 0 , 0 ,
+			//	0 , 0 , 1 / w , 0 ,
+			//	0 , 0 , 0 , 1 / w ,
+			//	});
 
-			auto ndcPoint = viewPoint * t1 * clipPoint;
+			auto ndcPoint = viewPoint * projection * view * model * pos;
 
 			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);
 		};
@@ -70,7 +70,7 @@ namespace TmingEngine
 			//std::cout << "view: " << std::endl;
 			//std::cout << view << std::endl;
 
-			auto eyePoint = view * model * vertex.Position;
+			//auto eyePoint = view * model * vertex.Position;
 
 			//std::cout << "eyePoint: " << std::endl;
 			//std::cout << eyePoint << std::endl;
@@ -78,23 +78,23 @@ namespace TmingEngine
 			//std::cout << "porjection: " << std::endl;
 			//std::cout << porjection << std::endl;
 
-			auto clipPoint = projection * eyePoint;
+			//auto clipPoint = projection * view * model * vertex.Position;
 
-			//std::cout << "clipPoint: " << std::endl;
-			//std::cout << clipPoint << std::endl;
+			////std::cout << "clipPoint: " << std::endl;
+			////std::cout << clipPoint << std::endl;
 
-			float w = clipPoint[3][0];
-			Matrix t1(4, 4,
-				{
-				1 / w , 0 , 0 , 0 ,
-				0 , 1 / w , 0 , 0 ,
-				0 , 0 , 1 / w , 0 ,
-				0 , 0 , 0 , 1 / w ,
-				});
+			//float w = clipPoint[3][0];
+			//Matrix t1(4, 4,
+			//	{
+			//	1 / w , 0 , 0 , 0 ,
+			//	0 , 1 / w , 0 , 0 ,
+			//	0 , 0 , 1 / w , 0 ,
+			//	0 , 0 , 0 , 1 / w ,
+			//	});
 
 			//std::cout << "viewPoint: " << std::endl;
 			//std::cout << viewPoint << std::endl;
-			auto screenPoint = viewPoint * t1 * clipPoint;
+			auto screenPoint = viewPoint * projection * view * model * vertex.Position;
 			//std::cout << "screenPoint: " << std::endl;
 			//std::cout << screenPoint << std::endl;
 

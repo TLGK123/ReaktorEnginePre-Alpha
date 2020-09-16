@@ -82,10 +82,6 @@ namespace TmingEngine
 
 			for (int i = 0; i < poins.size(); i++)
 			{
-				auto v1 = poins[i].Tangent;
-				auto v2 = Tangent.Normalize();
-				//std::cout << v1 << std::endl;
-				//std::cout << v2 << std::endl;
 				poins[i].Tangent = Tangent.Normalize();
 				poins[i].Bitangent = Bitangent.Normalize();
 			}
@@ -93,8 +89,8 @@ namespace TmingEngine
 
 		void VertexShader()
 		{
-			shader->Clean();
-			CaculateTBN();
+			//shader->Clean();
+			//CaculateTBN();
 			for (int i = 0; i < poins.size(); i++)
 			{
 				shader->Vertex(poins[i]);
