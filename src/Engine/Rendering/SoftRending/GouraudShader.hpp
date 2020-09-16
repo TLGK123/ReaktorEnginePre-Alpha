@@ -52,7 +52,7 @@ namespace TmingEngine
 			Vector3 Normal = ((Vector3)(normalMatrix * p.Normal)).Normalize();
 			Vector3 Tangent = ((Vector3)(normalMatrix * p.Tangent)).Normalize();
 			Vector3 Bitangent = ((Vector3)(normalMatrix * (Normal.Cross(Tangent)))).Normalize();
-			
+
 			int u = p.TexCoords.x * textures[1]->image.get_width();
 			int v = p.TexCoords.y * textures[1]->image.get_height();
 			TGAColor colorNormal = textures[1]->image.get(u, v);
@@ -93,8 +93,8 @@ namespace TmingEngine
 
 			// transform the light vector to the normalized device coordinates
 
-		    //定义在世界坐标中的相机基本坐标系   相机空间的坐标 = 世界坐标
-			
+			//定义在世界坐标中的相机基本坐标系   相机空间的坐标 = 世界坐标
+
 			//应用于法线向量的变换矩阵是顶点变换矩阵的逆转置矩阵
 			//Matrix normalMatrix = model.Inverse().Transpose();
 			//Vector3 T = ((Vector3)(normalMatrix * vertex.Tangent)).Normalize();
@@ -108,7 +108,7 @@ namespace TmingEngine
 			//	});
 
 			//light_dir = ((DirectLight*)light)->Direction.Normalize();
-			
+
 			vertex.Position = viewPoint * projection * view * model * vertex.Position;
 
 			return vertex.Position;
@@ -150,12 +150,11 @@ namespace TmingEngine
 			//Matrix matn(3, 1, { Normal.x,Normal.y,Normal.z });
 			Vector3 n = Normal; //TBN * matn;
 			Vector3 l = ((DirectLight*)light)->Direction.Normalize();
-	
-			//float diff =l.Dot(Normal);
+
 			float diff = std::max(l.Dot(n), 0.f);
-			Vector3 r = (n * (n.Dot(l)) * 2 - l);   // reflected light direction
-			TGAColor specColor = CalcSpecular(vertex);
-			float spec = std::pow(std::max(r.z, 0.f), 5 + specColor.bgra[0]);
+			//Vector3 r = (n * (n.Dot(l)) * 2 - l);   // reflected light direction
+			//TGAColor specColor = CalcSpecular(vertex);
+			//float spec = std::pow(std::max(r.z, 0.f), 5 + specColor.bgra[0]);
 
 			//Vector3 posInShaowScreen = object2ShadowScreen * clip2Object * vertex.Position;
 			//int index = (int)posInShaowScreen.x + (int)posInShaowScreen.y * screenWidth;
@@ -175,11 +174,11 @@ namespace TmingEngine
 				color = textures[0]->image.get(u, v);
 			}
 			// Ambient
-			TGAColor ambient =  color * 0.1;
-			TGAColor diffuse =  color * diff;
-			TGAColor specular = TGAColor(255 * 0.2 ,255 *0.2 ,255* 0.2 ,255)* spec;
-			
-			color = ambient + diffuse + specular;
+			TGAColor ambient = color * 0.1;
+			TGAColor diffuse = color * diff;
+			//TGAColor specular = TGAColor(255 * 0.2, 255 * 0.2, 255 * 0.2, 255) * spec;
+
+			color = ambient + diffuse;
 			return false;
 		}
 

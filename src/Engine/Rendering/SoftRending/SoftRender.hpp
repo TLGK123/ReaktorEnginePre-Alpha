@@ -215,7 +215,7 @@ namespace TmingEngine
 				primitiveDatas[i].shader->SetViewPoint(viewPoint);
 
 				primitiveDatas[i].VertexShader();               //run the vertex shader for each point in a primitive
- 				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
+				primitiveDatas[i].TessellationShader();			//run the tessellation shader for a primitive
 				primitiveDatas[i].GeometryShader();				//run the geometry shader for a primitive
 
 				fillTriangleFromEdgeWitchZbuffer(
