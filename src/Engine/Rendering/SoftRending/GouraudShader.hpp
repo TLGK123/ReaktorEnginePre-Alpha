@@ -44,14 +44,13 @@ namespace TmingEngine
 		Vector3 light_dir;
 		Matrix TBN;
 
+		Vector3 viewPos;
+
 		Vector3 CalcBumpedNormal(TmingEngine::IVertex p)
 		{
-			//return p.Normal;
-			Matrix normalMatrix = modelIT;
-
-			Vector3 Normal = ((Vector3)(normalMatrix * p.Normal)).Normalize();
-			Vector3 Tangent = ((Vector3)(normalMatrix * p.Tangent)).Normalize();
-			Vector3 Bitangent = ((Vector3)(normalMatrix * (Normal.Cross(Tangent)))).Normalize();
+			Vector3 Normal = ((Vector3)(  p.Normal)).Normalize();
+			Vector3 Tangent = ((Vector3)(  p.Tangent - p.Normal * p.Normal.Dot(p.Tangent))).Normalize();
+			Vector3 Bitangent = ((Vector3)( (Normal.Cross(Tangent)))).Normalize();
 
 			int u = p.TexCoords.x * textures[1]->image.get_width();
 			int v = p.TexCoords.y * textures[1]->image.get_height();
@@ -59,7 +58,7 @@ namespace TmingEngine
 			Vector3 BumpMapNormal = Vector3(colorNormal[2] / 255.0f, colorNormal[1] / 255.0f, colorNormal[0] / 255.0f);
 			BumpMapNormal = BumpMapNormal.Normalize();
 			BumpMapNormal = BumpMapNormal * 2 - Vector3(1, 1, 1);
-			return BumpMapNormal;
+			
 			Vector3 NewNormal;
 			Matrix TBN = Matrix(3, 3, {
 				Tangent.x ,  Bitangent.x , Normal.x ,
@@ -110,6 +109,16 @@ namespace TmingEngine
 			//light_dir = ((DirectLight*)light)->Direction.Normalize();
 
 			vertex.Position = viewPoint * projection * view * model * vertex.Position;
+			viewPos = viewPoint * projection * view * model * viewPos;
+			Matrix normalMatrix = modelIT;
+
+			Vector3 Normal = ((Vector3)(normalMatrix * vertex.Normal)).Normalize();
+			Vector3 Tangent = ((Vector3)(normalMatrix * vertex.Tangent)).Normalize();
+			Vector3 Bitangent = ((Vector3)(normalMatrix * (Normal.Cross(Tangent)))).Normalize();
+
+			vertex.Normal = Normal;
+			vertex.Tangent = Tangent;
+			vertex.Bitangent = Bitangent;
 
 			return vertex.Position;
 		};
@@ -147,14 +156,15 @@ namespace TmingEngine
 
 			Vector3 Normal = CalcBumpedNormal(vertex);
 
-			//Matrix matn(3, 1, { Normal.x,Normal.y,Normal.z });
-			Vector3 n = Normal; //TBN * matn;
+			Vector3 n = Normal;
 			Vector3 l = ((DirectLight*)light)->Direction.Normalize();
 
+			
+			Vector3 viewDir = (viewPos - vertex.Position).Normalize();
 			float diff = std::max(l.Dot(n), 0.f);
-			//Vector3 r = (n * (n.Dot(l)) * 2 - l);   // reflected light direction
-			//TGAColor specColor = CalcSpecular(vertex);
-			//float spec = std::pow(std::max(r.z, 0.f), 5 + specColor.bgra[0]);
+			Vector3 r = (n * (n.Dot(l)) * 2 - l);   // reflected light direction
+			TGAColor specColor = CalcSpecular(vertex);
+			float spec = std::pow(std::max(viewDir.Dot(r) , 0.f), 5.0f );
 
 			//Vector3 posInShaowScreen = object2ShadowScreen * clip2Object * vertex.Position;
 			//int index = (int)posInShaowScreen.x + (int)posInShaowScreen.y * screenWidth;
@@ -176,9 +186,9 @@ namespace TmingEngine
 			// Ambient
 			TGAColor ambient = color * 0.1;
 			TGAColor diffuse = color * diff;
-			//TGAColor specular = TGAColor(255 * 0.2, 255 * 0.2, 255 * 0.2, 255) * spec;
+			TGAColor specular = specColor * spec;
 
-			color = ambient + diffuse;
+			color = ambient + diffuse + specular;
 			return false;
 		}
 

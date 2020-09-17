@@ -106,11 +106,14 @@ namespace TmingEngine
 		void GenerateFrames()
 		{
 			sunlitght = new DirectLight();
-			((DirectLight*)sunlitght)->Direction = Vector3(0, 0, 1);
+
+			//in the Computer Graphic ,light direction is vector that from a world pos point to the light
+			//just for caculate simple
+			((DirectLight*)sunlitght)->Direction = Vector3(1, 0 , 1);
 			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
 
-			MainCamera.position = Vector3(0, 2, 1);
-			MainCamera.center = Vector3(0, 2, 0);
+			MainCamera.position = Vector3(1, 4, 2);
+			MainCamera.center = Vector3(0, 3, 0);
 			MainCamera.up = Vector3(0, 1, 0);
 
 			TGAImage depth(frameWidth, frameHeight, TGAImage::RGB);
@@ -126,7 +129,7 @@ namespace TmingEngine
 
 			Matrix perspective = MainCamera.Perspective(1, 1, 1, 3);
 
-			Matrix orthographic = MainCamera.Orthographic(2, 2, 0, 5);
+			Matrix orthographic = MainCamera.Orthographic(1.5, 1.5, 0, 5);
 
 			Matrix viewPoint = MainCamera.Viewport(0, 0, frameWidth, frameHeight);
 
@@ -161,7 +164,7 @@ namespace TmingEngine
 
 			IShader* depthShader = new DepthShader();
 			depthShader->light = sunlitght;
-			view = MainCamera.LookAt(Vector3(1, 4, 0), Vector3(0, 2, 0), MainCamera.up);
+			view = MainCamera.LookAt(Vector3(0, 2, 1)+ ((DirectLight*)sunlitght)->Direction , Vector3(0, 2, 0), MainCamera.up);
 
 			Matrix objectToShadowScreen = viewPoint * orthographic * view * model;
 
@@ -205,6 +208,7 @@ namespace TmingEngine
 			//((GouraudShader*)gouraudShader)->clip2Object = clip2Object;
 			((GouraudShader*)gouraudShader)->screenWidth = frameWidth;
 			((GouraudShader*)gouraudShader)->screenHeight = frameHeight;
+			((GouraudShader*)gouraudShader)->viewPos = MainCamera.position;
 
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
