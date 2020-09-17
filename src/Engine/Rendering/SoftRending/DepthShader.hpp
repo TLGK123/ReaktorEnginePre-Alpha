@@ -39,21 +39,9 @@ namespace TmingEngine
 		DepthShader() {};
 		~DepthShader() {};
 
-		Matrix TBN;
 
 		Vector3 Vertex(Vector3 pos) override
 		{
-			auto clipPoint = projection * view * model * pos;
-			//std::cout << clipPoint << std::endl;
-			//float w = clipPoint[3][0];
-			//Matrix t1(4, 4,
-			//	{
-			//	1 / w , 0 , 0 , 0 ,
-			//	0 , 1 / w , 0 , 0 ,
-			//	0 , 0 , 1 / w , 0 ,
-			//	0 , 0 , 0 , 1 / w ,
-			//	});
-
 			auto ndcPoint = viewPoint * projection * view * model * pos;
 
 			return Vector3(ndcPoint[0][0], ndcPoint[1][0], ndcPoint[2][0]);

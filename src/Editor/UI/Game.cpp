@@ -67,7 +67,7 @@ namespace TmingEngine
 			float region_sz = 32.0f;
 			float region_x = io.MousePos.x - pos.x - region_sz * 0.5f;
 			float region_y = io.MousePos.y - pos.y - region_sz * 0.5f;
-			float zoom = 4.0f;
+			float zoom = 6.0f;
 			if (region_x < 0.0f) { region_x = 0.0f; }
 			else if (region_x > my_tex_w - region_sz) { region_x = my_tex_w - region_sz; }
 			if (region_y < 0.0f) { region_y = 0.0f; }
