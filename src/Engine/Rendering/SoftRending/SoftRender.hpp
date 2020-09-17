@@ -106,7 +106,7 @@ namespace TmingEngine
 		void GenerateFrames()
 		{
 			sunlitght = new DirectLight();
-			((DirectLight*)sunlitght)->Direction = Vector3(-1, -2, 0);
+			((DirectLight*)sunlitght)->Direction = Vector3(0, 0, 1);
 			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
 
 			MainCamera.position = Vector3(0, 2, 1);
