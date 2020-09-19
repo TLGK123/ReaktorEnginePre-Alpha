@@ -17,7 +17,7 @@ namespace TmingEngine
 {
 	unsigned int OpenGLTexture::LoadTexture(const char* path)
 	{
-		string filename = string(path);
+		std::string filename = std::string(path);
 		unsigned int textureID;
 		glGenTextures(1, &textureID);
 
@@ -56,7 +56,7 @@ namespace TmingEngine
 	TGAImage OpenGLTexture::LoadTGATexture(const char* path)
 	{
 		TGAImage image;
-		string filename = string(path);
+		std::string filename = std::string(path);
 		image.read_tga_file(filename.c_str());
 		image.flip_vertically();
 		return image;

@@ -279,8 +279,8 @@ namespace TmingEngine
 				std::cout << "不满足自动矩阵 转 Vector3 格式 " << std::endl;
 				return Vector3();
 			}
-
-			return Vector3(matrix[0][cloumn - 1], matrix[1][cloumn - 1], matrix[2][cloumn - 1]);
+			int index = cloumn - 1;
+			return Vector3(matrix[0][index], matrix[1][index], matrix[2][index]);
 		}
 
 		operator Vector4()
@@ -290,8 +290,8 @@ namespace TmingEngine
 				std::cout << "不满足自动矩阵 转 Vector3 格式 " << std::endl;
 				return Vector4();
 			}
-
-			return Vector4(matrix[0][cloumn - 1], matrix[1][cloumn - 1], matrix[2][cloumn - 1], matrix[3][cloumn - 1]);
+			int index = cloumn - 1;
+			return Vector4(matrix[0][index], matrix[1][index], matrix[2][index], matrix[3][index]);
 		}
 
 		operator Determinant()

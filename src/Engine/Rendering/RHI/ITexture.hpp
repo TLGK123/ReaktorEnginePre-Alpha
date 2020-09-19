@@ -28,13 +28,12 @@
 #include<string>
 #include "tgaimage/tgaimage.h"
 
-using namespace std;
 class ITexture {
 public:
 	ITexture() {}
 	unsigned int id = 0;
-	string type = "";
-	string path = "";
+	std::string type = "";
+	std::string path = "";
 	int width = 0;
 	int height = 0;
 	TGAImage image;

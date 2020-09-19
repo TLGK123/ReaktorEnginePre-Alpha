@@ -25,16 +25,16 @@ either version 4 of the License, or (at your option) any later version.
 #include <iostream>
 #include <map>
 #include <vector>
-using namespace std;
+
 namespace TmingEngine
 {
 	class Model
 	{
 	public:
 		/*  Model Data */
-		vector<ITexture*> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
-		vector<IMesh*> meshes;
-		string directory;
+		std::vector<ITexture*> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+		std::vector<IMesh*> meshes;
+		std::string directory;
 		bool gammaCorrection;
 
 		/*  Functions   */
@@ -44,12 +44,12 @@ namespace TmingEngine
 		{
 		}
 
-		Model(string const& path, bool gamma = false) : gammaCorrection(gamma)
+		Model(std::string const& path, bool gamma = false) : gammaCorrection(gamma)
 		{
 			Init(path);
 		}
 
-		void Init(string const& path)
+		void Init(std::string const& path)
 		{
 			textures_loaded.clear();
 			meshes.clear();
@@ -66,7 +66,7 @@ namespace TmingEngine
 	private:
 		/*  Functions   */
 		// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
-		void loadModel(string const& path)
+		void loadModel(std::string const& path)
 		{
 			// read file via ASSIMP
 			Assimp::Importer importer;  //aiProcess_FlipUVs |
@@ -105,9 +105,9 @@ namespace TmingEngine
 		IMesh* processMesh(aiMesh* mesh, const aiScene* scene)
 		{
 			// data to fill
-			vector<IVertex> vertices;
-			vector<unsigned int> indices;
-			vector<ITexture*> textures;
+			std::vector<IVertex> vertices;
+			std::vector<unsigned int> indices;
+			std::vector<ITexture*> textures;
 
 			// Walk through each of the mesh's vertices
 			for (unsigned int i = 0; i < mesh->mNumVertices; i++)
@@ -166,10 +166,10 @@ namespace TmingEngine
 			// normal: texture_normalN
 
 			// 1. diffuse maps
-			vector<ITexture*> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+			std::vector<ITexture*> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 			textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 			// 2. specular maps
-			vector<ITexture*> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+			std::vector<ITexture*> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 			textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 			// 3. normal maps
 			std::vector<ITexture*> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
@@ -184,9 +184,9 @@ namespace TmingEngine
 
 		// checks all material textures of a given type and loads the textures if they're not loaded yet.
 		// the required info is returned as a Texture struct.
-		vector<ITexture*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
+		std::vector<ITexture*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
 		{
-			vector<ITexture*> textures;
+			std::vector<ITexture*> textures;
 			for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 			{
 				aiString str;

@@ -51,7 +51,7 @@ namespace TmingEngine
 		Matrix modelIT;
 		Matrix viewPoint;
 
-		vector<ITexture*> textures;
+		std::vector<ITexture*> textures;
 
 		ILight* light;
 

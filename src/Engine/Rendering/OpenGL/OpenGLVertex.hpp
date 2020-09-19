@@ -30,7 +30,6 @@
 #include "OpenGLFunctions.hpp"
 #include "Rendering/RHI/IVertex.hpp"
 
-using namespace std;
 namespace TmingEngine
 {
 	class OpenGLVertex : public IVertex {

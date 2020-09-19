@@ -16,14 +16,13 @@ either version 4 of the License, or (at your option) any later version.
 #include "OpenGLFunctions.hpp"
 #include "Rendering/RHI/ITexture.hpp"
 
-using namespace std;
 namespace TmingEngine
 {
 	class OpenGLTexture : public ITexture {
 	public:
 		unsigned int id;
-		string type;
-		string path;
+		std::string type;
+		std::string path;
 		int width;
 		int height;
 		TGAImage image;

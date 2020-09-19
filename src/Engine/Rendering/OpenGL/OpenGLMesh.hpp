@@ -19,7 +19,7 @@ either version 4 of the License, or (at your option) any later version.
 #include <sstream>
 #include <iostream>
 #include <vector>
-using namespace std;
+
 namespace TmingEngine
 {
 	class OpenGLMesh : public IMesh
@@ -31,7 +31,7 @@ namespace TmingEngine
 
 		/*  Functions  */
 		// constructor
-		OpenGLMesh(vector<IVertex> vertices, vector<unsigned int> indices, vector<ITexture*> textures)
+		OpenGLMesh(std::vector<IVertex> vertices, std::vector<unsigned int> indices, std::vector<ITexture*> textures)
 		{
 			this->vertices = vertices;
 			this->indices = indices;
