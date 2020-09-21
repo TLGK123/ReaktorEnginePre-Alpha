@@ -109,7 +109,7 @@ namespace TmingEngine
 
 			//in the Computer Graphic ,light direction is vector that from a world pos point to the light
 			//just for caculate simple
-			((DirectLight*)sunlitght)->Direction = Vector3(0, 0, 1);
+			((DirectLight*)sunlitght)->Direction = Vector3(1, 0, 1);
 			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
 
 			MainCamera.position = Vector3(1, 4, 2);

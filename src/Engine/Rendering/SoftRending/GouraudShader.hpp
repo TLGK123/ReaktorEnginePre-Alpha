@@ -131,13 +131,9 @@ namespace TmingEngine
 			TGAColor diffuse = color * diff;
 			TGAColor specular = specColor * spec;
 
-			color = ambient + diffuse + specular;
 			for (int i = 0; i < 3; i++)
 			{
-				if (color.bgra[i] > 255)
-				{
-					color.bgra[i] = 255;
-				}
+				color[i] = std::min<float>(20 + diffuse[i] * 1.2 + specular[i] * 0.6, 255);
 			}
 			return false;
 		}
