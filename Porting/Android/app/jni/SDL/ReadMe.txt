@@ -1,0 +1,1 @@
+需要把SDL2 目录中的src 和 include ， Android.mk 拷贝进来
