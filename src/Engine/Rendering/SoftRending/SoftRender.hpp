@@ -109,7 +109,7 @@ namespace TmingEngine
 
 			//in the Computer Graphic ,light direction is vector that from a world pos point to the light
 			//just for caculate simple
-			((DirectLight*)sunlitght)->Direction = Vector3(1, 0, 1);
+			((DirectLight*)sunlitght)->Direction = Vector3(0, 0, 1);
 			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
 
 			MainCamera.position = Vector3(1, 4, 2);
@@ -129,7 +129,7 @@ namespace TmingEngine
 
 			Matrix perspective = MainCamera.Perspective(1, 1, 1, 3);
 
-			Matrix orthographic = MainCamera.Orthographic(1, 1, 0, 5);
+			Matrix orthographic = MainCamera.Orthographic(2, 2, 0, 5);
 
 			Matrix viewPoint = MainCamera.Viewport(0, 0, frameWidth, frameHeight);
 

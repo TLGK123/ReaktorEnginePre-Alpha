@@ -33,7 +33,9 @@
 namespace TmingEngine
 {
 	struct IVertex {
-		Vector3 Position;
+		Vector3 FragPos;  // position on fragment
+
+		Vector3 Position;  // position for Rasterizer
 
 		Vector3 Normal;
 
