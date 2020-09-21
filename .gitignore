@@ -70,3 +70,7 @@ src/Editor/Module/DLLProject/.vs/
 /include/gl3w
 /Data/Tools/MonoRemoteDebugger.Server/Temp
 /Data/Tools/MonoRemoteDebugger.Server/Log
+/Porting/Android/app/jni/SDL
+.idea
+.gradle
+.cxx
