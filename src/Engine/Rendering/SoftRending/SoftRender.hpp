@@ -109,7 +109,7 @@ namespace TmingEngine
 
 			//in the Computer Graphic ,light direction is vector that from a world pos point to the light
 			//just for caculate simple
-			((DirectLight*)sunlitght)->Direction = Vector3(1, 0, 1);
+			((DirectLight*)sunlitght)->Direction = Vector3(1, 0, 0);
 			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
 
 			MainCamera.position = Vector3(1, 4, 2);
@@ -164,7 +164,7 @@ namespace TmingEngine
 
 			IShader* depthShader = new DepthShader();
 			depthShader->light = sunlitght;
-			view = MainCamera.LookAt(Vector3(0, 2, 1) + ((DirectLight*)sunlitght)->Direction, Vector3(0, 2, 0), MainCamera.up);
+			view = MainCamera.LookAt(Vector3(0, 2, 0) + ((DirectLight*)sunlitght)->Direction, Vector3(0, 2, 0), MainCamera.up);
 
 			Matrix objectToShadowScreen = viewPoint * orthographic * view * model;
 
