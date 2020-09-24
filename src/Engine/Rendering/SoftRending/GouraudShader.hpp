@@ -155,17 +155,17 @@ namespace TmingEngine
 			return false;
 		}
 
-		Vector3 GouraudShader::Vertex(Vector3 pos)
+		Vector3 Vertex(Vector3 pos)
 		{
 			return Vector3();
 		}
 
-		bool GouraudShader::Fragment(TGAColor& color, Vector3 barycent)
+		bool Fragment(TGAColor& color, Vector3 barycent)
 		{
 			return false;
 		}
 
-		bool GouraudShader::Fragment(TGAColor& color)
+		bool Fragment(TGAColor& color)
 		{
 			return false;
 		}
