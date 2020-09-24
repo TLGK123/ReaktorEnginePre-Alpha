@@ -185,7 +185,7 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader)
+	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, float* zbuffer, ILight* sunlitght, IShader* shader)
 	{
 		Vector2* boxs = findTriangleBox(t0, t1, t2);
 
@@ -217,8 +217,8 @@ namespace TmingEngine
 				{
 					if (P.x >= 0 && P.y >= 0 && P.x <= frameWidth && P.y <= frameHeight)
 					{
-						int cacheDeep = zbuffer[int(x + y * frameWidth)];
-						if (P.z < cacheDeep)
+						float cacheDepth = zbuffer[int(x + y * frameWidth)];
+						if (P.z < cacheDepth)
 						{
 							bool discard = shader->Fragment(col);
 							if (!discard)
@@ -243,7 +243,7 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangleFromEdgeWitchZbuffer(IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader)
+	void fillTriangleFromEdgeWitchZbuffer(IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, float* zbuffer, ILight* sunlitght, IShader* shader)
 	{
 		Vector2* boxs = findTriangleBox(v1.Position, v2.Position, v3.Position);
 
@@ -258,6 +258,7 @@ namespace TmingEngine
 				P.Position = Vector3(x, y, 0);
 				Vector3 barycent = barycentricCoordinateCrossProduct(v1, v2, v3, P);
 				P.Position.z = v1.Position.z * barycent.x + v2.Position.z * barycent.y + v3.Position.z * barycent.z;
+
 				P.FragPos = v1.FragPos * barycent.x + v2.FragPos * barycent.y + v3.FragPos * barycent.z;
 				P.TexCoords = (v1.TexCoords * barycent.x) + (v2.TexCoords * barycent.y) + (v3.TexCoords * barycent.z);
 				P.Normal = (v1.Normal * barycent.x) + (v2.Normal * barycent.y) + (v3.Normal * barycent.z);
@@ -268,7 +269,7 @@ namespace TmingEngine
 				{
 					if (P.Position.x >= 0 && P.Position.y >= 0 && P.Position.x <= frameWidth && P.Position.y <= frameHeight)
 					{
-						int cacheDepth = zbuffer[int(x + y * frameWidth)];
+						float cacheDepth = zbuffer[int(x + y * frameWidth)];
 						if (P.Position.z < cacheDepth)
 						{
 							Vector2 s = P.TexCoords;
@@ -297,7 +298,7 @@ namespace TmingEngine
 		}
 	}
 
-	void fillTriangleUseClip(Matrix viewPoint, IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader)
+	void fillTriangleUseClip(Matrix viewPoint, IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, float* zbuffer, ILight* sunlitght, IShader* shader)
 	{
 		Vector3 pos1 = viewPoint * v1.Position;
 		Vector3 pos2 = viewPoint * v2.Position;
@@ -329,7 +330,7 @@ namespace TmingEngine
 				{
 					if (x >= 0 && y >= 0 && x <= frameWidth && y <= frameHeight)
 					{
-						int cacheDepth = zbuffer[int(x + y * frameWidth)];
+						float cacheDepth = zbuffer[int(x + y * frameWidth)];
 						if (P.Position.z < cacheDepth)
 						{
 							Vector2 s = P.TexCoords;

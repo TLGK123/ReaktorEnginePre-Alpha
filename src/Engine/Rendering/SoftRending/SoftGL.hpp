@@ -71,13 +71,13 @@ namespace TmingEngine
 
 	void fillTriangleFromEdge(Vector3 t0, Vector3 t1, Vector3 t2, TGAImage& image, TGAColor color, ILight* sunlitght);
 
-	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader);
+	void fillTriangleFromEdgeWitchZbuffer(Vector3 t0, Vector3 t1, Vector3 t2, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, float* zbuffer, ILight* sunlitght, IShader* shader);
 
-	void fillTriangleFromEdgeWitchZbuffer(IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader);
+	void fillTriangleFromEdgeWitchZbuffer(IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, float* zbuffer, ILight* sunlitght, IShader* shader);
 
 	void fillTriangleLinerScan(Vector2 t0, Vector2 t1, Vector2 t2, TGAImage& image, TGAColor color);
 
-	void fillTriangleUseClip(Matrix viewPoint, IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, int* zbuffer, ILight* sunlitght, IShader* shader);
+	void fillTriangleUseClip(Matrix viewPoint, IVertex v1, IVertex v2, IVertex v3, int frameWidth, int frameHeight, TGAImage& image, TGAColor color, float* zbuffer, ILight* sunlitght, IShader* shader);
 } // namespace TmingEngine
 
 #endif //TmingEngine_Engine_Rending_SoftGL_hpp_

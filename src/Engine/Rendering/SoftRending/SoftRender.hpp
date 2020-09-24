@@ -109,7 +109,7 @@ namespace TmingEngine
 
 			//in the Computer Graphic ,light direction is vector that from a world pos point to the light
 			//just for caculate simple
-			((DirectLight*)sunlitght)->Direction = Vector3(1, 0, 0);
+			((DirectLight*)sunlitght)->Direction = Vector3(1, 0, 0).Normalize();
 			((DirectLight*)sunlitght)->Color = TMColor(0.5, 0.5, 0);
 
 			MainCamera.position = Vector3(1, 4, 2);
@@ -117,6 +117,8 @@ namespace TmingEngine
 			MainCamera.up = Vector3(0, 1, 0);
 
 			TGAImage depth(frameWidth, frameHeight, TGAImage::RGB);
+			TGAImage depthFind(frameWidth, frameHeight, TGAImage::RGB);
+
 			//around the Y axis rotate 180
 			Matrix model(4, 4, {
 				cos(180.0f / 360 * 2 * Pi),0,sin(180.0f / 360 * 2 * Pi),0,
@@ -134,9 +136,9 @@ namespace TmingEngine
 			Matrix viewPoint = MainCamera.Viewport(0, 0, frameWidth, frameHeight);
 
 			int len = frameWidth * frameHeight;
-			int* zbuffer = new int[len];
-			int* shadowbuffer = new int[len];
-			int* editorZbuffer = new int[len];
+			float* zbuffer = new float[len];
+			float* shadowbuffer = new float[len];
+			float* editorZbuffer = new float[len];
 
 			for (int inedx = 0; inedx < len; inedx++)
 			{
@@ -209,6 +211,7 @@ namespace TmingEngine
 			((GouraudShader*)gouraudShader)->screenWidth = frameWidth;
 			((GouraudShader*)gouraudShader)->screenHeight = frameHeight;
 			((GouraudShader*)gouraudShader)->viewPos = MainCamera.position;
+			((GouraudShader*)gouraudShader)->depthFind = &depthFind;
 
 			for (int i = 0; i < primitiveDatas.size(); i++)
 			{
@@ -236,7 +239,9 @@ namespace TmingEngine
 			frame.write_tga_file(FileSystem::getPath("frame.tga").c_str());
 			frame.flip_horizontally();
 			frame.flip_vertically();
+			depthFind.flip_RGBA();
 			frame.flip_RGBA();   // exchange the  R and B ,the tga format is different with opengl texture data
+
 /*
 			LoadAssetToMemory();
 			TGAImage scene(frameWidth, frameHeight, TGAImage::RGB);
@@ -347,7 +352,7 @@ namespace TmingEngine
 			ITexture* tga2Opengl = new OpenGLTexture();
 			frameID = tga2Opengl->TGA2GLTexture(frame);
 			depthID = tga2Opengl->TGA2GLTexture(depth);
-			sceneID = tga2Opengl->TGA2GLTexture(normalMap->image);
+			sceneID = tga2Opengl->TGA2GLTexture(depthFind);
 			//scene.clear();
 			depth.clear();
 			frame.clear();

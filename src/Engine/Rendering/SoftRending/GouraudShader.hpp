@@ -38,12 +38,12 @@ namespace TmingEngine
 		GouraudShader() {};
 		~GouraudShader() {};
 
-		int* shadowbuffer = NULL;
+		float* shadowbuffer = NULL;
 		Matrix object2ShadowScreen;
 		Matrix world2Object;
 		Vector3 light_dir;
 		Matrix TBN;
-
+		TGAImage* depthFind = NULL;
 		Vector3 viewPos;
 
 		Vector3 CalcBumpedNormal(TmingEngine::IVertex p)
@@ -110,19 +110,22 @@ namespace TmingEngine
 			float spec = std::pow(std::max(viewDir.Dot(r), 0.f), 5);
 
 			Vector3 posInShaowScreen = object2ShadowScreen * world2Object * vertex.FragPos;
-			int index = (int)posInShaowScreen.x + (int)posInShaowScreen.y * screenWidth;
-			int shadowDepth = shadowbuffer[index];
+			int index = (int)(posInShaowScreen.x + posInShaowScreen.y * screenWidth);
+			float pixelDepth = posInShaowScreen.z;
+			float shadowDepth = shadowbuffer[index];
 			float tempf = 1;
 
-			if (posInShaowScreen.z < shadowDepth)
+			if (pixelDepth - 2 <= shadowDepth)
 			{
+				depthFind->set(posInShaowScreen.x, posInShaowScreen.y, TGAColor(255, 0, 0));
 				tempf = 1;
 			}
 			else
 			{
+				depthFind->set(posInShaowScreen.x, posInShaowScreen.y, TGAColor(0, 255, 0));
 				tempf = 0;
 			}
-			float shadow = 0.3f + 0.7 * tempf;
+			float shadow = 0.1f + 0.9 * tempf;
 
 			int u = vertex.TexCoords.x * textures[0]->image.get_width();
 			int v = vertex.TexCoords.y * textures[0]->image.get_height();
@@ -143,6 +146,11 @@ namespace TmingEngine
 			for (int i = 0; i < 3; i++)
 			{
 				color[i] = std::min<float>(20 + diffuse[i] * shadow * 1.2f + specular[i] * 0.6f, 255);
+			}
+
+			if (tempf == 0)
+			{
+				color = TGAColor(0, 255, 0, 255);
 			}
 			return false;
 		}

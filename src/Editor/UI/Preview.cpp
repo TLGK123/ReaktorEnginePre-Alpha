@@ -55,7 +55,8 @@ namespace TmingEngine
 		ImTextureID my_tex_id = (void*)ImageId;
 		int my_tex_w = ImGui::GetWindowSize().x - 20;
 		int my_tex_h = ImGui::GetWindowSize().y - 50;
-
+		my_tex_w = 500;
+		my_tex_h = 500;
 		//----------------------------------------------------------------- -1 -1  Image reversal
 
 		ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(0, 0), ImVec2(-1, -1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
