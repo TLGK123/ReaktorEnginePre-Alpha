@@ -39,7 +39,6 @@ namespace TmingEngine
 		DepthShader() {};
 		~DepthShader() {};
 
-
 		Vector3 Vertex(Vector3 pos) override
 		{
 			auto ndcPoint = viewPoint * projection * view * model * pos;
@@ -86,7 +85,17 @@ namespace TmingEngine
 			//std::cout << "screenPoint: " << std::endl;
 			//std::cout << screenPoint << std::endl;
 
+			vertex.FragPos = model * vertex.Position;
+			Vector3 t = screenPoint;
+			if (t.z < 0)
+			{
+				Vector3 world = model * vertex.Position;
+				Vector3 eye = view * model * vertex.Position;
+				Vector3 clicp = projection * view * model * vertex.Position;
+				int a = 0;
+			}
 			vertex.Position = screenPoint;
+
 			return screenPoint;
 		};
 

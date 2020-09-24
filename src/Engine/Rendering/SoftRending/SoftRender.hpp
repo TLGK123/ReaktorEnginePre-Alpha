@@ -164,7 +164,7 @@ namespace TmingEngine
 
 			IShader* depthShader = new DepthShader();
 			depthShader->light = sunlitght;
-			view = MainCamera.LookAt(Vector3(0, 2, 0) + ((DirectLight*)sunlitght)->Direction, Vector3(0, 2, 0), MainCamera.up);
+			view = MainCamera.LookAt(Vector3(0, 2, 0) + ((DirectLight*)sunlitght)->Direction * 2, Vector3(0, 2, 0), MainCamera.up);
 
 			Matrix objectToShadowScreen = viewPoint * orthographic * view * model;
 
@@ -192,20 +192,20 @@ namespace TmingEngine
 			depth.write_tga_file(FileSystem::getPath("depth.tga").c_str());
 			depth.flip_horizontally();
 			depth.flip_vertically();  // reture normal
+			depth.flip_RGBA();
 			;
 
 			LoadAssetToMemory();
 			view = MainCamera.LookAt(MainCamera.position, MainCamera.center, MainCamera.up);
-			//Matrix object2clip = orthographic * view * model;
-			//Matrix  clip2Object = object2clip.Inverse(); // revert the transform
+
 			TGAImage frame(frameWidth, frameHeight, TGAImage::RGB);
 			IShader* gouraudShader = new GouraudShader();
 			gouraudShader->textures = modelTextures;
 			gouraudShader->light = sunlitght;
 
 			((GouraudShader*)gouraudShader)->shadowbuffer = shadowbuffer;
-			//((GouraudShader*)gouraudShader)->object2ShadowScreen = objectToShadowScreen;
-			//((GouraudShader*)gouraudShader)->clip2Object = clip2Object;
+			((GouraudShader*)gouraudShader)->object2ShadowScreen = objectToShadowScreen;
+			((GouraudShader*)gouraudShader)->world2Object = model.Inverse();
 			((GouraudShader*)gouraudShader)->screenWidth = frameWidth;
 			((GouraudShader*)gouraudShader)->screenHeight = frameHeight;
 			((GouraudShader*)gouraudShader)->viewPos = MainCamera.position;
@@ -247,7 +247,7 @@ namespace TmingEngine
 			orthographic = EditorCamera.Orthographic(2, 2, 0, 7);
 			((GouraudShader*)gouraudShader)->shadowbuffer = shadowbuffer;
 			((GouraudShader*)gouraudShader)->object2ShadowScreen = objectToShadowScreen;
-			((GouraudShader*)gouraudShader)->frameScreen2Object = gameScreen2Object;
+			((GouraudShader*)gouraudShader)->world2Object = model.Inverse();
 			((GouraudShader*)gouraudShader)->screenWidth = frameWidth;
 			((GouraudShader*)gouraudShader)->screenHeight = frameHeight;
 			for (int i = 0; i < primitiveDatas.size(); i++)
@@ -348,6 +348,7 @@ namespace TmingEngine
 			frameID = tga2Opengl->TGA2GLTexture(frame);
 			depthID = tga2Opengl->TGA2GLTexture(depth);
 			sceneID = tga2Opengl->TGA2GLTexture(normalMap->image);
+			//scene.clear();
 			depth.clear();
 			frame.clear();
 		}

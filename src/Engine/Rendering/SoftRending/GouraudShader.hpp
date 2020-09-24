@@ -40,7 +40,7 @@ namespace TmingEngine
 
 		int* shadowbuffer = NULL;
 		Matrix object2ShadowScreen;
-		Matrix clip2Object;
+		Matrix world2Object;
 		Vector3 light_dir;
 		Matrix TBN;
 
@@ -109,11 +109,20 @@ namespace TmingEngine
 			TGAColor specColor = CalcSpecular(vertex);
 			float spec = std::pow(std::max(viewDir.Dot(r), 0.f), 5);
 
-			//Vector3 posInShaowScreen = object2ShadowScreen * clip2Object * vertex.Position;
-			//int index = (int)posInShaowScreen.x + (int)posInShaowScreen.y * screenWidth;
-			//int shadowDepth = shadowbuffer[index];
-			//float tempf = (shadowDepth < posInShaowScreen.z) ? 1 : 0;
-			//float shadow = 0.3f + 0.7 * tempf;
+			Vector3 posInShaowScreen = object2ShadowScreen * world2Object * vertex.FragPos;
+			int index = (int)posInShaowScreen.x + (int)posInShaowScreen.y * screenWidth;
+			int shadowDepth = shadowbuffer[index];
+			float tempf = 1;
+
+			if (posInShaowScreen.z < shadowDepth)
+			{
+				tempf = 1;
+			}
+			else
+			{
+				tempf = 0;
+			}
+			float shadow = 0.3f + 0.7 * tempf;
 
 			int u = vertex.TexCoords.x * textures[0]->image.get_width();
 			int v = vertex.TexCoords.y * textures[0]->image.get_height();
@@ -133,7 +142,7 @@ namespace TmingEngine
 
 			for (int i = 0; i < 3; i++)
 			{
-				color[i] = std::min<float>(20 + diffuse[i] * 1.2 + specular[i] * 0.6, 255);
+				color[i] = std::min<float>(20 + diffuse[i] * shadow * 1.2f + specular[i] * 0.6f, 255);
 			}
 			return false;
 		}

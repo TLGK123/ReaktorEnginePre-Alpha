@@ -258,6 +258,7 @@ namespace TmingEngine
 				P.Position = Vector3(x, y, 0);
 				Vector3 barycent = barycentricCoordinateCrossProduct(v1, v2, v3, P);
 				P.Position.z = v1.Position.z * barycent.x + v2.Position.z * barycent.y + v3.Position.z * barycent.z;
+				P.FragPos = v1.FragPos * barycent.x + v2.FragPos * barycent.y + v3.FragPos * barycent.z;
 				P.TexCoords = (v1.TexCoords * barycent.x) + (v2.TexCoords * barycent.y) + (v3.TexCoords * barycent.z);
 				P.Normal = (v1.Normal * barycent.x) + (v2.Normal * barycent.y) + (v3.Normal * barycent.z);
 				P.Tangent = v1.Tangent * barycent.x + v2.Tangent * barycent.y + v3.Tangent * barycent.z;
