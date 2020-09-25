@@ -24,7 +24,6 @@
 */
 
 #include "ScreenWin.h"
-
 #include <iostream>
 
 #define DOCKING_ENABLED ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable
@@ -129,7 +128,7 @@ namespace TmingEngine
 		// depending on whether SDL_INIT_GAMECONTROLLER is enabled or disabled.. updating to latest version of SDL is recommended!)
 		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
 		{
-			IM_ASSERT("Error: %s\n", SDL_GetError());
+			IM_ASSERT(SDL_GetError());
 			return;
 		}
 
@@ -169,7 +168,7 @@ namespace TmingEngine
 		bool err = gl3wInit() != 0;
 		if (err)
 		{
-			IM_ASSERT(stderr, "Failed to initialize OpenGL loader!\n");
+			IM_ASSERT("Failed to initialize OpenGL loader!\n");
 			return;
 		}
 
